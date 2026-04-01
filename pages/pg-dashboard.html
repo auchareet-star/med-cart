@@ -1,0 +1,259 @@
+<div id="pg-dashboard" class="page">
+
+    <header class="header">
+        <div class="header-brand">
+            <div class="brand-icon">
+                <svg width="27" height="27" viewBox="0 0 24 24" fill="white">
+                    <path d="M19 3H5C3.9 3 3 3.9 3 5v14c0 1.1.9 2 2 2h14c1.1 0
+                             2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c.55 0 1 .45 1
+                             1v3h3c.55 0 1 .45 1 1s-.45 1-1 1h-3v3c0
+                             .55-.45 1-1 1s-1-.45-1-1v-3H8c-.55 0-1-.45-1-1s.45-1
+                             1-1h3V7c0-.55.45-1 1-1z"/>
+                </svg>
+            </div>
+            <div>
+                <div class="brand-name">Med Cart</div>
+                <div class="brand-sub">ระบบรถเข็นยาอัจฉริยะ</div>
+            </div>
+        </div>
+        <div class="header-right">
+            <div>
+                <div class="dt-time" id="clock5">--:--:--</div>
+                <div class="dt-date" id="dateStr5">--</div>
+            </div>
+            <div class="hdr-user">
+                <div class="hdr-avatar">สจ</div>
+                <div>
+                    <div class="hdr-user-name">สมใจ ดีมาก</div>
+                    <div class="hdr-user-role">พยาบาลวิชาชีพ</div>
+                </div>
+            </div>
+            <button class="logout-btn" onclick="doLogout()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/>
+                    <polyline points="16 17 21 12 16 7"/>
+                    <line x1="21" y1="12" x2="9" y2="12"/>
+                </svg>
+                ออกจากระบบ
+            </button>
+        </div>
+    </header>
+
+    <div style="flex:1;padding:28px 36px 40px;width:100%;overflow-y:auto;">
+
+        <!-- Row 1: Welcome banner with gradient -->
+        <div style="background:linear-gradient(135deg,#0F766E 0%,#0D9488 40%,#14B8A6 100%);border-radius:20px;padding:28px 32px;margin-bottom:22px;position:relative;overflow:hidden;color:white;">
+            <div style="position:absolute;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,0.06);top:-60px;right:-40px;"></div>
+            <div style="position:absolute;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,0.04);bottom:-30px;right:120px;"></div>
+            <div style="display:flex;align-items:center;justify-content:space-between;position:relative;">
+                <div>
+                    <div style="font-size:14px;opacity:.75;margin-bottom:4px;">Ward 3A · หอผู้ป่วยอายุรกรรม</div>
+                    <h1 style="font-size:28px;font-weight:700;letter-spacing:-0.3px;margin-bottom:6px;">สวัสดี, <span style="color:white;" id="dashWelcomeName">คุณปราณี</span></h1>
+                    <p style="font-size:13px;opacity:.8;">รอบเช้า 08:00 น. · มีรายการยารอดำเนินการ 8 รายการ</p>
+                </div>
+                <div style="display:flex;align-items:center;gap:14px;">
+                    <!-- Progress circle -->
+                    <div style="position:relative;width:80px;height:80px;">
+                        <svg width="80" height="80" viewBox="0 0 80 80" style="transform:rotate(-90deg);">
+                            <circle cx="40" cy="40" r="34" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="6"/>
+                            <circle cx="40" cy="40" r="34" fill="none" stroke="white" stroke-width="6" stroke-dasharray="214" stroke-dashoffset="71" stroke-linecap="round"/>
+                        </svg>
+                        <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;">
+                            <div style="font-size:20px;font-weight:700;">67%</div>
+                            <div style="font-size:9px;opacity:.7;">เสร็จแล้ว</div>
+                        </div>
+                    </div>
+                    <!-- Cart info -->
+                    <div style="background:rgba(255,255,255,0.15);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.2);border-radius:14px;padding:12px 16px;">
+                        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+                            <div style="width:28px;height:28px;background:rgba(255,255,255,0.2);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;">A-1</div>
+                            <div style="font-size:12px;font-weight:600;" id="dashWard">Med Cart A-1</div>
+                        </div>
+                        <div style="display:flex;align-items:center;gap:6px;font-size:11px;opacity:.75;">
+                            <div class="batt-wrap" style="width:24px;height:10px;border-color:rgba(255,255,255,0.5);"><div class="batt-fill" style="width:85%;background:white;"></div></div>
+                            85% · Online
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Row 2: Colorful Stats Cards -->
+        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:22px;">
+            <!-- ผู้ป่วย — Indigo -->
+            <div style="background:linear-gradient(135deg,#4F46E5,#6366F1);border-radius:16px;padding:18px;color:white;position:relative;overflow:hidden;">
+                <div style="position:absolute;top:-15px;right:-15px;width:60px;height:60px;border-radius:50%;background:rgba(255,255,255,0.1);"></div>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" style="opacity:.6;margin-bottom:8px;"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/></svg>
+                <div style="font-size:28px;font-weight:700;">8</div>
+                <div style="font-size:11px;opacity:.75;margin-top:2px;">ผู้ป่วยใน Ward</div>
+            </div>
+            <!-- รายการยา — Teal -->
+            <div style="background:linear-gradient(135deg,#0D9488,#14B8A6);border-radius:16px;padding:18px;color:white;position:relative;overflow:hidden;">
+                <div style="position:absolute;top:-15px;right:-15px;width:60px;height:60px;border-radius:50%;background:rgba(255,255,255,0.1);"></div>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" style="opacity:.6;margin-bottom:8px;"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+                <div style="font-size:28px;font-weight:700;">24</div>
+                <div style="font-size:11px;opacity:.75;margin-top:2px;">รายการยาวันนี้</div>
+            </div>
+            <!-- จ่ายแล้ว — Sky -->
+            <div style="background:linear-gradient(135deg,#0284C7,#0EA5E9);border-radius:16px;padding:18px;color:white;position:relative;overflow:hidden;">
+                <div style="position:absolute;top:-15px;right:-15px;width:60px;height:60px;border-radius:50%;background:rgba(255,255,255,0.1);"></div>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" style="opacity:.6;margin-bottom:8px;"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                <div style="font-size:28px;font-weight:700;">16</div>
+                <div style="font-size:11px;opacity:.75;margin-top:2px;">จ่ายแล้ว</div>
+                <div style="width:100%;height:4px;background:rgba(255,255,255,0.2);border-radius:2px;margin-top:8px;"><div style="width:67%;height:100%;background:white;border-radius:2px;"></div></div>
+            </div>
+            <!-- รอจ่าย — Amber -->
+            <div style="background:linear-gradient(135deg,#D97706,#F59E0B);border-radius:16px;padding:18px;color:white;position:relative;overflow:hidden;">
+                <div style="position:absolute;top:-15px;right:-15px;width:60px;height:60px;border-radius:50%;background:rgba(255,255,255,0.1);"></div>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" style="opacity:.6;margin-bottom:8px;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <div style="font-size:28px;font-weight:700;">8</div>
+                <div style="font-size:11px;opacity:.75;margin-top:2px;">รอจ่าย</div>
+                <div style="width:100%;height:4px;background:rgba(255,255,255,0.2);border-radius:2px;margin-top:8px;"><div style="width:33%;height:100%;background:white;border-radius:2px;"></div></div>
+            </div>
+            <!-- Drawer — Rose -->
+            <div style="background:linear-gradient(135deg,#E11D48,#FB7185);border-radius:16px;padding:18px;color:white;position:relative;overflow:hidden;">
+                <div style="position:absolute;top:-15px;right:-15px;width:60px;height:60px;border-radius:50%;background:rgba(255,255,255,0.1);"></div>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" style="opacity:.6;margin-bottom:8px;"><rect x="2" y="3" width="20" height="18" rx="2"/><line x1="2" y1="9" x2="22" y2="9"/></svg>
+                <div style="font-size:28px;font-weight:700;">6<span style="font-size:16px;opacity:.6;">/24</span></div>
+                <div style="font-size:11px;opacity:.75;margin-top:2px;">Drawer / Cassette</div>
+            </div>
+        </div>
+
+        <!-- Role-specific dynamic section -->
+        <div id="dashRoleSection" style="margin-bottom:22px;"></div>
+
+        <!-- Row 3: 2 main actions + Quick alerts -->
+        <div style="display:grid;grid-template-columns:1fr 1fr 320px;gap:16px;margin-bottom:24px;">
+
+            <!-- จ่ายยา -->
+            <div onclick="nav('pg-routine')" style="background:linear-gradient(160deg,#EFF9F3 0%,rgba(255,255,255,0.92) 50%,#f0fbf5 100%);border:2px solid var(--green-mid);border-radius:20px;padding:28px 24px;cursor:pointer;position:relative;overflow:hidden;transition:all .25s;box-shadow:var(--shadow);" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 32px rgba(13,148,136,0.15)'" onmouseout="this.style.transform='';this.style.boxShadow='var(--shadow)'">
+                <div style="position:absolute;top:-30px;right:-30px;width:100px;height:100px;background:rgba(13,148,136,0.06);border-radius:50%;"></div>
+                <span style="position:absolute;top:14px;right:14px;background:#ef4444;color:white;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;">3 รอจ่าย</span>
+                <div style="display:flex;align-items:center;gap:14px;margin-bottom:14px;">
+                    <div style="width:56px;height:56px;background:linear-gradient(135deg,var(--green),#14B8A6);border-radius:16px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(13,148,136,0.2);">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0016.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 002 8.5c0 2.3 1.5 4.05 3 5.5l7 7z"/></svg>
+                    </div>
+                    <div>
+                        <div style="font-size:20px;font-weight:700;color:var(--green-dark);">จ่ายยา</div>
+                        <div style="font-size:12px;color:var(--text-3);">Medication Administration</div>
+                    </div>
+                </div>
+                <div style="font-size:12px;color:var(--text-2);line-height:1.6;">บริหารยาตามรายการสั่งของแพทย์ พร้อม 7 Rights</div>
+            </div>
+
+            <!-- จัดยา -->
+            <div onclick="goToPrepType()" style="background:rgba(255,255,255,0.85);backdrop-filter:blur(12px);border:1.5px solid var(--border);border-radius:20px;padding:28px 24px;cursor:pointer;position:relative;overflow:hidden;transition:all .25s;box-shadow:var(--shadow);" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 32px rgba(0,0,0,0.1)';this.style.borderColor='#93c5fd'" onmouseout="this.style.transform='';this.style.boxShadow='var(--shadow)';this.style.borderColor='var(--border)'">
+                <div style="position:absolute;top:-30px;right:-30px;width:100px;height:100px;background:rgba(59,130,246,0.04);border-radius:50%;"></div>
+                <span style="position:absolute;top:14px;right:14px;background:#3b82f6;color:white;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;">5 รอจัด</span>
+                <div style="display:flex;align-items:center;gap:14px;margin-bottom:14px;">
+                    <div style="width:56px;height:56px;background:#eff6ff;border:2px solid #bfdbfe;border-radius:16px;display:flex;align-items:center;justify-content:center;">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+                    </div>
+                    <div>
+                        <div style="font-size:20px;font-weight:700;color:var(--text-1);">จัดยา</div>
+                        <div style="font-size:12px;color:var(--text-3);">Medication Preparation</div>
+                    </div>
+                </div>
+                <div style="font-size:12px;color:var(--text-2);line-height:1.6;">เตรียมยาเข้ารถเข็น ตามผู้ป่วย / ตามยา / ตามเวลา</div>
+            </div>
+
+            <!-- Quick alerts (2x2) -->
+            <div id="dashQuickAlerts" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+                <div onclick="startStatTimer();nav('pg-stat');" style="background:rgba(255,255,255,0.85);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:14px;padding:14px;cursor:pointer;display:flex;align-items:center;gap:10px;transition:all .2s;box-shadow:var(--shadow);border-left:4px solid #ef4444;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''">
+                    <div style="width:36px;height:36px;background:#fef2f2;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#ef4444;flex-shrink:0;">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    </div>
+                    <div><div style="font-size:20px;font-weight:700;color:#ef4444;line-height:1;">2</div><div style="font-size:9px;color:var(--text-2);margin-top:1px;">STAT รอจ่าย</div></div>
+                </div>
+                <div onclick="nav('pg-prn')" style="background:rgba(255,255,255,0.85);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:14px;padding:14px;cursor:pointer;display:flex;align-items:center;gap:10px;transition:all .2s;box-shadow:var(--shadow);border-left:4px solid #7c3aed;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''">
+                    <div style="width:36px;height:36px;background:#f5f3ff;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#7c3aed;flex-shrink:0;">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0016.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 002 8.5c0 2.3 1.5 4.05 3 5.5l7 7z"/></svg>
+                    </div>
+                    <div><div style="font-size:20px;font-weight:700;color:#7c3aed;line-height:1;">3</div><div style="font-size:9px;color:var(--text-2);margin-top:1px;">PRN รอจ่าย</div></div>
+                </div>
+                <div onclick="nav('pg-highalert')" style="background:rgba(255,255,255,0.85);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:14px;padding:14px;cursor:pointer;display:flex;align-items:center;gap:10px;transition:all .2s;box-shadow:var(--shadow);border-left:4px solid #f59e0b;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''">
+                    <div style="width:36px;height:36px;background:#fffbeb;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#f59e0b;flex-shrink:0;">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                    </div>
+                    <div><div style="font-size:20px;font-weight:700;color:#f59e0b;line-height:1;">2</div><div style="font-size:9px;color:var(--text-2);margin-top:1px;">High Alert</div></div>
+                </div>
+                <div style="background:rgba(255,255,255,0.85);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:14px;padding:14px;display:flex;align-items:center;gap:10px;box-shadow:var(--shadow);border-left:4px solid var(--green);">
+                    <div style="width:36px;height:36px;background:var(--green-light);border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--green);flex-shrink:0;">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                    </div>
+                    <div><div style="font-size:20px;font-weight:700;color:var(--green);line-height:1;">0</div><div style="font-size:9px;color:var(--text-2);margin-top:1px;">แจ้งเตือนผิดปกติ</div></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Row 4: Schedule + Recent activity -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+
+            <!-- Left: Schedule -->
+            <div style="background:rgba(255,255,255,0.85);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:16px;padding:18px 20px;box-shadow:var(--shadow);">
+                <div style="font-size:14px;font-weight:600;color:var(--text-1);margin-bottom:14px;display:flex;align-items:center;gap:6px;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    ตารางรอบยาวันนี้
+                </div>
+                <div style="display:flex;flex-direction:column;gap:0;">
+                    <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-left:2px solid var(--green);margin-left:6px;padding-left:14px;">
+                        <div style="width:10px;height:10px;background:var(--green);border-radius:50%;margin-left:-20px;flex-shrink:0;"></div>
+                        <div style="flex:1;"><div style="font-size:13px;font-weight:600;color:var(--green);">06:00 – 08:00 &nbsp;รอบเช้า</div><div style="font-size:11px;color:var(--text-3);">8 ผู้ป่วย · 16/24 จ่ายแล้ว</div></div>
+                        <span style="font-size:10px;font-weight:600;color:#3b82f6;background:#eff6ff;padding:2px 8px;border-radius:10px;">กำลังดำเนินการ</span>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-left:2px solid var(--border);margin-left:6px;padding-left:14px;">
+                        <div style="width:10px;height:10px;background:var(--border);border-radius:50%;margin-left:-20px;flex-shrink:0;"></div>
+                        <div style="flex:1;"><div style="font-size:13px;font-weight:600;color:var(--text-1);">11:00 – 12:00 &nbsp;รอบเที่ยง</div><div style="font-size:11px;color:var(--text-3);">5 ผู้ป่วย · 12 รายการ</div></div>
+                        <span style="font-size:10px;font-weight:600;color:var(--text-3);background:var(--bg);padding:2px 8px;border-radius:10px;">รอ</span>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-left:2px solid var(--border);margin-left:6px;padding-left:14px;">
+                        <div style="width:10px;height:10px;background:var(--border);border-radius:50%;margin-left:-20px;flex-shrink:0;"></div>
+                        <div style="flex:1;"><div style="font-size:13px;font-weight:600;color:var(--text-1);">16:00 – 18:00 &nbsp;รอบเย็น</div><div style="font-size:11px;color:var(--text-3);">6 ผู้ป่วย · 15 รายการ</div></div>
+                        <span style="font-size:10px;font-weight:600;color:var(--text-3);background:var(--bg);padding:2px 8px;border-radius:10px;">รอ</span>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-left:2px solid transparent;margin-left:6px;padding-left:14px;">
+                        <div style="width:10px;height:10px;background:var(--border);border-radius:50%;margin-left:-20px;flex-shrink:0;"></div>
+                        <div style="flex:1;"><div style="font-size:13px;font-weight:600;color:var(--text-1);">20:00 – 22:00 &nbsp;กลางคืน</div><div style="font-size:11px;color:var(--text-3);">4 ผู้ป่วย · 6 รายการ</div></div>
+                        <span style="font-size:10px;font-weight:600;color:var(--text-3);background:var(--bg);padding:2px 8px;border-radius:10px;">รอ</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Recent activity -->
+            <div style="background:rgba(255,255,255,0.85);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:16px;padding:18px 20px;box-shadow:var(--shadow);">
+                <div style="font-size:14px;font-weight:600;color:var(--text-1);margin-bottom:14px;display:flex;align-items:center;gap:6px;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-2)" stroke-width="2.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                    กิจกรรมล่าสุด
+                </div>
+                <div style="display:flex;flex-direction:column;gap:10px;">
+                    <div style="display:flex;align-items:center;gap:10px;">
+                        <div style="width:8px;height:8px;background:var(--green);border-radius:50%;flex-shrink:0;"></div>
+                        <div style="flex:1;font-size:12px;color:var(--text-1);">จ่ายยา <strong>Amlodipine 5mg</strong> — สมชาย มานะ (3A-01)</div>
+                        <div style="font-size:11px;color:var(--text-3);flex-shrink:0;">08:12</div>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:10px;">
+                        <div style="width:8px;height:8px;background:var(--green);border-radius:50%;flex-shrink:0;"></div>
+                        <div style="flex:1;font-size:12px;color:var(--text-1);">จ่ายยา <strong>Metformin 500mg</strong> — มาลี สุขใจ (3A-03)</div>
+                        <div style="font-size:11px;color:var(--text-3);flex-shrink:0;">08:08</div>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:10px;">
+                        <div style="width:8px;height:8px;background:#3b82f6;border-radius:50%;flex-shrink:0;"></div>
+                        <div style="flex:1;font-size:12px;color:var(--text-1);">จัดยา <strong>Omeprazole 20mg</strong> → Slot A-01</div>
+                        <div style="font-size:11px;color:var(--text-3);flex-shrink:0;">07:55</div>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:10px;">
+                        <div style="width:8px;height:8px;background:#f59e0b;border-radius:50%;flex-shrink:0;"></div>
+                        <div style="flex:1;font-size:12px;color:var(--text-1);">งดยา <strong>Warfarin 3mg</strong> — กัลยา ชัยวงศ์ (Vital ไม่ผ่าน)</div>
+                        <div style="font-size:11px;color:var(--text-3);flex-shrink:0;">07:45</div>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:10px;">
+                        <div style="width:8px;height:8px;background:var(--green);border-radius:50%;flex-shrink:0;"></div>
+                        <div style="flex:1;font-size:12px;color:var(--text-1);">เข้าสู่ระบบ <strong>นส.สมใจ ดีมาก</strong> — Ward 3A</div>
+                        <div style="font-size:11px;color:var(--text-3);flex-shrink:0;">07:30</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

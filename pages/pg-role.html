@@ -1,0 +1,98 @@
+<div id="pg-role" class="page">
+    <div class="role-body">
+        <div class="role-frame">
+
+            <!-- Header -->
+            <div style="margin-bottom:8px;">
+                <div style="display:inline-flex;align-items:center;justify-content:center;width:64px;height:64px;background:linear-gradient(135deg,var(--green-light),#d0edda);border-radius:50%;margin-bottom:16px;">
+                    <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#0D9488" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/>
+                    </svg>
+                </div>
+                <h1 style="font-size:28px;font-weight:700;color:var(--text-1);letter-spacing:-0.3px;">เลือกสิทธิ์การใช้งาน</h1>
+                <p style="font-size:14px;color:var(--text-3);margin-top:6px;">สวัสดี <strong style="color:var(--text-1);">คุณสมใจ ดีมาก</strong> — กรุณาเลือกบทบาทที่ต้องการเข้าใช้งาน</p>
+            </div>
+
+            <!-- 3 Role cards -->
+            <div class="role-grid">
+
+                <!-- 1. พยาบาล -->
+                <div class="role-card nurse" onclick="selectRole('nurse','นส.สมใจ ดีมาก','พยาบาล')">
+                    <div class="role-avatar nurse">
+                        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#0D9488" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0016.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 002 8.5c0 2.3 1.5 4.05 3 5.5l7 7z"/>
+                        </svg>
+                    </div>
+                    <div class="role-name">พยาบาล</div>
+                    <div class="role-name-en">Registered Nurse</div>
+                    <div class="role-perms">
+                        <span class="role-perm green">จ่ายยา</span>
+                        <span class="role-perm green">สแกนผู้ป่วย</span>
+                        <span class="role-perm gray">ดูรายงาน</span>
+                    </div>
+                    <div style="font-size:12px;color:var(--text-2);line-height:1.5;margin-bottom:16px;">บริหารยาให้ผู้ป่วยตามคำสั่งแพทย์<br>พร้อมระบบตรวจสอบ 7 Rights</div>
+                    <button class="role-btn nurse">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        เข้าใช้งาน
+                    </button>
+                </div>
+
+                <!-- 2. เภสัชกร -->
+                <div class="role-card pharma" onclick="selectRole('pharma','ภญ.วิภา เจริญยา','เภสัชกร')">
+                    <div class="role-avatar pharma">
+                        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/>
+                            <polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/>
+                        </svg>
+                    </div>
+                    <div class="role-name">เภสัชกร</div>
+                    <div class="role-name-en">Pharmacist</div>
+                    <div class="role-perms">
+                        <span class="role-perm blue">จัดยา</span>
+                        <span class="role-perm blue">สแกนยา</span>
+                        <span class="role-perm gray">ดูรายงาน</span>
+                    </div>
+                    <div style="font-size:12px;color:var(--text-2);line-height:1.5;margin-bottom:16px;">เตรียมยาเข้ารถเข็นตามใบสั่งยา<br>จัดตามผู้ป่วย / ตามยา / ตามรอบเวลา</div>
+                    <button class="role-btn pharma">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        เข้าใช้งาน
+                    </button>
+                </div>
+
+                <!-- 3. หัวหน้าเวร -->
+                <div class="role-card super" onclick="selectRole('super','นส.ปราณี หัวหน้าเวร','หัวหน้าเวร')">
+                    <div class="role-avatar super">
+                        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>
+                            <path d="M9 12l2 2 4-4" stroke="#7c3aed" stroke-width="2.5"/>
+                        </svg>
+                    </div>
+                    <div class="role-name">หัวหน้าเวร</div>
+                    <div class="role-name-en">Charge Nurse / Supervisor</div>
+                    <div class="role-perms">
+                        <span class="role-perm green">จ่ายยา</span>
+                        <span class="role-perm blue">จัดยา</span>
+                        <span class="role-perm purple">รายงาน</span>
+                        <span class="role-perm purple">ตั้งค่า</span>
+                    </div>
+                    <div style="font-size:12px;color:var(--text-2);line-height:1.5;margin-bottom:16px;">เข้าถึงทุกฟังก์ชัน ทั้งจ่ายยา จัดยา<br>ดูรายงาน และตั้งค่าระบบ</div>
+                    <button class="role-btn super">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        เข้าใช้งาน
+                    </button>
+                </div>
+
+            </div>
+
+            <!-- Footer info -->
+            <div style="margin-top:28px;display:flex;align-items:center;justify-content:center;gap:16px;">
+                <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text-3);">
+                    <div style="width:28px;height:28px;background:linear-gradient(135deg,var(--green),#14B8A6);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:white;">A-1</div>
+                    Med Cart A-1 · Ward 3A
+                </div>
+                <div style="width:1px;height:16px;background:var(--border);"></div>
+                <div style="font-size:12px;color:var(--text-3);">EMP-4821 · พยาบาลวิชาชีพ</div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,85 @@
+<div id="pg-hardstop" class="page">
+    <header class="header" style="border-bottom-color:#fca5a5;">
+        <div class="header-brand">
+            <div class="brand-icon" style="background:#dc2626;">
+                <svg width="27" height="27" viewBox="0 0 24 24" fill="white"><path d="M19 3H5C3.9 3 3 3.9 3 5v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c.55 0 1 .45 1 1v3h3c.55 0 1 .45 1 1s-.45 1-1 1h-3v3c0 .55-.45 1-1 1s-1-.45-1-1v-3H8c-.55 0-1-.45-1-1s.45-1 1-1h3V7c0-.55.45-1 1-1z"/></svg>
+            </div>
+            <div>
+                <div class="brand-name" style="color:#dc2626;">Med Cart</div>
+                <div class="brand-sub">ไม่สามารถดำเนินการต่อได้</div>
+            </div>
+        </div>
+        <div class="header-right">
+            <div><div class="dt-time" id="clockHS">--:--:--</div><div class="dt-date" id="dateStrHS">--</div></div>
+            <div class="status-pill" style="background:#fef2f2;color:#dc2626;">
+                <span class="dot"></span> HARD STOP
+            </div>
+        </div>
+    </header>
+
+    <div class="hs-body">
+        <div class="hs-frame">
+
+            <!-- Stop icon -->
+            <div class="hs-icon-wrap">
+                <svg width="52" height="52" viewBox="0 0 24 24" fill="white">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48
+                             10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+                </svg>
+            </div>
+
+            <div class="hs-title">ข้อมูลไม่ถูกต้อง — ระบบหยุดการให้ยา</div>
+            <div class="hs-sub">ระบบตรวจพบความไม่สอดคล้องที่อาจเป็นอันตรายต่อผู้ป่วย<br>ไม่สามารถดำเนินการให้ยาต่อได้จนกว่าจะแก้ไข</div>
+
+            <!-- Fail list -->
+            <div class="hs-fails">
+                <div class="hs-fails-title">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+                    รายการที่ไม่ผ่านการตรวจสอบ
+                </div>
+
+                <div class="hs-fail-item">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="#dc2626"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" style="display:none"/><circle cx="12" cy="12" r="10" fill="none" stroke="#dc2626" stroke-width="2"/><line x1="15" y1="9" x2="9" y2="15" stroke="#dc2626" stroke-width="2"/><line x1="9" y1="9" x2="15" y2="15" stroke="#dc2626" stroke-width="2"/></svg>
+                    <div><strong>Right Drug — ไม่ผ่าน:</strong> Barcode ยาที่สแกนไม่ตรงกับคำสั่งแพทย์ (สแกนได้: Enoxaparin แต่คำสั่ง: Heparin)</div>
+                </div>
+                <div class="hs-fail-item">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#dc2626" stroke-width="2"/><line x1="15" y1="9" x2="9" y2="15" stroke="#dc2626" stroke-width="2"/><line x1="9" y1="9" x2="15" y2="15" stroke="#dc2626" stroke-width="2"/></svg>
+                    <div><strong>Right Dose — ไม่ผ่าน:</strong> Dose ที่สแกนได้ (6,000 units) ไม่ตรงกับคำสั่ง (5,000 units)</div>
+                </div>
+                <div class="hs-fail-item">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#d97706" stroke-width="2"/><line x1="12" y1="8" x2="12" y2="12" stroke="#d97706" stroke-width="2"/><line x1="12" y1="16" x2="12.01" y2="16" stroke="#d97706" stroke-width="2"/></svg>
+                    <div><strong>Witness — ยังไม่ยืนยัน:</strong> ยานี้เป็น High Alert ต้องมีพยานยืนยันก่อนดำเนินการ</div>
+                </div>
+            </div>
+
+            <!-- Reference -->
+            <div class="hs-ref">
+                <div class="hs-ref-title">ข้อมูลอ้างอิง</div>
+                <div class="hs-ref-grid">
+                    <div><div class="wit-ml">ผู้ป่วยเป้าหมาย</div><div class="wit-mv">นายสมชาย มานะ</div></div>
+                    <div><div class="wit-ml">HN / เตียง</div><div class="wit-mv">6401234 · 3A-01</div></div>
+                    <div><div class="wit-ml">ยาที่ต้องให้ (คำสั่ง)</div><div class="wit-mv expected">Heparin 5,000 units SC</div></div>
+                    <div><div class="wit-ml">ยาที่สแกนได้ (จริง)</div><div class="wit-mv actual">Enoxaparin 6,000 units</div></div>
+                </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="hs-actions">
+                <button class="btn-primary" onclick="nav('pg-admin-med')" style="background:#dc2626;box-shadow:0 5px 22px rgba(220,38,38,.3);">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+                    กลับไปตรวจสอบใหม่
+                </button>
+                <div class="hs-act-row">
+                    <button class="btn-secondary" onclick="nav('pg-dispense')">
+                        ยกเลิกและกลับรายการผู้ป่วย
+                    </button>
+                    <button class="btn-secondary" onclick="showToast('กำลังแจ้งหัวหน้าเวร...'); setTimeout(()=>showToast(''),2500);" style="border-color:#fca5a5;color:#dc2626;">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+                        แจ้งหัวหน้าเวร
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

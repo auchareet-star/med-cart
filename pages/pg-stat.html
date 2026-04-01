@@ -1,0 +1,196 @@
+<div id="pg-stat" class="page">
+
+    <header class="header" style="border-bottom-color:#fca5a5;">
+        <div class="header-left">
+            <button class="hdr-back" onclick="stBack()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+                ย้อนกลับ
+            </button>
+            <div class="header-brand">
+                <div class="brand-icon" style="background:#dc2626;"><svg width="27" height="27" viewBox="0 0 24 24" fill="white"><path d="M19 3H5C3.9 3 3 3.9 3 5v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c.55 0 1 .45 1 1v3h3c.55 0 1 .45 1 1s-.45 1-1 1h-3v3c0 .55-.45 1-1 1s-1-.45-1-1v-3H8c-.55 0-1-.45-1-1s.45-1 1-1h3V7c0-.55.45-1 1-1z"/></svg></div>
+                <div><div class="brand-name" style="color:#dc2626;">Med Cart — STAT</div><div class="brand-sub" id="stSubtitle">จ่ายยาเร่งด่วน</div></div>
+            </div>
+        </div>
+        <div class="header-right">
+            <div><div class="dt-time" id="clockST">--:--:--</div><div class="dt-date" id="dateStrST">--</div></div>
+            <span class="stat-timer"><span class="dot"></span> STAT <span id="stElapsed">00:00</span></span>
+        </div>
+    </header>
+
+    <div class="rt-body">
+
+        <!-- Stepper (5 steps) -->
+        <div class="rt-stepper stat-stepper" id="stStepper">
+            <div class="rt-step active" data-s="1"><div class="rt-step-dot">1</div><span class="rt-step-label">เลือกผู้ป่วย</span></div>
+            <div class="rt-step-line"></div>
+            <div class="rt-step" data-s="2"><div class="rt-step-dot">2</div><span class="rt-step-label">ข้อมูล & ยา</span></div>
+            <div class="rt-step-line"></div>
+            <div class="rt-step" data-s="3"><div class="rt-step-dot">3</div><span class="rt-step-label">สแกนผู้ป่วย</span></div>
+            <div class="rt-step-line"></div>
+            <div class="rt-step" data-s="4"><div class="rt-step-dot">4</div><span class="rt-step-label">สแกนยา & ยืนยัน</span></div>
+            <div class="rt-step-line"></div>
+            <div class="rt-step" data-s="5"><div class="rt-step-dot">5</div><span class="rt-step-label">สำเร็จ</span></div>
+        </div>
+
+        <!-- ══ STEP 1: เลือกผู้ป่วย STAT ══ -->
+        <div class="rt-panel active" id="stStep1">
+            <div class="rt-inner">
+                <div class="stat-banner">
+                    <div class="stat-banner-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg></div>
+                    <div><div class="stat-banner-text">ยา STAT — ต้องให้ทันที</div><div class="stat-banner-sub">แสดงเฉพาะผู้ป่วยที่มีคำสั่งยา STAT ในขณะนี้</div></div>
+                </div>
+
+                <div class="stat-pt" onclick="stGoStep(2)">
+                    <div class="stat-pt-bar"></div>
+                    <div class="rt-pt-info">
+                        <div class="rt-pt-name" style="display:flex;align-items:center;gap:6px;">นายธนกร วิเศษสิทธิ์ <span class="pt-badge stat" style="font-size:10px;padding:2px 8px;">STAT</span><span class="pt-badge high-alert" style="font-size:9px;padding:2px 7px;">High Alert</span></div>
+                        <div class="rt-pt-meta">HN: 6405001 · เตียง 3A-10 · สั่งเมื่อ 07:25 น.</div>
+                    </div>
+                    <div class="rt-pt-right">
+                        <div class="rt-pt-time" style="color:#dc2626;font-size:16px;">07:30</div>
+                        <div style="font-size:11px;color:#dc2626;font-weight:700;">ผ่านมา 48 นาที</div>
+                    </div>
+                </div>
+
+                <div class="stat-pt" onclick="stGoStep(2)">
+                    <div class="stat-pt-bar"></div>
+                    <div class="rt-pt-info">
+                        <div class="rt-pt-name" style="display:flex;align-items:center;gap:6px;">นางกัลยา ชัยวงศ์ <span class="pt-badge stat" style="font-size:10px;padding:2px 8px;">STAT</span></div>
+                        <div class="rt-pt-meta">HN: 6403012 · เตียง 3A-08 · สั่งเมื่อ 08:05 น.</div>
+                    </div>
+                    <div class="rt-pt-right">
+                        <div class="rt-pt-time" style="color:#d97706;font-size:16px;">08:10</div>
+                        <div style="font-size:11px;color:#d97706;font-weight:700;">ผ่านมา 8 นาที</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ══ STEP 2: ข้อมูลผู้ป่วย + ยา STAT ══ -->
+        <div class="rt-panel" id="stStep2">
+            <div class="rt-inner">
+                <div class="stat-banner">
+                    <div class="stat-banner-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="white"><circle cx="12" cy="12" r="10" fill="none" stroke="white" stroke-width="2"/><polyline points="12 6 12 12 16 14" stroke="white" stroke-width="2" fill="none"/></svg></div>
+                    <div><div class="stat-banner-text">ยา STAT — สั่งเมื่อ 07:25 น. (ผ่านมา 48 นาที)</div><div class="stat-banner-sub">ต้องให้ยาทันที กรุณาดำเนินการโดยเร็ว</div></div>
+                </div>
+
+                <div class="pd-hero" style="margin-bottom:16px;">
+                    <div class="pd-avatar" style="background:#dc2626;">ธว</div>
+                    <div class="pd-pt-info">
+                        <div class="pd-pt-name">นายธนกร วิเศษสิทธิ์</div>
+                        <div class="pd-pt-meta"><span>HN: 6405001</span><span>เตียง 3A-10</span><span>ชาย, 45 ปี</span></div>
+                        <div class="pd-warnings"><span class="pd-warn-tag halert">High Alert Drug</span></div>
+                    </div>
+                </div>
+
+                <div style="font-size:15px;font-weight:700;color:#991b1b;margin-bottom:12px;display:flex;align-items:center;gap:6px;">
+                    <span class="pt-badge stat" style="font-size:11px;padding:3px 10px;">STAT</span>
+                    รายการยาเร่งด่วน
+                </div>
+
+                <div class="rt-drug" style="border-color:#fca5a5;background:#fffbfb;">
+                    <div class="rt-drug-bar" style="background:#dc2626;"></div>
+                    <div class="rt-drug-info">
+                        <div class="rt-drug-name" style="display:flex;align-items:center;gap:6px;">Heparin 5000 units <span class="pt-badge stat" style="font-size:9px;padding:1px 6px;">STAT</span><span class="pt-badge halert" style="font-size:8px;padding:1px 5px;background:#fef2f2;color:#dc2626;border:1px solid #fca5a5;">High Alert</span></div>
+                        <div class="rt-drug-sub">SC (ฉีดใต้ผิวหนัง) · สั่งโดย นพ.สุรศักดิ์ · 07:25 น.</div>
+                        <div style="margin-top:4px;"><span class="pt-badge" style="background:#fef2f2;color:#dc2626;font-size:9px;">ต้องมีพยาน</span></div>
+                    </div>
+                    <div class="rt-drug-right"><span class="stat-timer" style="font-size:11px;padding:3px 10px;"><span class="dot"></span>STAT</span></div>
+                </div>
+            </div>
+            <div class="rt-bottom"><button class="btn-secondary" onclick="stGoStep(1)">ย้อนกลับ</button><button class="btn-stat" style="flex:2;" onclick="stGoStep(3)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg>เริ่มให้ยา STAT</button></div>
+        </div>
+
+        <!-- ══ STEP 3: สแกนผู้ป่วย ══ -->
+        <div class="rt-panel" id="stStep3">
+            <div class="rt-inner center">
+                <div class="stat-banner" style="max-width:440px;width:100;text-align:left;">
+                    <div class="stat-banner-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg></div>
+                    <div><div class="stat-banner-text">สแกนผู้ป่วยก่อนให้ยา STAT</div><div class="stat-banner-sub">ธนกร วิเศษสิทธิ์ · 3A-10 · HN: 6405001</div></div>
+                </div>
+
+                <div class="rt-scan-zone" style="max-width:440px;width:100%;" id="stScan3Zone">
+                    <div class="rt-scan-circle idle" id="stScan3C">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--text-3)" id="stScan3I"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg>
+                    </div>
+                    <div style="font-size:20px;font-weight:800;color:var(--text-1);margin-bottom:4px;" id="stScan3H">กรุณาสแกนสายรัดข้อมือผู้ป่วย</div>
+                    <div style="font-size:14px;color:var(--text-2);margin-bottom:20px;" id="stScan3T">ยืนยันตัวตนก่อนให้ยา STAT</div>
+                    <button class="btn-stat" style="max-width:260px;" onclick="stScanPt()" id="stScan3Btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg>เริ่มสแกน</button>
+                </div>
+            </div>
+            <div class="rt-bottom" id="stStep3Bot" style="display:none;"><button class="btn-secondary" onclick="stResetScan3()">สแกนใหม่</button><button class="btn-stat" style="flex:2;" onclick="stGoStep(4)">ดำเนินการต่อ</button></div>
+        </div>
+
+        <!-- ══ STEP 4: สแกนยา + ยืนยัน STAT ══ -->
+        <div class="rt-panel" id="stStep4">
+            <div class="rt-inner">
+                <div class="stat-banner">
+                    <div class="stat-banner-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="white"><circle cx="12" cy="12" r="10" fill="none" stroke="white" stroke-width="2"/><polyline points="12 6 12 12 16 14" stroke="white" stroke-width="2" fill="none"/></svg></div>
+                    <div><div class="stat-banner-text">สแกนยาและยืนยัน — STAT</div><div class="stat-banner-sub">Heparin 5000 units SC · ธนกร วิเศษสิทธิ์ (3A-10)</div></div>
+                </div>
+
+                <div class="am-detail" style="margin-bottom:14px;">
+                    <div class="am-detail-name" style="display:flex;align-items:center;gap:6px;">Heparin 5000 units <span class="pt-badge stat" style="font-size:10px;padding:2px 8px;">STAT</span></div>
+                    <div class="am-detail-grid">
+                        <div><div class="am-dl">Dose</div><div class="am-dv green">5,000 units</div></div>
+                        <div><div class="am-dl">Route</div><div class="am-dv">SC (ฉีดใต้ผิวหนัง)</div></div>
+                        <div><div class="am-dl">สั่งเมื่อ</div><div class="am-dv" style="color:#dc2626;font-weight:800;">07:25 น. (STAT)</div></div>
+                        <div><div class="am-dl">แพทย์สั่ง</div><div class="am-dv">นพ.สุรศักดิ์</div></div>
+                    </div>
+                    <div class="am-warn-box"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span><strong>High Alert</strong> — ต้องมีพยาน (ระบบจะขอยืนยันพยานหลังสแกนยา)</span></div>
+                </div>
+
+                <!-- 7 Rights -->
+                <div class="rt-rights" id="stRights">
+                    <div class="rt-r pass">Patient</div>
+                    <div class="rt-r pend" id="stRD">Drug</div>
+                    <div class="rt-r pend" id="stRDs">Dose</div>
+                    <div class="rt-r pend" id="stRR">Route</div>
+                    <div class="rt-r pass">Time</div>
+                    <div class="rt-r pend" id="stRDc">Doc.</div>
+                    <div class="rt-r pend" id="stRRs">Reason</div>
+                </div>
+
+                <button class="btn-stat" onclick="stScanDrug()" style="margin-bottom:14px;" id="stScanDrugBtn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg>สแกนยา</button>
+
+                <div class="am-scan-result" id="stDrugResult">
+                    <div class="am-sr-head"><span class="am-sr-status pass">ผ่าน</span><span class="am-sr-name">Heparin 5000 units</span></div>
+                    <div class="am-sr-grid">
+                        <div><div class="am-sr-l">Lot</div><div class="am-sr-v">HEP-2025-042</div></div>
+                        <div><div class="am-sr-l">Expiry</div><div class="am-sr-v">30/09/2569</div></div>
+                    </div>
+                </div>
+            </div>
+            <div class="rt-bottom"><button class="btn-secondary" onclick="stGoStep(3)">ย้อนกลับ</button><button class="btn-stat" style="flex:2;" id="stBtnConfirm" onclick="stGoStep(5)" disabled><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>ยืนยันให้ยา STAT ตอนนี้</button></div>
+        </div>
+
+        <!-- ══ STEP 5: สำเร็จ ══ -->
+        <div class="rt-panel" id="stStep5">
+            <div class="rt-inner center">
+                <div class="stat-ok-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+                <div style="font-size:26px;font-weight:800;color:#991b1b;margin-bottom:4px;">ให้ยา STAT สำเร็จแล้ว</div>
+                <div style="font-size:14px;color:var(--text-2);margin-bottom:24px;">Heparin 5000 units SC — นายธนกร วิเศษสิทธิ์ (3A-10)</div>
+
+                <div class="ok-summary" style="max-width:400px;width:100%;">
+                    <div class="ok-summary-grid">
+                        <div><div class="wit-ml">ยา</div><div class="wit-mv" style="color:#dc2626;font-weight:800;">Heparin 5000 units (STAT)</div></div>
+                        <div><div class="wit-ml">สถานะ</div><div class="wit-mv green">ให้ยาแล้ว</div></div>
+                        <div><div class="wit-ml">สั่งเมื่อ</div><div class="wit-mv">07:25 น.</div></div>
+                        <div><div class="wit-ml">ให้จริง</div><div class="wit-mv" id="stGivenTime">08:18 น.</div></div>
+                        <div><div class="wit-ml">ผู้ให้ยา</div><div class="wit-mv">นส.สมใจ ดีมาก</div></div>
+                        <div><div class="wit-ml">Elapsed</div><div class="wit-mv" style="color:#dc2626;">53 นาที</div></div>
+                    </div>
+                </div>
+
+                <div class="ok-actions" style="max-width:400px;width:100%;">
+                    <button class="btn-primary" onclick="stGoStep(1)" style="background:#dc2626;box-shadow:0 5px 22px rgba(220,38,38,.3);">กลับรายการผู้ป่วย STAT</button>
+                    <button class="btn-secondary" onclick="nav('pg-dashboard')" style="border-color:var(--text-3);">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+                        กลับ Dashboard
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

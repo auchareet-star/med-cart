@@ -1,0 +1,161 @@
+<div id="pg-overdue" class="page">
+
+    <header class="header" style="border-bottom-color:#fda4af;">
+        <div class="header-left">
+            <button class="hdr-back" onclick="ovBack()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+                ย้อนกลับ
+            </button>
+            <div class="header-brand">
+                <div class="brand-icon" style="background:#be123c;"><svg width="27" height="27" viewBox="0 0 24 24" fill="white"><path d="M19 3H5C3.9 3 3 3.9 3 5v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c.55 0 1 .45 1 1v3h3c.55 0 1 .45 1 1s-.45 1-1 1h-3v3c0 .55-.45 1-1 1s-1-.45-1-1v-3H8c-.55 0-1-.45-1-1s.45-1 1-1h3V7c0-.55.45-1 1-1z"/></svg></div>
+                <div><div class="brand-name" style="color:#be123c;">Med Cart — Overdue</div><div class="brand-sub">ยาเลยเวลา</div></div>
+            </div>
+        </div>
+        <div class="header-right">
+            <div><div class="dt-time" id="clockOV">--:--:--</div><div class="dt-date" id="dateStrOV">--</div></div>
+            <div class="status-pill" style="background:#fff1f2;color:#be123c;"><span class="dot" style="background:#be123c;"></span> Overdue</div>
+        </div>
+    </header>
+
+    <div class="rt-body">
+
+        <div class="rt-stepper ov-stepper" id="ovStepper">
+            <div class="rt-step active" data-s="1"><div class="rt-step-dot">1</div><span class="rt-step-label">ผู้ป่วย</span></div><div class="rt-step-line"></div>
+            <div class="rt-step" data-s="2"><div class="rt-step-dot">2</div><span class="rt-step-label">รายละเอียด</span></div><div class="rt-step-line"></div>
+            <div class="rt-step" data-s="3"><div class="rt-step-dot">3</div><span class="rt-step-label">สแกน Pt</span></div><div class="rt-step-line"></div>
+            <div class="rt-step" data-s="4"><div class="rt-step-dot">4</div><span class="rt-step-label">ยืนยัน OD</span></div><div class="rt-step-line"></div>
+            <div class="rt-step" data-s="5"><div class="rt-step-dot">5</div><span class="rt-step-label">สแกนยา</span></div><div class="rt-step-line"></div>
+            <div class="rt-step" data-s="6"><div class="rt-step-dot">6</div><span class="rt-step-label">บันทึก</span></div><div class="rt-step-line"></div>
+            <div class="rt-step" data-s="7"><div class="rt-step-dot">7</div><span class="rt-step-label">สำเร็จ</span></div>
+        </div>
+
+        <!-- ══ STEP 1 ══ -->
+        <div class="rt-panel active" id="ovStep1">
+            <div class="rt-inner">
+                <div class="ov-banner"><div class="ov-banner-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="white"><circle cx="12" cy="12" r="10" fill="none" stroke="white" stroke-width="2"/><polyline points="12 6 12 12 16 14" stroke="white" stroke-width="2" fill="none"/></svg></div><div><div class="ov-banner-text">Overdue — ยาเลยเวลาที่กำหนด</div><div class="ov-banner-sub">ผู้ป่วยที่มียาเลยเวลาใน Ward 3A</div></div></div>
+
+                <div class="stat-pt" style="border-color:#fda4af;background:#fff8f8;" onclick="ovGoStep(2)"><div class="stat-pt-bar" style="background:#be123c;"></div><div class="rt-pt-info"><div class="rt-pt-name" style="display:flex;align-items:center;gap:6px;">นายธนกร วิเศษสิทธิ์ <span class="pt-badge" style="background:#fff1f2;color:#be123c;font-size:10px;padding:2px 8px;">Overdue</span></div><div class="rt-pt-meta">HN: 6405001 · เตียง 3A-10 · Heparin 5000 units SC</div></div><div class="rt-pt-right"><div class="rt-pt-time" style="color:#be123c;font-size:16px;">07:30</div><div style="font-size:11px;color:#be123c;font-weight:700;">เลยเวลา 48 นาที</div></div></div>
+
+                <div class="stat-pt" style="border-color:#fda4af;background:#fff8f8;" onclick="ovGoStep(2)"><div class="stat-pt-bar" style="background:#be123c;"></div><div class="rt-pt-info"><div class="rt-pt-name" style="display:flex;align-items:center;gap:6px;">นางกัลยา ชัยวงศ์ <span class="pt-badge" style="background:#fff1f2;color:#be123c;font-size:10px;padding:2px 8px;">Overdue</span></div><div class="rt-pt-meta">HN: 6403012 · เตียง 3A-08 · Warfarin 3 mg PO</div></div><div class="rt-pt-right"><div class="rt-pt-time" style="color:#be123c;font-size:16px;">07:00</div><div style="font-size:11px;color:#be123c;font-weight:700;">เลยเวลา 1 ชม. 18 นาที</div></div></div>
+            </div>
+        </div>
+
+        <!-- ══ STEP 2 ══ -->
+        <div class="rt-panel" id="ovStep2">
+            <div class="rt-inner">
+                <div class="ov-banner"><div class="ov-banner-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="white"><circle cx="12" cy="12" r="10" fill="none" stroke="white" stroke-width="2"/><polyline points="12 6 12 12 16 14" stroke="white" stroke-width="2" fill="none"/></svg></div><div><div class="ov-banner-text">ธนกร วิเศษสิทธิ์ — ยาเลยเวลา 48 นาที</div><div class="ov-banner-sub">ต้องยืนยันก่อนดำเนินการให้ยา</div></div></div>
+
+                <div class="pd-hero" style="margin-bottom:16px;"><div class="pd-avatar" style="background:#be123c;">ธว</div><div class="pd-pt-info"><div class="pd-pt-name">นายธนกร วิเศษสิทธิ์</div><div class="pd-pt-meta"><span>HN: 6405001</span><span>เตียง 3A-10</span><span>ชาย, 45 ปี</span></div></div></div>
+
+                <div class="rt-drug" style="border-color:#fda4af;background:#fff8f8;"><div class="rt-drug-bar" style="background:#be123c;"></div><div class="rt-drug-info"><div class="rt-drug-name" style="display:flex;align-items:center;gap:6px;">Heparin 5000 units <span class="pt-badge" style="background:#fff1f2;color:#be123c;font-size:9px;">Overdue</span><span class="pt-badge high-alert" style="font-size:8px;">High Alert</span></div><div class="rt-drug-sub">SC · 5,000 units · ควรให้เวลา 07:30 น.</div><div style="margin-top:6px;font-size:13px;font-weight:700;color:#be123c;">เลยเวลามา 48 นาที</div></div></div>
+            </div>
+            <div class="rt-bottom"><button class="btn-secondary" onclick="ovGoStep(1)">ย้อนกลับ</button><button class="btn-ov" style="flex:2;" onclick="ovGoStep(3)">ดำเนินการต่อ</button></div>
+        </div>
+
+        <!-- ══ STEP 3: สแกนผู้ป่วย ══ -->
+        <div class="rt-panel" id="ovStep3">
+            <div class="rt-inner center">
+                <div class="rt-scan-zone" style="max-width:440px;width:100%;">
+                    <div class="rt-scan-circle idle" id="ovScan3C"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--text-3)" id="ovScan3I"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg></div>
+                    <div style="font-size:20px;font-weight:800;color:var(--text-1);margin-bottom:4px;" id="ovScan3H">สแกนยืนยันตัวผู้ป่วย</div>
+                    <div style="font-size:14px;color:var(--text-2);margin-bottom:20px;">ธนกร วิเศษสิทธิ์ · 3A-10</div>
+                    <button class="btn-ov" style="max-width:260px;" onclick="ovScanPt()" id="ovScan3Btn">เริ่มสแกน</button>
+                </div>
+            </div>
+            <div class="rt-bottom" id="ovStep3Bot" style="display:none;"><button class="btn-secondary" onclick="ovResetScan3()">สแกนใหม่</button><button class="btn-ov" style="flex:2;" onclick="ovGoStep(4)">ดำเนินการต่อ</button></div>
+        </div>
+
+        <!-- ══ STEP 4: แจ้งเตือน Overdue + ยืนยัน ══ -->
+        <div class="rt-panel" id="ovStep4">
+            <div class="rt-inner" style="max-width:560px;">
+                <div class="ov-warn-card">
+                    <div class="ov-warn-title">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="#be123c"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+                        ยาเลยเวลาที่กำหนด
+                    </div>
+                    <div style="text-align:center;margin:12px 0;">
+                        <div class="ov-timer-big">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                            เลยเวลามา 48 นาที
+                        </div>
+                    </div>
+                    <div style="font-size:14px;color:#881337;margin-bottom:10px;">Heparin 5000 units SC — ควรให้เวลา <strong>07:30 น.</strong></div>
+                    <ul class="ov-warn-list">
+                        <li>ยานี้เลยเวลาจากกำหนดแล้ว กรุณาตรวจสอบความจำเป็น</li>
+                        <li>หาก overdue เกิน 2 ชม. ระบบจะไม่อนุญาตให้ดำเนินการ (Hard Stop)</li>
+                        <li>กรุณาบันทึกเหตุผลของความล่าช้าในขั้นตอนยืนยัน</li>
+                    </ul>
+                </div>
+
+                <div style="display:flex;gap:10px;">
+                    <button class="btn-secondary" style="flex:1;" onclick="ovGoStep(2)">ยกเลิกและกลับตรวจสอบ</button>
+                    <button class="btn-ov" style="flex:2;" onclick="ovGoStep(5)">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                        ยืนยันดำเนินการต่อ
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ══ STEP 5: สแกนยา ══ -->
+        <div class="rt-panel" id="ovStep5">
+            <div class="rt-inner">
+                <div class="ov-banner"><div class="ov-banner-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg></div><div><div class="ov-banner-text">สแกนยา — Overdue Dose</div><div class="ov-banner-sub">Heparin 5000 units SC · เลยเวลา 48 นาที</div></div></div>
+
+                <div class="am-detail" style="margin-bottom:14px;"><div class="am-detail-name" style="display:flex;align-items:center;gap:6px;">Heparin 5000 units <span class="pt-badge" style="background:#fff1f2;color:#be123c;font-size:10px;">Overdue</span></div><div class="am-detail-grid"><div><div class="am-dl">Dose</div><div class="am-dv" style="color:#be123c;font-weight:800;">5,000 units</div></div><div><div class="am-dl">Route</div><div class="am-dv">SC</div></div><div><div class="am-dl">ควรให้</div><div class="am-dv" style="color:#be123c;">07:30 (เลยเวลา)</div></div><div><div class="am-dl">Overdue</div><div class="am-dv" style="color:#be123c;font-weight:800;">48 นาที</div></div></div></div>
+
+                <div class="rt-rights" id="ovRights"><div class="rt-r pass">Patient</div><div class="rt-r pend" id="ovRD">Drug</div><div class="rt-r pend" id="ovRDs">Dose</div><div class="rt-r pend" id="ovRR">Route</div><div class="rt-r" id="ovRT" style="background:#fff1f2;color:#be123c;">Time!</div><div class="rt-r pend" id="ovRDc">Doc.</div><div class="rt-r pend" id="ovRRs">Reason</div></div>
+
+                <button class="btn-ov" onclick="ovScanDrug()" style="margin-bottom:14px;">สแกนยา</button>
+                <div class="am-scan-result" id="ovDrugResult"><div class="am-sr-head"><span class="am-sr-status pass">ผ่าน</span><span class="am-sr-name">Heparin 5000 units</span></div><div class="am-sr-grid"><div><div class="am-sr-l">Lot</div><div class="am-sr-v">HEP-2025-042</div></div><div><div class="am-sr-l">Expiry</div><div class="am-sr-v">30/09/2569</div></div></div></div>
+            </div>
+            <div class="rt-bottom"><button class="btn-secondary" onclick="ovGoStep(4)">ย้อนกลับ</button><button class="btn-ov" style="flex:2;" id="ovBtnConfirm" onclick="ovGoStep(6)" disabled>ยืนยันให้ยา (Overdue)</button></div>
+        </div>
+
+        <!-- ══ STEP 6: ยืนยันบันทึก ══ -->
+        <div class="rt-panel" id="ovStep6">
+            <div class="rt-inner" style="max-width:580px;">
+                <div class="ov-banner"><div class="ov-banner-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><div><div class="ov-banner-text">พร้อมบันทึก — Overdue Dose</div><div class="ov-banner-sub">ตรวจสอบข้อมูลก่อนบันทึก</div></div></div>
+
+                <div class="rec-card"><div class="rec-card-title"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>ข้อมูลการให้ยา Overdue</div><div class="rec-grid">
+                    <div><div class="wit-ml">ผู้ป่วย</div><div class="wit-mv">นายธนกร วิเศษสิทธิ์</div></div>
+                    <div><div class="wit-ml">HN / เตียง</div><div class="wit-mv">6405001 · 3A-10</div></div>
+                    <div><div class="wit-ml">ยา</div><div class="wit-mv" style="color:#be123c;font-weight:800;">Heparin 5000 units</div></div>
+                    <div><div class="wit-ml">เวลาเดิม</div><div class="wit-mv" style="color:#be123c;">07:30 น.</div></div>
+                    <div><div class="wit-ml">Overdue</div><div class="wit-mv" style="color:#be123c;font-weight:800;">48 นาที</div></div>
+                    <div><div class="wit-ml">ผู้ให้ยา</div><div class="wit-mv">นส.สมใจ ดีมาก</div></div>
+                </div></div>
+
+                <div class="rec-card"><div class="rec-card-title"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>บันทึกเพิ่มเติม</div>
+                    <div class="rec-doc-group"><div class="rec-doc-label">เวลาให้ยาจริง <span style="color:#dc2626;">*</span></div><input type="time" class="rec-doc-input" value="08:18" style="max-width:180px;"></div>
+                    <div class="rec-doc-group"><div class="rec-doc-label">เหตุผลที่ล่าช้า <span style="color:#dc2626;">*</span></div><textarea class="rec-doc-input" placeholder="ระบุเหตุผลที่ให้ยาล่าช้า..."></textarea></div>
+                </div>
+            </div>
+            <div class="rt-bottom"><button class="btn-secondary" onclick="ovGoStep(5)">กลับแก้ไข</button><button class="btn-ov" style="flex:2;" onclick="ovGoStep(7)"><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>บันทึกผล</button></div>
+        </div>
+
+        <!-- ══ STEP 7: สำเร็จ ══ -->
+        <div class="rt-panel" id="ovStep7">
+            <div class="rt-inner center">
+                <div class="ov-ok-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+                <div style="font-size:26px;font-weight:800;color:#881337;margin-bottom:4px;">บันทึกการให้ยา Overdue สำเร็จ</div>
+                <div style="font-size:14px;color:var(--text-2);margin-bottom:24px;">Heparin 5000 units SC — นายธนกร วิเศษสิทธิ์ (3A-10)</div>
+
+                <div class="ok-summary" style="max-width:400px;width:100%;">
+                    <div class="ok-summary-grid">
+                        <div><div class="wit-ml">ยา</div><div class="wit-mv" style="color:#be123c;font-weight:800;">Heparin 5000 units</div></div>
+                        <div><div class="wit-ml">สถานะ</div><div class="wit-mv green">ให้ยาแล้ว</div></div>
+                        <div><div class="wit-ml">Overdue</div><div class="wit-mv" style="color:#be123c;">48 นาที</div></div>
+                        <div><div class="wit-ml">เวลาให้จริง</div><div class="wit-mv" id="ovGivenTime">--</div></div>
+                    </div>
+                </div>
+
+                <div class="ok-actions" style="max-width:400px;width:100%;">
+                    <button class="btn-primary" onclick="ovGoStep(1)" style="background:#be123c;box-shadow:0 5px 22px rgba(190,18,60,.3);">กลับรายการผู้ป่วย</button>
+                    <button class="btn-secondary" onclick="nav('pg-dashboard')" style="border-color:var(--text-3);"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>กลับ Dashboard</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,204 @@
+<div id="pg-summary" class="page">
+
+    <header class="header">
+        <div class="header-left">
+            <button class="hdr-back" onclick="nav('pg-fill')">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+                ย้อนกลับ
+            </button>
+            <div class="header-brand">
+                <div class="brand-icon">
+                    <svg width="27" height="27" viewBox="0 0 24 24" fill="white">
+                        <path d="M19 3H5C3.9 3 3 3.9 3 5v14c0 1.1.9 2 2 2h14c1.1 0
+                                 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c.55 0 1 .45 1
+                                 1v3h3c.55 0 1 .45 1 1s-.45 1-1 1h-3v3c0
+                                 .55-.45 1-1 1s-1-.45-1-1v-3H8c-.55 0-1-.45-1-1s.45-1
+                                 1-1h3V7c0-.55.45-1 1-1z"/>
+                    </svg>
+                </div>
+                <div>
+                    <div class="brand-name">Med Cart</div>
+                    <div class="brand-sub">สรุปผลการจัดยา</div>
+                </div>
+            </div>
+        </div>
+        <div class="header-right">
+            <div>
+                <div class="dt-time" id="clock9">--:--:--</div>
+                <div class="dt-date" id="dateStr9">--</div>
+            </div>
+            <div class="status-pill online"><span class="dot"></span> Online</div>
+        </div>
+    </header>
+
+    <div class="sum-body">
+
+        <div class="page-top">
+            <h1>สรุปผลการจัดยา</h1>
+            <p>ตรวจสอบความถูกต้องก่อนบันทึกและปิดงาน</p>
+        </div>
+
+        <!-- Context chips -->
+        <div class="fill-ctx" style="margin-bottom:20px;">
+            <span class="fill-ctx-chip">รถเข็น: <strong>A-1</strong></span>
+            <span class="fill-ctx-chip">Ward: <strong>3A</strong></span>
+            <span class="fill-ctx-chip">Drawer: <strong>D1</strong></span>
+            <span class="fill-ctx-chip">Cassette: <strong>A1</strong></span>
+            <span class="fill-ctx-chip">ประเภท: <strong>ตามรายชื่อผู้ป่วย</strong></span>
+        </div>
+
+        <!-- Stats -->
+        <div class="sum-stats">
+            <div class="ss">
+                <div class="ss-num blue">10</div>
+                <div class="ss-label">รายการทั้งหมด</div>
+            </div>
+            <div class="ss">
+                <div class="ss-num green">7</div>
+                <div class="ss-label">จัดครบแล้ว</div>
+            </div>
+            <div class="ss">
+                <div class="ss-num amber">2</div>
+                <div class="ss-label">ยังไม่ครบ</div>
+            </div>
+            <div class="ss">
+                <div class="ss-num red">1</div>
+                <div class="ss-label">มีปัญหา</div>
+            </div>
+        </div>
+
+        <!-- Progress -->
+        <div class="sum-progress">
+            <div class="sp-icon">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0D9488" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/>
+                    <polyline points="22 4 12 14.01 9 11.01"/>
+                </svg>
+            </div>
+            <div class="sp-bar-wrap">
+                <div class="sp-label-row">
+                    <span class="sp-label">ความคืบหน้า</span>
+                    <span class="sp-pct">70%</span>
+                </div>
+                <div class="sp-track">
+                    <div class="sp-fill" style="width:70%"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Alerts -->
+        <div class="sum-alerts">
+            <div class="sum-alert warn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                <span>พบ <strong>2 รายการ</strong> ที่ยังจัดยาไม่ครบตามจำนวน กรุณาตรวจสอบก่อนปิดงาน</span>
+            </div>
+            <div class="sum-alert err">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                <span>พบ <strong>1 รายการ</strong> ที่สแกนยาไม่ผ่านเงื่อนไข (ยาหมดอายุ)</span>
+            </div>
+        </div>
+
+        <!-- Table -->
+        <div class="sum-table">
+            <div class="sum-table-head">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                รายการจัดยาทั้งหมด
+            </div>
+
+            <div class="st-row header-row">
+                <div>ผู้ป่วย / ยา</div>
+                <div style="text-align:center">ช่อง</div>
+                <div style="text-align:center">จัด / ต้องจัด</div>
+                <div style="text-align:center">เวลา</div>
+                <div style="text-align:center">สถานะ</div>
+            </div>
+
+            <div class="st-row">
+                <div><div class="st-name">Amlodipine 5 mg</div><div class="st-sub">สมชาย มานะ · HN 6401234</div></div>
+                <div class="st-val">A-01</div>
+                <div class="st-val">2 / 2</div>
+                <div class="st-val">08:00</div>
+                <div style="text-align:center"><span class="st-status ok"><span class="dot"></span> สำเร็จ</span></div>
+            </div>
+            <div class="st-row">
+                <div><div class="st-name">Metformin 500 mg</div><div class="st-sub">สมชาย มานะ · HN 6401234</div></div>
+                <div class="st-val">A-02</div>
+                <div class="st-val">1 / 1</div>
+                <div class="st-val">08:00</div>
+                <div style="text-align:center"><span class="st-status ok"><span class="dot"></span> สำเร็จ</span></div>
+            </div>
+            <div class="st-row">
+                <div><div class="st-name">Omeprazole 20 mg</div><div class="st-sub">สมชาย มานะ · HN 6401234</div></div>
+                <div class="st-val">A-03</div>
+                <div class="st-val">1 / 1</div>
+                <div class="st-val">เช้า</div>
+                <div style="text-align:center"><span class="st-status ok"><span class="dot"></span> สำเร็จ</span></div>
+            </div>
+            <div class="st-row">
+                <div><div class="st-name">Enalapril 10 mg</div><div class="st-sub">พิมพ์ใจ สุขสม · HN 6401567</div></div>
+                <div class="st-val">A-04</div>
+                <div class="st-val">2 / 2</div>
+                <div class="st-val">08:00</div>
+                <div style="text-align:center"><span class="st-status ok"><span class="dot"></span> สำเร็จ</span></div>
+            </div>
+            <div class="st-row">
+                <div><div class="st-name">Atorvastatin 40 mg</div><div class="st-sub">พิมพ์ใจ สุขสม · HN 6401567</div></div>
+                <div class="st-val">B-01</div>
+                <div class="st-val">1 / 1</div>
+                <div class="st-val">ก่อนนอน</div>
+                <div style="text-align:center"><span class="st-status ok"><span class="dot"></span> สำเร็จ</span></div>
+            </div>
+            <div class="st-row">
+                <div><div class="st-name">Aspirin 81 mg</div><div class="st-sub">วิชัย ดีงาม · HN 6402890</div></div>
+                <div class="st-val">B-02</div>
+                <div class="st-val">1 / 1</div>
+                <div class="st-val">เช้า</div>
+                <div style="text-align:center"><span class="st-status ok"><span class="dot"></span> สำเร็จ</span></div>
+            </div>
+            <div class="st-row">
+                <div><div class="st-name">Losartan 50 mg</div><div class="st-sub">วิชัย ดีงาม · HN 6402890</div></div>
+                <div class="st-val">B-04</div>
+                <div class="st-val">1 / 1</div>
+                <div class="st-val">เช้า</div>
+                <div style="text-align:center"><span class="st-status ok"><span class="dot"></span> สำเร็จ</span></div>
+            </div>
+            <div class="st-row" style="background:#fffbeb;">
+                <div><div class="st-name">Warfarin 3 mg</div><div class="st-sub">กัลยา ชัยวงศ์ · HN 6403012</div></div>
+                <div class="st-val">B-05</div>
+                <div class="st-val" style="color:#d97706;font-weight:800;">1 / 2</div>
+                <div class="st-val">เย็น</div>
+                <div style="text-align:center"><span class="st-status warn">ไม่ครบ</span></div>
+            </div>
+            <div class="st-row" style="background:#fffbeb;">
+                <div><div class="st-name">Clopidogrel 75 mg</div><div class="st-sub">กัลยา ชัยวงศ์ · HN 6403012</div></div>
+                <div class="st-val">—</div>
+                <div class="st-val" style="color:#d97706;font-weight:800;">0 / 1</div>
+                <div class="st-val">เช้า</div>
+                <div style="text-align:center"><span class="st-status warn">ยังไม่จัด</span></div>
+            </div>
+            <div class="st-row" style="background:#fef2f2;">
+                <div><div class="st-name">Amoxicillin 500 mg</div><div class="st-sub">กัลยา ชัยวงศ์ · HN 6403012</div></div>
+                <div class="st-val">B-03</div>
+                <div class="st-val" style="color:#dc2626;font-weight:800;">0 / 3</div>
+                <div class="st-val">08:00</div>
+                <div style="text-align:center"><span class="st-status err">ยาหมดอายุ</span></div>
+            </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="sum-actions">
+            <button class="btn-secondary" onclick="nav('pg-fill')">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+                กลับไปแก้ไข
+            </button>
+            <button class="btn-secondary" onclick="confirmBackDash()" style="border-color:var(--text-3);">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+                กลับ Dashboard
+            </button>
+            <button class="btn-primary" onclick="saveSummary()">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                บันทึกและปิดงาน
+            </button>
+        </div>
+    </div>
+</div>

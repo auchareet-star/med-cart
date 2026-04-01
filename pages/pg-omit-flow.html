@@ -1,0 +1,157 @@
+<div id="pg-omit-flow" class="page">
+
+    <header class="header">
+        <div class="header-left">
+            <button class="hdr-back" onclick="omBack()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+                ย้อนกลับ
+            </button>
+            <div class="header-brand">
+                <div class="brand-icon" style="background:#64748b;"><svg width="27" height="27" viewBox="0 0 24 24" fill="white"><path d="M19 3H5C3.9 3 3 3.9 3 5v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c.55 0 1 .45 1 1v3h3c.55 0 1 .45 1 1s-.45 1-1 1h-3v3c0 .55-.45 1-1 1s-1-.45-1-1v-3H8c-.55 0-1-.45-1-1s.45-1 1-1h3V7c0-.55.45-1 1-1z"/></svg></div>
+                <div><div class="brand-name" style="color:#64748b;">Med Cart — Omit</div><div class="brand-sub">งดให้ยา</div></div>
+            </div>
+        </div>
+        <div class="header-right">
+            <div><div class="dt-time" id="clockOM2">--:--:--</div><div class="dt-date" id="dateStrOM2">--</div></div>
+            <div class="status-pill" style="background:var(--bg);color:#64748b;"><span class="dot" style="background:#64748b;"></span> Omit</div>
+        </div>
+    </header>
+
+    <div class="rt-body">
+
+        <!-- Stepper 7 steps -->
+        <div class="rt-stepper om-stepper" id="omStepper">
+            <div class="rt-step active" data-s="1"><div class="rt-step-dot">1</div><span class="rt-step-label">ผู้ป่วย</span></div><div class="rt-step-line"></div>
+            <div class="rt-step" data-s="2"><div class="rt-step-dot">2</div><span class="rt-step-label">รายละเอียด</span></div><div class="rt-step-line"></div>
+            <div class="rt-step" data-s="3"><div class="rt-step-dot">3</div><span class="rt-step-label">สแกน Pt</span></div><div class="rt-step-line"></div>
+            <div class="rt-step" data-s="4"><div class="rt-step-dot">4</div><span class="rt-step-label">เลือกยา</span></div><div class="rt-step-line"></div>
+            <div class="rt-step" data-s="5"><div class="rt-step-dot">5</div><span class="rt-step-label">เหตุผล</span></div><div class="rt-step-line"></div>
+            <div class="rt-step" data-s="6"><div class="rt-step-dot">6</div><span class="rt-step-label">ยืนยัน</span></div><div class="rt-step-line"></div>
+            <div class="rt-step" data-s="7"><div class="rt-step-dot">7</div><span class="rt-step-label">สำเร็จ</span></div>
+        </div>
+
+        <!-- ══ STEP 1: เลือกผู้ป่วย ══ -->
+        <div class="rt-panel active" id="omStep1">
+            <div class="rt-inner">
+                <div class="om-banner"><div class="om-banner-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="white"><line x1="18" y1="6" x2="6" y2="18" stroke="white" stroke-width="3"/><line x1="6" y1="6" x2="18" y2="18" stroke="white" stroke-width="3"/></svg></div><div><div class="om-banner-text">งดให้ยา / Omit</div><div class="om-banner-sub">เลือกผู้ป่วยที่ต้องการบันทึกงดให้ยา</div></div></div>
+
+                <div class="rt-pt" onclick="omGoStep(2)" style="border-color:var(--border);"><div class="rt-pt-bar" style="background:#64748b;"></div><div class="rt-pt-info"><div class="rt-pt-name">นายสมชาย มานะ</div><div class="rt-pt-meta">HN: 6401234 · เตียง 3A-01 · 3 รายการยา</div></div><div class="rt-pt-right"><div class="rt-pt-time">08:00</div></div></div>
+                <div class="rt-pt" onclick="omGoStep(2)" style="border-color:var(--border);"><div class="rt-pt-bar" style="background:#64748b;"></div><div class="rt-pt-info"><div class="rt-pt-name">นางมาลี สุขใจ</div><div class="rt-pt-meta">HN: 6404215 · เตียง 3A-03 · 4 รายการยา</div></div><div class="rt-pt-right"><div class="rt-pt-time">08:00</div></div></div>
+                <div class="rt-pt" onclick="omGoStep(2)" style="border-color:var(--border);"><div class="rt-pt-bar" style="background:#64748b;"></div><div class="rt-pt-info"><div class="rt-pt-name">นายวิชัย ดีงาม</div><div class="rt-pt-meta">HN: 6402890 · เตียง 3A-05 · 2 รายการยา</div></div><div class="rt-pt-right"><div class="rt-pt-time">08:00</div></div></div>
+            </div>
+        </div>
+
+        <!-- ══ STEP 2: รายละเอียดผู้ป่วย ══ -->
+        <div class="rt-panel" id="omStep2">
+            <div class="rt-inner">
+                <div class="pd-hero" style="margin-bottom:16px;"><div class="pd-avatar" style="background:#64748b;">สช</div><div class="pd-pt-info"><div class="pd-pt-name">นายสมชาย มานะ</div><div class="pd-pt-meta"><span>HN: 6401234</span><span>เตียง 3A-01</span><span>ชาย, 58 ปี</span></div><div class="pd-allergy"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>แพ้ยา: Penicillin</div></div></div>
+
+                <div style="font-size:15px;font-weight:700;color:var(--text-1);margin-bottom:12px;">รายการยา — รอบ 08:00 น.</div>
+                <div class="rt-drug"><div class="rt-drug-bar wait"></div><div class="rt-drug-info"><div class="rt-drug-name">Amlodipine 5 mg</div><div class="rt-drug-sub">PO · OD เช้า · 08:00</div></div></div>
+                <div class="rt-drug"><div class="rt-drug-bar wait"></div><div class="rt-drug-info"><div class="rt-drug-name">Metformin 500 mg</div><div class="rt-drug-sub">PO · BID หลังอาหาร · 08:00</div></div></div>
+                <div class="rt-drug"><div class="rt-drug-bar wait"></div><div class="rt-drug-info"><div class="rt-drug-name">Omeprazole 20 mg</div><div class="rt-drug-sub">PO · OD ก่อนอาหาร · 08:00</div></div></div>
+            </div>
+            <div class="rt-bottom"><button class="btn-secondary" onclick="omGoStep(1)">ย้อนกลับ</button><button class="btn-om" style="flex:2;" onclick="omGoStep(3)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg>เริ่มสแกนผู้ป่วย</button></div>
+        </div>
+
+        <!-- ══ STEP 3: สแกนผู้ป่วย ══ -->
+        <div class="rt-panel" id="omStep3">
+            <div class="rt-inner center">
+                <div class="rt-scan-zone" style="max-width:440px;width:100%;">
+                    <div class="rt-scan-circle idle" id="omScan3C"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--text-3)" id="omScan3I"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg></div>
+                    <div style="font-size:20px;font-weight:800;color:var(--text-1);margin-bottom:4px;" id="omScan3H">สแกนยืนยันตัวผู้ป่วย</div>
+                    <div style="font-size:14px;color:var(--text-2);margin-bottom:20px;">สมชาย มานะ · 3A-01</div>
+                    <button class="btn-om" style="max-width:260px;" onclick="omScanPt()" id="omScan3Btn">เริ่มสแกน</button>
+                </div>
+            </div>
+            <div class="rt-bottom" id="omStep3Bot" style="display:none;"><button class="btn-secondary" onclick="omResetScan3()">สแกนใหม่</button><button class="btn-om" style="flex:2;" onclick="omGoStep(4)">ดำเนินการต่อ</button></div>
+        </div>
+
+        <!-- ══ STEP 4: เลือกรายการยาที่จะงด ══ -->
+        <div class="rt-panel" id="omStep4">
+            <div class="rt-inner">
+                <div class="om-banner"><div class="om-banner-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="white"><line x1="18" y1="6" x2="6" y2="18" stroke="white" stroke-width="3"/><line x1="6" y1="6" x2="18" y2="18" stroke="white" stroke-width="3"/></svg></div><div><div class="om-banner-text">เลือกรายการยาที่ต้องการงด</div><div class="om-banner-sub">กดเลือกยาที่ต้องการบันทึกงดให้ยา</div></div></div>
+
+                <div class="rt-drug" onclick="omPickDrug(this)" style="cursor:pointer;"><div class="rt-drug-bar wait"></div><div class="rt-drug-info"><div class="rt-drug-name">Amlodipine 5 mg</div><div class="rt-drug-sub">PO · 5 mg · OD เช้า · 08:00 น.</div></div><div class="rt-drug-right"><span class="am-drug-st wait" style="font-size:11px;">รอให้ยา</span></div></div>
+                <div class="rt-drug" onclick="omPickDrug(this)" style="cursor:pointer;"><div class="rt-drug-bar wait"></div><div class="rt-drug-info"><div class="rt-drug-name">Metformin 500 mg</div><div class="rt-drug-sub">PO · 500 mg · BID · 08:00 น.</div></div><div class="rt-drug-right"><span class="am-drug-st wait" style="font-size:11px;">รอให้ยา</span></div></div>
+                <div class="rt-drug" onclick="omPickDrug(this)" style="cursor:pointer;"><div class="rt-drug-bar wait"></div><div class="rt-drug-info"><div class="rt-drug-name">Omeprazole 20 mg</div><div class="rt-drug-sub">PO · 20 mg · OD · 08:00 น.</div></div><div class="rt-drug-right"><span class="am-drug-st wait" style="font-size:11px;">รอให้ยา</span></div></div>
+            </div>
+            <div class="rt-bottom"><button class="btn-secondary" onclick="omGoStep(3)">ย้อนกลับ</button><button class="btn-om" style="flex:2;" id="omBtnReason" onclick="omGoStep(5)" disabled>งดให้ยารายการนี้</button></div>
+        </div>
+
+        <!-- ══ STEP 5: ระบุเหตุผลงดให้ยา ══ -->
+        <div class="rt-panel" id="omStep5">
+            <div class="rt-inner" style="max-width:520px;">
+                <div class="omit-med" style="margin-bottom:18px;">
+                    <div class="omit-med-grid">
+                        <div><div class="wit-ml">ผู้ป่วย</div><div class="wit-mv">นายสมชาย มานะ</div></div>
+                        <div><div class="wit-ml">HN / เตียง</div><div class="wit-mv">6401234 · 3A-01</div></div>
+                        <div><div class="wit-ml">ยาที่งด</div><div class="wit-mv" id="omDrugName" style="color:#64748b;font-weight:800;">Amlodipine 5 mg</div></div>
+                        <div><div class="wit-ml">Route / Dose</div><div class="wit-mv">PO · 5 mg</div></div>
+                        <div><div class="wit-ml">เวลาเดิม</div><div class="wit-mv">08:00 น.</div></div>
+                        <div><div class="wit-ml">Frequency</div><div class="wit-mv">OD เช้า</div></div>
+                    </div>
+                </div>
+
+                <div class="omit-card" style="margin-bottom:0;">
+                    <div class="omit-card-title" style="font-size:16px;">ระบุเหตุผลงดให้ยา <span style="color:#dc2626;font-size:14px;">*</span></div>
+                    <div class="omit-card-sub">เลือกเหตุผลอย่างน้อย 1 ข้อ</div>
+                    <div class="omit-options" id="omOptions">
+                        <div class="omit-opt" onclick="omPickReason(this)"><div class="omit-radio"><svg width="12" height="12" viewBox="0 0 24 24" fill="white" style="display:none"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><span class="omit-opt-label">ผู้ป่วยปฏิเสธยา</span></div>
+                        <div class="omit-opt" onclick="omPickReason(this)"><div class="omit-radio"><svg width="12" height="12" viewBox="0 0 24 24" fill="white" style="display:none"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><span class="omit-opt-label">ผู้ป่วยไม่อยู่ (ไปตรวจ/ทำหัตถการ)</span></div>
+                        <div class="omit-opt" onclick="omPickReason(this)"><div class="omit-radio"><svg width="12" height="12" viewBox="0 0 24 24" fill="white" style="display:none"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><span class="omit-opt-label">ค่า Vital sign ไม่ผ่านเกณฑ์</span></div>
+                        <div class="omit-opt" onclick="omPickReason(this)"><div class="omit-radio"><svg width="12" height="12" viewBox="0 0 24 24" fill="white" style="display:none"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><span class="omit-opt-label">มีคำสั่งแพทย์ให้งด</span></div>
+                        <div class="omit-opt" onclick="omPickReason(this)"><div class="omit-radio"><svg width="12" height="12" viewBox="0 0 24 24" fill="white" style="display:none"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><span class="omit-opt-label">ยาไม่พร้อมใช้ / หมด stock</span></div>
+                        <div class="omit-opt" onclick="omPickReason(this)"><div class="omit-radio"><svg width="12" height="12" viewBox="0 0 24 24" fill="white" style="display:none"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><span class="omit-opt-label">อื่นๆ (ระบุในหมายเหตุ)</span></div>
+                    </div>
+                    <div class="omit-note"><label>หมายเหตุเพิ่มเติม</label><textarea placeholder="พิมพ์รายละเอียดเพิ่มเติม (ถ้ามี)..."></textarea></div>
+                </div>
+            </div>
+            <div class="rt-bottom"><button class="btn-secondary" onclick="omGoStep(4)">ยกเลิก</button><button class="btn-om" style="flex:2;" id="omBtnSave5" onclick="omGoStep(6)" disabled>บันทึกการงดให้ยา</button></div>
+        </div>
+
+        <!-- ══ STEP 6: ยืนยัน ══ -->
+        <div class="rt-panel" id="omStep6">
+            <div class="rt-inner" style="max-width:560px;">
+                <div class="om-banner" style="background:#fff7ed;border-color:#fde68a;"><div class="om-banner-icon" style="background:#d97706;"><svg width="20" height="20" viewBox="0 0 24 24" fill="white"><line x1="18" y1="6" x2="6" y2="18" stroke="white" stroke-width="3"/><line x1="6" y1="6" x2="18" y2="18" stroke="white" stroke-width="3"/></svg></div><div><div class="om-banner-text" style="color:#92400e;">งดให้ยา — ตรวจสอบก่อนบันทึก</div><div class="om-banner-sub" style="color:#b45309;">กรุณาตรวจสอบข้อมูลให้ถูกต้องก่อนยืนยัน</div></div></div>
+
+                <div class="rec-card"><div class="rec-card-title"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>สรุปการงดให้ยา</div><div class="rec-grid">
+                    <div><div class="wit-ml">ผู้ป่วย</div><div class="wit-mv">นายสมชาย มานะ</div></div>
+                    <div><div class="wit-ml">HN / เตียง</div><div class="wit-mv">6401234 · 3A-01</div></div>
+                    <div><div class="wit-ml">ยา</div><div class="wit-mv" id="omConfirmDrug" style="color:#64748b;font-weight:800;">Amlodipine 5 mg</div></div>
+                    <div><div class="wit-ml">สถานะ</div><div class="wit-mv" style="color:#d97706;font-weight:800;">งดให้ยา (Omit)</div></div>
+                    <div><div class="wit-ml">เหตุผล</div><div class="wit-mv" id="omConfirmReason">—</div></div>
+                    <div><div class="wit-ml">ผู้บันทึก</div><div class="wit-mv">นส.สมใจ ดีมาก</div></div>
+                </div></div>
+            </div>
+            <div class="rt-bottom"><button class="btn-secondary" onclick="omGoStep(5)">กลับแก้ไข</button><button class="btn-om" style="flex:2;" onclick="omGoStep(7)"><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>บันทึกผล</button></div>
+        </div>
+
+        <!-- ══ STEP 7: สำเร็จ ══ -->
+        <div class="rt-panel" id="omStep7">
+            <div class="rt-inner center">
+                <div class="om-ok-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+                <div style="font-size:26px;font-weight:800;color:#1e293b;margin-bottom:4px;">บันทึกการงดให้ยาสำเร็จ</div>
+                <div style="font-size:14px;color:var(--text-2);margin-bottom:24px;" id="omSuccessDrug">Amlodipine 5 mg — นายสมชาย มานะ (3A-01)</div>
+
+                <div class="ok-summary" style="max-width:400px;width:100%;">
+                    <div class="ok-summary-grid">
+                        <div><div class="wit-ml">ยา</div><div class="wit-mv" style="color:#64748b;font-weight:800;" id="omOkDrug">Amlodipine 5 mg</div></div>
+                        <div><div class="wit-ml">สถานะ</div><div class="wit-mv" style="color:#d97706;font-weight:800;">งดให้ยา</div></div>
+                        <div><div class="wit-ml">เหตุผล</div><div class="wit-mv" id="omOkReason">—</div></div>
+                        <div><div class="wit-ml">ผู้บันทึก</div><div class="wit-mv">นส.สมใจ ดีมาก</div></div>
+                    </div>
+                </div>
+
+                <div class="ok-actions" style="max-width:400px;width:100%;">
+                    <button class="btn-primary" onclick="omGoStep(4)" style="background:#64748b;box-shadow:0 5px 22px rgba(100,116,139,.3);">กลับไปรายการยา</button>
+                    <div class="ok-act-row">
+                        <button class="btn-secondary" onclick="omGoStep(1)">กลับรายการผู้ป่วย</button>
+                        <button class="btn-secondary" onclick="nav('pg-dashboard')" style="border-color:var(--text-3);">กลับ Dashboard</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

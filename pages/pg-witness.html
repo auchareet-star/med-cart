@@ -1,0 +1,154 @@
+<div id="pg-witness" class="page">
+
+    <header class="header">
+        <div class="header-left">
+            <button class="hdr-back" onclick="nav('pg-admin-med')">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+                ย้อนกลับ
+            </button>
+            <div class="header-brand">
+                <div class="brand-icon">
+                    <svg width="27" height="27" viewBox="0 0 24 24" fill="white"><path d="M19 3H5C3.9 3 3 3.9 3 5v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c.55 0 1 .45 1 1v3h3c.55 0 1 .45 1 1s-.45 1-1 1h-3v3c0 .55-.45 1-1 1s-1-.45-1-1v-3H8c-.55 0-1-.45-1-1s.45-1 1-1h3V7c0-.55.45-1 1-1z"/></svg>
+                </div>
+                <div>
+                    <div class="brand-name">Med Cart</div>
+                    <div class="brand-sub">ยืนยันโดยพยาน / IDC</div>
+                </div>
+            </div>
+        </div>
+        <div class="header-right">
+            <div>
+                <div class="dt-time" id="clockW">--:--:--</div>
+                <div class="dt-date" id="dateStrW">--</div>
+            </div>
+            <div class="status-pill online"><span class="dot"></span> Online</div>
+        </div>
+    </header>
+
+    <div class="wit-body">
+        <div class="wit-frame">
+
+            <!-- Medication summary -->
+            <div class="wit-med">
+                <div class="wit-med-head">
+                    <div class="wit-med-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                    </div>
+                    <div>
+                        <div class="wit-med-title">ต้องมีพยานยืนยันก่อนให้ยา</div>
+                        <div class="wit-med-reason">เหตุผล: High Alert Medication — ต้อง double check</div>
+                    </div>
+                </div>
+                <div class="wit-med-grid">
+                    <div><div class="wit-ml">ผู้ป่วย</div><div class="wit-mv">นายสมชาย มานะ</div></div>
+                    <div><div class="wit-ml">HN / เตียง</div><div class="wit-mv">6401234 · 3A-01</div></div>
+                    <div><div class="wit-ml">ชื่อยา</div><div class="wit-mv green">Heparin 5000 units</div></div>
+                    <div><div class="wit-ml">Route</div><div class="wit-mv">SC (ฉีดใต้ผิวหนัง)</div></div>
+                    <div><div class="wit-ml">Dose</div><div class="wit-mv green">5,000 units</div></div>
+                    <div><div class="wit-ml">เวลาให้</div><div class="wit-mv">07:30 น.</div></div>
+                </div>
+            </div>
+
+            <!-- Verify card -->
+            <div class="wit-card">
+                <div class="wit-card-head">
+                    <div class="wit-lock-icon">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
+                            <circle cx="9" cy="7" r="4"/>
+                            <path d="M23 21v-2a4 4 0 00-3-3.87"/>
+                            <path d="M16 3.13a4 4 0 010 7.75"/>
+                        </svg>
+                    </div>
+                    <h2 class="wit-card-title">ยืนยันโดยพยาน</h2>
+                    <p class="wit-card-sub">กรุณาให้เจ้าหน้าที่อีกท่านยืนยันตัวตน</p>
+                </div>
+
+                <!-- Method tabs -->
+                <div class="wit-tabs">
+                    <button class="wit-tab active" onclick="switchWitTab('card')">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+                        สแกนบัตร
+                    </button>
+                    <button class="wit-tab" onclick="switchWitTab('user')">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                        Username
+                    </button>
+                    <button class="wit-tab" onclick="switchWitTab('pin')">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+                        PIN
+                    </button>
+                </div>
+
+                <!-- Panel: Card scan -->
+                <div class="wit-panel active" id="witPanelCard">
+                    <div style="text-align:center;padding:10px 0;">
+                        <div class="scan-illustration" style="width:90px;height:90px;margin:0 auto 14px;background:var(--green-light);border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative;">
+                            <div style="position:absolute;inset:-5px;border:3px dashed var(--green-mid);border-radius:50%;animation:scan-pulse 2.5s ease-in-out infinite;"></div>
+                            <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#0D9488" stroke-width="1.5"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/><circle cx="12" cy="15" r="1.5" fill="#0D9488" stroke="none"/></svg>
+                        </div>
+                        <div style="font-size:15px;font-weight:700;color:var(--text-1);margin-bottom:4px;">กรุณาให้พยานสแกนบัตร</div>
+                        <div style="font-size:13px;color:var(--text-2);">วางบัตรพนักงานที่เครื่องอ่านบัตร</div>
+                        <button class="spt-scan-btn" style="margin:18px auto 0;padding:14px 32px;font-size:15px;" onclick="demoWitness()">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+                            Demo: สแกนบัตรพยาน
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Panel: Username -->
+                <div class="wit-panel" id="witPanelUser">
+                    <div class="form-group">
+                        <label class="form-label">Username พยาน <span style="color:#dc2626;">*</span></label>
+                        <div class="form-input-wrap">
+                            <svg class="field-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                            <input type="text" class="form-input" placeholder="กรอก username ของพยาน">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Password <span style="color:#dc2626;">*</span></label>
+                        <div class="form-input-wrap">
+                            <svg class="field-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+                            <input type="password" class="form-input" placeholder="กรอกรหัสผ่าน">
+                        </div>
+                    </div>
+                    <button class="btn-login" style="margin-top:4px;" onclick="demoWitness()">ยืนยัน</button>
+                </div>
+
+                <!-- Panel: PIN -->
+                <div class="wit-panel" id="witPanelPin">
+                    <div class="form-group">
+                        <label class="form-label">PIN พยาน (6 หลัก) <span style="color:#dc2626;">*</span></label>
+                        <div class="form-input-wrap">
+                            <svg class="field-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+                            <input type="password" class="form-input" placeholder="------" maxlength="6" style="text-align:center;letter-spacing:8px;font-size:22px;">
+                        </div>
+                    </div>
+                    <button class="btn-login" style="margin-top:4px;" onclick="demoWitness()">ยืนยัน PIN</button>
+                </div>
+
+                <!-- Witness result -->
+                <div class="wit-result" id="witResult">
+                    <div class="wit-result-box">
+                        <div class="wit-result-avatar">วร</div>
+                        <div class="wit-result-info">
+                            <div class="wit-result-name">นส.วรรณา รุ่งเรือง</div>
+                            <div class="wit-result-meta">EMP-3251 · พยาบาลวิชาชีพ · อนุมัติเมื่อ <span id="witTime">--:--</span></div>
+                        </div>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="var(--green)"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="wit-actions" id="witActions">
+                    <button class="btn-secondary" onclick="resetWitness()">ยกเลิก</button>
+                    <button class="btn-primary" onclick="showToast('ยืนยันโดยพยานสำเร็จ — บันทึกผลการให้ยา...'); setTimeout(()=>showToast(''),2500);">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                        ยืนยันและดำเนินการต่อ
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

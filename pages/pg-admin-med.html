@@ -1,0 +1,178 @@
+<div id="pg-admin-med" class="page">
+
+    <header class="header">
+        <div class="header-left">
+            <button class="hdr-back" onclick="nav('pg-scan-pt')">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+                ย้อนกลับ
+            </button>
+            <div class="header-brand">
+                <div class="brand-icon">
+                    <svg width="27" height="27" viewBox="0 0 24 24" fill="white"><path d="M19 3H5C3.9 3 3 3.9 3 5v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c.55 0 1 .45 1 1v3h3c.55 0 1 .45 1 1s-.45 1-1 1h-3v3c0 .55-.45 1-1 1s-1-.45-1-1v-3H8c-.55 0-1-.45-1-1s.45-1 1-1h3V7c0-.55.45-1 1-1z"/></svg>
+                </div>
+                <div>
+                    <div class="brand-name">Med Cart</div>
+                    <div class="brand-sub">เลือกรายการยาและสแกนยา</div>
+                </div>
+            </div>
+        </div>
+        <div class="header-right">
+            <div>
+                <div class="dt-time" id="clockAM">--:--:--</div>
+                <div class="dt-date" id="dateStrAM">--</div>
+            </div>
+            <div class="status-pill online"><span class="dot"></span> Online</div>
+        </div>
+    </header>
+
+    <div class="am-wrap">
+        <!-- Patient bar -->
+        <div class="am-ptbar">
+            <div class="am-ptbar-name">นายสมชาย มานะ</div>
+            <div class="am-ptbar-meta">
+                <span>HN: 6401234</span>
+                <span>เตียง 3A-01</span>
+                <span>ชาย 58 ปี</span>
+            </div>
+            <span class="am-ptbar-warn">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                แพ้ Penicillin
+            </span>
+            <span class="am-ptbar-time">รอบ 08:00 น.</span>
+        </div>
+
+        <!-- 3-col -->
+        <div class="am-main">
+
+            <!-- LEFT: Drug list -->
+            <div class="am-col">
+                <div class="am-col-head">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0016.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 002 8.5c0 2.3 1.5 4.05 3 5.5l7 7z"/></svg>
+                    รายการยา (5)
+                </div>
+                <div class="am-col-scroll">
+                    <div class="am-drug active" onclick="selectAmDrug(this)">
+                        <div class="am-drug-name">Heparin 5000 units <span class="pt-badge stat" style="font-size:9px;padding:1px 6px;">STAT</span></div>
+                        <div class="am-drug-sub">SC · 07:30</div>
+                        <div class="am-drug-tags">
+                            <span class="am-drug-st ready">พร้อมสแกน</span>
+                            <span class="pt-badge halert" style="font-size:8px;padding:1px 5px;background:#fef2f2;color:#dc2626;border:1px solid #fca5a5;">High Alert</span>
+                        </div>
+                    </div>
+                    <div class="am-drug" onclick="selectAmDrug(this)" style="opacity:.6;">
+                        <div class="am-drug-name">Amlodipine 5 mg</div>
+                        <div class="am-drug-sub">PO · 08:00</div>
+                        <div class="am-drug-tags"><span class="am-drug-st done">ให้แล้ว</span></div>
+                    </div>
+                    <div class="am-drug" onclick="selectAmDrug(this)">
+                        <div class="am-drug-name">Metformin 500 mg</div>
+                        <div class="am-drug-sub">PO · 08:00</div>
+                        <div class="am-drug-tags"><span class="am-drug-st wait">ยังไม่สแกน</span></div>
+                    </div>
+                    <div class="am-drug" onclick="selectAmDrug(this)">
+                        <div class="am-drug-name">Omeprazole 20 mg</div>
+                        <div class="am-drug-sub">PO · 08:00</div>
+                        <div class="am-drug-tags"><span class="am-drug-st wait">ยังไม่สแกน</span></div>
+                    </div>
+                    <div class="am-drug" onclick="selectAmDrug(this)">
+                        <div class="am-drug-name">Morphine 5 mg <span class="pt-badge prn" style="font-size:9px;padding:1px 6px;">PRN</span></div>
+                        <div class="am-drug-sub">IV · PRN</div>
+                        <div class="am-drug-tags">
+                            <span class="am-drug-st wait">ยังไม่สแกน</span>
+                            <span class="pt-badge halert" style="font-size:8px;padding:1px 5px;background:#fef2f2;color:#dc2626;border:1px solid #fca5a5;">High Alert</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CENTER: Detail + 7 Rights -->
+            <div class="am-center">
+                <div class="am-detail">
+                    <div class="am-detail-name">
+                        Heparin 5000 units
+                        <span class="pt-badge stat" style="font-size:10px;padding:2px 8px;">STAT</span>
+                        <span class="pt-badge halert" style="font-size:9px;padding:2px 7px;background:#fef2f2;color:#dc2626;border:1px solid #fca5a5;">High Alert</span>
+                    </div>
+                    <div class="am-detail-grid">
+                        <div><div class="am-dl">ชื่อยาเต็ม</div><div class="am-dv">Heparin Sodium Injection</div></div>
+                        <div><div class="am-dl">รูปแบบ</div><div class="am-dv">ยาฉีด (Injection)</div></div>
+                        <div><div class="am-dl">Dose สั่ง</div><div class="am-dv green">5,000 units</div></div>
+                        <div><div class="am-dl">Route</div><div class="am-dv">SC (ฉีดใต้ผิวหนัง)</div></div>
+                        <div><div class="am-dl">เวลาให้ยา</div><div class="am-dv" style="color:#dc2626;font-weight:800;">07:30 (เลยเวลา)</div></div>
+                        <div><div class="am-dl">Frequency</div><div class="am-dv">STAT (ครั้งเดียว)</div></div>
+                    </div>
+                    <div class="am-warn-box">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                        <div>
+                            <strong>ต้องมีพยาน (Witness required)</strong><br>
+                            ยานี้จัดเป็น High Alert Drug — ต้องมีพยาบาลอีก 1 คนร่วมตรวจสอบก่อนให้ยา
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 7 Rights -->
+                <div class="am-rights">
+                    <div class="am-rights-title">7 Rights Validation</div>
+                    <div class="am-rights-grid">
+                        <div class="am-r pass"><div class="am-r-dot"></div>Right Patient</div>
+                        <div class="am-r pend" id="rDrug"><div class="am-r-dot"></div>Right Drug</div>
+                        <div class="am-r pend" id="rDose"><div class="am-r-dot"></div>Right Dose</div>
+                        <div class="am-r pend" id="rRoute"><div class="am-r-dot"></div>Right Route</div>
+                        <div class="am-r pass"><div class="am-r-dot"></div>Right Time</div>
+                        <div class="am-r pend" id="rDoc"><div class="am-r-dot"></div>Right Doc.</div>
+                        <div class="am-r pend" id="rReason"><div class="am-r-dot"></div>Right Reason</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT: Scan + Actions -->
+            <div class="am-col am-right-col" style="border-right:none;">
+                <div class="am-col-head">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg>
+                    สแกนและยืนยัน
+                </div>
+                <div class="am-right-scroll">
+                    <button class="scan-btn-big" onclick="demoScanMed()">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg>
+                        สแกนยา
+                    </button>
+
+                    <div class="am-scan-result" id="amScanResult">
+                        <div class="am-sr-head">
+                            <span class="am-sr-status pass">ผ่าน</span>
+                            <span class="am-sr-name">Heparin 5000 units</span>
+                        </div>
+                        <div class="am-sr-grid">
+                            <div><div class="am-sr-l">Barcode</div><div class="am-sr-v">880123456789</div></div>
+                            <div><div class="am-sr-l">จำนวน</div><div class="am-sr-v">1 vial</div></div>
+                            <div><div class="am-sr-l">Lot</div><div class="am-sr-v">HEP-2025-042</div></div>
+                            <div><div class="am-sr-l">Expiry</div><div class="am-sr-v">30/09/2569</div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="am-actions">
+                    <button class="btn-primary" id="btnConfirmAdmin" onclick="showToast('ยืนยันให้ยาสำเร็จ — บันทึกผล...'); setTimeout(()=>showToast(''),2500);" disabled>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                        ยืนยันให้ยา
+                    </button>
+                    <div class="am-act-row">
+                        <button class="am-act-btn danger" onclick="nav('pg-omit')">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                            งดให้ยา
+                        </button>
+                        <button class="am-act-btn warn" onclick="showToast('เลื่อนให้ยาภายหลัง...'); setTimeout(()=>showToast(''),2000);">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                            เลื่อน
+                        </button>
+                        <button class="am-act-btn" onclick="nav('pg-witness')">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+                            พยาน
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

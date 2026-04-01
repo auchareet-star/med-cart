@@ -1,0 +1,339 @@
+<div id="pg-prep-patient" class="page">
+    <div id="pbpWard" style="display:none;">Ward 3A</div>
+    <div id="clockPBP" style="display:none;"></div><div id="dateStrPBP" style="display:none;"></div>
+
+    <div style="flex:1;display:flex;flex-direction:column;overflow-y:auto;padding:20px 28px;">
+
+        <!-- Type badge -->
+        <div style="margin-bottom:14px;flex-shrink:0;">
+            <span style="display:inline-flex;align-items:center;gap:7px;background:linear-gradient(135deg,var(--green),#14B8A6);color:white;font-size:11.5px;font-weight:600;padding:6px 16px;border-radius:20px;box-shadow:0 2px 8px rgba(13,148,136,0.25);letter-spacing:0.01em;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+                จัดยาตามผู้ป่วย — Patient-based
+            </span>
+        </div>
+
+        <!-- Header row -->
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-shrink:0;">
+            <div style="display:flex;align-items:center;gap:14px;">
+                <div style="width:42px;height:42px;background:linear-gradient(135deg,var(--green),#14B8A6);border-radius:13px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(13,148,136,0.3);">
+                    <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                </div>
+                <div>
+                    <h1 style="font-size:22px;font-weight:700;color:var(--text-1);line-height:1.2;">จัดยาตามผู้ป่วย</h1>
+                    <p style="font-size:12px;color:var(--text-3);margin-top:2px;display:flex;align-items:center;gap:5px;">
+                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+                        แผนผังเตียง · Ward 3A
+                    </p>
+                </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;">
+                <div class="disp-search" style="width:240px;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    <input type="text" id="pbpSearch" placeholder="ค้นหาผู้ป่วย, ห้อง, HN..." oninput="filterPbp()" style="padding:9px 12px 9px 36px;font-size:13px;">
+                </div>
+                <div style="display:flex;background:rgba(255,255,255,0.7);backdrop-filter:blur(8px);border-radius:11px;padding:3px;border:1px solid var(--border);box-shadow:0 1px 4px rgba(0,0,0,0.04);">
+                    <button style="padding:7px 16px;border:none;border-radius:8px;background:linear-gradient(135deg,var(--green),#14B8A6);color:white;font-family:'Prompt',sans-serif;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:5px;box-shadow:0 2px 6px rgba(13,148,136,0.25);">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+                        แบบแยก
+                    </button>
+                    <button style="padding:7px 16px;border:none;border-radius:8px;background:transparent;color:var(--text-2);font-family:'Prompt',sans-serif;font-size:12px;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:5px;">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+                        แบบรายการ
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats cards -->
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px;flex-shrink:0;">
+            <!-- ห้องทั้งหมด — blue -->
+            <div style="background:linear-gradient(135deg,#3b82f6,#60a5fa);border-radius:16px;padding:18px 20px;color:white;display:flex;align-items:center;justify-content:space-between;box-shadow:0 4px 16px rgba(59,130,246,0.25);position:relative;overflow:hidden;">
+                <div style="position:absolute;top:-12px;right:-12px;width:64px;height:64px;background:rgba(255,255,255,0.1);border-radius:50%;"></div>
+                <div style="position:absolute;bottom:-8px;right:20px;width:40px;height:40px;background:rgba(255,255,255,0.07);border-radius:50%;"></div>
+                <div style="position:relative;z-index:1;"><div style="font-size:11px;opacity:.85;font-weight:500;">ห้องทั้งหมด</div><div style="font-size:30px;font-weight:700;line-height:1.2;margin-top:2px;">16</div></div>
+                <div style="position:relative;z-index:1;width:40px;height:40px;background:rgba(255,255,255,0.15);border-radius:12px;display:flex;align-items:center;justify-content:center;">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+                </div>
+            </div>
+            <!-- ผู้ป่วยปัจจุบัน — teal -->
+            <div style="background:linear-gradient(135deg,#0D9488,#14B8A6);border-radius:16px;padding:18px 20px;color:white;display:flex;align-items:center;justify-content:space-between;box-shadow:0 4px 16px rgba(13,148,136,0.25);position:relative;overflow:hidden;">
+                <div style="position:absolute;top:-12px;right:-12px;width:64px;height:64px;background:rgba(255,255,255,0.1);border-radius:50%;"></div>
+                <div style="position:absolute;bottom:-8px;right:20px;width:40px;height:40px;background:rgba(255,255,255,0.07);border-radius:50%;"></div>
+                <div style="position:relative;z-index:1;"><div style="font-size:11px;opacity:.85;font-weight:500;">ผู้ป่วยปัจจุบัน</div><div style="font-size:30px;font-weight:700;line-height:1.2;margin-top:2px;">8</div></div>
+                <div style="position:relative;z-index:1;width:40px;height:40px;background:rgba(255,255,255,0.15);border-radius:12px;display:flex;align-items:center;justify-content:center;">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+                </div>
+            </div>
+            <!-- รอจัดยา — purple -->
+            <div style="background:linear-gradient(135deg,#8b5cf6,#a78bfa);border-radius:16px;padding:18px 20px;color:white;display:flex;align-items:center;justify-content:space-between;box-shadow:0 4px 16px rgba(139,92,246,0.25);position:relative;overflow:hidden;">
+                <div style="position:absolute;top:-12px;right:-12px;width:64px;height:64px;background:rgba(255,255,255,0.1);border-radius:50%;"></div>
+                <div style="position:absolute;bottom:-8px;right:20px;width:40px;height:40px;background:rgba(255,255,255,0.07);border-radius:50%;"></div>
+                <div style="position:relative;z-index:1;"><div style="font-size:11px;opacity:.85;font-weight:500;">รอจัดยา</div><div style="font-size:30px;font-weight:700;line-height:1.2;margin-top:2px;">7</div></div>
+                <div style="position:relative;z-index:1;width:40px;height:40px;background:rgba(255,255,255,0.15);border-radius:12px;display:flex;align-items:center;justify-content:center;">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                </div>
+            </div>
+            <!-- จัดครบแล้ว — amber -->
+            <div style="background:linear-gradient(135deg,#f59e0b,#fbbf24);border-radius:16px;padding:18px 20px;color:white;display:flex;align-items:center;justify-content:space-between;box-shadow:0 4px 16px rgba(245,158,11,0.25);position:relative;overflow:hidden;">
+                <div style="position:absolute;top:-12px;right:-12px;width:64px;height:64px;background:rgba(255,255,255,0.1);border-radius:50%;"></div>
+                <div style="position:absolute;bottom:-8px;right:20px;width:40px;height:40px;background:rgba(255,255,255,0.07);border-radius:50%;"></div>
+                <div style="position:relative;z-index:1;"><div style="font-size:11px;opacity:.85;font-weight:500;">จัดครบแล้ว</div><div style="font-size:30px;font-weight:700;line-height:1.2;margin-top:2px;">1</div></div>
+                <div style="position:relative;z-index:1;width:40px;height:40px;background:rgba(255,255,255,0.15);border-radius:12px;display:flex;align-items:center;justify-content:center;">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2-column layout -->
+        <div style="flex:1;display:grid;grid-template-columns:1fr 1fr;gap:18px;min-height:0;overflow:hidden;">
+
+            <!-- LEFT: แผนผังห้อง -->
+            <div style="background:rgba(255,255,255,0.75);backdrop-filter:blur(16px) saturate(180%);-webkit-backdrop-filter:blur(16px) saturate(180%);border:1px solid rgba(226,232,240,0.6);border-radius:20px;box-shadow:0 1px 3px rgba(0,0,0,0.04),0 8px 32px rgba(0,0,0,0.06);padding:22px;overflow-y:auto;">
+
+                <!-- Section header -->
+                <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
+                    <div style="width:34px;height:34px;background:linear-gradient(135deg,#e0f2fe,#bae6fd);border-radius:10px;display:flex;align-items:center;justify-content:center;">
+                        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2.2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+                    </div>
+                    <div style="font-size:15px;font-weight:700;color:var(--text-1);">แผนผังห้อง</div>
+                    <div style="margin-left:auto;font-size:10px;color:var(--text-3);font-weight:500;">Ward 3A</div>
+                </div>
+
+                <!-- Legend -->
+                <div style="display:flex;gap:16px;margin-bottom:18px;padding:9px 14px;background:rgba(248,250,252,0.8);backdrop-filter:blur(8px);border-radius:10px;border:1px solid rgba(226,232,240,0.5);font-size:11px;color:var(--text-2);font-weight:500;">
+                    <span style="display:flex;align-items:center;gap:5px;"><div style="width:10px;height:10px;border-radius:50%;background:linear-gradient(135deg,#0D9488,#14B8A6);box-shadow:0 1px 4px rgba(13,148,136,0.3);"></div> ไม่ว่าง</span>
+                    <span style="display:flex;align-items:center;gap:5px;"><div style="width:10px;height:10px;border-radius:50%;background:#d1d5db;"></div> ว่าง</span>
+                    <span style="display:flex;align-items:center;gap:5px;"><div style="width:10px;height:10px;border-radius:50%;background:linear-gradient(135deg,#f59e0b,#fbbf24);box-shadow:0 1px 4px rgba(245,158,11,0.3);"></div> ปิดปรับปรุง</span>
+                </div>
+
+                <!-- Row A -->
+                <div style="font-size:11px;font-weight:600;color:var(--text-3);margin-bottom:8px;display:flex;align-items:center;gap:6px;">
+                    <div style="width:5px;height:5px;border-radius:50%;background:var(--green);"></div>
+                    ฝั่ง A — หน้าวิว
+                </div>
+                <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px;">
+                    <!-- 01 สมชาย — occupied -->
+                    <div onclick="nav('pg-prep-pt-drugs')" style="background:linear-gradient(135deg,#e0f2fe,#bae6fd);border:1px solid rgba(186,230,253,0.6);border-radius:14px;padding:14px 10px;cursor:pointer;transition:all .2s ease;position:relative;overflow:hidden;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 20px rgba(56,189,248,0.2)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+                        <div style="font-size:22px;font-weight:700;color:#0284c7;">01</div>
+                        <div style="font-size:10.5px;color:#0369a1;margin-top:4px;font-weight:500;">สมชาย</div>
+                        <div style="margin-top:6px;"><span style="background:linear-gradient(135deg,#0284c7,#0ea5e9);color:white;padding:3px 8px;border-radius:6px;font-size:8.5px;font-weight:600;display:inline-flex;align-items:center;gap:3px;box-shadow:0 1px 4px rgba(2,132,199,0.25);">
+                            <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><path d="M9 12l2 2 4-4"/></svg>1/3 ยา</span></div>
+                        <div style="position:absolute;top:7px;right:7px;width:8px;height:8px;border-radius:50%;background:linear-gradient(135deg,#0D9488,#14B8A6);box-shadow:0 0 0 2px rgba(13,148,136,0.2);"></div>
+                    </div>
+                    <!-- 02 พิมพ์ใจ — occupied -->
+                    <div onclick="nav('pg-prep-pt-drugs')" style="background:linear-gradient(135deg,#e0f2fe,#bae6fd);border:1px solid rgba(186,230,253,0.6);border-radius:14px;padding:14px 10px;cursor:pointer;transition:all .2s ease;position:relative;overflow:hidden;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 20px rgba(56,189,248,0.2)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+                        <div style="font-size:22px;font-weight:700;color:#0284c7;">02</div>
+                        <div style="font-size:10.5px;color:#0369a1;margin-top:4px;font-weight:500;">พิมพ์ใจ</div>
+                        <div style="margin-top:6px;"><span style="background:linear-gradient(135deg,#0284c7,#0ea5e9);color:white;padding:3px 8px;border-radius:6px;font-size:8.5px;font-weight:600;display:inline-flex;align-items:center;gap:3px;box-shadow:0 1px 4px rgba(2,132,199,0.25);">
+                            <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><path d="M9 12l2 2 4-4"/></svg>1/2 ยา</span></div>
+                        <div style="position:absolute;top:7px;right:7px;width:8px;height:8px;border-radius:50%;background:linear-gradient(135deg,#0D9488,#14B8A6);box-shadow:0 0 0 2px rgba(13,148,136,0.2);"></div>
+                    </div>
+                    <!-- 03 มาลี — occupied -->
+                    <div onclick="nav('pg-prep-pt-drugs')" style="background:linear-gradient(135deg,#e0f2fe,#bae6fd);border:1px solid rgba(186,230,253,0.6);border-radius:14px;padding:14px 10px;cursor:pointer;transition:all .2s ease;position:relative;overflow:hidden;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 20px rgba(56,189,248,0.2)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+                        <div style="font-size:22px;font-weight:700;color:#0284c7;">03</div>
+                        <div style="font-size:10.5px;color:#0369a1;margin-top:4px;font-weight:500;">มาลี</div>
+                        <div style="margin-top:6px;"><span style="background:linear-gradient(135deg,#0284c7,#0ea5e9);color:white;padding:3px 8px;border-radius:6px;font-size:8.5px;font-weight:600;display:inline-flex;align-items:center;gap:3px;box-shadow:0 1px 4px rgba(2,132,199,0.25);">
+                            <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><path d="M9 12l2 2 4-4"/></svg>0/4 ยา</span></div>
+                        <div style="position:absolute;top:7px;right:7px;width:8px;height:8px;border-radius:50%;background:linear-gradient(135deg,#0D9488,#14B8A6);box-shadow:0 0 0 2px rgba(13,148,136,0.2);"></div>
+                    </div>
+                    <!-- 04 ว่าง -->
+                    <div style="background:#f3f4f6;border:1px solid #e5e7eb;border-radius:14px;padding:14px 10px;">
+                        <div style="font-size:22px;font-weight:700;color:#c0c5cc;">04</div>
+                        <div style="font-size:10.5px;color:#b0b5bd;margin-top:4px;font-weight:500;">ว่าง</div>
+                    </div>
+                </div>
+
+                <!-- Row B -->
+                <div style="font-size:11px;font-weight:600;color:var(--text-3);margin-bottom:8px;display:flex;align-items:center;gap:6px;">
+                    <div style="width:5px;height:5px;border-radius:50%;background:#8b5cf6;"></div>
+                    ฝั่ง B — หลัง
+                </div>
+                <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px;">
+                    <!-- 05 วิชัย — occupied -->
+                    <div onclick="nav('pg-prep-pt-drugs')" style="background:linear-gradient(135deg,#e0f2fe,#bae6fd);border:1px solid rgba(186,230,253,0.6);border-radius:14px;padding:14px 10px;cursor:pointer;transition:all .2s ease;position:relative;overflow:hidden;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 20px rgba(56,189,248,0.2)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+                        <div style="font-size:22px;font-weight:700;color:#0284c7;">05</div>
+                        <div style="font-size:10.5px;color:#0369a1;margin-top:4px;font-weight:500;">วิชัย</div>
+                        <div style="margin-top:6px;"><span style="background:linear-gradient(135deg,#0284c7,#0ea5e9);color:white;padding:3px 8px;border-radius:6px;font-size:8.5px;font-weight:600;display:inline-flex;align-items:center;gap:3px;box-shadow:0 1px 4px rgba(2,132,199,0.25);">
+                            <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><path d="M9 12l2 2 4-4"/></svg>0/2 ยา</span></div>
+                        <div style="position:absolute;top:7px;right:7px;width:8px;height:8px;border-radius:50%;background:linear-gradient(135deg,#0D9488,#14B8A6);box-shadow:0 0 0 2px rgba(13,148,136,0.2);"></div>
+                    </div>
+                    <!-- 06 ว่าง -->
+                    <div style="background:#f3f4f6;border:1px solid #e5e7eb;border-radius:14px;padding:14px 10px;">
+                        <div style="font-size:22px;font-weight:700;color:#c0c5cc;">06</div>
+                        <div style="font-size:10.5px;color:#b0b5bd;margin-top:4px;font-weight:500;">ว่าง</div>
+                    </div>
+                    <!-- 07 ปิดปรับปรุง — maintenance -->
+                    <div style="background:linear-gradient(135deg,#fef3c7,#fde68a);border:1px solid rgba(253,230,138,0.6);border-radius:14px;padding:14px 10px;position:relative;overflow:hidden;">
+                        <div style="position:absolute;top:-6px;right:-6px;width:28px;height:28px;background:rgba(245,158,11,0.12);border-radius:50%;"></div>
+                        <div style="font-size:22px;font-weight:700;color:#b45309;">07</div>
+                        <div style="font-size:9.5px;color:#92400e;margin-top:4px;font-weight:600;display:flex;align-items:center;gap:3px;">
+                            <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#92400e" stroke-width="2.5" stroke-linecap="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                            ปิดปรับปรุง
+                        </div>
+                    </div>
+                    <!-- 08 กัลยา — occupied -->
+                    <div onclick="nav('pg-prep-pt-drugs')" style="background:linear-gradient(135deg,#e0f2fe,#bae6fd);border:1px solid rgba(186,230,253,0.6);border-radius:14px;padding:14px 10px;cursor:pointer;transition:all .2s ease;position:relative;overflow:hidden;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 20px rgba(56,189,248,0.2)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+                        <div style="font-size:22px;font-weight:700;color:#0284c7;">08</div>
+                        <div style="font-size:10.5px;color:#0369a1;margin-top:4px;font-weight:500;">กัลยา</div>
+                        <div style="margin-top:6px;"><span style="background:linear-gradient(135deg,#0284c7,#0ea5e9);color:white;padding:3px 8px;border-radius:6px;font-size:8.5px;font-weight:600;display:inline-flex;align-items:center;gap:3px;box-shadow:0 1px 4px rgba(2,132,199,0.25);">
+                            <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><path d="M9 12l2 2 4-4"/></svg>0/3 ยา</span></div>
+                        <div style="position:absolute;top:7px;right:7px;width:8px;height:8px;border-radius:50%;background:linear-gradient(135deg,#0D9488,#14B8A6);box-shadow:0 0 0 2px rgba(13,148,136,0.2);"></div>
+                    </div>
+                </div>
+
+                <!-- Row C -->
+                <div style="font-size:11px;font-weight:600;color:var(--text-3);margin-bottom:8px;display:flex;align-items:center;gap:6px;">
+                    <div style="width:5px;height:5px;border-radius:50%;background:#f59e0b;"></div>
+                    ฝั่ง C — หน้า
+                </div>
+                <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px;">
+                    <!-- 09 ว่าง -->
+                    <div style="background:#f3f4f6;border:1px solid #e5e7eb;border-radius:14px;padding:14px 10px;">
+                        <div style="font-size:22px;font-weight:700;color:#c0c5cc;">09</div>
+                        <div style="font-size:10.5px;color:#b0b5bd;margin-top:4px;font-weight:500;">ว่าง</div>
+                    </div>
+                    <!-- 10 ธนกร — done/completed (green) -->
+                    <div onclick="nav('pg-prep-pt-drugs')" style="background:linear-gradient(135deg,#dcfce7,#bbf7d0);border:1px solid rgba(187,247,208,0.6);border-radius:14px;padding:14px 10px;cursor:pointer;transition:all .2s ease;position:relative;overflow:hidden;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 20px rgba(22,163,74,0.15)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+                        <div style="font-size:22px;font-weight:700;color:#16a34a;">10</div>
+                        <div style="font-size:10.5px;color:#15803d;margin-top:4px;font-weight:500;">ธนกร</div>
+                        <div style="margin-top:6px;"><span style="background:linear-gradient(135deg,#16a34a,#22c55e);color:white;padding:3px 8px;border-radius:6px;font-size:8.5px;font-weight:600;display:inline-flex;align-items:center;gap:3px;box-shadow:0 1px 4px rgba(22,163,74,0.25);">
+                            <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>2/2 ยา</span></div>
+                        <div style="position:absolute;top:7px;right:7px;width:8px;height:8px;border-radius:50%;background:linear-gradient(135deg,#16a34a,#22c55e);box-shadow:0 0 0 2px rgba(22,163,74,0.2);"></div>
+                    </div>
+                    <!-- 11 ว่าง -->
+                    <div style="background:#f3f4f6;border:1px solid #e5e7eb;border-radius:14px;padding:14px 10px;">
+                        <div style="font-size:22px;font-weight:700;color:#c0c5cc;">11</div>
+                        <div style="font-size:10.5px;color:#b0b5bd;margin-top:4px;font-weight:500;">ว่าง</div>
+                    </div>
+                    <!-- 12 ประสิทธิ์ — occupied -->
+                    <div onclick="nav('pg-prep-pt-drugs')" style="background:linear-gradient(135deg,#e0f2fe,#bae6fd);border:1px solid rgba(186,230,253,0.6);border-radius:14px;padding:14px 10px;cursor:pointer;transition:all .2s ease;position:relative;overflow:hidden;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 20px rgba(56,189,248,0.2)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+                        <div style="font-size:22px;font-weight:700;color:#0284c7;">12</div>
+                        <div style="font-size:10.5px;color:#0369a1;margin-top:4px;font-weight:500;">ประสิทธิ์</div>
+                        <div style="margin-top:6px;"><span style="background:linear-gradient(135deg,#0284c7,#0ea5e9);color:white;padding:3px 8px;border-radius:6px;font-size:8.5px;font-weight:600;display:inline-flex;align-items:center;gap:3px;box-shadow:0 1px 4px rgba(2,132,199,0.25);">
+                            <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><path d="M9 12l2 2 4-4"/></svg>0/1 ยา</span></div>
+                        <div style="position:absolute;top:7px;right:7px;width:8px;height:8px;border-radius:50%;background:linear-gradient(135deg,#0D9488,#14B8A6);box-shadow:0 0 0 2px rgba(13,148,136,0.2);"></div>
+                    </div>
+                </div>
+
+                <!-- Row D -->
+                <div style="font-size:11px;font-weight:600;color:var(--text-3);margin-bottom:8px;display:flex;align-items:center;gap:6px;">
+                    <div style="width:5px;height:5px;border-radius:50%;background:#3b82f6;"></div>
+                    ฝั่ง D — ห้องพิเศษ
+                </div>
+                <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;">
+                    <!-- 13 ว่าง -->
+                    <div style="background:#f3f4f6;border:1px solid #e5e7eb;border-radius:14px;padding:14px 10px;">
+                        <div style="font-size:22px;font-weight:700;color:#c0c5cc;">13</div>
+                        <div style="font-size:10.5px;color:#b0b5bd;margin-top:4px;font-weight:500;">ว่าง</div>
+                    </div>
+                    <!-- 14 ว่าง -->
+                    <div style="background:#f3f4f6;border:1px solid #e5e7eb;border-radius:14px;padding:14px 10px;">
+                        <div style="font-size:22px;font-weight:700;color:#c0c5cc;">14</div>
+                        <div style="font-size:10.5px;color:#b0b5bd;margin-top:4px;font-weight:500;">ว่าง</div>
+                    </div>
+                    <!-- 15 สมศรี — occupied -->
+                    <div onclick="nav('pg-prep-pt-drugs')" style="background:linear-gradient(135deg,#e0f2fe,#bae6fd);border:1px solid rgba(186,230,253,0.6);border-radius:14px;padding:14px 10px;cursor:pointer;transition:all .2s ease;position:relative;overflow:hidden;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 20px rgba(56,189,248,0.2)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+                        <div style="font-size:22px;font-weight:700;color:#0284c7;">15</div>
+                        <div style="font-size:10.5px;color:#0369a1;margin-top:4px;font-weight:500;">สมศรี</div>
+                        <div style="margin-top:6px;"><span style="background:linear-gradient(135deg,#0284c7,#0ea5e9);color:white;padding:3px 8px;border-radius:6px;font-size:8.5px;font-weight:600;display:inline-flex;align-items:center;gap:3px;box-shadow:0 1px 4px rgba(2,132,199,0.25);">
+                            <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><path d="M9 12l2 2 4-4"/></svg>0/2 ยา</span></div>
+                        <div style="position:absolute;top:7px;right:7px;width:8px;height:8px;border-radius:50%;background:linear-gradient(135deg,#0D9488,#14B8A6);box-shadow:0 0 0 2px rgba(13,148,136,0.2);"></div>
+                    </div>
+                    <!-- 16 ว่าง -->
+                    <div style="background:#f3f4f6;border:1px solid #e5e7eb;border-radius:14px;padding:14px 10px;">
+                        <div style="font-size:22px;font-weight:700;color:#c0c5cc;">16</div>
+                        <div style="font-size:10.5px;color:#b0b5bd;margin-top:4px;font-weight:500;">ว่าง</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT: รายการผู้ป่วย -->
+            <div style="background:rgba(255,255,255,0.75);backdrop-filter:blur(16px) saturate(180%);-webkit-backdrop-filter:blur(16px) saturate(180%);border:1px solid rgba(226,232,240,0.6);border-radius:20px;box-shadow:0 1px 3px rgba(0,0,0,0.04),0 8px 32px rgba(0,0,0,0.06);display:flex;flex-direction:column;overflow:hidden;">
+
+                <!-- Section header -->
+                <div style="display:flex;align-items:center;gap:10px;padding:20px 22px 14px;border-bottom:1px solid rgba(226,232,240,0.6);flex-shrink:0;">
+                    <div style="width:34px;height:34px;background:linear-gradient(135deg,#CCFBF1,#99F6E4);border-radius:10px;display:flex;align-items:center;justify-content:center;">
+                        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#0D9488" stroke-width="2.2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+                    </div>
+                    <div style="font-size:15px;font-weight:700;color:var(--text-1);">รายการผู้ป่วย</div>
+                    <div style="margin-left:auto;padding:4px 10px;background:linear-gradient(135deg,#CCFBF1,#99F6E4);border-radius:8px;font-size:10px;font-weight:600;color:#0D9488;">8 คน</div>
+                </div>
+
+                <!-- Table header -->
+                <div style="display:grid;grid-template-columns:48px 1fr 1fr 68px;padding:10px 22px;font-size:10px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:0.04em;border-bottom:1px solid rgba(226,232,240,0.4);flex-shrink:0;background:rgba(248,250,252,0.5);">
+                    <div>ห้อง</div><div>ผู้ป่วย</div><div>รายการ</div><div style="text-align:center;">สถานะ</div>
+                </div>
+
+                <!-- Patient list -->
+                <div id="pbpList" style="flex:1;overflow-y:auto;">
+
+                    <!-- 01 สมชาย -->
+                    <div onclick="nav('pg-prep-pt-drugs')" data-name="สมชาย มานะ" data-hn="6401234" data-bed="3A-01" style="display:grid;grid-template-columns:48px 1fr 1fr 68px;padding:13px 22px;border-bottom:1px solid rgba(226,232,240,0.4);cursor:pointer;transition:all .15s ease;align-items:center;" onmouseover="this.style.background='rgba(204,251,241,0.3)'" onmouseout="this.style.background=''">
+                        <div style="width:36px;height:36px;background:linear-gradient(135deg,#0D9488,#14B8A6);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:white;box-shadow:0 2px 6px rgba(13,148,136,0.25);">01</div>
+                        <div style="padding-left:4px;"><div style="font-size:13px;font-weight:600;color:var(--text-1);">นายสมชาย มานะ</div><div style="font-size:10px;color:var(--text-3);margin-top:1px;">HN: 6401234</div></div>
+                        <div><div style="font-size:11px;color:var(--text-2);font-weight:500;">08:00</div><div style="font-size:10px;color:var(--text-3);margin-top:1px;">1/3 รายการ</div></div>
+                        <div style="text-align:center;"><span style="padding:4px 10px;border-radius:8px;font-size:9px;font-weight:600;background:linear-gradient(135deg,#FEF3C7,#FDE68A);color:#92400E;">รอจัด</span></div>
+                    </div>
+
+                    <!-- 02 พิมพ์ใจ -->
+                    <div onclick="nav('pg-prep-pt-drugs')" data-name="พิมพ์ใจ สุขสม" data-hn="6401567" data-bed="3A-02" style="display:grid;grid-template-columns:48px 1fr 1fr 68px;padding:13px 22px;border-bottom:1px solid rgba(226,232,240,0.4);cursor:pointer;transition:all .15s ease;align-items:center;" onmouseover="this.style.background='rgba(204,251,241,0.3)'" onmouseout="this.style.background=''">
+                        <div style="width:36px;height:36px;background:linear-gradient(135deg,#8b5cf6,#a78bfa);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:white;box-shadow:0 2px 6px rgba(139,92,246,0.25);">02</div>
+                        <div style="padding-left:4px;"><div style="font-size:13px;font-weight:600;color:var(--text-1);">นส.พิมพ์ใจ สุขสม</div><div style="font-size:10px;color:var(--text-3);margin-top:1px;">HN: 6401567</div></div>
+                        <div><div style="font-size:11px;color:var(--text-2);font-weight:500;">08:00</div><div style="font-size:10px;color:var(--text-3);margin-top:1px;">1/2 รายการ</div></div>
+                        <div style="text-align:center;"><span style="padding:4px 10px;border-radius:8px;font-size:9px;font-weight:600;background:linear-gradient(135deg,#FEF3C7,#FDE68A);color:#92400E;">รอจัด</span></div>
+                    </div>
+
+                    <!-- 03 มาลี -->
+                    <div onclick="nav('pg-prep-pt-drugs')" data-name="มาลี สุขใจ" data-hn="6404215" data-bed="3A-03" style="display:grid;grid-template-columns:48px 1fr 1fr 68px;padding:13px 22px;border-bottom:1px solid rgba(226,232,240,0.4);cursor:pointer;transition:all .15s ease;align-items:center;" onmouseover="this.style.background='rgba(204,251,241,0.3)'" onmouseout="this.style.background=''">
+                        <div style="width:36px;height:36px;background:linear-gradient(135deg,#0D9488,#14B8A6);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:white;box-shadow:0 2px 6px rgba(13,148,136,0.25);">03</div>
+                        <div style="padding-left:4px;"><div style="font-size:13px;font-weight:600;color:var(--text-1);">นางมาลี สุขใจ</div><div style="font-size:10px;color:var(--text-3);margin-top:1px;">HN: 6404215</div></div>
+                        <div><div style="font-size:11px;color:var(--text-2);font-weight:500;">08:00</div><div style="font-size:10px;color:var(--text-3);margin-top:1px;">0/4 รายการ</div></div>
+                        <div style="text-align:center;"><span style="padding:4px 10px;border-radius:8px;font-size:9px;font-weight:600;background:linear-gradient(135deg,#FEF3C7,#FDE68A);color:#92400E;">รอจัด</span></div>
+                    </div>
+
+                    <!-- 05 วิชัย -->
+                    <div onclick="nav('pg-prep-pt-drugs')" data-name="วิชัย ดีงาม" data-hn="6402890" data-bed="3A-05" style="display:grid;grid-template-columns:48px 1fr 1fr 68px;padding:13px 22px;border-bottom:1px solid rgba(226,232,240,0.4);cursor:pointer;transition:all .15s ease;align-items:center;" onmouseover="this.style.background='rgba(204,251,241,0.3)'" onmouseout="this.style.background=''">
+                        <div style="width:36px;height:36px;background:linear-gradient(135deg,#0D9488,#14B8A6);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:white;box-shadow:0 2px 6px rgba(13,148,136,0.25);">05</div>
+                        <div style="padding-left:4px;"><div style="font-size:13px;font-weight:600;color:var(--text-1);">นายวิชัย ดีงาม</div><div style="font-size:10px;color:var(--text-3);margin-top:1px;">HN: 6402890</div></div>
+                        <div><div style="font-size:11px;color:var(--text-2);font-weight:500;">08:00</div><div style="font-size:10px;color:var(--text-3);margin-top:1px;">0/2 รายการ</div></div>
+                        <div style="text-align:center;"><span style="padding:4px 10px;border-radius:8px;font-size:9px;font-weight:600;background:linear-gradient(135deg,#FEF3C7,#FDE68A);color:#92400E;">รอจัด</span></div>
+                    </div>
+
+                    <!-- 08 กัลยา -->
+                    <div onclick="nav('pg-prep-pt-drugs')" data-name="กัลยา ชัยวงศ์" data-hn="6403012" data-bed="3A-08" style="display:grid;grid-template-columns:48px 1fr 1fr 68px;padding:13px 22px;border-bottom:1px solid rgba(226,232,240,0.4);cursor:pointer;transition:all .15s ease;align-items:center;" onmouseover="this.style.background='rgba(204,251,241,0.3)'" onmouseout="this.style.background=''">
+                        <div style="width:36px;height:36px;background:linear-gradient(135deg,#0D9488,#14B8A6);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:white;box-shadow:0 2px 6px rgba(13,148,136,0.25);">08</div>
+                        <div style="padding-left:4px;"><div style="font-size:13px;font-weight:600;color:var(--text-1);">นางกัลยา ชัยวงศ์</div><div style="font-size:10px;color:var(--text-3);margin-top:1px;">HN: 6403012</div></div>
+                        <div><div style="font-size:11px;color:var(--text-2);font-weight:500;">08:00</div><div style="font-size:10px;color:var(--text-3);margin-top:1px;">0/3 รายการ</div></div>
+                        <div style="text-align:center;"><span style="padding:4px 10px;border-radius:8px;font-size:9px;font-weight:600;background:linear-gradient(135deg,#FEF3C7,#FDE68A);color:#92400E;">รอจัด</span></div>
+                    </div>
+
+                    <!-- 10 ธนกร — done -->
+                    <div onclick="nav('pg-prep-pt-drugs')" data-name="ธนกร วิเศษสิทธิ์" data-hn="6405001" data-bed="3A-10" style="display:grid;grid-template-columns:48px 1fr 1fr 68px;padding:13px 22px;border-bottom:1px solid rgba(226,232,240,0.4);cursor:pointer;transition:all .15s ease;align-items:center;opacity:.55;">
+                        <div style="width:36px;height:36px;background:linear-gradient(135deg,#16a34a,#22c55e);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:white;box-shadow:0 2px 6px rgba(22,163,74,0.25);">10</div>
+                        <div style="padding-left:4px;"><div style="font-size:13px;font-weight:600;color:var(--text-1);">นายธนกร วิเศษสิทธิ์</div><div style="font-size:10px;color:var(--text-3);margin-top:1px;">HN: 6405001</div></div>
+                        <div><div style="font-size:11px;color:#16a34a;font-weight:600;">2/2 เสร็จ</div></div>
+                        <div style="text-align:center;"><span style="padding:4px 10px;border-radius:8px;font-size:9px;font-weight:600;background:linear-gradient(135deg,#DCFCE7,#BBF7D0);color:#16a34a;">เสร็จ</span></div>
+                    </div>
+
+                    <!-- 12 ประสิทธิ์ -->
+                    <div onclick="nav('pg-prep-pt-drugs')" data-name="ประสิทธิ์ แก้วงาม" data-hn="6406234" data-bed="3A-12" style="display:grid;grid-template-columns:48px 1fr 1fr 68px;padding:13px 22px;border-bottom:1px solid rgba(226,232,240,0.4);cursor:pointer;transition:all .15s ease;align-items:center;" onmouseover="this.style.background='rgba(204,251,241,0.3)'" onmouseout="this.style.background=''">
+                        <div style="width:36px;height:36px;background:linear-gradient(135deg,#0D9488,#14B8A6);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:white;box-shadow:0 2px 6px rgba(13,148,136,0.25);">12</div>
+                        <div style="padding-left:4px;"><div style="font-size:13px;font-weight:600;color:var(--text-1);">นายประสิทธิ์ แก้วงาม</div><div style="font-size:10px;color:var(--text-3);margin-top:1px;">HN: 6406234</div></div>
+                        <div><div style="font-size:11px;color:var(--text-2);font-weight:500;">12:00</div><div style="font-size:10px;color:var(--text-3);margin-top:1px;">0/1 รายการ</div></div>
+                        <div style="text-align:center;"><span style="padding:4px 10px;border-radius:8px;font-size:9px;font-weight:600;background:linear-gradient(135deg,#FEF3C7,#FDE68A);color:#92400E;">รอจัด</span></div>
+                    </div>
+
+                    <!-- 15 สมศรี -->
+                    <div onclick="nav('pg-prep-pt-drugs')" data-name="สมศรี บุญมาก" data-hn="6407890" data-bed="3A-15" style="display:grid;grid-template-columns:48px 1fr 1fr 68px;padding:13px 22px;cursor:pointer;transition:all .15s ease;align-items:center;" onmouseover="this.style.background='rgba(204,251,241,0.3)'" onmouseout="this.style.background=''">
+                        <div style="width:36px;height:36px;background:linear-gradient(135deg,#0D9488,#14B8A6);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:white;box-shadow:0 2px 6px rgba(13,148,136,0.25);">15</div>
+                        <div style="padding-left:4px;"><div style="font-size:13px;font-weight:600;color:var(--text-1);">นางสมศรี บุญมาก</div><div style="font-size:10px;color:var(--text-3);margin-top:1px;">HN: 6407890</div></div>
+                        <div><div style="font-size:11px;color:var(--text-2);font-weight:500;">12:00</div><div style="font-size:10px;color:var(--text-3);margin-top:1px;">0/2 รายการ</div></div>
+                        <div style="text-align:center;"><span style="padding:4px 10px;border-radius:8px;font-size:9px;font-weight:600;background:linear-gradient(135deg,#FEF3C7,#FDE68A);color:#92400E;">รอจัด</span></div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div><!-- end 2-col -->
+    </div><!-- end body -->
+</div>

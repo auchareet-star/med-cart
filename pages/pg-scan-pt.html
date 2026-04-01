@@ -1,0 +1,122 @@
+<div id="pg-scan-pt" class="page">
+
+    <header class="header">
+        <div class="header-left">
+            <button class="hdr-back" onclick="nav('pg-pt-detail')">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+                ย้อนกลับ
+            </button>
+            <div class="header-brand">
+                <div class="brand-icon">
+                    <svg width="27" height="27" viewBox="0 0 24 24" fill="white">
+                        <path d="M19 3H5C3.9 3 3 3.9 3 5v14c0 1.1.9 2 2 2h14c1.1 0
+                                 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c.55 0 1 .45 1
+                                 1v3h3c.55 0 1 .45 1 1s-.45 1-1 1h-3v3c0
+                                 .55-.45 1-1 1s-1-.45-1-1v-3H8c-.55 0-1-.45-1-1s.45-1
+                                 1-1h3V7c0-.55.45-1 1-1z"/>
+                    </svg>
+                </div>
+                <div>
+                    <div class="brand-name">Med Cart</div>
+                    <div class="brand-sub">สแกนยืนยันตัวผู้ป่วย</div>
+                </div>
+            </div>
+        </div>
+        <div class="header-right">
+            <div>
+                <div class="dt-time" id="clockSP">--:--:--</div>
+                <div class="dt-date" id="dateStrSP">--</div>
+            </div>
+            <div class="status-pill online"><span class="dot"></span> Online</div>
+        </div>
+    </header>
+
+    <div class="scan-pt-body">
+        <div class="scan-pt-frame">
+
+            <!-- Target patient -->
+            <div class="spt-target">
+                <div class="spt-avatar">สช</div>
+                <div class="spt-info">
+                    <div class="spt-name">นายสมชาย มานะ</div>
+                    <div class="spt-meta">HN: 6401234 &nbsp;·&nbsp; ชาย 58 ปี &nbsp;·&nbsp; Ward 3A</div>
+                    <div class="spt-warnings">
+                        <span class="pd-warn-tag allergy">แพ้ Penicillin</span>
+                        <span class="pd-warn-tag halert">High Alert</span>
+                        <span class="pd-warn-tag fall">Fall Risk</span>
+                    </div>
+                </div>
+                <div class="spt-right">
+                    <div class="spt-bed">3A-01</div>
+                    <div class="spt-ward">เตียง</div>
+                </div>
+            </div>
+
+            <!-- Scan card -->
+            <div class="spt-card">
+                <div class="spt-scan-zone">
+                    <div class="spt-illust idle" id="sptIllust">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none"
+                             stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" id="sptIcon" style="color:var(--text-3)">
+                            <path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/>
+                            <line x1="7" y1="12" x2="17" y2="12"/>
+                        </svg>
+                    </div>
+                    <div class="spt-heading" id="sptHeading">กรุณาสแกนสายรัดข้อมือผู้ป่วย</div>
+                    <div class="spt-hint" id="sptHint">
+                        ใช้เครื่องสแกนบาร์โค้ดที่ติดตั้งบนรถเข็น<br>
+                        สแกนที่สายรัดข้อมือของผู้ป่วยเพื่อยืนยันตัวตน
+                    </div>
+                    <button class="spt-scan-btn" id="sptScanBtn" onclick="demoScanPt('match')">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5">
+                            <path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/>
+                            <line x1="7" y1="12" x2="17" y2="12"/>
+                        </svg>
+                        เริ่มสแกน
+                    </button>
+                    <button class="spt-fallback" onclick="showToast('เปิดหน้าค้นหาผู้ป่วยด้วยตนเอง (กรณีฉุกเฉิน)'); setTimeout(()=>showToast(''),2500);">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                        กรอก HN แทน (กรณีฉุกเฉิน)
+                    </button>
+                </div>
+
+                <!-- Result: match -->
+                <div class="spt-result" id="sptResult">
+                    <div class="spt-result-box" id="sptResultBox">
+                        <div class="spt-result-icon" id="sptResultIcon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="white" id="sptResultSvg">
+                                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                            </svg>
+                        </div>
+                        <div class="spt-result-info">
+                            <div class="spt-result-title" id="sptResultTitle">ตรงกับผู้ป่วยเป้าหมาย</div>
+                            <div class="spt-result-detail" id="sptResultDetail">สมชาย มานะ · HN: 6401234 · เตียง 3A-01</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action after success -->
+                <div class="spt-action" id="sptActions">
+                    <button class="btn-secondary" onclick="resetScanPt()">
+                        สแกนใหม่
+                    </button>
+                    <button class="btn-primary" id="sptProceed" onclick="nav('pg-admin-med')">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                        ดำเนินการจ่ายยา
+                    </button>
+                </div>
+            </div>
+
+            <!-- Demo: mismatch button (for testing) -->
+            <div style="text-align:center;margin-top:16px;">
+                <button style="background:none;border:1px dashed var(--border);border-radius:8px;padding:6px 14px;font-family:'Sarabun';font-size:11px;color:var(--text-3);cursor:pointer;" onclick="demoScanPt('mismatch')">
+                    Demo: สแกนไม่ตรง
+                </button>
+                <button style="background:none;border:1px dashed var(--border);border-radius:8px;padding:6px 14px;font-family:'Sarabun';font-size:11px;color:var(--text-3);cursor:pointer;margin-left:6px;" onclick="resetScanPt()">
+                    Demo: รีเซ็ต
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>

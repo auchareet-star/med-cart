@@ -1,0 +1,147 @@
+<div id="pg-highalert" class="page">
+
+    <header class="header" style="border-bottom-color:#fde68a;">
+        <div class="header-left">
+            <button class="hdr-back" onclick="haBack()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+                ย้อนกลับ
+            </button>
+            <div class="header-brand">
+                <div class="brand-icon" style="background:#d97706;"><svg width="27" height="27" viewBox="0 0 24 24" fill="white"><path d="M19 3H5C3.9 3 3 3.9 3 5v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c.55 0 1 .45 1 1v3h3c.55 0 1 .45 1 1s-.45 1-1 1h-3v3c0 .55-.45 1-1 1s-1-.45-1-1v-3H8c-.55 0-1-.45-1-1s.45-1 1-1h3V7c0-.55.45-1 1-1z"/></svg></div>
+                <div><div class="brand-name" style="color:#d97706;">Med Cart — High Alert</div><div class="brand-sub">ยาที่ต้องตรวจสอบเข้มงวด</div></div>
+            </div>
+        </div>
+        <div class="header-right">
+            <div><div class="dt-time" id="clockHA">--:--:--</div><div class="dt-date" id="dateStrHA">--</div></div>
+            <div class="status-pill" style="background:#fffbeb;color:#d97706;"><span class="dot" style="background:#d97706;"></span> High Alert</div>
+        </div>
+    </header>
+
+    <div class="rt-body">
+
+        <!-- Stepper 7 steps -->
+        <div class="rt-stepper ha-stepper" id="haStepper">
+            <div class="rt-step active" data-s="1"><div class="rt-step-dot">1</div><span class="rt-step-label">ผู้ป่วย</span></div><div class="rt-step-line"></div>
+            <div class="rt-step" data-s="2"><div class="rt-step-dot">2</div><span class="rt-step-label">รายละเอียด</span></div><div class="rt-step-line"></div>
+            <div class="rt-step" data-s="3"><div class="rt-step-dot">3</div><span class="rt-step-label">สแกน Pt</span></div><div class="rt-step-line"></div>
+            <div class="rt-step" data-s="4"><div class="rt-step-dot">4</div><span class="rt-step-label">สแกนยา</span></div><div class="rt-step-line"></div>
+            <div class="rt-step" data-s="5"><div class="rt-step-dot">5</div><span class="rt-step-label">พยาน</span></div><div class="rt-step-line"></div>
+            <div class="rt-step" data-s="6"><div class="rt-step-dot">6</div><span class="rt-step-label">ยืนยัน</span></div><div class="rt-step-line"></div>
+            <div class="rt-step" data-s="7"><div class="rt-step-dot">7</div><span class="rt-step-label">สำเร็จ</span></div>
+        </div>
+
+        <!-- ══ STEP 1 ══ -->
+        <div class="rt-panel active" id="haStep1">
+            <div class="rt-inner">
+                <div class="ha-banner"><div class="ha-banner-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg></div><div><div class="ha-banner-text">High Alert Medication — ต้อง Double Check</div><div class="ha-banner-sub">ผู้ป่วยที่มีคำสั่งยา High Alert ใน Ward 3A</div></div></div>
+
+                <div class="ha-pt" onclick="haGoStep(2)"><div class="ha-pt-bar"></div><div class="rt-pt-info"><div class="rt-pt-name" style="display:flex;align-items:center;gap:6px;">นายสมชาย มานะ <span class="pt-badge high-alert" style="font-size:9px;">High Alert</span></div><div class="rt-pt-meta">HN: 6401234 · 3A-01 · Heparin 5000 units SC</div></div><div class="rt-pt-right"><div class="rt-pt-time">08:00</div><div class="rt-pt-count">1 ยา HA</div></div></div>
+                <div class="ha-pt" onclick="haGoStep(2)"><div class="ha-pt-bar"></div><div class="rt-pt-info"><div class="rt-pt-name" style="display:flex;align-items:center;gap:6px;">นายธนกร วิเศษสิทธิ์ <span class="pt-badge high-alert" style="font-size:9px;">High Alert</span><span class="pt-badge stat" style="font-size:9px;">STAT</span></div><div class="rt-pt-meta">HN: 6405001 · 3A-10 · Heparin 5000 units SC (STAT)</div></div><div class="rt-pt-right"><div class="rt-pt-time" style="color:#dc2626;">07:30</div><div class="rt-pt-count" style="color:#dc2626;">เลยเวลา</div></div></div>
+            </div>
+        </div>
+
+        <!-- ══ STEP 2 ══ -->
+        <div class="rt-panel" id="haStep2">
+            <div class="rt-inner">
+                <div class="ha-shield"><div class="ha-shield-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg></div><div><div class="ha-shield-title">ยานี้จัดเป็น High Alert — ต้องมีพยาน</div><div class="ha-shield-sub">ต้องมีเจ้าหน้าที่อีก 1 คนร่วม double check ก่อนให้ยา</div></div></div>
+
+                <div class="pd-hero" style="margin-bottom:16px;"><div class="pd-avatar" style="background:#d97706;">สช</div><div class="pd-pt-info"><div class="pd-pt-name">นายสมชาย มานะ</div><div class="pd-pt-meta"><span>HN: 6401234</span><span>เตียง 3A-01</span><span>ชาย, 58 ปี</span></div><div class="pd-allergy"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>แพ้ยา: Penicillin</div></div></div>
+
+                <div class="rt-drug" style="border-color:#fde68a;background:#fffdf5;"><div class="rt-drug-bar" style="background:#d97706;"></div><div class="rt-drug-info"><div class="rt-drug-name" style="display:flex;align-items:center;gap:6px;">Heparin 5000 units <span class="pt-badge high-alert" style="font-size:9px;">High Alert</span></div><div class="rt-drug-sub">SC · 5,000 units · OD · 08:00 น.</div><div style="margin-top:4px;"><span class="pt-badge" style="background:#fef2f2;color:#dc2626;font-size:9px;">ต้องมีพยาน</span><span class="pt-badge" style="background:#fffbeb;color:#92400e;font-size:9px;margin-left:3px;">Double Check</span></div></div></div>
+            </div>
+            <div class="rt-bottom"><button class="btn-secondary" onclick="haGoStep(1)">ย้อนกลับ</button><button class="btn-ha" style="flex:2;" onclick="haGoStep(3)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg>เริ่มสแกนผู้ป่วย</button></div>
+        </div>
+
+        <!-- ══ STEP 3: สแกนผู้ป่วย ══ -->
+        <div class="rt-panel" id="haStep3">
+            <div class="rt-inner center">
+                <div class="rt-scan-zone" style="max-width:440px;width:100%;">
+                    <div class="rt-scan-circle idle" id="haScan3C"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--text-3)" id="haScan3I"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg></div>
+                    <div style="font-size:20px;font-weight:800;color:var(--text-1);margin-bottom:4px;" id="haScan3H">กรุณาสแกนสายรัดข้อมือผู้ป่วย</div>
+                    <div style="font-size:14px;color:var(--text-2);margin-bottom:20px;">สมชาย มานะ · 3A-01 · HN: 6401234</div>
+                    <button class="btn-ha" style="max-width:260px;" onclick="haScanPt()" id="haScan3Btn">เริ่มสแกน</button>
+                </div>
+            </div>
+            <div class="rt-bottom" id="haStep3Bot" style="display:none;"><button class="btn-secondary" onclick="haResetScan3()">สแกนใหม่</button><button class="btn-ha" style="flex:2;" onclick="haGoStep(4)">ดำเนินการต่อ</button></div>
+        </div>
+
+        <!-- ══ STEP 4: สแกนยา + 7 Rights ══ -->
+        <div class="rt-panel" id="haStep4">
+            <div class="rt-inner">
+                <div class="ha-banner"><div class="ha-banner-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg></div><div><div class="ha-banner-text">สแกนยา High Alert — Heparin 5000 units</div><div class="ha-banner-sub">สแกนยาแล้วระบบจะไปขั้นตอนพยานโดยอัตโนมัติ</div></div></div>
+
+                <div class="am-detail" style="margin-bottom:14px;"><div class="am-detail-name" style="display:flex;align-items:center;gap:6px;">Heparin 5000 units <span class="pt-badge high-alert" style="font-size:10px;">High Alert</span></div><div class="am-detail-grid"><div><div class="am-dl">Dose</div><div class="am-dv" style="color:#d97706;font-weight:800;">5,000 units</div></div><div><div class="am-dl">Route</div><div class="am-dv">SC (ฉีดใต้ผิวหนัง)</div></div><div><div class="am-dl">เวลา</div><div class="am-dv">08:00 น.</div></div><div><div class="am-dl">Frequency</div><div class="am-dv">OD</div></div></div></div>
+
+                <div class="rt-rights" id="haRights"><div class="rt-r pass">Patient</div><div class="rt-r pend" id="haRD">Drug</div><div class="rt-r pend" id="haRDs">Dose</div><div class="rt-r pend" id="haRR">Route</div><div class="rt-r pass">Time</div><div class="rt-r pend" id="haRDc">Doc.</div><div class="rt-r pend" id="haRRs">Reason</div></div>
+
+                <button class="btn-ha" onclick="haScanDrug()" style="margin-bottom:14px;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg>สแกนยา</button>
+                <div class="am-scan-result" id="haDrugResult"><div class="am-sr-head"><span class="am-sr-status pass">ผ่าน</span><span class="am-sr-name">Heparin 5000 units</span></div><div class="am-sr-grid"><div><div class="am-sr-l">Lot</div><div class="am-sr-v">HEP-2025-042</div></div><div><div class="am-sr-l">Expiry</div><div class="am-sr-v">30/09/2569</div></div></div></div>
+            </div>
+            <div class="rt-bottom"><button class="btn-secondary" onclick="haGoStep(3)">ย้อนกลับ</button><button class="btn-ha" style="flex:2;" id="haBtnWit" onclick="haGoStep(5)" disabled><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>ไปขั้นตอนพยาน</button></div>
+        </div>
+
+        <!-- ══ STEP 5: พยาน / IDC ══ -->
+        <div class="rt-panel" id="haStep5">
+            <div class="rt-inner" style="max-width:540px;">
+                <div class="ha-shield"><div class="ha-shield-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div><div><div class="ha-shield-title">ขั้นตอนพยาน — Double Check บังคับ</div><div class="ha-shield-sub">Heparin 5000 units SC · สมชาย มานะ (3A-01)</div></div></div>
+
+                <div class="wit-card" style="margin-bottom:16px;">
+                    <div class="wit-card-head" style="padding:20px 24px 0;"><div class="wit-lock-icon" style="background:#fffbeb;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div><h2 class="wit-card-title">ยืนยันโดยพยาน</h2><p class="wit-card-sub">ให้เจ้าหน้าที่อีกท่านสแกนบัตรหรือกรอกข้อมูล</p></div>
+                    <div style="padding:20px 24px 24px;text-align:center;">
+                        <button class="btn-ha" style="max-width:300px;margin:0 auto;" onclick="haWitness()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>Demo: สแกนบัตรพยาน</button>
+                    </div>
+                    <div class="wit-result" id="haWitResult"><div class="wit-result-box"><div class="wit-result-avatar" style="background:#d97706;">วร</div><div class="wit-result-info"><div class="wit-result-name" style="color:#92400e;">นส.วรรณา รุ่งเรือง</div><div class="wit-result-meta" style="color:#b45309;">EMP-3251 · พยาบาลวิชาชีพ · อนุมัติเมื่อ <span id="haWitTime">--:--</span></div></div><svg width="24" height="24" viewBox="0 0 24 24" fill="#d97706"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg></div></div>
+                </div>
+            </div>
+            <div class="rt-bottom" id="haStep5Bot" style="display:none;"><button class="btn-secondary" onclick="haGoStep(4)">ย้อนกลับ</button><button class="btn-ha" style="flex:2;" onclick="haGoStep(6)"><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>ยืนยันและดำเนินการต่อ</button></div>
+        </div>
+
+        <!-- ══ STEP 6: ยืนยันบันทึก ══ -->
+        <div class="rt-panel" id="haStep6">
+            <div class="rt-inner" style="max-width:600px;">
+                <div class="rec-status-banner success" style="margin-bottom:18px;border-color:#d97706;background:#fffbeb;"><div class="rec-st-icon" style="background:#d97706;"><svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg></div><div><div class="rec-st-title" style="color:#92400e;">พร้อมบันทึก — ตรวจสอบครบแล้ว</div><div class="rec-st-sub" style="color:#b45309;">7 Rights ผ่าน + พยานยืนยันแล้ว</div></div></div>
+
+                <div class="rec-card"><div class="rec-card-title"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>ข้อมูลการให้ยา High Alert</div><div class="rec-grid">
+                    <div><div class="wit-ml">ผู้ป่วย</div><div class="wit-mv">นายสมชาย มานะ</div></div>
+                    <div><div class="wit-ml">HN / เตียง</div><div class="wit-mv">6401234 · 3A-01</div></div>
+                    <div><div class="wit-ml">ยา</div><div class="wit-mv" style="color:#d97706;font-weight:800;">Heparin 5000 units (HA)</div></div>
+                    <div><div class="wit-ml">Route</div><div class="wit-mv">SC</div></div>
+                    <div><div class="wit-ml">ผู้ให้ยา</div><div class="wit-mv">นส.สมใจ ดีมาก</div></div>
+                    <div><div class="wit-ml">พยาน</div><div class="wit-mv">นส.วรรณา รุ่งเรือง</div></div>
+                </div></div>
+
+                <div class="rec-card"><div class="rec-card-title"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>บันทึกเพิ่มเติม</div>
+                    <div class="rec-doc-group"><div class="rec-doc-label">เวลาให้ยาจริง <span style="color:#dc2626;">*</span></div><input type="time" class="rec-doc-input" value="08:10" style="max-width:180px;"></div>
+                    <div class="rec-doc-group"><div class="rec-doc-label">หมายเหตุ</div><textarea class="rec-doc-input" placeholder="หมายเหตุ (ถ้ามี)..." style="min-height:40px;"></textarea></div>
+                </div>
+            </div>
+            <div class="rt-bottom"><button class="btn-secondary" onclick="haGoStep(5)">กลับแก้ไข</button><button class="btn-ha" style="flex:2;" onclick="haGoStep(7)"><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>บันทึกผล</button></div>
+        </div>
+
+        <!-- ══ STEP 7: สำเร็จ ══ -->
+        <div class="rt-panel" id="haStep7">
+            <div class="rt-inner center">
+                <div class="ha-ok-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="white"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg></div>
+                <div style="font-size:26px;font-weight:800;color:#92400e;margin-bottom:4px;">ให้ยา High Alert สำเร็จแล้ว</div>
+                <div style="font-size:14px;color:var(--text-2);margin-bottom:24px;">Heparin 5000 units SC — Double Check ครบถ้วน</div>
+
+                <div class="ok-summary" style="max-width:420px;width:100%;">
+                    <div class="ok-summary-grid">
+                        <div><div class="wit-ml">ยา</div><div class="wit-mv" style="color:#d97706;font-weight:800;">Heparin 5000 units (HA)</div></div>
+                        <div><div class="wit-ml">สถานะ</div><div class="wit-mv green">ให้ยาแล้ว</div></div>
+                        <div><div class="wit-ml">ผู้ให้ยา</div><div class="wit-mv">นส.สมใจ ดีมาก</div></div>
+                        <div><div class="wit-ml">พยาน</div><div class="wit-mv">นส.วรรณา รุ่งเรือง</div></div>
+                        <div><div class="wit-ml">เวลาให้จริง</div><div class="wit-mv" id="haGivenTime">--</div></div>
+                        <div><div class="wit-ml">Double Check</div><div class="wit-mv green">ผ่าน</div></div>
+                    </div>
+                </div>
+
+                <div class="ok-actions" style="max-width:420px;width:100%;">
+                    <button class="btn-primary" onclick="haGoStep(1)" style="background:#d97706;box-shadow:0 5px 22px rgba(217,119,6,.3);">กลับรายการผู้ป่วย</button>
+                    <button class="btn-secondary" onclick="nav('pg-dashboard')" style="border-color:var(--text-3);"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>กลับ Dashboard</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

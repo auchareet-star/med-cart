@@ -1,0 +1,272 @@
+<div id="pg-sched-detail" class="page">
+
+    <div style="flex:1;display:flex;flex-direction:column;overflow-y:auto;padding:20px 28px;">
+
+        <!-- ══ 1. Header Row ══════════════════════════════ -->
+        <div style="display:flex;align-items:center;gap:14px;margin-bottom:20px;">
+            <div style="width:42px;height:42px;background:linear-gradient(135deg,#7C3AED,#6D28D9);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 4px 14px rgba(124,58,237,0.3);">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <div style="flex:1;">
+                <div style="font-size:20px;font-weight:700;color:var(--text-1);letter-spacing:-0.3px;display:flex;align-items:center;gap:8px;">
+                    รายการจัดยา
+                    <span style="color:var(--text-3);font-weight:400;">—</span>
+                    <span style="color:#7C3AED;">รอบเช้า</span>
+                </div>
+                <div style="font-size:12px;color:var(--text-3);margin-top:2px;">06:00 – 08:00 น. · Ward 3A</div>
+            </div>
+        </div>
+
+        <!-- ══ 2. Time Summary Banner ═════════════════════ -->
+        <div style="background:rgba(255,255,255,0.88);backdrop-filter:blur(16px) saturate(180%);-webkit-backdrop-filter:blur(16px) saturate(180%);border:1px solid rgba(226,232,240,0.6);border-left:4px solid transparent;border-image:linear-gradient(180deg,#7C3AED,#A78BFA) 1;border-image-slice:1;border-radius:16px;padding:16px 20px;margin-bottom:18px;box-shadow:0 2px 12px rgba(124,58,237,0.06),0 8px 32px rgba(0,0,0,0.04);overflow:hidden;position:relative;">
+            <!-- Subtle decorative circle -->
+            <div style="position:absolute;width:120px;height:120px;border-radius:50%;background:radial-gradient(circle,rgba(124,58,237,0.04),transparent);top:-40px;right:20px;pointer-events:none;"></div>
+
+            <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;position:relative;">
+                <!-- Left: icon + label -->
+                <div style="display:flex;align-items:center;gap:12px;flex:1;min-width:220px;">
+                    <div style="width:44px;height:44px;background:linear-gradient(135deg,#FDE68A,#F59E0B);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 3px 10px rgba(245,158,11,0.25);">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                    </div>
+                    <div>
+                        <div style="font-size:16px;font-weight:700;color:var(--text-1);">รอบเช้า</div>
+                        <div style="font-size:11px;color:var(--text-3);margin-top:1px;">06:00 – 08:00 น. · <span style="color:#D97706;font-weight:600;">จัดแล้วบางส่วน</span></div>
+                    </div>
+                </div>
+
+                <!-- Right: 4 stat boxes -->
+                <div style="display:flex;gap:8px;flex-shrink:0;">
+                    <!-- ผู้ป่วย -->
+                    <div style="background:linear-gradient(135deg,#F5F3FF,#EDE9FE);border-radius:10px;padding:8px 14px;text-align:center;min-width:62px;">
+                        <div style="font-size:20px;font-weight:800;color:#7C3AED;line-height:1;">8</div>
+                        <div style="font-size:9px;font-weight:600;color:#7C3AED;opacity:.7;margin-top:2px;">ผู้ป่วย</div>
+                    </div>
+                    <!-- รายการยา -->
+                    <div style="background:linear-gradient(135deg,#EFF6FF,#DBEAFE);border-radius:10px;padding:8px 14px;text-align:center;min-width:62px;">
+                        <div style="font-size:20px;font-weight:800;color:#2563EB;line-height:1;">24</div>
+                        <div style="font-size:9px;font-weight:600;color:#2563EB;opacity:.7;margin-top:2px;">รายการยา</div>
+                    </div>
+                    <!-- จัดแล้ว -->
+                    <div style="background:linear-gradient(135deg,#F0FDFA,#CCFBF1);border-radius:10px;padding:8px 14px;text-align:center;min-width:62px;">
+                        <div style="font-size:20px;font-weight:800;color:#0D9488;line-height:1;">8</div>
+                        <div style="font-size:9px;font-weight:600;color:#0D9488;opacity:.7;margin-top:2px;">จัดแล้ว</div>
+                    </div>
+                    <!-- ค้าง -->
+                    <div style="background:linear-gradient(135deg,#FFFBEB,#FEF3C7);border-radius:10px;padding:8px 14px;text-align:center;min-width:62px;">
+                        <div style="font-size:20px;font-weight:800;color:#D97706;line-height:1;">16</div>
+                        <div style="font-size:9px;font-weight:600;color:#D97706;opacity:.7;margin-top:2px;">ค้าง</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ══ 3. View Toggle ═════════════════════════════ -->
+        <div style="display:flex;gap:4px;background:rgba(255,255,255,0.7);backdrop-filter:blur(8px);border:1px solid var(--border);border-radius:12px;padding:4px;margin-bottom:16px;width:fit-content;">
+            <button onclick="trdSwitch('patient',this)" style="display:flex;align-items:center;gap:6px;padding:8px 18px;border-radius:9px;border:none;font-size:13px;font-weight:600;cursor:pointer;transition:all .25s;background:linear-gradient(135deg,#7C3AED,#6D28D9);color:white;box-shadow:0 2px 8px rgba(124,58,237,0.25);font-family:inherit;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+                ดูตามผู้ป่วย
+            </button>
+            <button onclick="trdSwitch('drug',this)" style="display:flex;align-items:center;gap:6px;padding:8px 18px;border-radius:9px;border:none;font-size:13px;font-weight:600;cursor:pointer;transition:all .25s;background:transparent;color:var(--text-2);font-family:inherit;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+                ดูตามรายการยา
+            </button>
+        </div>
+
+        <!-- ══ 4. Patient View ════════════════════════════ -->
+        <div id="trdViewPt" style="flex:1;">
+
+            <!-- Patient 1: สมชาย มานะ — teal gradient -->
+            <div style="background:rgba(255,255,255,0.9);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:14px;padding:14px 16px;display:flex;align-items:center;gap:12px;margin-bottom:8px;transition:all .2s;cursor:default;" onmouseover="this.style.boxShadow='0 4px 16px rgba(0,0,0,0.06)';this.style.borderColor='#A78BFA'" onmouseout="this.style.boxShadow='';this.style.borderColor='var(--border)'">
+                <div style="width:38px;height:38px;background:linear-gradient(135deg,#0D9488,#14B8A6);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:white;flex-shrink:0;">สช</div>
+                <div style="flex:1;">
+                    <div style="font-size:14px;font-weight:600;color:var(--text-1);">นายสมชาย มานะ</div>
+                    <div style="font-size:11px;color:var(--text-3);">HN: 6401234 · เตียง 3A-01</div>
+                </div>
+                <span style="padding:4px 10px;border-radius:8px;font-size:10px;font-weight:600;background:#EFF6FF;color:#2563EB;">1/3 จัดแล้ว</span>
+            </div>
+
+            <!-- Patient 2: มาลี สุขใจ — purple gradient -->
+            <div style="background:rgba(255,255,255,0.9);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:14px;padding:14px 16px;display:flex;align-items:center;gap:12px;margin-bottom:8px;transition:all .2s;cursor:default;" onmouseover="this.style.boxShadow='0 4px 16px rgba(0,0,0,0.06)';this.style.borderColor='#A78BFA'" onmouseout="this.style.boxShadow='';this.style.borderColor='var(--border)'">
+                <div style="width:38px;height:38px;background:linear-gradient(135deg,#7C3AED,#A78BFA);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:white;flex-shrink:0;">มส</div>
+                <div style="flex:1;">
+                    <div style="font-size:14px;font-weight:600;color:var(--text-1);">นางมาลี สุขใจ</div>
+                    <div style="font-size:11px;color:var(--text-3);">HN: 6404215 · เตียง 3A-03</div>
+                </div>
+                <span style="padding:4px 10px;border-radius:8px;font-size:10px;font-weight:600;background:#F1F5F9;color:#64748B;">0/4 ยังไม่จัด</span>
+            </div>
+
+            <!-- Patient 3: พิมพ์ใจ สุขสม — blue gradient -->
+            <div style="background:rgba(255,255,255,0.9);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:14px;padding:14px 16px;display:flex;align-items:center;gap:12px;margin-bottom:8px;transition:all .2s;cursor:default;" onmouseover="this.style.boxShadow='0 4px 16px rgba(0,0,0,0.06)';this.style.borderColor='#A78BFA'" onmouseout="this.style.boxShadow='';this.style.borderColor='var(--border)'">
+                <div style="width:38px;height:38px;background:linear-gradient(135deg,#2563EB,#3B82F6);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:white;flex-shrink:0;">พส</div>
+                <div style="flex:1;">
+                    <div style="font-size:14px;font-weight:600;color:var(--text-1);">นางสาวพิมพ์ใจ สุขสม</div>
+                    <div style="font-size:11px;color:var(--text-3);">HN: 6401567 · เตียง 3A-02</div>
+                </div>
+                <span style="padding:4px 10px;border-radius:8px;font-size:10px;font-weight:600;background:#EFF6FF;color:#2563EB;">1/2 จัดแล้ว</span>
+            </div>
+
+            <!-- Patient 4: วิชัย ดีงาม — amber gradient -->
+            <div style="background:rgba(255,255,255,0.9);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:14px;padding:14px 16px;display:flex;align-items:center;gap:12px;margin-bottom:8px;transition:all .2s;cursor:default;" onmouseover="this.style.boxShadow='0 4px 16px rgba(0,0,0,0.06)';this.style.borderColor='#A78BFA'" onmouseout="this.style.boxShadow='';this.style.borderColor='var(--border)'">
+                <div style="width:38px;height:38px;background:linear-gradient(135deg,#D97706,#F59E0B);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:white;flex-shrink:0;">วด</div>
+                <div style="flex:1;">
+                    <div style="font-size:14px;font-weight:600;color:var(--text-1);">นายวิชัย ดีงาม</div>
+                    <div style="font-size:11px;color:var(--text-3);">HN: 6402890 · เตียง 3A-05</div>
+                </div>
+                <span style="padding:4px 10px;border-radius:8px;font-size:10px;font-weight:600;background:#F1F5F9;color:#64748B;">0/2 ยังไม่จัด</span>
+            </div>
+
+            <!-- Patient 5: กัลยา ชัยวงศ์ — pink gradient -->
+            <div style="background:rgba(255,255,255,0.9);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:14px;padding:14px 16px;display:flex;align-items:center;gap:12px;margin-bottom:8px;transition:all .2s;cursor:default;" onmouseover="this.style.boxShadow='0 4px 16px rgba(0,0,0,0.06)';this.style.borderColor='#A78BFA'" onmouseout="this.style.boxShadow='';this.style.borderColor='var(--border)'">
+                <div style="width:38px;height:38px;background:linear-gradient(135deg,#DB2777,#EC4899);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:white;flex-shrink:0;">กช</div>
+                <div style="flex:1;">
+                    <div style="font-size:14px;font-weight:600;color:var(--text-1);">นางกัลยา ชัยวงศ์</div>
+                    <div style="font-size:11px;color:var(--text-3);">HN: 6403012 · เตียง 3A-08</div>
+                </div>
+                <span style="padding:4px 10px;border-radius:8px;font-size:10px;font-weight:600;background:#F1F5F9;color:#64748B;">0/3 ยังไม่จัด</span>
+            </div>
+
+            <!-- Patient 6: ธนกร วิเศษสิทธิ์ — cyan gradient (DONE - opacity .6) -->
+            <div style="background:rgba(255,255,255,0.9);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:14px;padding:14px 16px;display:flex;align-items:center;gap:12px;margin-bottom:8px;transition:all .2s;cursor:default;opacity:.6;" onmouseover="this.style.boxShadow='0 4px 16px rgba(0,0,0,0.06)';this.style.borderColor='#A78BFA'" onmouseout="this.style.boxShadow='';this.style.borderColor='var(--border)'">
+                <div style="width:38px;height:38px;background:linear-gradient(135deg,#0891B2,#06B6D4);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:white;flex-shrink:0;">ธว</div>
+                <div style="flex:1;">
+                    <div style="font-size:14px;font-weight:600;color:var(--text-1);">นายธนกร วิเศษสิทธิ์</div>
+                    <div style="font-size:11px;color:var(--text-3);">HN: 6405001 · เตียง 3A-10</div>
+                </div>
+                <span style="padding:4px 10px;border-radius:8px;font-size:10px;font-weight:600;background:#F0FDF4;color:#16A34A;">2/2 จัดครบ</span>
+            </div>
+
+            <!-- Patient 7: ประสิทธิ์ แก้วงาม — indigo gradient -->
+            <div style="background:rgba(255,255,255,0.9);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:14px;padding:14px 16px;display:flex;align-items:center;gap:12px;margin-bottom:8px;transition:all .2s;cursor:default;" onmouseover="this.style.boxShadow='0 4px 16px rgba(0,0,0,0.06)';this.style.borderColor='#A78BFA'" onmouseout="this.style.boxShadow='';this.style.borderColor='var(--border)'">
+                <div style="width:38px;height:38px;background:linear-gradient(135deg,#4338CA,#6366F1);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:white;flex-shrink:0;">ปก</div>
+                <div style="flex:1;">
+                    <div style="font-size:14px;font-weight:600;color:var(--text-1);">นายประสิทธิ์ แก้วงาม</div>
+                    <div style="font-size:11px;color:var(--text-3);">HN: 6406234 · เตียง 3A-12</div>
+                </div>
+                <span style="padding:4px 10px;border-radius:8px;font-size:10px;font-weight:600;background:#EFF6FF;color:#2563EB;">2/4 จัดแล้ว</span>
+            </div>
+
+            <!-- Patient 8: สมศรี บุญมาก — emerald gradient -->
+            <div style="background:rgba(255,255,255,0.9);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:14px;padding:14px 16px;display:flex;align-items:center;gap:12px;margin-bottom:8px;transition:all .2s;cursor:default;" onmouseover="this.style.boxShadow='0 4px 16px rgba(0,0,0,0.06)';this.style.borderColor='#A78BFA'" onmouseout="this.style.boxShadow='';this.style.borderColor='var(--border)'">
+                <div style="width:38px;height:38px;background:linear-gradient(135deg,#059669,#10B981);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:white;flex-shrink:0;">สบ</div>
+                <div style="flex:1;">
+                    <div style="font-size:14px;font-weight:600;color:var(--text-1);">นางสมศรี บุญมาก</div>
+                    <div style="font-size:11px;color:var(--text-3);">HN: 6407890 · เตียง 3A-15</div>
+                </div>
+                <span style="padding:4px 10px;border-radius:8px;font-size:10px;font-weight:600;background:#EFF6FF;color:#2563EB;">2/4 จัดแล้ว</span>
+            </div>
+
+        </div>
+
+        <!-- ══ 5. Drug View (hidden) ══════════════════════ -->
+        <div id="trdViewDrug" style="display:none;flex:1;">
+
+            <!-- Drug 1: Amlodipine 5 mg — ยังไม่จัด -->
+            <div style="background:rgba(255,255,255,0.9);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:14px;padding:14px 16px;display:flex;align-items:center;gap:12px;margin-bottom:8px;transition:all .2s;cursor:default;" onmouseover="this.style.boxShadow='0 4px 16px rgba(0,0,0,0.06)';this.style.borderColor='#A78BFA'" onmouseout="this.style.boxShadow='';this.style.borderColor='var(--border)'">
+                <div style="width:38px;height:38px;background:linear-gradient(135deg,#F5F3FF,#EDE9FE);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-6 18.75h9"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="12" y1="6" x2="12" y2="12"/></svg>
+                </div>
+                <div style="flex:1;">
+                    <div style="font-size:14px;font-weight:600;color:var(--text-1);">Amlodipine 5 mg</div>
+                    <div style="font-size:11px;color:var(--text-3);">DRG-00421 · เม็ด · PO</div>
+                </div>
+                <div style="display:flex;align-items:center;gap:10px;">
+                    <div style="text-align:right;">
+                        <div style="font-size:13px;font-weight:700;color:var(--text-1);">6 เม็ด</div>
+                        <div style="font-size:10px;color:var(--text-3);">4 ผู้ป่วย</div>
+                    </div>
+                    <span style="padding:4px 10px;border-radius:8px;font-size:10px;font-weight:600;background:#F1F5F9;color:#64748B;">ยังไม่จัด</span>
+                </div>
+            </div>
+
+            <!-- Drug 2: Metformin 500 mg — จัดบางส่วน -->
+            <div style="background:rgba(255,255,255,0.9);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:14px;padding:14px 16px;display:flex;align-items:center;gap:12px;margin-bottom:8px;transition:all .2s;cursor:default;" onmouseover="this.style.boxShadow='0 4px 16px rgba(0,0,0,0.06)';this.style.borderColor='#A78BFA'" onmouseout="this.style.boxShadow='';this.style.borderColor='var(--border)'">
+                <div style="width:38px;height:38px;background:linear-gradient(135deg,#EFF6FF,#DBEAFE);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-6 18.75h9"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="12" y1="6" x2="12" y2="12"/></svg>
+                </div>
+                <div style="flex:1;">
+                    <div style="font-size:14px;font-weight:600;color:var(--text-1);">Metformin 500 mg</div>
+                    <div style="font-size:11px;color:var(--text-3);">DRG-00532 · เม็ด · PO</div>
+                </div>
+                <div style="display:flex;align-items:center;gap:10px;">
+                    <div style="text-align:right;">
+                        <div style="font-size:13px;font-weight:700;color:var(--text-1);">5 เม็ด</div>
+                        <div style="font-size:10px;color:var(--text-3);">3 ผู้ป่วย</div>
+                    </div>
+                    <span style="padding:4px 10px;border-radius:8px;font-size:10px;font-weight:600;background:#EFF6FF;color:#2563EB;">จัดบางส่วน</span>
+                </div>
+            </div>
+
+            <!-- Drug 3: Omeprazole 20 mg — ยังไม่จัด -->
+            <div style="background:rgba(255,255,255,0.9);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:14px;padding:14px 16px;display:flex;align-items:center;gap:12px;margin-bottom:8px;transition:all .2s;cursor:default;" onmouseover="this.style.boxShadow='0 4px 16px rgba(0,0,0,0.06)';this.style.borderColor='#A78BFA'" onmouseout="this.style.boxShadow='';this.style.borderColor='var(--border)'">
+                <div style="width:38px;height:38px;background:linear-gradient(135deg,#F5F3FF,#EDE9FE);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-6 18.75h9"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="12" y1="6" x2="12" y2="12"/></svg>
+                </div>
+                <div style="flex:1;">
+                    <div style="font-size:14px;font-weight:600;color:var(--text-1);">Omeprazole 20 mg</div>
+                    <div style="font-size:11px;color:var(--text-3);">DRG-00187 · แคปซูล · PO</div>
+                </div>
+                <div style="display:flex;align-items:center;gap:10px;">
+                    <div style="text-align:right;">
+                        <div style="font-size:13px;font-weight:700;color:var(--text-1);">4 แคปซูล</div>
+                        <div style="font-size:10px;color:var(--text-3);">4 ผู้ป่วย</div>
+                    </div>
+                    <span style="padding:4px 10px;border-radius:8px;font-size:10px;font-weight:600;background:#F1F5F9;color:#64748B;">ยังไม่จัด</span>
+                </div>
+            </div>
+
+            <!-- Drug 4: Heparin 5000 units — High Alert -->
+            <div style="background:rgba(255,255,255,0.9);backdrop-filter:blur(12px);border:1px solid #FECACA;border-radius:14px;padding:14px 16px;display:flex;align-items:center;gap:12px;margin-bottom:8px;transition:all .2s;cursor:default;" onmouseover="this.style.boxShadow='0 4px 16px rgba(220,38,38,0.08)';this.style.borderColor='#FCA5A5'" onmouseout="this.style.boxShadow='';this.style.borderColor='#FECACA'">
+                <div style="width:38px;height:38px;background:linear-gradient(135deg,#FEF2F2,#FEE2E2);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-6 18.75h9"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="12" y1="6" x2="12" y2="12"/></svg>
+                </div>
+                <div style="flex:1;">
+                    <div style="font-size:14px;font-weight:600;color:var(--text-1);display:flex;align-items:center;gap:6px;">
+                        Heparin 5000 units
+                        <span style="background:linear-gradient(135deg,#DC2626,#EF4444);color:white;font-size:8px;font-weight:700;padding:2px 6px;border-radius:4px;letter-spacing:.5px;">High Alert</span>
+                    </div>
+                    <div style="font-size:11px;color:var(--text-3);">DRG-00891 · ยาฉีด · SC</div>
+                </div>
+                <div style="display:flex;align-items:center;gap:10px;">
+                    <div style="text-align:right;">
+                        <div style="font-size:13px;font-weight:700;color:#DC2626;">3 vials</div>
+                        <div style="font-size:10px;color:var(--text-3);">2 ผู้ป่วย</div>
+                    </div>
+                    <span style="padding:4px 10px;border-radius:8px;font-size:10px;font-weight:600;background:#F1F5F9;color:#64748B;">ยังไม่จัด</span>
+                </div>
+            </div>
+
+            <!-- Drug 5: Aspirin 81 mg — จัดครบ (opacity .6) -->
+            <div style="background:rgba(255,255,255,0.9);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:14px;padding:14px 16px;display:flex;align-items:center;gap:12px;margin-bottom:8px;transition:all .2s;cursor:default;opacity:.6;" onmouseover="this.style.boxShadow='0 4px 16px rgba(0,0,0,0.06)';this.style.borderColor='#A78BFA'" onmouseout="this.style.boxShadow='';this.style.borderColor='var(--border)'">
+                <div style="width:38px;height:38px;background:linear-gradient(135deg,#F0FDF4,#DCFCE7);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#16A34A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-6 18.75h9"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="12" y1="6" x2="12" y2="12"/></svg>
+                </div>
+                <div style="flex:1;">
+                    <div style="font-size:14px;font-weight:600;color:var(--text-1);">Aspirin 81 mg</div>
+                    <div style="font-size:11px;color:var(--text-3);">DRG-00045 · เม็ด · PO</div>
+                </div>
+                <div style="display:flex;align-items:center;gap:10px;">
+                    <div style="text-align:right;">
+                        <div style="font-size:13px;font-weight:700;color:var(--text-3);">3 เม็ด</div>
+                        <div style="font-size:10px;color:var(--text-3);">3 ผู้ป่วย</div>
+                    </div>
+                    <span style="padding:4px 10px;border-radius:8px;font-size:10px;font-weight:600;background:#F0FDF4;color:#16A34A;">จัดครบ</span>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ══ 6. Action Buttons ══════════════════════════ -->
+        <div style="display:flex;gap:12px;margin-top:18px;padding-top:16px;border-top:1px solid var(--border);">
+            <button onclick="nav('pg-hw')" style="flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:14px 20px;border-radius:14px;border:1.5px solid var(--border);background:rgba(255,255,255,0.9);backdrop-filter:blur(8px);color:var(--text-2);font-size:14px;font-weight:600;cursor:pointer;transition:all .25s;font-family:inherit;" onmouseover="this.style.borderColor='#A78BFA';this.style.color='#7C3AED';this.style.background='rgba(124,58,237,0.04)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text-2)';this.style.background='rgba(255,255,255,0.9)'">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+                เลือก Drawer / Cassette
+            </button>
+            <button onclick="nav('pg-trf')" style="flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:14px 20px;border-radius:14px;border:none;background:linear-gradient(135deg,#7C3AED,#6D28D9);color:white;font-size:14px;font-weight:600;cursor:pointer;transition:all .25s;box-shadow:0 4px 16px rgba(124,58,237,0.3);font-family:inherit;" onmouseover="this.style.boxShadow='0 6px 24px rgba(124,58,237,0.4)';this.style.transform='translateY(-1px)'" onmouseout="this.style.boxShadow='0 4px 16px rgba(124,58,237,0.3)';this.style.transform=''">
+                เริ่มจัดยารอบนี้
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
+        </div>
+
+    </div>
+
+</div>
