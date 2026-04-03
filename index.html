@@ -5744,6 +5744,28 @@
             </div>
         </div>
 
+        <!-- Post-Assessment Quick Link -->
+        <div onclick="nav('pg-assess-list')" style="
+            background:linear-gradient(135deg,#ecfdf5,#d1fae5);
+            border:1.5px solid #6ee7b7;border-radius:18px;
+            padding:16px 20px;margin-bottom:20px;cursor:pointer;
+            display:flex;align-items:center;gap:16px;
+            transition:all .18s;box-shadow:0 2px 12px rgba(5,150,105,0.08);"
+            onmouseover="this.style.background='#d1fae5';this.style.borderColor='#059669';this.style.boxShadow='0 4px 18px rgba(5,150,105,0.18)';this.style.transform='translateY(-1px)'"
+            onmouseout="this.style.background='linear-gradient(135deg,#ecfdf5,#d1fae5)';this.style.borderColor='#6ee7b7';this.style.boxShadow='0 2px 12px rgba(5,150,105,0.08)';this.style.transform=''">
+            <div style="width:44px;height:44px;background:linear-gradient(135deg,#059669,#10b981);border-radius:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 4px 12px rgba(5,150,105,0.3);">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8" fill="none" stroke="white" stroke-width="2"/><line x1="16" y1="13" x2="8" y2="13" stroke="white" stroke-width="2"/><line x1="16" y1="17" x2="8" y2="17" stroke="white" stroke-width="2"/></svg>
+            </div>
+            <div style="flex:1;">
+                <div style="font-size:14px;font-weight:700;color:#065f46;margin-bottom:2px;">รายการประเมินหลังให้ยา</div>
+                <div style="font-size:12px;color:#059669;">ติดตามผลการตอบสนองของผู้ป่วยหลังได้รับยา</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;">
+                <span style="background:#fef2f2;color:#dc2626;font-size:11px;font-weight:700;padding:3px 10px;border-radius:8px;border:1px solid #fca5a5;">รอประเมิน 3</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
+        </div>
+
         <!-- Role section (pharma: stock + cassette | nurse: urgent + summary) -->
         <div id="dashRoleSection" class="db-role-section"></div>
 
@@ -5894,6 +5916,264 @@
 
     </div>
     </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     POST-ASSESSMENT LIST PAGE
+═══════════════════════════════════════════════════════════ -->
+<div id="pg-assess-list" class="page">
+
+    <header class="header" style="border-bottom-color:#86efac;">
+        <div class="header-left">
+            <button class="hdr-back" onclick="nav('pg-dashboard')">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+                ย้อนกลับ
+            </button>
+            <div class="header-brand">
+                <div class="brand-icon" style="background:linear-gradient(135deg,#059669,#10b981);">
+                    <svg width="27" height="27" viewBox="0 0 24 24" fill="white"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8" fill="none" stroke="white" stroke-width="2"/><line x1="16" y1="13" x2="8" y2="13" stroke="white" stroke-width="2"/><line x1="16" y1="17" x2="8" y2="17" stroke="white" stroke-width="2"/></svg>
+                </div>
+                <div>
+                    <div class="brand-name" style="color:#065f46;">ประเมินหลังให้ยา</div>
+                    <div class="brand-sub">Post-Medication Assessment</div>
+                </div>
+            </div>
+        </div>
+        <div class="header-right">
+            <div><div class="dt-time" id="clockAL">--:--:--</div><div class="dt-date" id="dateStrAL">--</div></div>
+            <div class="status-pill" style="background:#d1fae5;color:#065f46;"><span class="dot" style="background:#059669;"></span> Ward 3A</div>
+        </div>
+    </header>
+
+    <div style="flex:1;overflow-y:auto;background:#f8fafc;padding:24px;">
+    <div style="max-width:780px;margin:0 auto;">
+
+        <!-- Summary bar -->
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px;">
+            <div style="background:white;border:1.5px solid #fca5a5;border-radius:14px;padding:14px 16px;display:flex;align-items:center;gap:12px;">
+                <div style="width:36px;height:36px;background:#fef2f2;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                </div>
+                <div><div style="font-size:22px;font-weight:800;color:#dc2626;line-height:1;">3</div><div style="font-size:11px;color:#64748b;margin-top:1px;">รอประเมิน</div></div>
+            </div>
+            <div style="background:white;border:1.5px solid #86efac;border-radius:14px;padding:14px 16px;display:flex;align-items:center;gap:12px;">
+                <div style="width:36px;height:36px;background:#f0fdf4;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                </div>
+                <div><div style="font-size:22px;font-weight:800;color:#059669;line-height:1;">5</div><div style="font-size:11px;color:#64748b;margin-top:1px;">ประเมินแล้ว</div></div>
+            </div>
+            <div style="background:white;border:1.5px solid #e2e8f0;border-radius:14px;padding:14px 16px;display:flex;align-items:center;gap:12px;">
+                <div style="width:36px;height:36px;background:#f8fafc;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+                </div>
+                <div><div style="font-size:22px;font-weight:800;color:#1e293b;line-height:1;">8</div><div style="font-size:11px;color:#64748b;margin-top:1px;">ทั้งหมดวันนี้</div></div>
+            </div>
+        </div>
+
+        <!-- Filter tabs -->
+        <div style="display:flex;gap:8px;margin-bottom:16px;" id="alFilterTabs">
+            <button onclick="alFilter('all',this)" style="padding:7px 18px;border-radius:999px;border:1.5px solid #059669;background:#059669;color:white;font-size:12px;font-weight:700;cursor:pointer;">ทั้งหมด (8)</button>
+            <button onclick="alFilter('pending',this)" style="padding:7px 18px;border-radius:999px;border:1.5px solid #e2e8f0;background:white;color:#64748b;font-size:12px;font-weight:600;cursor:pointer;">รอประเมิน (3)</button>
+            <button onclick="alFilter('done',this)" style="padding:7px 18px;border-radius:999px;border:1.5px solid #e2e8f0;background:white;color:#64748b;font-size:12px;font-weight:600;cursor:pointer;">ประเมินแล้ว (5)</button>
+        </div>
+
+        <!-- List -->
+        <div id="alList" style="display:flex;flex-direction:column;gap:10px;">
+
+            <!-- Row 1 — รอประเมิน -->
+            <div class="al-row" data-status="pending" style="background:white;border:1.5px solid #fca5a5;border-radius:16px;padding:16px 18px;display:flex;align-items:center;gap:14px;cursor:pointer;transition:all .18s;"
+                onclick="goPostAssessI({patient:'นายสมชาย มานะ',bed:'6401234 · 3A-01',drug:'Morphine 5 mg',detail:'IV · 5 mg',type:'PRN',givenTime:'08:18 น.',showPain:true,origin:'pg-assess-list'})"
+                onmouseover="this.style.boxShadow='0 4px 18px rgba(220,38,38,0.12)';this.style.transform='translateY(-1px)'"
+                onmouseout="this.style.boxShadow='';this.style.transform=''">
+                <div style="width:42px;height:42px;background:#f5f3ff;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0016.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 002 8.5c0 2.3 1.5 4.05 3 5.5l7 7z"/></svg>
+                </div>
+                <div style="flex:1;min-width:0;">
+                    <div style="display:flex;align-items:center;gap:8px;margin-bottom:3px;">
+                        <span style="font-size:14px;font-weight:700;color:#1e293b;">นายสมชาย มานะ</span>
+                        <span style="font-size:10px;color:#64748b;">3A-01</span>
+                        <span style="font-size:10px;font-weight:700;background:#f5f3ff;color:#7c3aed;padding:2px 8px;border-radius:6px;border:1px solid #ddd6fe;">PRN</span>
+                    </div>
+                    <div style="font-size:12px;color:#475569;margin-bottom:2px;">Morphine 5 mg · IV</div>
+                    <div style="font-size:11px;color:#94a3b8;">ให้ยาเมื่อ 08:18 น.</div>
+                </div>
+                <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0;">
+                    <span style="font-size:11px;font-weight:700;background:#fef2f2;color:#dc2626;padding:3px 10px;border-radius:8px;border:1px solid #fca5a5;">รอประเมิน</span>
+                    <span style="font-size:11px;color:#059669;font-weight:600;">กดเพื่อประเมิน →</span>
+                </div>
+            </div>
+
+            <!-- Row 2 — รอประเมิน -->
+            <div class="al-row" data-status="pending" style="background:white;border:1.5px solid #fca5a5;border-radius:16px;padding:16px 18px;display:flex;align-items:center;gap:14px;cursor:pointer;transition:all .18s;"
+                onclick="goPostAssessI({patient:'นายธนกร วิเศษสิทธิ์',bed:'6405001 · 3A-10',drug:'Heparin 5000 units',detail:'SC · 5,000 units',type:'Overdue',givenTime:'08:18 น.',showPain:false,origin:'pg-assess-list'})"
+                onmouseover="this.style.boxShadow='0 4px 18px rgba(220,38,38,0.12)';this.style.transform='translateY(-1px)'"
+                onmouseout="this.style.boxShadow='';this.style.transform=''">
+                <div style="width:42px;height:42px;background:#fff1f2;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#be123c" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                </div>
+                <div style="flex:1;min-width:0;">
+                    <div style="display:flex;align-items:center;gap:8px;margin-bottom:3px;">
+                        <span style="font-size:14px;font-weight:700;color:#1e293b;">นายธนกร วิเศษสิทธิ์</span>
+                        <span style="font-size:10px;color:#64748b;">3A-10</span>
+                        <span style="font-size:10px;font-weight:700;background:#fff1f2;color:#be123c;padding:2px 8px;border-radius:6px;border:1px solid #fecdd3;">Overdue</span>
+                    </div>
+                    <div style="font-size:12px;color:#475569;margin-bottom:2px;">Heparin 5000 units · SC</div>
+                    <div style="font-size:11px;color:#94a3b8;">ให้ยาเมื่อ 08:18 น. (เลยเวลา 48 นาที)</div>
+                </div>
+                <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0;">
+                    <span style="font-size:11px;font-weight:700;background:#fef2f2;color:#dc2626;padding:3px 10px;border-radius:8px;border:1px solid #fca5a5;">รอประเมิน</span>
+                    <span style="font-size:11px;color:#059669;font-weight:600;">กดเพื่อประเมิน →</span>
+                </div>
+            </div>
+
+            <!-- Row 3 — รอประเมิน -->
+            <div class="al-row" data-status="pending" style="background:white;border:1.5px solid #fca5a5;border-radius:16px;padding:16px 18px;display:flex;align-items:center;gap:14px;cursor:pointer;transition:all .18s;"
+                onclick="goPostAssessI({patient:'นายสมชาย มานะ',bed:'6401234 · 3A-01',drug:'Heparin 5000 units',detail:'SC · 5,000 units',type:'High Alert',givenTime:'08:10 น.',showPain:false,origin:'pg-assess-list'})"
+                onmouseover="this.style.boxShadow='0 4px 18px rgba(220,38,38,0.12)';this.style.transform='translateY(-1px)'"
+                onmouseout="this.style.boxShadow='';this.style.transform=''">
+                <div style="width:42px;height:42px;background:#fffbeb;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                </div>
+                <div style="flex:1;min-width:0;">
+                    <div style="display:flex;align-items:center;gap:8px;margin-bottom:3px;">
+                        <span style="font-size:14px;font-weight:700;color:#1e293b;">นายสมชาย มานะ</span>
+                        <span style="font-size:10px;color:#64748b;">3A-01</span>
+                        <span style="font-size:10px;font-weight:700;background:#fffbeb;color:#d97706;padding:2px 8px;border-radius:6px;border:1px solid #fde68a;">High Alert</span>
+                    </div>
+                    <div style="font-size:12px;color:#475569;margin-bottom:2px;">Heparin 5000 units · SC (HA)</div>
+                    <div style="font-size:11px;color:#94a3b8;">ให้ยาเมื่อ 08:10 น.</div>
+                </div>
+                <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0;">
+                    <span style="font-size:11px;font-weight:700;background:#fef2f2;color:#dc2626;padding:3px 10px;border-radius:8px;border:1px solid #fca5a5;">รอประเมิน</span>
+                    <span style="font-size:11px;color:#059669;font-weight:600;">กดเพื่อประเมิน →</span>
+                </div>
+            </div>
+
+            <!-- Row 4 — ประเมินแล้ว -->
+            <div class="al-row" data-status="done" style="background:#f8fafb;border:1.5px solid #e2e8f0;border-radius:16px;padding:16px 18px;display:flex;align-items:center;gap:14px;">
+                <div style="width:42px;height:42px;background:#f0fdf4;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                </div>
+                <div style="flex:1;min-width:0;">
+                    <div style="display:flex;align-items:center;gap:8px;margin-bottom:3px;">
+                        <span style="font-size:14px;font-weight:700;color:#475569;">นางมาลี สุขใจ</span>
+                        <span style="font-size:10px;color:#94a3b8;">3A-03</span>
+                        <span style="font-size:10px;font-weight:700;background:#f0fdf4;color:#059669;padding:2px 8px;border-radius:6px;border:1px solid #86efac;">Routine</span>
+                    </div>
+                    <div style="font-size:12px;color:#94a3b8;margin-bottom:2px;">Amlodipine 5 mg · PO</div>
+                    <div style="font-size:11px;color:#cbd5e1;">ให้ยาเมื่อ 07:50 น. · ประเมินเมื่อ 08:20 น.</div>
+                </div>
+                <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0;">
+                    <span style="font-size:11px;font-weight:700;background:#f0fdf4;color:#059669;padding:3px 10px;border-radius:8px;border:1px solid #86efac;">ประเมินแล้ว</span>
+                    <span style="font-size:11px;color:#94a3b8;">ตอบสนองดีขึ้น</span>
+                </div>
+            </div>
+
+            <!-- Row 5 — ประเมินแล้ว -->
+            <div class="al-row" data-status="done" style="background:#f8fafb;border:1.5px solid #e2e8f0;border-radius:16px;padding:16px 18px;display:flex;align-items:center;gap:14px;">
+                <div style="width:42px;height:42px;background:#f0fdf4;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                </div>
+                <div style="flex:1;min-width:0;">
+                    <div style="display:flex;align-items:center;gap:8px;margin-bottom:3px;">
+                        <span style="font-size:14px;font-weight:700;color:#475569;">นส.วิไล ประเสริฐ</span>
+                        <span style="font-size:10px;color:#94a3b8;">3A-05</span>
+                        <span style="font-size:10px;font-weight:700;background:#f0fdf4;color:#059669;padding:2px 8px;border-radius:6px;border:1px solid #86efac;">Routine</span>
+                    </div>
+                    <div style="font-size:12px;color:#94a3b8;margin-bottom:2px;">Metformin 500 mg · PO</div>
+                    <div style="font-size:11px;color:#cbd5e1;">ให้ยาเมื่อ 07:45 น. · ประเมินเมื่อ 08:10 น.</div>
+                </div>
+                <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0;">
+                    <span style="font-size:11px;font-weight:700;background:#f0fdf4;color:#059669;padding:3px 10px;border-radius:8px;border:1px solid #86efac;">ประเมินแล้ว</span>
+                    <span style="font-size:11px;color:#94a3b8;">ตอบสนองดีขึ้น</span>
+                </div>
+            </div>
+
+            <!-- Row 6 — ประเมินแล้ว -->
+            <div class="al-row" data-status="done" style="background:#f8fafb;border:1.5px solid #e2e8f0;border-radius:16px;padding:16px 18px;display:flex;align-items:center;gap:14px;">
+                <div style="width:42px;height:42px;background:#f0fdf4;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                </div>
+                <div style="flex:1;min-width:0;">
+                    <div style="display:flex;align-items:center;gap:8px;margin-bottom:3px;">
+                        <span style="font-size:14px;font-weight:700;color:#475569;">นายกัมพล ธรรมชาติ</span>
+                        <span style="font-size:10px;color:#94a3b8;">3A-07</span>
+                        <span style="font-size:10px;font-weight:700;background:#fef2f2;color:#dc2626;padding:2px 8px;border-radius:6px;border:1px solid #fca5a5;">STAT</span>
+                    </div>
+                    <div style="font-size:12px;color:#94a3b8;margin-bottom:2px;">Heparin 5000 units · SC</div>
+                    <div style="font-size:11px;color:#cbd5e1;">ให้ยาเมื่อ 07:30 น. · ประเมินเมื่อ 08:00 น.</div>
+                </div>
+                <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0;">
+                    <span style="font-size:11px;font-weight:700;background:#f0fdf4;color:#059669;padding:3px 10px;border-radius:8px;border:1px solid #86efac;">ประเมินแล้ว</span>
+                    <span style="font-size:11px;color:#94a3b8;">ไม่มีอาการเปลี่ยนแปลง</span>
+                </div>
+            </div>
+
+            <!-- Row 7 — ประเมินแล้ว -->
+            <div class="al-row" data-status="done" style="background:#f8fafb;border:1.5px solid #e2e8f0;border-radius:16px;padding:16px 18px;display:flex;align-items:center;gap:14px;">
+                <div style="width:42px;height:42px;background:#f0fdf4;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                </div>
+                <div style="flex:1;min-width:0;">
+                    <div style="display:flex;align-items:center;gap:8px;margin-bottom:3px;">
+                        <span style="font-size:14px;font-weight:700;color:#475569;">นส.จันทร์ฉาย แสงทอง</span>
+                        <span style="font-size:10px;color:#94a3b8;">3A-08</span>
+                        <span style="font-size:10px;font-weight:700;background:#f0fdf4;color:#059669;padding:2px 8px;border-radius:6px;border:1px solid #86efac;">Routine</span>
+                    </div>
+                    <div style="font-size:12px;color:#94a3b8;margin-bottom:2px;">Omeprazole 20 mg · PO</div>
+                    <div style="font-size:11px;color:#cbd5e1;">ให้ยาเมื่อ 07:40 น. · ประเมินเมื่อ 08:05 น.</div>
+                </div>
+                <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0;">
+                    <span style="font-size:11px;font-weight:700;background:#f0fdf4;color:#059669;padding:3px 10px;border-radius:8px;border:1px solid #86efac;">ประเมินแล้ว</span>
+                    <span style="font-size:11px;color:#94a3b8;">ตอบสนองดีขึ้น</span>
+                </div>
+            </div>
+
+            <!-- Row 8 — ประเมินแล้ว (ADR) -->
+            <div class="al-row" data-status="done" style="background:#f8fafb;border:1.5px solid #fde68a;border-radius:16px;padding:16px 18px;display:flex;align-items:center;gap:14px;">
+                <div style="width:42px;height:42px;background:#fffbeb;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                </div>
+                <div style="flex:1;min-width:0;">
+                    <div style="display:flex;align-items:center;gap:8px;margin-bottom:3px;">
+                        <span style="font-size:14px;font-weight:700;color:#475569;">นายสุรชัย มงคล</span>
+                        <span style="font-size:10px;color:#94a3b8;">3A-02</span>
+                        <span style="font-size:10px;font-weight:700;background:#f5f3ff;color:#7c3aed;padding:2px 8px;border-radius:6px;border:1px solid #ddd6fe;">PRN</span>
+                    </div>
+                    <div style="font-size:12px;color:#94a3b8;margin-bottom:2px;">Morphine 5 mg · IV</div>
+                    <div style="font-size:11px;color:#cbd5e1;">ให้ยาเมื่อ 06:55 น. · ประเมินเมื่อ 07:25 น.</div>
+                </div>
+                <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0;">
+                    <span style="font-size:11px;font-weight:700;background:#f0fdf4;color:#059669;padding:3px 10px;border-radius:8px;border:1px solid #86efac;">ประเมินแล้ว</span>
+                    <span style="font-size:11px;color:#d97706;font-weight:600;">⚠ มี ADR: คลื่นไส้</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    </div>
+
+    <script>
+    function alFilter(type, btn) {
+        document.querySelectorAll('#alFilterTabs button').forEach(b => {
+            b.style.background = 'white'; b.style.color = '#64748b'; b.style.borderColor = '#e2e8f0';
+        });
+        btn.style.background = '#059669'; btn.style.color = 'white'; btn.style.borderColor = '#059669';
+        document.querySelectorAll('.al-row').forEach(row => {
+            if (type === 'all' || row.dataset.status === type) row.style.display = '';
+            else row.style.display = 'none';
+        });
+    }
+    // Clock for this page
+    (function tickAL() {
+        const now = new Date();
+        const t = document.getElementById('clockAL');
+        const d = document.getElementById('dateStrAL');
+        if (t) t.textContent = now.toLocaleTimeString('th-TH');
+        if (d) d.textContent = now.toLocaleDateString('th-TH',{day:'numeric',month:'short',year:'2-digit'});
+        setTimeout(tickAL, 1000);
+    })();
+    </script>
 </div>
 
 <div id="pg-prep-type" class="page">
@@ -11823,11 +12103,12 @@
         'pg-prep-fill-pt':'จัดยาลงช่อง','pg-prep-med':'จัดยาตามรายการยา',
         'pg-prep-med-detail':'รายละเอียดยา','pg-ibf':'จัดยาตามรายการ',
         'pg-prep-sched':'จัดยาตามเวลา','pg-sched-detail':'รายการรอบเวลา','pg-trf':'จัดยาตามรอบ',
-        'pg-post-assess':'ประเมินหลังให้ยา'
+        'pg-post-assess':'ประเมินหลังให้ยา',
+        'pg-assess-list':'รายการประเมินหลังให้ยา'
     };
 
     // Pages that require dispense access (pharma blocked)
-    const dispensePages = ['pg-routine','pg-stat','pg-prn','pg-highalert','pg-omit-flow','pg-overdue','pg-scan-pt','pg-admin-med','pg-witness','pg-omit','pg-record','pg-hardstop','pg-dispense','pg-pt-detail','pg-post-assess'];
+    const dispensePages = ['pg-routine','pg-stat','pg-prn','pg-highalert','pg-omit-flow','pg-overdue','pg-scan-pt','pg-admin-med','pg-witness','pg-omit','pg-record','pg-hardstop','pg-dispense','pg-pt-detail','pg-post-assess','pg-assess-list'];
     let currentRole = 'nurse';
 
     function nav(targetId, skipHistory) {
@@ -15117,6 +15398,48 @@
         }
     }
 
+    /* ── Reset Demo ── */
+    function resetDemo() {
+        // Reset all flow steps to 1
+        rtGoStep(1);
+        stGoStep(1);
+        prnGoStep(1);
+        haGoStep(1);
+        ovGoStep(1);
+
+        // Reset all multi-drug scan cards
+        document.querySelectorAll('.mdc').forEach(card => {
+            card.classList.remove('done');
+            card.dataset.done = 'false';
+        });
+        document.querySelectorAll('[id$="_done"]').forEach(el => {
+            if (el.id.match(/^(r|st|prn|ha|ov)drug_\d+_done$/)) el.style.display = 'none';
+        });
+        document.querySelectorAll('[id$="_btn"]').forEach(btn => {
+            if (btn.id.match(/^(r|st|prn|ha|ov)drug_\d+_btn$/)) {
+                btn.disabled = false;
+                btn.style.display = '';
+                btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" style="vertical-align:middle;margin-right:4px;"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg>สแกน`;
+            }
+        });
+
+        // Re-disable all confirm buttons
+        ['rtBtnConfirmDrug','stBtnConfirm','btnPrnConfirm','haBtnWit','ovBtnConfirm'].forEach(id => {
+            const btn = document.getElementById(id);
+            if (btn) btn.disabled = true;
+        });
+
+        // Reset scan states hidden results
+        ['rtDrugScanResult','stDrugResult','prnDrugResult','haDrugResult','ovDrugResult'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.style.display = 'none';
+        });
+
+        // Navigate to dashboard
+        nav('pg-dashboard');
+        showToast('รีเซ็ต Demo เรียบร้อยแล้ว');
+    }
+
     /* ── Logout ── */
     function doLogout() {
         // Clear session
@@ -15455,5 +15778,25 @@
     // Initialize cart list on load
     renderCartListPage();
 </script>
+
+<!-- ── Reset Demo Floating Button ── -->
+<button id="resetDemoBtn" onclick="resetDemo()" title="Reset Demo" style="
+    position:fixed; bottom:24px; right:24px; z-index:9999;
+    display:flex; align-items:center; gap:8px;
+    padding:10px 18px; border-radius:999px;
+    background:linear-gradient(135deg,#1e293b,#334155);
+    color:white; font-size:13px; font-weight:700;
+    border:none; cursor:pointer;
+    box-shadow:0 4px 20px rgba(0,0,0,0.25);
+    transition:opacity .2s, transform .2s;
+    opacity:0.75;
+" onmouseenter="this.style.opacity='1';this.style.transform='scale(1.05)'"
+   onmouseleave="this.style.opacity='0.75';this.style.transform='scale(1)'">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5">
+        <polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.5"/>
+    </svg>
+    Reset Demo
+</button>
+
 </body>
 </html>
