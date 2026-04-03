@@ -220,9 +220,9 @@
         const banner = document.getElementById('dashBanner');
         if (banner) {
             const gradients = {
-                nurse: 'linear-gradient(135deg,#0F766E 0%,#0D9488 40%,#14B8A6 100%)',
-                pharma: 'linear-gradient(135deg,#1D4ED8 0%,#3B82F6 50%,#60A5FA 100%)',
-                super: 'linear-gradient(135deg,#5B21B6 0%,#7C3AED 40%,#A78BFA 100%)'
+                nurse:  'linear-gradient(135deg,#0a5c55 0%,#0F766E 30%,#0D9488 65%,#0ea59a 100%)',
+                pharma: 'linear-gradient(135deg,#1e3a8a 0%,#1D4ED8 30%,#3B82F6 65%,#60A5FA 100%)',
+                super:  'linear-gradient(135deg,#3b0764 0%,#5B21B6 30%,#7C3AED 65%,#a855f7 100%)'
             };
             banner.style.background = gradients[role] || gradients.super;
         }
@@ -275,19 +275,15 @@
             }
         }
 
-        // Grid layout adapts to alert visibility
-        if (dispenseBtn && prepBtn) {
-            const actionsGrid = dispenseBtn.parentElement;
-            if (role === 'super') {
-                actionsGrid.style.gridTemplateColumns = '1fr 1fr';
-            } else {
-                actionsGrid.style.gridTemplateColumns = '280px 1fr 1fr';
-            }
-        }
+        // db-actions is always 2 columns; alerts row is a separate element
 
         // Inject role-specific section
         const sec = document.getElementById('dashRoleSection');
         if (sec) sec.innerHTML = getRoleSectionHTML(role, name, roleText);
+
+        // Inject bottom section (super: team + performance below schedule/activity)
+        const secBottom = document.getElementById('dashRoleBottom');
+        if (secBottom) secBottom.innerHTML = getRoleBottomHTML(role);
 
         // Hide quick alerts for super role
         const quickAlerts = document.getElementById('dashQuickAlerts');
@@ -413,47 +409,46 @@
                 +'</div>';
         }
 
-        // Super — team + chart
-        return '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;">'
+        // Super — only quick actions in top section (team + performance move to bottom)
+        return '';
+    }
+
+    function getRoleBottomHTML(role) {
+        if (role !== 'super') return '';
+        const glass = 'background:rgba(255,255,255,0.9);backdrop-filter:blur(14px);border:1px solid var(--border);border-radius:18px;box-shadow:var(--shadow);';
+        return '<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px;">'
             // Team overview
-            +'<div style="'+glass+'padding:18px 20px;">'
-            +'<div style="font-size:14px;font-weight:600;color:var(--text-1);margin-bottom:14px;display:flex;align-items:center;gap:6px;">'
-            +'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="2.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>'
-            +'ทีมที่ปฏิบัติงาน</div>'
-            +'<div style="display:flex;flex-direction:column;gap:8px;">'
-            +'<div style="display:flex;align-items:center;gap:10px;"><div style="width:36px;height:36px;background:linear-gradient(135deg,var(--green),#5db840);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:white;">สจ</div><div><div style="font-size:13px;font-weight:600;color:var(--text-1);">นส.สมใจ ดีมาก</div><div style="font-size:10px;color:var(--green);">พยาบาล · กำลังจ่ายยา</div></div></div>'
-            +'<div style="display:flex;align-items:center;gap:10px;"><div style="width:36px;height:36px;background:linear-gradient(135deg,#3b82f6,#60a5fa);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:white;">วภ</div><div><div style="font-size:13px;font-weight:600;color:var(--text-1);">ภญ.วิภา เจริญยา</div><div style="font-size:10px;color:#3b82f6;">เภสัชกร · กำลังจัดยา</div></div></div>'
-            +'<div style="display:flex;align-items:center;gap:10px;"><div style="width:36px;height:36px;background:linear-gradient(135deg,var(--green),#5db840);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:white;">วร</div><div><div style="font-size:13px;font-weight:600;color:var(--text-1);">นส.วรรณา รุ่งเรือง</div><div style="font-size:10px;color:var(--text-3);">พยาบาล · ว่าง</div></div></div>'
+            +'<div style="'+glass+'padding:20px 22px;">'
+            +'<div style="font-size:14px;font-weight:600;color:var(--text-1);margin-bottom:16px;display:flex;align-items:center;gap:8px;">'
+            +'<div style="width:28px;height:28px;background:#f5f3ff;border-radius:8px;display:flex;align-items:center;justify-content:center;">'
+            +'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="2.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>'
+            +'</div>ทีมที่ปฏิบัติงาน'
+            +'<span style="margin-left:auto;font-size:10px;font-weight:600;color:#7c3aed;background:#f5f3ff;padding:2px 10px;border-radius:8px;">3 คน</span></div>'
+            +'<div style="display:flex;flex-direction:column;gap:10px;">'
+            +'<div style="display:flex;align-items:center;gap:12px;padding:10px 12px;background:#f0fdf4;border-radius:12px;">'
+            +'<div style="width:38px;height:38px;background:linear-gradient(135deg,var(--green),#14B8A6);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:white;flex-shrink:0;">สจ</div>'
+            +'<div style="flex:1;"><div style="font-size:13px;font-weight:600;color:var(--text-1);">นส.สมใจ ดีมาก</div><div style="font-size:11px;color:#0D9488;margin-top:1px;">พยาบาล · กำลังจ่ายยา</div></div>'
+            +'<div style="width:8px;height:8px;background:#4ade80;border-radius:50%;"></div></div>'
+            +'<div style="display:flex;align-items:center;gap:12px;padding:10px 12px;background:#eff6ff;border-radius:12px;">'
+            +'<div style="width:38px;height:38px;background:linear-gradient(135deg,#3b82f6,#60a5fa);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:white;flex-shrink:0;">วภ</div>'
+            +'<div style="flex:1;"><div style="font-size:13px;font-weight:600;color:var(--text-1);">ภญ.วิภา เจริญยา</div><div style="font-size:11px;color:#3b82f6;margin-top:1px;">เภสัชกร · กำลังจัดยา</div></div>'
+            +'<div style="width:8px;height:8px;background:#4ade80;border-radius:50%;"></div></div>'
+            +'<div style="display:flex;align-items:center;gap:12px;padding:10px 12px;background:#f8fafc;border-radius:12px;">'
+            +'<div style="width:38px;height:38px;background:linear-gradient(135deg,#64748b,#94a3b8);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:white;flex-shrink:0;">วร</div>'
+            +'<div style="flex:1;"><div style="font-size:13px;font-weight:600;color:var(--text-1);">นส.วรรณา รุ่งเรือง</div><div style="font-size:11px;color:var(--text-3);margin-top:1px;">พยาบาล · ว่าง</div></div>'
+            +'<div style="width:8px;height:8px;background:#e2e8f0;border-radius:50%;"></div></div>'
             +'</div></div>'
             // Performance
-            +'<div style="'+glass+'padding:18px 20px;">'
-            +'<div style="font-size:14px;font-weight:600;color:var(--text-1);margin-bottom:14px;display:flex;align-items:center;gap:6px;">'
-            +'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2.5"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg>'
-            +'ประสิทธิภาพเวรนี้</div>'
-            +'<div style="display:flex;flex-direction:column;gap:10px;">'
-            +'<div><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;"><span style="color:var(--text-2);">ตรงเวลา</span><span style="font-weight:700;color:var(--green);">87%</span></div><div style="width:100%;height:6px;background:var(--bg);border-radius:3px;overflow:hidden;"><div style="width:87%;height:100%;background:linear-gradient(90deg,var(--green),#5db840);border-radius:3px;"></div></div></div>'
-            +'<div><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;"><span style="color:var(--text-2);">7 Rights ผ่าน</span><span style="font-weight:700;color:#3b82f6;">100%</span></div><div style="width:100%;height:6px;background:var(--bg);border-radius:3px;overflow:hidden;"><div style="width:100%;height:100%;background:linear-gradient(90deg,#3b82f6,#60a5fa);border-radius:3px;"></div></div></div>'
-            +'<div><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;"><span style="color:var(--text-2);">Overdue rate</span><span style="font-weight:700;color:#f59e0b;">13%</span></div><div style="width:100%;height:6px;background:var(--bg);border-radius:3px;overflow:hidden;"><div style="width:13%;height:100%;background:linear-gradient(90deg,#f59e0b,#fbbf24);border-radius:3px;"></div></div></div>'
-            +'<div><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;"><span style="color:var(--text-2);">Error rate</span><span style="font-weight:700;color:var(--green);">0%</span></div><div style="width:100%;height:6px;background:var(--bg);border-radius:3px;overflow:hidden;"><div style="width:0%;height:100%;background:#ef4444;border-radius:3px;"></div></div></div>'
-            +'</div></div>'
-            // Quick actions
-            +'<div style="'+glass+'padding:18px 20px;">'
-            +'<div style="font-size:14px;font-weight:600;color:var(--text-1);margin-bottom:14px;display:flex;align-items:center;gap:6px;">'
-            +'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-2)" stroke-width="2.5"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>'
-            +'เมนูด่วน</div>'
-            +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">'
-            +'<div style="background:var(--green-light);border-radius:12px;padding:14px 10px;text-align:center;cursor:pointer;transition:all .15s;" onclick="nav(\'pg-routine\')" onmouseover="this.style.transform=\'translateY(-2px)\'" onmouseout="this.style.transform=\'\'">'
-            +'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2" style="margin-bottom:6px;"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0016.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 002 8.5c0 2.3 1.5 4.05 3 5.5l7 7z"/></svg>'
-            +'<div style="font-size:11px;font-weight:600;color:var(--green-dark);">จ่ายยา</div></div>'
-            +'<div style="background:#eff6ff;border-radius:12px;padding:14px 10px;text-align:center;cursor:pointer;transition:all .15s;" onclick="goToPrepType()" onmouseover="this.style.transform=\'translateY(-2px)\'" onmouseout="this.style.transform=\'\'">'
-            +'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" style="margin-bottom:6px;"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>'
-            +'<div style="font-size:11px;font-weight:600;color:#1d4ed8;">จัดยา</div></div>'
-            +'<div style="background:#f5f3ff;border-radius:12px;padding:14px 10px;text-align:center;cursor:pointer;transition:all .15s;" onclick="nav(\'pg-overdue\')" onmouseover="this.style.transform=\'translateY(-2px)\'" onmouseout="this.style.transform=\'\'">'
-            +'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="2" style="margin-bottom:6px;"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>'
-            +'<div style="font-size:11px;font-weight:600;color:#6d28d9;">รายงาน</div></div>'
-            +'<div style="background:#fef2f2;border-radius:12px;padding:14px 10px;text-align:center;cursor:pointer;transition:all .15s;" onclick="nav(\'pg-highalert\')" onmouseover="this.style.transform=\'translateY(-2px)\'" onmouseout="this.style.transform=\'\'">'
-            +'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2" style="margin-bottom:6px;"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>'
-            +'<div style="font-size:11px;font-weight:600;color:#dc2626;">High Alert</div></div>'
+            +'<div style="'+glass+'padding:20px 22px;">'
+            +'<div style="font-size:14px;font-weight:600;color:var(--text-1);margin-bottom:16px;display:flex;align-items:center;gap:8px;">'
+            +'<div style="width:28px;height:28px;background:#fffbeb;border-radius:8px;display:flex;align-items:center;justify-content:center;">'
+            +'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2.5"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg>'
+            +'</div>ประสิทธิภาพเวรนี้</div>'
+            +'<div style="display:flex;flex-direction:column;gap:14px;">'
+            +'<div><div style="display:flex;justify-content:space-between;align-items:center;font-size:12px;margin-bottom:6px;"><span style="color:var(--text-2);">ตรงเวลา</span><span style="font-weight:700;color:var(--green);font-size:14px;">87%</span></div><div style="width:100%;height:7px;background:#f1f5f9;border-radius:4px;overflow:hidden;"><div style="width:87%;height:100%;background:linear-gradient(90deg,#0D9488,#14B8A6);border-radius:4px;"></div></div></div>'
+            +'<div><div style="display:flex;justify-content:space-between;align-items:center;font-size:12px;margin-bottom:6px;"><span style="color:var(--text-2);">7 Rights ผ่าน</span><span style="font-weight:700;color:#3b82f6;font-size:14px;">100%</span></div><div style="width:100%;height:7px;background:#f1f5f9;border-radius:4px;overflow:hidden;"><div style="width:100%;height:100%;background:linear-gradient(90deg,#3b82f6,#60a5fa);border-radius:4px;"></div></div></div>'
+            +'<div><div style="display:flex;justify-content:space-between;align-items:center;font-size:12px;margin-bottom:6px;"><span style="color:var(--text-2);">Overdue rate</span><span style="font-weight:700;color:#f59e0b;font-size:14px;">13%</span></div><div style="width:100%;height:7px;background:#f1f5f9;border-radius:4px;overflow:hidden;"><div style="width:13%;height:100%;background:linear-gradient(90deg,#f59e0b,#fbbf24);border-radius:4px;"></div></div></div>'
+            +'<div><div style="display:flex;justify-content:space-between;align-items:center;font-size:12px;margin-bottom:6px;"><span style="color:var(--text-2);">Error rate</span><span style="font-weight:700;color:var(--green);font-size:14px;">0%</span></div><div style="width:100%;height:7px;background:#f1f5f9;border-radius:4px;overflow:hidden;"><div style="width:0%;height:100%;background:#ef4444;border-radius:4px;"></div></div></div>'
             +'</div></div>'
             +'</div>';
     }

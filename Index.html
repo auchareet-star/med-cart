@@ -1475,94 +1475,101 @@
             font-size:11px; font-weight:800;
         }
 
-        /* Stats row — colorful gradient cards */
+        /* Stats row — white cards with colored accent */
         .db-stats {
             display:grid; grid-template-columns:repeat(5,1fr);
-            gap:14px; margin-bottom:24px;
+            gap:12px; margin-bottom:22px;
         }
         .db-stat {
-            border-radius:18px; padding:20px 18px; color:white;
+            background:#fff; border-radius:18px; padding:18px 18px 16px;
             position:relative; overflow:hidden;
-            box-shadow:0 4px 16px rgba(0,0,0,0.08);
+            box-shadow:0 2px 12px rgba(0,0,0,0.05);
             transition:transform .2s, box-shadow .2s;
+            border:1px solid #f1f5f9;
         }
         .db-stat:hover {
             transform:translateY(-3px);
-            box-shadow:0 8px 28px rgba(0,0,0,0.12);
+            box-shadow:0 8px 24px rgba(0,0,0,0.09);
         }
         .db-stat::before {
-            content:''; position:absolute; top:-20px; right:-20px;
-            width:70px; height:70px; border-radius:50%;
-            background:rgba(255,255,255,0.12);
-        }
-        .db-stat::after {
-            content:''; position:absolute; bottom:-30px; left:-10px;
-            width:50px; height:50px; border-radius:50%;
-            background:rgba(255,255,255,0.06);
+            content:''; position:absolute; top:0; right:0;
+            width:70px; height:70px;
+            border-radius:0 18px 0 50px;
+            background:var(--db-stat-accent-bg, rgba(99,102,241,0.06));
         }
         .db-stat-icon {
-            width:38px; height:38px; border-radius:11px;
+            width:36px; height:36px; border-radius:10px;
             display:flex; align-items:center; justify-content:center;
-            margin-bottom:12px; background:rgba(255,255,255,0.2);
+            margin-bottom:12px;
+            background:var(--db-stat-icon-bg, linear-gradient(135deg,#4F46E5,#6366F1));
+            box-shadow:0 4px 10px var(--db-stat-shadow, rgba(79,70,229,0.25));
         }
-        .db-stat-num { font-size:30px; font-weight:800; line-height:1; position:relative; }
-        .db-stat-label { font-size:11px; opacity:.8; margin-top:4px; font-weight:500; position:relative; }
-        .db-stat-bar { width:100%; height:5px; background:rgba(255,255,255,0.25); border-radius:3px; margin-top:12px; overflow:hidden; position:relative; }
-        .db-stat-bar-fill { height:100%; border-radius:3px; background:white; }
+        .db-stat-num { font-size:30px; font-weight:700; line-height:1; color:var(--db-stat-num-color,#1e1b4b); }
+        .db-stat-label { font-size:11px; color:var(--db-stat-color,#6366F1); font-weight:600; margin-top:4px; }
+        .db-stat-sublabel { font-size:10px; color:#94a3b8; margin-top:2px; }
+        .db-stat-bar { width:100%; height:4px; border-radius:2px; margin-top:8px; overflow:hidden;
+                       background:var(--db-stat-bar-bg,#e0e7ff); }
+        .db-stat-bar-fill { height:100%; border-radius:2px;
+                            background:var(--db-stat-bar-fill,linear-gradient(90deg,#4F46E5,#818CF8)); }
 
         /* Actions row */
         .db-actions {
-            display:grid; grid-template-columns:280px 1fr 1fr;
-            gap:16px; margin-bottom:24px;
+            display:grid; grid-template-columns:1fr 1fr;
+            gap:14px; margin-bottom:14px;
         }
-        .db-alerts { display:flex; flex-direction:column; gap:10px; }
+        .db-alerts {
+            display:grid; grid-template-columns:repeat(4,1fr);
+            gap:12px; margin-bottom:22px;
+        }
         .db-alert {
-            background:rgba(255,255,255,0.92); backdrop-filter:blur(14px);
-            border:1px solid var(--border); border-radius:16px;
-            padding:16px 18px; cursor:pointer;
+            background:#fff; border:1px solid var(--border); border-radius:14px;
+            padding:14px 16px; cursor:pointer;
             display:flex; align-items:center; gap:12px;
-            transition:all .2s; box-shadow:var(--shadow);
+            transition:all .2s; box-shadow:0 2px 8px rgba(0,0,0,0.04);
         }
-        .db-alert:hover { transform:translateY(-2px); box-shadow:var(--shadow-lg); }
+        .db-alert:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(0,0,0,0.09); }
         .db-alert-icon {
-            width:40px; height:40px; border-radius:12px;
+            width:36px; height:36px; border-radius:10px;
             display:flex; align-items:center; justify-content:center; flex-shrink:0;
         }
-        .db-alert-num { font-size:22px; font-weight:800; line-height:1; }
-        .db-alert-label { font-size:10px; color:var(--text-2); margin-top:2px; font-weight:500; }
+        .db-alert-num { font-size:22px; font-weight:700; line-height:1; }
+        .db-alert-label { font-size:10px; color:var(--text-2); font-weight:500; margin-top:2px; }
 
         .db-action {
-            background:rgba(255,255,255,0.95); border:2px solid var(--border);
-            border-radius:22px; padding:30px 26px; cursor:pointer;
+            background:#fff; border:1.5px solid var(--border);
+            border-radius:20px; padding:26px 22px; cursor:pointer;
             position:relative; overflow:hidden; transition:all .25s;
-            box-shadow:var(--shadow);
+            box-shadow:0 2px 16px rgba(0,0,0,0.04);
         }
-        .db-action:hover { transform:translateY(-4px); box-shadow:0 12px 40px rgba(0,0,0,0.1); }
-        .db-action.primary {
-            border-color:var(--green-mid);
-            background:linear-gradient(160deg,#ECFDF5 0%,#ffffff 40%,#F0FDF4 100%);
-        }
-        .db-action.primary:hover { box-shadow:0 12px 40px rgba(13,148,136,0.15); }
+        .db-action:hover { transform:translateY(-4px); box-shadow:0 12px 36px rgba(0,0,0,0.09); }
+        .db-action.primary { border-color:#99f6e4; }
+        .db-action.primary:hover { box-shadow:0 12px 36px rgba(13,148,136,0.13); border-color:#0D9488; }
+        .db-action.secondary { border-color:#bfdbfe; }
+        .db-action.secondary:hover { box-shadow:0 12px 36px rgba(59,130,246,0.13); border-color:#3b82f6; }
         .db-action::before {
-            content:''; position:absolute; top:-40px; right:-40px;
-            width:120px; height:120px; border-radius:50%;
-            background:rgba(13,148,136,0.04); transition:all .3s;
+            content:''; position:absolute; top:0; right:0;
+            width:110px; height:110px; border-radius:0 20px 0 0;
+            background:radial-gradient(circle at top right,rgba(13,148,136,.06),transparent 70%);
+            pointer-events:none;
         }
-        .db-action:hover::before { width:160px; height:160px; background:rgba(13,148,136,0.07); }
+        .db-action.secondary::before { background:radial-gradient(circle at top right,rgba(59,130,246,.06),transparent 70%); }
         .db-action-badge {
-            position:absolute; top:16px; right:16px;
-            font-size:11px; font-weight:700; padding:4px 12px;
-            border-radius:var(--r-full); color:white;
-            box-shadow:0 2px 8px rgba(0,0,0,0.15);
+            position:absolute; top:14px; right:14px;
+            font-size:10px; font-weight:700; padding:3px 10px;
+            border-radius:var(--r-full); color:white; letter-spacing:.3px;
         }
         .db-action-icon {
-            width:56px; height:56px; border-radius:16px;
+            width:54px; height:54px; border-radius:16px;
             display:flex; align-items:center; justify-content:center;
-            box-shadow:0 4px 16px rgba(13,148,136,0.25);
+            box-shadow:0 6px 16px rgba(13,148,136,0.25); margin-bottom:14px;
         }
-        .db-action-title { font-size:21px; font-weight:800; margin-top:16px; letter-spacing:-.3px; }
-        .db-action-sub { font-size:12px; color:var(--text-3); margin-top:3px; font-weight:500; }
-        .db-action-desc { font-size:12px; color:var(--text-2); line-height:1.7; margin-top:12px; }
+        .db-action-title { font-size:19px; font-weight:700; letter-spacing:-.3px; }
+        .db-action-sub { font-size:11px; color:var(--text-3); margin-top:3px; font-weight:500; }
+        .db-action-desc { font-size:12px; color:var(--text-2); line-height:1.6; margin-top:10px; }
+        .db-action-cta {
+            display:flex; align-items:center; gap:4px; margin-top:14px;
+            font-size:12px; font-weight:600;
+        }
 
         /* Role section */
         .db-role-section { margin-bottom:24px; }
@@ -5574,147 +5581,297 @@
     <div class="db-inner">
 
         <!-- Banner -->
-        <div class="db-banner" id="dashBanner" style="background:linear-gradient(135deg,#0F766E 0%,#0D9488 40%,#14B8A6 100%);">
-            <div class="db-banner-row">
-                <div class="db-banner-left">
-                    <div class="db-banner-ward">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="opacity:.6;"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
-                        Ward 3A · หอผู้ป่วยอายุรกรรม
-                    </div>
-                    <h1>สวัสดี, <span id="dashWelcomeName">คุณปราณี</span></h1>
-                    <div class="db-banner-sub">รอบเช้า 08:00 น. · มีรายการยารอดำเนินการ 8 รายการ</div>
+        <div class="db-banner" id="dashBanner" style="background:linear-gradient(135deg,#0a5c55 0%,#0F766E 30%,#0D9488 65%,#0ea59a 100%);padding:0;display:flex;align-items:stretch;min-height:148px;">
+            <!-- Left: greeting -->
+            <div style="flex:1;padding:26px 32px;display:flex;flex-direction:column;justify-content:center;position:relative;z-index:1;">
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+                    <div style="width:8px;height:8px;background:#4ade80;border-radius:50%;box-shadow:0 0 0 3px rgba(74,222,128,0.3);animation:dashPulse 2s infinite;flex-shrink:0;"></div>
+                    <span style="font-size:12px;opacity:.8;letter-spacing:.3px;">Ward 3A · หอผู้ป่วยอายุรกรรม · รอบเช้า 08:00 น.</span>
                 </div>
-                <div class="db-banner-right">
-                    <div class="db-progress">
-                        <svg width="84" height="84" viewBox="0 0 84 84" style="transform:rotate(-90deg);">
-                            <circle cx="42" cy="42" r="36" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="6"/>
-                            <circle cx="42" cy="42" r="36" fill="none" stroke="white" stroke-width="6" stroke-dasharray="226" stroke-dashoffset="75" stroke-linecap="round"/>
-                        </svg>
-                        <div class="db-progress-text">
-                            <div class="db-progress-num">67%</div>
-                            <div class="db-progress-label">เสร็จแล้ว</div>
-                        </div>
+                <h1 style="font-size:26px;font-weight:700;letter-spacing:-.4px;margin-bottom:8px;line-height:1.2;color:white;text-shadow:none;">สวัสดี, <span id="dashWelcomeName">คุณปราณี</span> 👋</h1>
+                <div class="db-banner-sub" style="font-size:13px;opacity:.75;">มีรายการยา <strong style="opacity:1;color:#a7f3d0;">8 รายการ</strong> รอดำเนินการ · จ่ายแล้ว <strong style="opacity:1;color:#a7f3d0;">16 จาก 24</strong> รายการ</div>
+            </div>
+            <!-- Center: progress donut -->
+            <div style="display:flex;align-items:center;justify-content:center;padding:0 32px;position:relative;z-index:1;border-left:1px solid rgba(255,255,255,0.1);border-right:1px solid rgba(255,255,255,0.1);">
+                <div class="db-progress">
+                    <svg width="96" height="96" viewBox="0 0 96 96" style="transform:rotate(-90deg);">
+                        <circle cx="48" cy="48" r="40" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="8"/>
+                        <circle cx="48" cy="48" r="40" fill="none" stroke="white" stroke-width="8" stroke-dasharray="251" stroke-dashoffset="83" stroke-linecap="round"/>
+                    </svg>
+                    <div class="db-progress-text">
+                        <div class="db-progress-num" style="font-size:22px;">67%</div>
+                        <div class="db-progress-label">เสร็จแล้ว</div>
                     </div>
-                    <div class="db-cart-chip">
-                        <div style="display:flex;align-items:center;gap:9px;margin-bottom:8px;">
-                            <div class="db-cart-chip-id">A-1</div>
-                            <div style="font-size:13px;font-weight:600;" id="dashWard">Med Cart A-1</div>
-                        </div>
-                        <div style="display:flex;align-items:center;gap:6px;font-size:11px;opacity:.7;">
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="6" width="18" height="12" rx="2"/><line x1="23" y1="13" x2="23" y2="11"/></svg>
-                            85% · Online
-                        </div>
+                </div>
+            </div>
+            <!-- Right: cart info + shift -->
+            <div style="display:flex;flex-direction:column;justify-content:center;gap:10px;padding:20px 28px;position:relative;z-index:1;min-width:220px;">
+                <div class="db-cart-chip">
+                    <div style="display:flex;align-items:center;gap:9px;margin-bottom:8px;">
+                        <div class="db-cart-chip-id">A-1</div>
+                        <div style="font-size:13px;font-weight:600;" id="dashWard">Med Cart A-1</div>
                     </div>
+                    <div style="display:flex;align-items:center;gap:6px;font-size:11px;opacity:.7;">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="6" width="18" height="12" rx="2"/><line x1="23" y1="13" x2="23" y2="11"/></svg>
+                        85% · Online
+                    </div>
+                </div>
+                <div style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);border-radius:10px;padding:8px 14px;font-size:11px;opacity:.8;display:flex;align-items:center;gap:6px;color:white;">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    กะเช้า · 07:00 – 15:00 น.
                 </div>
             </div>
         </div>
+        <style>@keyframes dashPulse{0%,100%{box-shadow:0 0 0 3px rgba(74,222,128,0.3)}50%{box-shadow:0 0 0 6px rgba(74,222,128,0.1)}}</style>
 
         <!-- Stats -->
         <div class="db-stats">
-            <div class="db-stat" style="background:linear-gradient(135deg,#4F46E5,#818CF8);">
+            <!-- ผู้ป่วย — Indigo -->
+            <div class="db-stat" style="border-color:#e0e7ff;--db-stat-accent-bg:rgba(99,102,241,0.06);--db-stat-icon-bg:linear-gradient(135deg,#4F46E5,#6366F1);--db-stat-shadow:rgba(79,70,229,0.25);--db-stat-num-color:#1e1b4b;--db-stat-color:#6366F1;">
                 <div class="db-stat-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/></svg></div>
                 <div class="db-stat-num">8</div>
                 <div class="db-stat-label">ผู้ป่วยใน Ward</div>
+                <div class="db-stat-sublabel">Ward 3A ทั้งหมด</div>
             </div>
-            <div class="db-stat" style="background:linear-gradient(135deg,#0D9488,#2DD4BF);">
+            <!-- รายการยา — Teal -->
+            <div class="db-stat" style="border-color:#ccfbf1;--db-stat-accent-bg:rgba(20,184,166,0.07);--db-stat-icon-bg:linear-gradient(135deg,#0D9488,#14B8A6);--db-stat-shadow:rgba(13,148,136,0.25);--db-stat-num-color:#042f2e;--db-stat-color:#0D9488;">
                 <div class="db-stat-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></div>
                 <div class="db-stat-num">24</div>
                 <div class="db-stat-label">รายการยาวันนี้</div>
+                <div class="db-stat-sublabel">รอบเช้า–กลางคืน</div>
             </div>
-            <div class="db-stat" style="background:linear-gradient(135deg,#0369A1,#38BDF8);">
+            <!-- จ่ายแล้ว — Sky -->
+            <div class="db-stat" style="border-color:#bae6fd;--db-stat-accent-bg:rgba(14,165,233,0.07);--db-stat-icon-bg:linear-gradient(135deg,#0284C7,#0EA5E9);--db-stat-shadow:rgba(2,132,199,0.25);--db-stat-num-color:#0c1a29;--db-stat-color:#0284C7;--db-stat-bar-bg:#e0f2fe;--db-stat-bar-fill:linear-gradient(90deg,#0284C7,#38bdf8);">
                 <div class="db-stat-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
                 <div class="db-stat-num">16</div>
                 <div class="db-stat-label">จ่ายแล้ว</div>
                 <div class="db-stat-bar"><div class="db-stat-bar-fill" style="width:67%;"></div></div>
             </div>
-            <div class="db-stat" style="background:linear-gradient(135deg,#B45309,#FBBF24);">
+            <!-- รอจ่าย — Amber -->
+            <div class="db-stat" style="border-color:#fde68a;--db-stat-accent-bg:rgba(245,158,11,0.07);--db-stat-icon-bg:linear-gradient(135deg,#D97706,#F59E0B);--db-stat-shadow:rgba(217,119,6,0.25);--db-stat-num-color:#1c0a00;--db-stat-color:#D97706;--db-stat-bar-bg:#fef3c7;--db-stat-bar-fill:linear-gradient(90deg,#D97706,#fbbf24);">
                 <div class="db-stat-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
                 <div class="db-stat-num">8</div>
                 <div class="db-stat-label">รอจ่าย</div>
                 <div class="db-stat-bar"><div class="db-stat-bar-fill" style="width:33%;"></div></div>
             </div>
-            <div class="db-stat" style="background:linear-gradient(135deg,#BE123C,#FB7185);">
+            <!-- Drawer — Rose -->
+            <div class="db-stat" style="border-color:#fecdd3;--db-stat-accent-bg:rgba(251,113,133,0.07);--db-stat-icon-bg:linear-gradient(135deg,#E11D48,#FB7185);--db-stat-shadow:rgba(225,29,72,0.25);--db-stat-num-color:#1a0008;--db-stat-color:#E11D48;">
                 <div class="db-stat-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="2" y="3" width="20" height="18" rx="2"/><line x1="2" y1="9" x2="22" y2="9"/></svg></div>
-                <div class="db-stat-num">6<span style="font-size:16px;opacity:.6;">/24</span></div>
+                <div class="db-stat-num">6<span style="font-size:15px;color:#94a3b8;font-weight:500;">/24</span></div>
                 <div class="db-stat-label">Drawer / Cassette</div>
+                <div class="db-stat-sublabel">เติมยาในรถเข็น</div>
             </div>
         </div>
 
-        <!-- Role section -->
-        <div id="dashRoleSection" class="db-role-section"></div>
         <div id="dashPermSection" style="display:none;margin-bottom:24px;"></div>
 
-        <!-- Actions -->
+        <!-- Actions (2 cards) -->
         <div class="db-actions">
-            <div class="db-alerts" id="dashQuickAlerts">
-                <div class="db-alert" style="border-left:4px solid #EF4444;" onclick="startStatTimer();nav('pg-stat');">
-                    <div class="db-alert-icon" style="background:#FEF2F2;color:#EF4444;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
-                    <div style="flex:1;"><div class="db-alert-num" style="color:#EF4444;">2</div><div class="db-alert-label">STAT รอจ่าย</div></div>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-                </div>
-                <div class="db-alert" style="border-left:4px solid #7C3AED;" onclick="nav('pg-prn')">
-                    <div class="db-alert-icon" style="background:#F5F3FF;color:#7C3AED;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0016.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 002 8.5c0 2.3 1.5 4.05 3 5.5l7 7z"/></svg></div>
-                    <div style="flex:1;"><div class="db-alert-num" style="color:#7C3AED;">3</div><div class="db-alert-label">PRN รอจ่าย</div></div>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-                </div>
-                <div class="db-alert" style="border-left:4px solid #F59E0B;" onclick="nav('pg-highalert')">
-                    <div class="db-alert-icon" style="background:#FFFBEB;color:#F59E0B;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
-                    <div style="flex:1;"><div class="db-alert-num" style="color:#F59E0B;">2</div><div class="db-alert-label">High Alert</div></div>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-                </div>
-            </div>
-
             <!-- จ่ายยา -->
             <div class="db-action primary" onclick="nav('pg-routine')">
                 <span class="db-action-badge" style="background:#EF4444;">3 รอจ่าย</span>
-                <div class="db-action-icon" style="background:linear-gradient(135deg,var(--green),#14B8A6);color:white;">
-                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0016.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 002 8.5c0 2.3 1.5 4.05 3 5.5l7 7z"/></svg>
+                <div class="db-action-icon" style="background:linear-gradient(135deg,#0D9488,#14B8A6);">
+                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0016.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 002 8.5c0 2.3 1.5 4.05 3 5.5l7 7z"/></svg>
                 </div>
-                <div class="db-action-title" style="color:var(--green-dark);">จ่ายยา</div>
+                <div class="db-action-title" style="color:#0F766E;">จ่ายยา</div>
                 <div class="db-action-sub">Medication Administration</div>
-                <div class="db-action-desc">บริหารยาตามรายการสั่งของแพทย์ พร้อม 7 Rights</div>
-            </div>
-
-            <!-- จัดยา -->
-            <div class="db-action primary" onclick="goToPrepType()">
-                <span class="db-action-badge" style="background:var(--green);">5 รอจัด</span>
-                <div class="db-action-icon" style="background:linear-gradient(135deg,var(--green),#14B8A6);color:white;">
-                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+                <div class="db-action-desc">บริหารยาตามรายการสั่งของแพทย์ พร้อม 7 Rights ครบถ้วน</div>
+                <div class="db-action-cta" style="color:#0D9488;">
+                    เริ่มจ่ายยา
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
                 </div>
-                <div class="db-action-title" style="color:var(--green-dark);">จัดยา</div>
+            </div>
+            <!-- จัดยา -->
+            <div class="db-action secondary" onclick="goToPrepType()">
+                <span class="db-action-badge" style="background:#3b82f6;">5 รอจัด</span>
+                <div class="db-action-icon" style="background:linear-gradient(135deg,#2563eb,#3b82f6);box-shadow:0 6px 16px rgba(59,130,246,0.25);">
+                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+                </div>
+                <div class="db-action-title" style="color:#1d4ed8;">จัดยา</div>
                 <div class="db-action-sub">Medication Preparation</div>
                 <div class="db-action-desc">เตรียมยาเข้ารถเข็น ตามผู้ป่วย / ตามยา / ตามเวลา</div>
+                <div class="db-action-cta" style="color:#3b82f6;">
+                    เริ่มจัดยา
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+                </div>
             </div>
         </div>
+
+        <!-- Quick Alerts — 4 cards แนวนอน -->
+        <div class="db-alerts" id="dashQuickAlerts">
+            <div class="db-alert" style="border-color:#fee2e2;border-left:3px solid #ef4444;" onclick="startStatTimer();nav('pg-stat');">
+                <div class="db-alert-icon" style="background:linear-gradient(135deg,#ef4444,#f87171);box-shadow:0 3px 8px rgba(239,68,68,0.25);">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                </div>
+                <div><div class="db-alert-num" style="color:#ef4444;">2</div><div class="db-alert-label">STAT รอจ่าย</div></div>
+            </div>
+            <div class="db-alert" style="border-color:#ede9fe;border-left:3px solid #7c3aed;" onclick="nav('pg-prn')">
+                <div class="db-alert-icon" style="background:linear-gradient(135deg,#7c3aed,#8b5cf6);box-shadow:0 3px 8px rgba(124,58,237,0.25);">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0016.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 002 8.5c0 2.3 1.5 4.05 3 5.5l7 7z"/></svg>
+                </div>
+                <div><div class="db-alert-num" style="color:#7c3aed;">3</div><div class="db-alert-label">PRN รอจ่าย</div></div>
+            </div>
+            <div class="db-alert" style="border-color:#fde68a;border-left:3px solid #d97706;" onclick="nav('pg-highalert')">
+                <div class="db-alert-icon" style="background:linear-gradient(135deg,#d97706,#f59e0b);box-shadow:0 3px 8px rgba(217,119,6,0.25);">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                </div>
+                <div><div class="db-alert-num" style="color:#d97706;">2</div><div class="db-alert-label">High Alert</div></div>
+            </div>
+            <div class="db-alert" style="border-color:#fde68a;border-left:3px solid #d97706;" onclick="nav('pg-omit-flow')">
+                <div class="db-alert-icon" style="background:linear-gradient(135deg,#d97706,#f59e0b);box-shadow:0 3px 8px rgba(217,119,6,0.25);">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+                </div>
+                <div><div class="db-alert-num" style="color:#d97706;">2</div><div class="db-alert-label">งดยาวันนี้</div></div>
+            </div>
+        </div>
+
+        <!-- Role section (pharma: stock + cassette | nurse: urgent + summary) -->
+        <div id="dashRoleSection" class="db-role-section"></div>
 
         <!-- Schedule + Activity -->
         <div class="db-bottom">
 
             <div class="db-panel">
-                <div class="db-panel-head">
-                    <div class="db-panel-head-icon" style="background:var(--green-light);color:var(--green);"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
-                    ตารางรอบยาวันนี้
+                <div class="db-panel-head" style="justify-content:space-between;">
+                    <div style="display:flex;align-items:center;gap:10px;">
+                        <div class="db-panel-head-icon" style="background:#f0fdf4;color:var(--green);"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+                        ตารางรอบยาวันนี้
+                    </div>
+                    <span style="font-size:10px;color:#0D9488;font-weight:600;background:#f0fdf4;padding:3px 10px;border-radius:8px;">4 รอบ</span>
                 </div>
-                <div class="db-tl-item active" onclick="nav('pg-routine')"><div class="db-tl-dot"></div><div style="flex:1;"><div class="db-tl-title">06:00 – 08:00 รอบเช้า</div><div class="db-tl-sub">8 ผู้ป่วย · 16/24 จ่ายแล้ว</div></div><span class="db-tl-badge" style="color:#3B82F6;background:#EFF6FF;">กำลังดำเนินการ</span></div>
-                <div class="db-tl-item" onclick="nav('pg-routine')"><div class="db-tl-dot"></div><div style="flex:1;"><div class="db-tl-title">11:00 – 12:00 รอบเที่ยง</div><div class="db-tl-sub">5 ผู้ป่วย · 12 รายการ</div></div><span class="db-tl-badge" style="color:var(--text-3);background:var(--bg);">รอ</span></div>
-                <div class="db-tl-item" onclick="nav('pg-routine')"><div class="db-tl-dot"></div><div style="flex:1;"><div class="db-tl-title">16:00 – 18:00 รอบเย็น</div><div class="db-tl-sub">6 ผู้ป่วย · 15 รายการ</div></div><span class="db-tl-badge" style="color:var(--text-3);background:var(--bg);">รอ</span></div>
-                <div class="db-tl-item" onclick="nav('pg-routine')"><div class="db-tl-dot"></div><div style="flex:1;"><div class="db-tl-title">20:00 – 22:00 ก่อนนอน</div><div class="db-tl-sub">4 ผู้ป่วย · 6 รายการ</div></div><span class="db-tl-badge" style="color:var(--text-3);background:var(--bg);">รอ</span></div>
+                <div style="display:flex;flex-direction:column;">
+
+                    <!-- รอบเช้า (active) -->
+                    <div style="display:flex;gap:0;">
+                        <div style="display:flex;flex-direction:column;align-items:center;width:32px;flex-shrink:0;">
+                            <div style="width:14px;height:14px;background:#0D9488;border-radius:50%;border:2.5px solid white;box-shadow:0 0 0 3px rgba(13,148,136,0.25);flex-shrink:0;margin-top:14px;z-index:1;"></div>
+                            <div style="width:2px;flex:1;background:#d1fae5;margin-top:2px;"></div>
+                        </div>
+                        <div onclick="nav('pg-routine')"
+                             style="flex:1;background:#f0fdf4;border:1.5px solid #6ee7b7;border-radius:14px;padding:12px 14px;margin-left:8px;margin-bottom:8px;cursor:pointer;transition:all .18s;display:flex;flex-direction:column;gap:0;"
+                             onmouseover="this.style.background='#d1fae5';this.style.borderColor='#0D9488';this.style.boxShadow='0 4px 18px rgba(13,148,136,0.18)';this.style.transform='translateX(3px)'"
+                             onmouseout="this.style.background='#f0fdf4';this.style.borderColor='#6ee7b7';this.style.boxShadow='';this.style.transform=''">
+                            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
+                                <div style="font-size:13px;font-weight:700;color:#0F766E;">06:00 – 08:00 · รอบเช้า</div>
+                                <div style="display:flex;align-items:center;gap:6px;">
+                                    <span style="font-size:10px;font-weight:600;color:#0284c7;background:#e0f2fe;padding:2px 9px;border-radius:8px;">กำลังดำเนินการ</span>
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0D9488" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+                                </div>
+                            </div>
+                            <div style="font-size:11px;color:#0D9488;margin-bottom:8px;">8 ผู้ป่วย · 16/24 จ่ายแล้ว</div>
+                            <div style="width:100%;height:4px;background:rgba(13,148,136,0.15);border-radius:3px;"><div style="width:67%;height:100%;background:#0D9488;border-radius:3px;"></div></div>
+                        </div>
+                    </div>
+
+                    <!-- รอบเที่ยง -->
+                    <div style="display:flex;gap:0;">
+                        <div style="display:flex;flex-direction:column;align-items:center;width:32px;flex-shrink:0;">
+                            <div style="width:12px;height:12px;background:white;border-radius:50%;border:2px solid #cbd5e1;flex-shrink:0;margin-top:14px;z-index:1;"></div>
+                            <div style="width:2px;flex:1;background:#e2e8f0;margin-top:2px;"></div>
+                        </div>
+                        <div onclick="nav('pg-routine')"
+                             style="flex:1;background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:12px 14px;margin-left:8px;margin-bottom:8px;cursor:pointer;transition:all .18s;display:flex;align-items:center;gap:8px;"
+                             onmouseover="this.style.background='#f0fdf4';this.style.borderColor='#6ee7b7';this.style.boxShadow='0 4px 14px rgba(13,148,136,0.1)';this.style.transform='translateX(3px)'"
+                             onmouseout="this.style.background='#fff';this.style.borderColor='#e2e8f0';this.style.boxShadow='';this.style.transform=''">
+                            <div style="flex:1;">
+                                <div style="font-size:13px;font-weight:600;color:var(--text-1);margin-bottom:3px;">11:00 – 12:00 · รอบเที่ยง</div>
+                                <div style="font-size:11px;color:var(--text-3);">5 ผู้ป่วย · 12 รายการ</div>
+                            </div>
+                            <span style="font-size:10px;font-weight:500;color:#94a3b8;background:#f8fafc;padding:2px 9px;border-radius:8px;white-space:nowrap;">รอ</span>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#cbd5e1" stroke-width="2.5" style="flex-shrink:0;"><polyline points="9 18 15 12 9 6"/></svg>
+                        </div>
+                    </div>
+
+                    <!-- รอบเย็น -->
+                    <div style="display:flex;gap:0;">
+                        <div style="display:flex;flex-direction:column;align-items:center;width:32px;flex-shrink:0;">
+                            <div style="width:12px;height:12px;background:white;border-radius:50%;border:2px solid #cbd5e1;flex-shrink:0;margin-top:14px;z-index:1;"></div>
+                            <div style="width:2px;flex:1;background:#e2e8f0;margin-top:2px;"></div>
+                        </div>
+                        <div onclick="nav('pg-routine')"
+                             style="flex:1;background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:12px 14px;margin-left:8px;margin-bottom:8px;cursor:pointer;transition:all .18s;display:flex;align-items:center;gap:8px;"
+                             onmouseover="this.style.background='#f0fdf4';this.style.borderColor='#6ee7b7';this.style.boxShadow='0 4px 14px rgba(13,148,136,0.1)';this.style.transform='translateX(3px)'"
+                             onmouseout="this.style.background='#fff';this.style.borderColor='#e2e8f0';this.style.boxShadow='';this.style.transform=''">
+                            <div style="flex:1;">
+                                <div style="font-size:13px;font-weight:600;color:var(--text-1);margin-bottom:3px;">16:00 – 18:00 · รอบเย็น</div>
+                                <div style="font-size:11px;color:var(--text-3);">6 ผู้ป่วย · 15 รายการ</div>
+                            </div>
+                            <span style="font-size:10px;font-weight:500;color:#94a3b8;background:#f8fafc;padding:2px 9px;border-radius:8px;white-space:nowrap;">รอ</span>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#cbd5e1" stroke-width="2.5" style="flex-shrink:0;"><polyline points="9 18 15 12 9 6"/></svg>
+                        </div>
+                    </div>
+
+                    <!-- กลางคืน (last) -->
+                    <div style="display:flex;gap:0;">
+                        <div style="display:flex;flex-direction:column;align-items:center;width:32px;flex-shrink:0;">
+                            <div style="width:12px;height:12px;background:white;border-radius:50%;border:2px solid #cbd5e1;flex-shrink:0;margin-top:14px;z-index:1;"></div>
+                        </div>
+                        <div onclick="nav('pg-routine')"
+                             style="flex:1;background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:12px 14px;margin-left:8px;cursor:pointer;transition:all .18s;display:flex;align-items:center;gap:8px;"
+                             onmouseover="this.style.background='#f0fdf4';this.style.borderColor='#6ee7b7';this.style.boxShadow='0 4px 14px rgba(13,148,136,0.1)';this.style.transform='translateX(3px)'"
+                             onmouseout="this.style.background='#fff';this.style.borderColor='#e2e8f0';this.style.boxShadow='';this.style.transform=''">
+                            <div style="flex:1;">
+                                <div style="font-size:13px;font-weight:600;color:var(--text-1);margin-bottom:3px;">20:00 – 22:00 · กลางคืน</div>
+                                <div style="font-size:11px;color:var(--text-3);">4 ผู้ป่วย · 6 รายการ</div>
+                            </div>
+                            <span style="font-size:10px;font-weight:500;color:#94a3b8;background:#f8fafc;padding:2px 9px;border-radius:8px;white-space:nowrap;">รอ</span>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#cbd5e1" stroke-width="2.5" style="flex-shrink:0;"><polyline points="9 18 15 12 9 6"/></svg>
+                        </div>
+                    </div>
+
+                </div>
             </div>
 
             <div class="db-panel">
-                <div class="db-panel-head">
-                    <div class="db-panel-head-icon" style="background:#EFF6FF;color:#3B82F6;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
-                    กิจกรรมล่าสุด
+                <div class="db-panel-head" style="justify-content:space-between;">
+                    <div style="display:flex;align-items:center;gap:10px;">
+                        <div class="db-panel-head-icon" style="background:#f8fafc;color:#64748b;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+                        กิจกรรมล่าสุด
+                    </div>
+                    <span style="font-size:10px;color:#64748b;font-weight:500;">วันนี้</span>
                 </div>
-                <div style="display:flex;flex-direction:column;gap:6px;">
-                    <div class="db-log-item"><div class="db-log-dot" style="background:var(--green);"></div><div class="db-log-text">จ่ายยา <strong>Amlodipine 5mg</strong> — สมชาย มานะ (3A-01)</div><div class="db-log-time">08:12</div></div>
-                    <div class="db-log-item"><div class="db-log-dot" style="background:var(--green);"></div><div class="db-log-text">จ่ายยา <strong>Metformin 500mg</strong> — มาลี สุขใจ (3A-03)</div><div class="db-log-time">08:08</div></div>
-                    <div class="db-log-item"><div class="db-log-dot" style="background:#3B82F6;"></div><div class="db-log-text">จัดยา <strong>Omeprazole 20mg</strong> → Slot A-01</div><div class="db-log-time">07:55</div></div>
-                    <div class="db-log-item"><div class="db-log-dot" style="background:#F59E0B;"></div><div class="db-log-text">งดยา <strong>Warfarin 3mg</strong> — กัลยา ชัยวงศ์ (Vital ไม่ผ่าน)</div><div class="db-log-time">07:45</div></div>
-                    <div class="db-log-item"><div class="db-log-dot" style="background:var(--green);"></div><div class="db-log-text">เข้าสู่ระบบ <strong>นส.สมใจ ดีมาก</strong> — Ward 3A</div><div class="db-log-time">07:30</div></div>
+                <div style="display:flex;flex-direction:column;gap:0;">
+                    <div class="db-log-item" style="border-bottom:1px dashed #f1f5f9;padding:10px 8px;">
+                        <div style="width:32px;height:32px;background:#f0fdf4;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0D9488" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                        </div>
+                        <div style="flex:1;min-width:0;"><div class="db-log-text">จ่ายยา <strong>Amlodipine 5mg</strong></div><div style="font-size:11px;color:var(--text-3);">สมชาย มานะ · ห้อง 3A-01</div></div>
+                        <div class="db-log-time">08:12</div>
+                    </div>
+                    <div class="db-log-item" style="border-bottom:1px dashed #f1f5f9;padding:10px 8px;">
+                        <div style="width:32px;height:32px;background:#f0fdf4;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0D9488" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                        </div>
+                        <div style="flex:1;min-width:0;"><div class="db-log-text">จ่ายยา <strong>Metformin 500mg</strong></div><div style="font-size:11px;color:var(--text-3);">มาลี สุขใจ · ห้อง 3A-03</div></div>
+                        <div class="db-log-time">08:08</div>
+                    </div>
+                    <div class="db-log-item" style="border-bottom:1px dashed #f1f5f9;padding:10px 8px;">
+                        <div style="width:32px;height:32px;background:#eff6ff;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2.5"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>
+                        </div>
+                        <div style="flex:1;min-width:0;"><div class="db-log-text">จัดยา <strong>Omeprazole 20mg</strong></div><div style="font-size:11px;color:var(--text-3);">เข้า Slot A-01</div></div>
+                        <div class="db-log-time">07:55</div>
+                    </div>
+                    <div class="db-log-item" style="border-bottom:1px dashed #f1f5f9;padding:10px 8px;">
+                        <div style="width:32px;height:32px;background:#fffbeb;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                        </div>
+                        <div style="flex:1;min-width:0;"><div class="db-log-text">งดยา <strong>Warfarin 3mg</strong></div><div style="font-size:11px;color:var(--text-3);">กัลยา ชัยวงศ์ · Vital ไม่ผ่านเกณฑ์</div></div>
+                        <div class="db-log-time">07:45</div>
+                    </div>
+                    <div class="db-log-item" style="padding:10px 8px;">
+                        <div style="width:32px;height:32px;background:#f5f3ff;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="2.5"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                        </div>
+                        <div style="flex:1;min-width:0;"><div class="db-log-text">เข้าสู่ระบบ</div><div style="font-size:11px;color:var(--text-3);">นส.สมใจ ดีมาก · Ward 3A</div></div>
+                        <div class="db-log-time">07:30</div>
+                    </div>
                 </div>
             </div>
         </div>
+
+        <!-- Role bottom section (super: team + performance) -->
+        <div id="dashRoleBottom" class="db-role-section"></div>
 
     </div>
     </div>
@@ -11655,9 +11812,9 @@
         const banner = document.getElementById('dashBanner');
         if (banner) {
             const gradients = {
-                nurse: 'linear-gradient(135deg,#0F766E 0%,#0D9488 40%,#14B8A6 100%)',
-                pharma: 'linear-gradient(135deg,#1D4ED8 0%,#3B82F6 50%,#60A5FA 100%)',
-                super: 'linear-gradient(135deg,#5B21B6 0%,#7C3AED 40%,#A78BFA 100%)'
+                nurse:  'linear-gradient(135deg,#0a5c55 0%,#0F766E 30%,#0D9488 65%,#0ea59a 100%)',
+                pharma: 'linear-gradient(135deg,#1e3a8a 0%,#1D4ED8 30%,#3B82F6 65%,#60A5FA 100%)',
+                super: 'linear-gradient(135deg,#3b0764 0%,#5B21B6 30%,#7C3AED 65%,#a855f7 100%)'
             };
             banner.style.background = gradients[role] || gradients.super;
         }
@@ -11710,16 +11867,15 @@
             }
         }
 
-        // Grid always shows both cards
-        if (dispenseBtn && prepBtn) {
-            const aGrid = dispenseBtn.parentElement;
-            if (role === 'super') { aGrid.style.gridTemplateColumns = '1fr 1fr'; }
-            else { aGrid.style.gridTemplateColumns = '280px 1fr 1fr'; }
-        }
+        // db-actions is always 2 columns; alerts row is separate
 
         // Inject role-specific section
         const sec = document.getElementById('dashRoleSection');
         if (sec) sec.innerHTML = getRoleSectionHTML(role, name, roleText);
+
+        // Inject bottom section (super: team + performance below schedule/activity)
+        const secBottom = document.getElementById('dashRoleBottom');
+        if (secBottom) secBottom.innerHTML = getRoleBottomHTML(role);
 
         // Show permission button in global header for head nurse only
         var permBtn = document.getElementById('ghPermBtn');
@@ -11852,28 +12008,35 @@
                 +'</div>';
         }
 
-        // Super — team + chart
-        return '<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">'
-            // Team overview
-            +'<div style="'+glass+'padding:18px 20px;">'
-            +'<div style="font-size:14px;font-weight:600;color:var(--text-1);margin-bottom:14px;display:flex;align-items:center;gap:6px;">'
-            +'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="2.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>'
-            +'ทีมที่ปฏิบัติงาน</div>'
-            +'<div style="display:flex;flex-direction:column;gap:8px;">'
-            +'<div style="display:flex;align-items:center;gap:10px;"><div style="width:36px;height:36px;background:linear-gradient(135deg,var(--green),#5db840);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:white;">สจ</div><div><div style="font-size:13px;font-weight:600;color:var(--text-1);">นส.สมใจ ดีมาก</div><div style="font-size:10px;color:var(--green);">พยาบาล · กำลังจ่ายยา</div></div></div>'
-            +'<div style="display:flex;align-items:center;gap:10px;"><div style="width:36px;height:36px;background:linear-gradient(135deg,#3b82f6,#60a5fa);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:white;">วภ</div><div><div style="font-size:13px;font-weight:600;color:var(--text-1);">ภญ.วิภา เจริญยา</div><div style="font-size:10px;color:#3b82f6;">เภสัชกร · กำลังจัดยา</div></div></div>'
-            +'<div style="display:flex;align-items:center;gap:10px;"><div style="width:36px;height:36px;background:linear-gradient(135deg,var(--green),#5db840);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:white;">วร</div><div><div style="font-size:13px;font-weight:600;color:var(--text-1);">นส.วรรณา รุ่งเรือง</div><div style="font-size:10px;color:var(--text-3);">พยาบาล · ว่าง</div></div></div>'
-            +'</div></div>'
-            // Performance
-            +'<div style="'+glass+'padding:18px 20px;">'
-            +'<div style="font-size:14px;font-weight:600;color:var(--text-1);margin-bottom:14px;display:flex;align-items:center;gap:6px;">'
-            +'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2.5"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg>'
-            +'ประสิทธิภาพเวรนี้</div>'
+        // Super — no top section (team + performance appear below schedule/activity)
+        return '';
+    }
+
+    function getRoleBottomHTML(role) {
+        if (role !== 'super') return '';
+        const glass = 'background:rgba(255,255,255,0.9);backdrop-filter:blur(14px);border:1px solid var(--border);border-radius:18px;box-shadow:var(--shadow);';
+        return '<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px;">'
+            +'<div style="'+glass+'padding:20px 22px;">'
+            +'<div style="font-size:14px;font-weight:600;color:var(--text-1);margin-bottom:16px;display:flex;align-items:center;gap:8px;">'
+            +'<div style="width:28px;height:28px;background:#f5f3ff;border-radius:8px;display:flex;align-items:center;justify-content:center;">'
+            +'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="2.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>'
+            +'</div>ทีมที่ปฏิบัติงาน'
+            +'<span style="margin-left:auto;font-size:10px;font-weight:600;color:#7c3aed;background:#f5f3ff;padding:2px 10px;border-radius:8px;">3 คน</span></div>'
             +'<div style="display:flex;flex-direction:column;gap:10px;">'
-            +'<div><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;"><span style="color:var(--text-2);">ตรงเวลา</span><span style="font-weight:700;color:var(--green);">87%</span></div><div style="width:100%;height:6px;background:var(--bg);border-radius:3px;overflow:hidden;"><div style="width:87%;height:100%;background:linear-gradient(90deg,var(--green),#5db840);border-radius:3px;"></div></div></div>'
-            +'<div><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;"><span style="color:var(--text-2);">7 Rights ผ่าน</span><span style="font-weight:700;color:#3b82f6;">100%</span></div><div style="width:100%;height:6px;background:var(--bg);border-radius:3px;overflow:hidden;"><div style="width:100%;height:100%;background:linear-gradient(90deg,#3b82f6,#60a5fa);border-radius:3px;"></div></div></div>'
-            +'<div><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;"><span style="color:var(--text-2);">Overdue rate</span><span style="font-weight:700;color:#f59e0b;">13%</span></div><div style="width:100%;height:6px;background:var(--bg);border-radius:3px;overflow:hidden;"><div style="width:13%;height:100%;background:linear-gradient(90deg,#f59e0b,#fbbf24);border-radius:3px;"></div></div></div>'
-            +'<div><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;"><span style="color:var(--text-2);">Error rate</span><span style="font-weight:700;color:var(--green);">0%</span></div><div style="width:100%;height:6px;background:var(--bg);border-radius:3px;overflow:hidden;"><div style="width:0%;height:100%;background:#ef4444;border-radius:3px;"></div></div></div>'
+            +'<div style="display:flex;align-items:center;gap:12px;padding:10px 12px;background:#f0fdf4;border-radius:12px;"><div style="width:38px;height:38px;background:linear-gradient(135deg,var(--green),#14B8A6);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:white;flex-shrink:0;">สจ</div><div style="flex:1;"><div style="font-size:13px;font-weight:600;color:var(--text-1);">นส.สมใจ ดีมาก</div><div style="font-size:11px;color:#0D9488;margin-top:1px;">พยาบาล · กำลังจ่ายยา</div></div><div style="width:8px;height:8px;background:#4ade80;border-radius:50%;"></div></div>'
+            +'<div style="display:flex;align-items:center;gap:12px;padding:10px 12px;background:#eff6ff;border-radius:12px;"><div style="width:38px;height:38px;background:linear-gradient(135deg,#3b82f6,#60a5fa);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:white;flex-shrink:0;">วภ</div><div style="flex:1;"><div style="font-size:13px;font-weight:600;color:var(--text-1);">ภญ.วิภา เจริญยา</div><div style="font-size:11px;color:#3b82f6;margin-top:1px;">เภสัชกร · กำลังจัดยา</div></div><div style="width:8px;height:8px;background:#4ade80;border-radius:50%;"></div></div>'
+            +'<div style="display:flex;align-items:center;gap:12px;padding:10px 12px;background:#f8fafc;border-radius:12px;"><div style="width:38px;height:38px;background:linear-gradient(135deg,#64748b,#94a3b8);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:white;flex-shrink:0;">วร</div><div style="flex:1;"><div style="font-size:13px;font-weight:600;color:var(--text-1);">นส.วรรณา รุ่งเรือง</div><div style="font-size:11px;color:var(--text-3);margin-top:1px;">พยาบาล · ว่าง</div></div><div style="width:8px;height:8px;background:#e2e8f0;border-radius:50%;"></div></div>'
+            +'</div></div>'
+            +'<div style="'+glass+'padding:20px 22px;">'
+            +'<div style="font-size:14px;font-weight:600;color:var(--text-1);margin-bottom:16px;display:flex;align-items:center;gap:8px;">'
+            +'<div style="width:28px;height:28px;background:#fffbeb;border-radius:8px;display:flex;align-items:center;justify-content:center;">'
+            +'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2.5"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg>'
+            +'</div>ประสิทธิภาพเวรนี้</div>'
+            +'<div style="display:flex;flex-direction:column;gap:14px;">'
+            +'<div><div style="display:flex;justify-content:space-between;align-items:center;font-size:12px;margin-bottom:6px;"><span style="color:var(--text-2);">ตรงเวลา</span><span style="font-weight:700;color:#0D9488;font-size:14px;">87%</span></div><div style="width:100%;height:7px;background:#f1f5f9;border-radius:4px;overflow:hidden;"><div style="width:87%;height:100%;background:linear-gradient(90deg,#0D9488,#14B8A6);border-radius:4px;"></div></div></div>'
+            +'<div><div style="display:flex;justify-content:space-between;align-items:center;font-size:12px;margin-bottom:6px;"><span style="color:var(--text-2);">7 Rights ผ่าน</span><span style="font-weight:700;color:#3b82f6;font-size:14px;">100%</span></div><div style="width:100%;height:7px;background:#f1f5f9;border-radius:4px;overflow:hidden;"><div style="width:100%;height:100%;background:linear-gradient(90deg,#3b82f6,#60a5fa);border-radius:4px;"></div></div></div>'
+            +'<div><div style="display:flex;justify-content:space-between;align-items:center;font-size:12px;margin-bottom:6px;"><span style="color:var(--text-2);">Overdue rate</span><span style="font-weight:700;color:#f59e0b;font-size:14px;">13%</span></div><div style="width:100%;height:7px;background:#f1f5f9;border-radius:4px;overflow:hidden;"><div style="width:13%;height:100%;background:linear-gradient(90deg,#f59e0b,#fbbf24);border-radius:4px;"></div></div></div>'
+            +'<div><div style="display:flex;justify-content:space-between;align-items:center;font-size:12px;margin-bottom:6px;"><span style="color:var(--text-2);">Error rate</span><span style="font-weight:700;color:#0D9488;font-size:14px;">0%</span></div><div style="width:100%;height:7px;background:#f1f5f9;border-radius:4px;overflow:hidden;"><div style="width:0%;height:100%;background:#ef4444;border-radius:4px;"></div></div></div>'
             +'</div></div>'
             +'</div>';
     }
