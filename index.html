@@ -134,24 +134,6 @@
 
         /* ── BACK BUTTON (hidden — use browser back) ── */
         .hdr-back { display: none !important; }
-        .page > .hdr-back {
-            display: inline-flex !important;
-            align-items: center;
-            gap: 8px;
-            position: fixed;
-            top: 80px;
-            left: 24px;
-            z-index: 210;
-            padding: 10px 14px;
-            border: 1px solid rgba(255,255,255,0.25);
-            border-radius: 12px;
-            background: rgba(15,23,42,0.18);
-            color: white;
-            font-family: 'Prompt', sans-serif;
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-        }
 
         /* ── GLOBAL HEADER & FOOTER (always visible) ── */
         #globalHeader, #globalFooter { display: flex; }
@@ -8270,7 +8252,7 @@
                             <div><div style="font-size:14px;font-weight:700;color:var(--text-1);">มาลี สุขใจ</div><div style="font-size:10px;color:var(--text-3);">3A-03 · HN: 6404215</div></div>
                         </div>
                         <div style="display:flex;gap:8px;">
-                            <div style="flex:1;background:#F5F3FF;border-radius:8px;padding:8px;text-align:center;"><div style="font-size:16px;font-weight:700;color:#7C3AED;">4</div><div style="font-size:9px;color:var(--text-3);">รายการยา</div></div>
+                            <div style="flex:1;background:#F5F3FF;border-radius:8px;padding:8px;text-align:center;"><div style="font-size:16px;font-weight:700;color:#7C3AED;">3</div><div style="font-size:9px;color:var(--text-3);">รายการยา</div></div>
                             <div style="flex:1;background:#EFF6FF;border-radius:8px;padding:8px;text-align:center;"><div style="font-size:13px;font-weight:700;color:#3B82F6;">06:00–08:00</div><div style="font-size:9px;color:var(--text-3);">รอบเช้า</div></div>
                         </div>
                     </div>
@@ -8510,7 +8492,7 @@
                 <div style="font-size:28px;font-weight:800;color:#0F766E;margin-bottom:6px;letter-spacing:-0.3px;">บันทึกการให้ยาสำเร็จ</div>
                 <div class="ok-sub" style="margin-bottom:20px;" id="rtS6Sub">Amlodipine 5 mg — นายสมชาย มานะ (3A-01)</div>
                 <div class="ok-summary" style="max-width:400px;width:100%;">
-                    <div class="ok-summary-grid">
+                    <div class="ok-summary-grid" id="rtStep6Grid">
                         <div><div class="wit-ml">ยา</div><div class="wit-mv" style="color:var(--green);" id="rtS6Drug">Amlodipine 5 mg</div></div>
                         <div><div class="wit-ml">Dose</div><div class="wit-mv" id="rtS6Dose">5 mg x 1 เม็ด</div></div>
                         <div><div class="wit-ml">Route</div><div class="wit-mv" id="rtS6Route">PO (รับประทาน)</div></div>
@@ -8520,7 +8502,7 @@
                     </div>
                 </div>
                 <div class="ok-actions" style="max-width:400px;width:100%;">
-                    <button class="btn-primary" onclick="goPostAssessI({patient:'นายสมชาย มานะ',bed:'6401234 · 3A-01',drug:'Amlodipine 5 mg',detail:'PO · 5 mg',type:'Routine',givenTime:'08:05 น.',showPain:false,origin:'pg-routine'})" style="background:linear-gradient(135deg,#059669,#10b981);box-shadow:0 5px 18px rgba(5,150,105,.25);border:none;"><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8" fill="none" stroke="white" stroke-width="2"/><line x1="16" y1="13" x2="8" y2="13" stroke="white" stroke-width="2"/></svg>ประเมินหลังให้ยา</button>
+                    <button class="btn-primary" onclick="goCurrentPostAssessI('r')" style="background:linear-gradient(135deg,#059669,#10b981);box-shadow:0 5px 18px rgba(5,150,105,.25);border:none;"><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8" fill="none" stroke="white" stroke-width="2"/><line x1="16" y1="13" x2="8" y2="13" stroke="white" stroke-width="2"/></svg>ประเมินหลังให้ยา</button>
                     <button class="btn-primary" onclick="rtGoStep(4);rtResetDrugScan();" style="background:rgba(255,255,255,0.9);color:#0F766E;border:2px solid #99f6e4;">ให้ยารายการถัดไป</button>
                     <div class="ok-act-row">
                         <button class="btn-secondary" onclick="rtGoStep(1)">กลับรายการผู้ป่วย</button>
@@ -8724,7 +8706,7 @@
                 </div>
 
                 <div class="ok-actions" style="max-width:400px;width:100%;">
-                    <button class="btn-primary" onclick="goPostAssessI({patient:'นายธนกร วิเศษสิทธิ์',bed:'6405001 · 3A-10',drug:'Heparin 5000 units',detail:'SC · 5,000 units',type:'STAT',givenTime:'08:18 น.',showPain:false,origin:'pg-stat'})" style="background:linear-gradient(135deg,#059669,#10b981);box-shadow:0 5px 18px rgba(5,150,105,.25);border:none;"><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8" fill="none" stroke="white" stroke-width="2"/><line x1="16" y1="13" x2="8" y2="13" stroke="white" stroke-width="2"/></svg>ประเมินหลังให้ยา</button>
+                    <button class="btn-primary" onclick="goCurrentPostAssessI('st')" style="background:linear-gradient(135deg,#059669,#10b981);box-shadow:0 5px 18px rgba(5,150,105,.25);border:none;"><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8" fill="none" stroke="white" stroke-width="2"/><line x1="16" y1="13" x2="8" y2="13" stroke="white" stroke-width="2"/></svg>ประเมินหลังให้ยา</button>
                     <button class="btn-primary" onclick="stGoStep(1)" style="background:#dc2626;box-shadow:0 5px 22px rgba(220,38,38,.3);">กลับรายการผู้ป่วย STAT</button>
                     <button class="btn-secondary" onclick="nav('pg-dashboard')" style="border-color:var(--text-3);">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
@@ -9005,7 +8987,7 @@
                 </div>
 
                 <div class="ok-actions" style="max-width:420px;width:100%;">
-                    <button class="btn-primary" onclick="goPostAssessI({patient:'นายสมชาย มานะ',bed:'6401234 · 3A-01',drug:'Morphine 5 mg',detail:'IV · 5 mg',type:'PRN',givenTime:'08:18 น.',showPain:true,origin:'pg-prn'})" style="background:linear-gradient(135deg,#059669,#10b981);box-shadow:0 5px 18px rgba(5,150,105,.25);border:none;"><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8" fill="none" stroke="white" stroke-width="2"/><line x1="16" y1="13" x2="8" y2="13" stroke="white" stroke-width="2"/></svg>ประเมินหลังให้ยา (บังคับสำหรับ PRN)</button>
+                    <button class="btn-primary" onclick="goCurrentPostAssessI('prn')" style="background:linear-gradient(135deg,#059669,#10b981);box-shadow:0 5px 18px rgba(5,150,105,.25);border:none;"><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8" fill="none" stroke="white" stroke-width="2"/><line x1="16" y1="13" x2="8" y2="13" stroke="white" stroke-width="2"/></svg>ประเมินหลังให้ยา (บังคับสำหรับ PRN)</button>
                     <div class="ok-act-row">
                         <button class="btn-secondary" onclick="prnGoStep(1)">กลับรายการผู้ป่วย</button>
                         <button class="btn-secondary" onclick="nav('pg-dashboard')" style="border-color:var(--text-3);">กลับ Dashboard</button>
@@ -9055,7 +9037,7 @@
 
                 <!-- Patient cards (2 columns like routine) -->
                 <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;">
-                    <div onclick="haGoStep(2)" style="background:rgba(255,255,255,0.9);border:2px solid var(--border);border-radius:16px;padding:18px;cursor:pointer;transition:all .2s;box-shadow:var(--shadow);border-top:3px solid #D97706;" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 24px rgba(217,119,6,0.12)'" onmouseout="this.style.transform='';this.style.boxShadow='var(--shadow)'">
+                    <div onclick="haSelectPt(0)" style="background:rgba(255,255,255,0.9);border:2px solid var(--border);border-radius:16px;padding:18px;cursor:pointer;transition:all .2s;box-shadow:var(--shadow);border-top:3px solid #D97706;" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 24px rgba(217,119,6,0.12)'" onmouseout="this.style.transform='';this.style.boxShadow='var(--shadow)'">
                         <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
                             <div style="width:42px;height:42px;background:linear-gradient(135deg,#B45309,#D97706);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:white;flex-shrink:0;box-shadow:0 3px 10px rgba(217,119,6,0.25);">สช</div>
                             <div style="flex:1;">
@@ -9069,7 +9051,7 @@
                         </div>
                     </div>
 
-                    <div onclick="haGoStep(2)" style="background:rgba(255,255,255,0.9);border:2px solid var(--border);border-radius:16px;padding:18px;cursor:pointer;transition:all .2s;box-shadow:var(--shadow);border-top:3px solid #DC2626;" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 24px rgba(220,38,38,0.12)'" onmouseout="this.style.transform='';this.style.boxShadow='var(--shadow)'">
+                    <div onclick="haSelectPt(1)" style="background:rgba(255,255,255,0.9);border:2px solid var(--border);border-radius:16px;padding:18px;cursor:pointer;transition:all .2s;box-shadow:var(--shadow);border-top:3px solid #DC2626;" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 24px rgba(220,38,38,0.12)'" onmouseout="this.style.transform='';this.style.boxShadow='var(--shadow)'">
                         <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
                             <div style="width:42px;height:42px;background:linear-gradient(135deg,#B91C1C,#DC2626);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:white;flex-shrink:0;box-shadow:0 3px 10px rgba(220,38,38,0.25);">ธว</div>
                             <div style="flex:1;">
@@ -9183,12 +9165,12 @@
         <!-- ══ STEP 5: พยาน / IDC ══ -->
         <div class="rt-panel" id="haStep5">
             <div class="rt-inner" style="max-width:540px;">
-                <div class="ha-shield"><div class="ha-shield-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div><div><div class="ha-shield-title">ขั้นตอนพยาน — Double Check บังคับ</div><div class="ha-shield-sub">Heparin 5000 units SC · สมชาย มานะ (3A-01)</div></div></div>
+                <div class="ha-shield"><div class="ha-shield-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div><div><div class="ha-shield-title">ขั้นตอนพยาน — ต้องสแกน 1 คน</div><div class="ha-shield-sub">Heparin 5000 units SC · สมชาย มานะ (3A-01)</div></div></div>
 
                 <div class="wit-card" style="margin-bottom:16px;">
-                    <div class="wit-card-head" style="padding:20px 24px 0;"><div class="wit-lock-icon" style="background:#fffbeb;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div><h2 class="wit-card-title">ยืนยันโดยพยาน</h2><p class="wit-card-sub">ให้เจ้าหน้าที่อีกท่านสแกนบัตรหรือกรอกข้อมูล</p></div>
+                    <div class="wit-card-head" style="padding:20px 24px 0;"><div class="wit-lock-icon" style="background:#fffbeb;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div><h2 class="wit-card-title">ยืนยันโดยพยาน 1 คน</h2><p class="wit-card-sub">ให้เจ้าหน้าที่ 1 ท่านสแกนบัตรเพื่อยืนยัน</p></div>
                     <div style="padding:20px 24px 24px;text-align:center;">
-                        <button class="btn-ha" style="max-width:300px;margin:0 auto;" onclick="haWitness()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>Demo: สแกนบัตรพยาน</button>
+                        <button class="btn-ha" style="max-width:300px;margin:0 auto;" onclick="haWitness()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>สแกนบัตรพยาน</button>
                     </div>
                     <div class="wit-result" id="haWitResult"><div class="wit-result-box"><div class="wit-result-avatar" style="background:#d97706;">วร</div><div class="wit-result-info"><div class="wit-result-name" style="color:#92400e;">นส.วรรณา รุ่งเรือง</div><div class="wit-result-meta" style="color:#b45309;">EMP-3251 · พยาบาลวิชาชีพ · อนุมัติเมื่อ <span id="haWitTime">--:--</span></div></div><svg width="24" height="24" viewBox="0 0 24 24" fill="#d97706"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg></div></div>
                 </div>
@@ -9204,7 +9186,7 @@
                 <div class="rec-card"><div class="rec-card-title"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>ข้อมูลการให้ยา High Alert</div><div class="rec-grid">
                     <div><div class="wit-ml">ผู้ป่วย</div><div class="wit-mv">นายสมชาย มานะ</div></div>
                     <div><div class="wit-ml">HN / เตียง</div><div class="wit-mv">6401234 · 3A-01</div></div>
-                    <div><div class="wit-ml">ยา</div><div class="wit-mv" style="color:#d97706;font-weight:800;">Heparin 5000 units (HA)</div></div>
+                    <div><div class="wit-ml">ยา</div><div class="wit-mv" style="color:#d97706;font-weight:800;" id="haConfirmDrug">Heparin 5000 units (HA)</div></div>
                     <div><div class="wit-ml">Route</div><div class="wit-mv">SC</div></div>
                     <div><div class="wit-ml">ผู้ให้ยา</div><div class="wit-mv">นส.สมใจ ดีมาก</div></div>
                     <div><div class="wit-ml">พยาน</div><div class="wit-mv">นส.วรรณา รุ่งเรือง</div></div>
@@ -9223,11 +9205,11 @@
             <div class="rt-inner center">
                 <div class="ha-ok-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="white"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg></div>
                 <div style="font-size:26px;font-weight:800;color:#92400e;margin-bottom:4px;">ให้ยา High Alert สำเร็จแล้ว</div>
-                <div style="font-size:14px;color:var(--text-2);margin-bottom:24px;">Heparin 5000 units SC — Double Check ครบถ้วน</div>
+                <div style="font-size:14px;color:var(--text-2);margin-bottom:24px;" id="haSuccessSub">Heparin 5000 units SC — Double Check ครบถ้วน</div>
 
                 <div class="ok-summary" style="max-width:420px;width:100%;">
                     <div class="ok-summary-grid">
-                        <div><div class="wit-ml">ยา</div><div class="wit-mv" style="color:#d97706;font-weight:800;">Heparin 5000 units (HA)</div></div>
+                        <div><div class="wit-ml">ยา</div><div class="wit-mv" style="color:#d97706;font-weight:800;" id="haSuccessDrug">Heparin 5000 units (HA)</div></div>
                         <div><div class="wit-ml">สถานะ</div><div class="wit-mv green">ให้ยาแล้ว</div></div>
                         <div><div class="wit-ml">ผู้ให้ยา</div><div class="wit-mv">นส.สมใจ ดีมาก</div></div>
                         <div><div class="wit-ml">พยาน</div><div class="wit-mv">นส.วรรณา รุ่งเรือง</div></div>
@@ -9237,7 +9219,7 @@
                 </div>
 
                 <div class="ok-actions" style="max-width:420px;width:100%;">
-                    <button class="btn-primary" onclick="goPostAssessI({patient:'นายสมชาย มานะ',bed:'6401234 · 3A-01',drug:'Heparin 5000 units',detail:'SC · 5,000 units',type:'High Alert',givenTime:'08:10 น.',showPain:false,origin:'pg-highalert'})" style="background:linear-gradient(135deg,#059669,#10b981);box-shadow:0 5px 18px rgba(5,150,105,.25);border:none;"><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8" fill="none" stroke="white" stroke-width="2"/><line x1="16" y1="13" x2="8" y2="13" stroke="white" stroke-width="2"/></svg>ประเมินหลังให้ยา</button>
+                    <button class="btn-primary" onclick="goCurrentPostAssessI('ha')" style="background:linear-gradient(135deg,#059669,#10b981);box-shadow:0 5px 18px rgba(5,150,105,.25);border:none;"><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8" fill="none" stroke="white" stroke-width="2"/><line x1="16" y1="13" x2="8" y2="13" stroke="white" stroke-width="2"/></svg>ประเมินหลังให้ยา</button>
                     <button class="btn-primary" onclick="haGoStep(1)" style="background:#d97706;box-shadow:0 5px 22px rgba(217,119,6,.3);">กลับรายการผู้ป่วย</button>
                     <button class="btn-secondary" onclick="nav('pg-dashboard')" style="border-color:var(--text-3);"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>กลับ Dashboard</button>
                 </div>
@@ -9443,9 +9425,9 @@
             <div class="rt-inner">
                 <div class="ov-banner"><div class="ov-banner-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="white"><circle cx="12" cy="12" r="10" fill="none" stroke="white" stroke-width="2"/><polyline points="12 6 12 12 16 14" stroke="white" stroke-width="2" fill="none"/></svg></div><div><div class="ov-banner-text">Overdue — ยาเลยเวลาที่กำหนด</div><div class="ov-banner-sub">ผู้ป่วยที่มียาเลยเวลาใน Ward 3A</div></div></div>
 
-                <div class="stat-pt" style="border-color:#fda4af;background:#fff8f8;" onclick="ovGoStep(2)"><div class="stat-pt-bar" style="background:#be123c;"></div><div class="rt-pt-info"><div class="rt-pt-name" style="display:flex;align-items:center;gap:6px;">นายธนกร วิเศษสิทธิ์ <span class="pt-badge" style="background:#fff1f2;color:#be123c;font-size:10px;padding:2px 8px;">Overdue</span></div><div class="rt-pt-meta">HN: 6405001 · เตียง 3A-10 · Heparin 5000 units SC</div></div><div class="rt-pt-right"><div class="rt-pt-time" style="color:#be123c;font-size:16px;">07:30</div><div style="font-size:11px;color:#be123c;font-weight:700;">เลยเวลา 48 นาที</div></div></div>
+                <div class="stat-pt" style="border-color:#fda4af;background:#fff8f8;" onclick="ovSelectPt(0)"><div class="stat-pt-bar" style="background:#be123c;"></div><div class="rt-pt-info"><div class="rt-pt-name" style="display:flex;align-items:center;gap:6px;">นายธนกร วิเศษสิทธิ์ <span class="pt-badge" style="background:#fff1f2;color:#be123c;font-size:10px;padding:2px 8px;">Overdue</span></div><div class="rt-pt-meta">HN: 6405001 · เตียง 3A-10 · Heparin 5000 units SC</div></div><div class="rt-pt-right"><div class="rt-pt-time" style="color:#be123c;font-size:16px;">07:30</div><div style="font-size:11px;color:#be123c;font-weight:700;">เลยเวลา 48 นาที</div></div></div>
 
-                <div class="stat-pt" style="border-color:#fda4af;background:#fff8f8;" onclick="ovGoStep(2)"><div class="stat-pt-bar" style="background:#be123c;"></div><div class="rt-pt-info"><div class="rt-pt-name" style="display:flex;align-items:center;gap:6px;">นางกัลยา ชัยวงศ์ <span class="pt-badge" style="background:#fff1f2;color:#be123c;font-size:10px;padding:2px 8px;">Overdue</span></div><div class="rt-pt-meta">HN: 6403012 · เตียง 3A-08 · Warfarin 3 mg PO</div></div><div class="rt-pt-right"><div class="rt-pt-time" style="color:#be123c;font-size:16px;">07:00</div><div style="font-size:11px;color:#be123c;font-weight:700;">เลยเวลา 1 ชม. 18 นาที</div></div></div>
+                <div class="stat-pt" style="border-color:#fda4af;background:#fff8f8;" onclick="ovSelectPt(1)"><div class="stat-pt-bar" style="background:#be123c;"></div><div class="rt-pt-info"><div class="rt-pt-name" style="display:flex;align-items:center;gap:6px;">นางกัลยา ชัยวงศ์ <span class="pt-badge" style="background:#fff1f2;color:#be123c;font-size:10px;padding:2px 8px;">Overdue</span></div><div class="rt-pt-meta">HN: 6403012 · เตียง 3A-08 · Warfarin 3 mg PO</div></div><div class="rt-pt-right"><div class="rt-pt-time" style="color:#be123c;font-size:16px;">07:00</div><div style="font-size:11px;color:#be123c;font-weight:700;">เลยเวลา 1 ชม. 18 นาที</div></div></div>
             </div>
         </div>
 
@@ -9580,7 +9562,7 @@
                 <div class="rec-card"><div class="rec-card-title"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>ข้อมูลการให้ยา Overdue</div><div class="rec-grid">
                     <div><div class="wit-ml">ผู้ป่วย</div><div class="wit-mv">นายธนกร วิเศษสิทธิ์</div></div>
                     <div><div class="wit-ml">HN / เตียง</div><div class="wit-mv">6405001 · 3A-10</div></div>
-                    <div><div class="wit-ml">ยา</div><div class="wit-mv" style="color:#be123c;font-weight:800;">Heparin 5000 units</div></div>
+                    <div><div class="wit-ml">ยา</div><div class="wit-mv" style="color:#be123c;font-weight:800;" id="ovConfirmDrug">Heparin 5000 units</div></div>
                     <div><div class="wit-ml">เวลาเดิม</div><div class="wit-mv" style="color:#be123c;">07:30 น.</div></div>
                     <div><div class="wit-ml">Overdue</div><div class="wit-mv" style="color:#be123c;font-weight:800;">48 นาที</div></div>
                     <div><div class="wit-ml">ผู้ให้ยา</div><div class="wit-mv">นส.สมใจ ดีมาก</div></div>
@@ -9599,11 +9581,11 @@
             <div class="rt-inner center">
                 <div class="ov-ok-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
                 <div style="font-size:26px;font-weight:800;color:#881337;margin-bottom:4px;">บันทึกการให้ยา Overdue สำเร็จ</div>
-                <div style="font-size:14px;color:var(--text-2);margin-bottom:24px;">Heparin 5000 units SC — นายธนกร วิเศษสิทธิ์ (3A-10)</div>
+                <div style="font-size:14px;color:var(--text-2);margin-bottom:24px;" id="ovSuccessSub">Heparin 5000 units SC — นายธนกร วิเศษสิทธิ์ (3A-10)</div>
 
                 <div class="ok-summary" style="max-width:400px;width:100%;">
                     <div class="ok-summary-grid">
-                        <div><div class="wit-ml">ยา</div><div class="wit-mv" style="color:#be123c;font-weight:800;">Heparin 5000 units</div></div>
+                        <div><div class="wit-ml">ยา</div><div class="wit-mv" style="color:#be123c;font-weight:800;" id="ovSuccessDrug">Heparin 5000 units</div></div>
                         <div><div class="wit-ml">สถานะ</div><div class="wit-mv green">ให้ยาแล้ว</div></div>
                         <div><div class="wit-ml">Overdue</div><div class="wit-mv" style="color:#be123c;">48 นาที</div></div>
                         <div><div class="wit-ml">เวลาให้จริง</div><div class="wit-mv" id="ovGivenTime">--</div></div>
@@ -9611,7 +9593,7 @@
                 </div>
 
                 <div class="ok-actions" style="max-width:400px;width:100%;">
-                    <button class="btn-primary" onclick="goPostAssessI({patient:'นายธนกร วิเศษสิทธิ์',bed:'6405001 · 3A-10',drug:'Heparin 5000 units',detail:'SC · 5,000 units',type:'Overdue',givenTime:'08:18 น.',showPain:false,origin:'pg-overdue'})" style="background:linear-gradient(135deg,#059669,#10b981);box-shadow:0 5px 18px rgba(5,150,105,.25);border:none;"><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8" fill="none" stroke="white" stroke-width="2"/><line x1="16" y1="13" x2="8" y2="13" stroke="white" stroke-width="2"/></svg>ประเมินหลังให้ยา</button>
+                    <button class="btn-primary" onclick="goCurrentPostAssessI('ov')" style="background:linear-gradient(135deg,#059669,#10b981);box-shadow:0 5px 18px rgba(5,150,105,.25);border:none;"><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8" fill="none" stroke="white" stroke-width="2"/><line x1="16" y1="13" x2="8" y2="13" stroke="white" stroke-width="2"/></svg>ประเมินหลังให้ยา</button>
                     <button class="btn-primary" onclick="ovGoStep(1)" style="background:#be123c;box-shadow:0 5px 22px rgba(190,18,60,.3);">กลับรายการผู้ป่วย</button>
                     <button class="btn-secondary" onclick="nav('pg-dashboard')" style="border-color:var(--text-3);"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>กลับ Dashboard</button>
                 </div>
@@ -11983,11 +11965,11 @@
         <span>85%</span>
     </div>
     <div style="display:flex;align-items:center;gap:12px;">
-        <button type="button" onclick="nav('pg-dashboard')" style="background:none;border:none;font-family:'Prompt',sans-serif;font-size:11px;font-weight:500;color:var(--text-3);cursor:pointer;display:flex;align-items:center;gap:4px;padding:4px 8px;border-radius:6px;transition:all .15s;" onmouseover="this.style.background='var(--bg)';this.style.color='var(--text-1)'" onmouseout="this.style.background='';this.style.color='var(--text-3)'">
+        <button onclick="nav('pg-dashboard')" style="background:none;border:none;font-family:'Prompt',sans-serif;font-size:11px;font-weight:500;color:var(--text-3);cursor:pointer;display:flex;align-items:center;gap:4px;padding:4px 8px;border-radius:6px;transition:all .15s;" onmouseover="this.style.background='var(--bg)';this.style.color='var(--text-1)'" onmouseout="this.style.background='';this.style.color='var(--text-3)'">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
             Dashboard
         </button>
-        <button type="button" onclick="appBack()" style="background:none;border:none;font-family:'Prompt',sans-serif;font-size:11px;font-weight:500;color:var(--text-3);cursor:pointer;display:flex;align-items:center;gap:4px;padding:4px 8px;border-radius:6px;transition:all .15s;" onmouseover="this.style.background='var(--bg)';this.style.color='var(--text-1)'" onmouseout="this.style.background='';this.style.color='var(--text-3)'">
+        <button onclick="history.back()" style="background:none;border:none;font-family:'Prompt',sans-serif;font-size:11px;font-weight:500;color:var(--text-3);cursor:pointer;display:flex;align-items:center;gap:4px;padding:4px 8px;border-radius:6px;transition:all .15s;" onmouseover="this.style.background='var(--bg)';this.style.color='var(--text-1)'" onmouseout="this.style.background='';this.style.color='var(--text-3)'">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
             ย้อนกลับ
         </button>
@@ -12129,9 +12111,6 @@
     const dispensePages = ['pg-routine','pg-stat','pg-prn','pg-highalert','pg-omit-flow','pg-overdue','pg-scan-pt','pg-admin-med','pg-witness','pg-omit','pg-record','pg-hardstop','pg-dispense','pg-pt-detail','pg-post-assess','pg-assess-list'];
     let currentRole = 'nurse';
 
-    let currentPageId = 'pg-cart';
-    let lastPageId = '';
-
     function nav(targetId, skipHistory) {
         // Block pharma from accessing dispense pages
         if (currentRole === 'pharma' && dispensePages.includes(targetId)) {
@@ -12139,15 +12118,8 @@
             setTimeout(() => showToast(''), 2500);
             return;
         }
-        const nextPage = document.getElementById(targetId);
-        if (!nextPage) {
-            console.warn('Navigation target not found:', targetId);
-            return;
-        }
-        lastPageId = currentPageId;
-        currentPageId = targetId;
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-        nextPage.classList.add('active');
+        document.getElementById(targetId).classList.add('active');
         window.scrollTo(0, 0);
         if (!skipHistory) {
             history.pushState({ page: targetId }, '', '#' + targetId);
@@ -12155,14 +12127,6 @@
         // Update global header page name
         const ghName = document.getElementById('ghPageName');
         if (ghName) ghName.textContent = pageNames[targetId] || '';
-    }
-
-    function appBack() {
-        if (lastPageId && lastPageId !== currentPageId) {
-            history.back();
-            return;
-        }
-        nav(sessionStorage.getItem('mcRole') ? 'pg-dashboard' : 'pg-cart');
     }
 
     // Browser back/forward
@@ -13972,9 +13936,9 @@
         return isHighAlertDrug(name) ? ' <span style="background:linear-gradient(135deg,#DC2626,#EF4444);color:white;font-size:7px;font-weight:800;padding:2px 7px;border-radius:4px;letter-spacing:0.3px;vertical-align:middle;">HA</span>' : '';
     }
 
-    // HA verification — two modes: 'prep' (2 witnesses) and 'dispense' (self-scan)
+    // HA verification — modes: 'prep' (2 witnesses), 'witness' (1 witness), and 'dispense' (self-scan)
     let haVerifyCallback = null;
-    let haVerifyMode = 'prep'; // 'prep' or 'dispense'
+    let haVerifyMode = 'prep'; // 'prep', 'witness', or 'dispense'
     let haWitnessCount = 0;
 
     function showHAVerifyModal(drugName, lotText, callback, mode) {
@@ -13994,11 +13958,19 @@
             if (subEl) subEl.textContent = 'สแกนบัตรพยานคนที่ 1 เพื่อยืนยัน';
             if (scanTitle) scanTitle.textContent = 'สแกนบัตรพยานคนที่ 1';
             if (scanSub) scanSub.textContent = 'ให้พยานคนที่ 1 วางบัตรที่เครื่องอ่าน';
+            if (scanBtn) scanBtn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg>สแกนบัตรพยาน';
+        } else if (haVerifyMode === 'witness') {
+            if (titleEl) titleEl.textContent = 'High Alert — สแกนพยาน 1 คน';
+            if (subEl) subEl.textContent = 'สแกนบัตรพยานเพื่อยืนยัน Double Check';
+            if (scanTitle) scanTitle.textContent = 'สแกนบัตรพยาน';
+            if (scanSub) scanSub.textContent = 'ให้เจ้าหน้าที่พยานวางบัตรที่เครื่องอ่าน';
+            if (scanBtn) scanBtn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg>สแกนบัตรพยาน';
         } else {
             if (titleEl) titleEl.textContent = 'High Alert — ยืนยันตัวตน';
             if (subEl) subEl.textContent = 'สแกนบัตรพนักงานของคุณอีกครั้ง';
             if (scanTitle) scanTitle.textContent = 'สแกนบัตรพนักงานเพื่อยืนยัน';
             if (scanSub) scanSub.textContent = 'วางบัตรพนักงานของคุณที่เครื่องอ่าน';
+            if (scanBtn) scanBtn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg>สแกนบัตรยืนยัน';
         }
         document.getElementById('haVerifyModal').style.display = 'flex';
     }
@@ -14042,6 +14014,9 @@
         if (haVerifyMode === 'prep') {
             if (successTitle) successTitle.textContent = 'พยาน 2 คน ยืนยันครบแล้ว';
             if (successSub) successSub.textContent = 'กำลังบันทึก...';
+        } else if (haVerifyMode === 'witness') {
+            if (successTitle) successTitle.textContent = 'พยานยืนยันสำเร็จ';
+            if (successSub) successSub.textContent = 'Double Check ผ่าน กำลังบันทึก...';
         } else {
             if (successTitle) successTitle.textContent = 'ยืนยันตัวตนสำเร็จ';
             if (successSub) successSub.textContent = 'กำลังบันทึก...';
@@ -14266,13 +14241,96 @@
 
     /* ── Overdue flow (Page 24) ── */
     let ovCurrentStep = 1;
+    let ovSelectedIdx = 0;
+    const ovPatients = [
+        {
+            name:'นายธนกร วิเศษสิทธิ์', initials:'ธว', hn:'6405001', bed:'3A-10',
+            gender:'ชาย', age:45, route:'SC', routeTh:'SC (ฉีดใต้ผิวหนัง)',
+            drug:'Heparin 5000 units', dose:'5,000 units',
+            dueTime:'07:30 น.', overdueText:'48 นาที', overdueScanTag:'Overdue 48 นาที',
+            overdueSummary:'เลยเวลามา 48 นาที', detail:'SC · 5,000 units',
+            isHighAlert:true, lot:'HEP-2025-042', expiry:'30/09/2569'
+        },
+        {
+            name:'นางกัลยา ชัยวงศ์', initials:'กช', hn:'6403012', bed:'3A-08',
+            gender:'หญิง', age:62, route:'PO', routeTh:'PO (รับประทาน)',
+            drug:'Warfarin 3 mg', dose:'3 mg',
+            dueTime:'07:00 น.', overdueText:'1 ชม. 18 นาที', overdueScanTag:'Overdue 1 ชม. 18 นาที',
+            overdueSummary:'เลยเวลามา 1 ชม. 18 นาที', detail:'PO · 3 mg',
+            isHighAlert:true, lot:'WAR-2025-008', expiry:'31/12/2569'
+        }
+    ];
+
+    function ovSelectPt(idx, navigateToStep) {
+        if (navigateToStep === undefined) navigateToStep = true;
+        ovSelectedIdx = idx;
+        const p = ovPatients[idx];
+        if (!p) return;
+
+        const banner2 = document.querySelector('#ovStep2 .ov-banner-text');
+        if (banner2) banner2.textContent = p.name.replace(/^(นาย|นาง|นางสาว)/,'').trim() + ' — ยาเลยเวลา ' + p.overdueText;
+        const banner2Sub = document.querySelector('#ovStep2 .ov-banner-sub');
+        if (banner2Sub) banner2Sub.textContent = 'ต้องยืนยันก่อนดำเนินการให้ยา';
+
+        const step2Avatar = document.querySelector('#ovStep2 .pd-avatar');
+        if (step2Avatar) step2Avatar.textContent = p.initials;
+        const step2Name = document.querySelector('#ovStep2 .pd-pt-name');
+        if (step2Name) step2Name.textContent = p.name;
+        const step2Meta = document.querySelector('#ovStep2 .pd-pt-meta');
+        if (step2Meta) step2Meta.innerHTML = '<span>HN: ' + p.hn + '</span><span>เตียง ' + p.bed + '</span><span>' + p.gender + ', ' + p.age + ' ปี</span>';
+        const step2DrugName = document.querySelector('#ovStep2 .rt-drug-name');
+        if (step2DrugName) {
+            step2DrugName.innerHTML = p.drug + ' <span class="pt-badge" style="background:#fff1f2;color:#be123c;font-size:9px;">Overdue</span>' + (p.isHighAlert ? '<span class="pt-badge high-alert" style="font-size:8px;">High Alert</span>' : '');
+        }
+        const step2DrugSub = document.querySelector('#ovStep2 .rt-drug-sub');
+        if (step2DrugSub) step2DrugSub.textContent = p.route + ' · ' + p.dose + ' · ควรให้เวลา ' + p.dueTime;
+        const step2Overdue = document.querySelector('#ovStep2 .rt-drug-info > div[style*="font-size:13px"][style*="font-weight:700"]');
+        if (step2Overdue) step2Overdue.textContent = p.overdueSummary;
+
+        const step3Sub = document.querySelector('#ovStep3 [style*="font-size:14px;color:var(--text-2)"]');
+        if (step3Sub) step3Sub.textContent = p.name.replace(/^(นาย|นาง|นางสาว)/,'').trim() + ' · ' + p.bed;
+
+        const warnTimer = document.querySelector('#ovStep4 .ov-timer-big');
+        if (warnTimer) {
+            warnTimer.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>' + p.overdueSummary;
+        }
+        const warnDesc = document.querySelector('#ovStep4 .ov-warn-card > div[style*="font-size:14px;color:#881337"]');
+        if (warnDesc) warnDesc.innerHTML = p.drug + ' ' + p.route + ' — ควรให้เวลา <strong>' + p.dueTime + '</strong>';
+
+        const step5BannerTitle = document.querySelector('#ovStep5 .ov-banner-text');
+        if (step5BannerTitle) step5BannerTitle.textContent = 'สแกนยา Overdue — ' + p.name.replace(/^(นาย|นาง|นางสาว)/,'').trim() + ' (' + p.bed + ')';
+        const step5BannerSub = document.querySelector('#ovStep5 .ov-banner-sub');
+        if (step5BannerSub) step5BannerSub.textContent = 'สแกนยาครบทุกรายการเพื่อยืนยัน';
+
+        const step6Values = document.querySelectorAll('#ovStep6 .rec-grid .wit-mv');
+        if (step6Values[0]) step6Values[0].textContent = p.name;
+        if (step6Values[1]) step6Values[1].textContent = p.hn + ' · ' + p.bed;
+        if (step6Values[3]) step6Values[3].textContent = p.dueTime;
+        if (step6Values[4]) step6Values[4].textContent = p.overdueText;
+        const successValues = document.querySelectorAll('#ovStep7 .ok-summary-grid .wit-mv');
+        if (successValues[2]) successValues[2].textContent = p.overdueText;
+
+        ovResetScan3();
+        syncMultiDrugCards('ov', getCurrentFlowDrugs('ov'));
+        if (navigateToStep) ovGoStep(2);
+    }
 
     function ovGoStep(n) {
         ovCurrentStep = n;
         for(let i=1;i<=7;i++){const p=document.getElementById('ovStep'+i);if(p)p.classList.toggle('active',i===n);}
         document.querySelectorAll('#ovStepper .rt-step').forEach(s=>{const sn=parseInt(s.dataset.s);s.classList.remove('active','done');if(sn===n)s.classList.add('active');else if(sn<n)s.classList.add('done');});
         document.querySelectorAll('#ovStepper .rt-step-line').forEach((l,i)=>l.classList.toggle('done',i<n-1));
-        if(n===7){document.getElementById('ovGivenTime').textContent=new Date().toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit'})+' น.';}
+        const patient = getCurrentFlowPatient('ov') || {};
+        const drugs = getFlowDrugText('ov');
+        const patientLine = patient.name ? patient.name + ' (' + patient.bed + ')' : '';
+        if(n===6){
+            const el=document.getElementById('ovConfirmDrug');if(el)el.textContent=drugs;
+        }
+        if(n===7){
+            document.getElementById('ovGivenTime').textContent=new Date().toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit'})+' น.';
+            const sub=document.getElementById('ovSuccessSub');if(sub)sub.textContent=drugs + (patientLine ? ' — ' + patientLine : '');
+            const drugEl=document.getElementById('ovSuccessDrug');if(drugEl)drugEl.textContent=drugs;
+        }
     }
 
     function ovBack(){if(ovCurrentStep>1)ovGoStep(ovCurrentStep-1);else nav('pg-dashboard');}
@@ -14363,13 +14421,96 @@
 
     /* ── High Alert flow (Page 22) ── */
     let haCurrentStep = 1;
+    let haSelectedIdx = 0;
+    let haWitnessVerified = false;
+    const haPatients = [
+        {
+            name:'นายสมชาย มานะ', initials:'สช', hn:'6401234', bed:'3A-01',
+            gender:'ชาย', age:58, allergy:'Penicillin',
+            drug:'Heparin 5000 units', dose:'5,000 units',
+            route:'SC', routeTh:'SC (ฉีดใต้ผิวหนัง)', dueTime:'08:00 น.',
+            detail:'SC · 5,000 units', lot:'HEP-2025-042', expiry:'30/09/2569'
+        },
+        {
+            name:'นายธนกร วิเศษสิทธิ์', initials:'ธว', hn:'6405001', bed:'3A-10',
+            gender:'ชาย', age:45, allergy:'-',
+            drug:'Heparin 5000 units', dose:'5,000 units',
+            route:'SC', routeTh:'SC (ฉีดใต้ผิวหนัง)', dueTime:'07:30 น.',
+            detail:'SC · 5,000 units', lot:'HEP-2025-042', expiry:'30/09/2569'
+        }
+    ];
+
+    function haSelectPt(idx, navigateToStep) {
+        if (navigateToStep === undefined) navigateToStep = true;
+        haSelectedIdx = idx;
+        const p = haPatients[idx];
+        if (!p) return;
+
+        const step2Avatar = document.querySelector('#haStep2 .pd-avatar');
+        if (step2Avatar) step2Avatar.textContent = p.initials;
+        const step2Name = document.querySelector('#haStep2 .pd-pt-name');
+        if (step2Name) step2Name.textContent = p.name;
+        const step2Meta = document.querySelector('#haStep2 .pd-pt-meta');
+        if (step2Meta) step2Meta.innerHTML = '<span>HN: ' + p.hn + '</span><span>เตียง ' + p.bed + '</span><span>' + p.gender + ', ' + p.age + ' ปี</span>';
+        const step2Allergy = document.querySelector('#haStep2 .pd-allergy');
+        if (step2Allergy) {
+            step2Allergy.style.display = p.allergy && p.allergy !== '-' ? 'flex' : 'none';
+            if (p.allergy && p.allergy !== '-') {
+                step2Allergy.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>แพ้ยา: ' + p.allergy;
+            }
+        }
+        const step2DrugName = document.querySelector('#haStep2 .rt-drug-name');
+        if (step2DrugName) step2DrugName.innerHTML = p.drug + ' <span class="pt-badge high-alert" style="font-size:9px;">High Alert</span>';
+        const step2DrugSub = document.querySelector('#haStep2 .rt-drug-sub');
+        if (step2DrugSub) step2DrugSub.textContent = p.route + ' · ' + p.dose + ' · OD · ' + p.dueTime;
+
+        const step3Sub = document.querySelector('#haStep3 [style*="font-size:14px;color:var(--text-2)"]');
+        if (step3Sub) step3Sub.textContent = p.name.replace(/^(นาย|นาง|นางสาว)/,'').trim() + ' · ' + p.bed + ' · HN: ' + p.hn;
+
+        const step4BannerTitle = document.querySelector('#haStep4 .ha-banner-text');
+        if (step4BannerTitle) step4BannerTitle.textContent = 'สแกนยา High Alert — ' + p.name.replace(/^(นาย|นาง|นางสาว)/,'').trim() + ' (' + p.bed + ')';
+        const step4BannerSub = document.querySelector('#haStep4 .ha-banner-sub');
+        if (step4BannerSub) step4BannerSub.textContent = 'สแกนยาครบทุกรายการก่อนเข้าสู่ขั้นตอนพยาน';
+
+        const step5Sub = document.querySelector('#haStep5 .ha-shield-sub');
+        if (step5Sub) step5Sub.textContent = p.drug + ' ' + p.route + ' · ' + p.name.replace(/^(นาย|นาง|นางสาว)/,'').trim() + ' (' + p.bed + ')';
+
+        const step6Values = document.querySelectorAll('#haStep6 .rec-grid .wit-mv');
+        if (step6Values[0]) step6Values[0].textContent = p.name;
+        if (step6Values[1]) step6Values[1].textContent = p.hn + ' · ' + p.bed;
+        if (step6Values[3]) step6Values[3].textContent = p.route;
+
+        haResetScan3();
+        haWitnessVerified = false;
+        const witResult = document.getElementById('haWitResult');
+        if (witResult) witResult.classList.remove('show');
+        const step5Bot = document.getElementById('haStep5Bot');
+        if (step5Bot) step5Bot.style.display = 'none';
+        syncMultiDrugCards('ha', getCurrentFlowDrugs('ha'));
+        if (navigateToStep) haGoStep(2);
+    }
 
     function haGoStep(n) {
+        if (n >= 6 && !haWitnessVerified) {
+            showToast('ต้องสแกนบัตรพยานก่อนยืนยันยา High Alert');
+            setTimeout(()=>showToast(''), 1800);
+            n = 5;
+        }
         haCurrentStep = n;
         for(let i=1;i<=7;i++){const p=document.getElementById('haStep'+i);if(p)p.classList.toggle('active',i===n);}
         document.querySelectorAll('#haStepper .rt-step').forEach(s=>{const sn=parseInt(s.dataset.s);s.classList.remove('active','done');if(sn===n)s.classList.add('active');else if(sn<n)s.classList.add('done');});
         document.querySelectorAll('#haStepper .rt-step-line').forEach((l,i)=>l.classList.toggle('done',i<n-1));
-        if(n===7){document.getElementById('haGivenTime').textContent=new Date().toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit'})+' น.';}
+        const patient = getCurrentFlowPatient('ha') || {};
+        const drugs = getFlowDrugText('ha');
+        const patientLine = patient.name ? patient.name + ' (' + patient.bed + ')' : '';
+        if(n===6){
+            const el=document.getElementById('haConfirmDrug');if(el)el.textContent=drugs+' (HA)';
+        }
+        if(n===7){
+            document.getElementById('haGivenTime').textContent=new Date().toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit'})+' น.';
+            const sub=document.getElementById('haSuccessSub');if(sub)sub.textContent=drugs + (patientLine ? ' — ' + patientLine : '') + ' · Double Check ครบถ้วน';
+            const drugEl=document.getElementById('haSuccessDrug');if(drugEl)drugEl.textContent=drugs+' (HA)';
+        }
     }
 
     function haBack(){if(haCurrentStep>1)haGoStep(haCurrentStep-1);else nav('pg-dashboard');}
@@ -14401,10 +14542,19 @@
     }
 
     function haWitness(){
-        document.getElementById('haWitTime').textContent=new Date().toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit'});
-        document.getElementById('haWitResult').classList.add('show');
-        document.getElementById('haStep5Bot').style.display='';
-        showToast('พยานยืนยันสำเร็จ');setTimeout(()=>showToast(''),1500);
+        const currentItems = getCurrentFlowDrugs('ha');
+        const drugs = currentItems.map(d => d.name).join(' · ') || 'High Alert Drug';
+        const lotInfo = currentItems[0] ? currentItems[0].lot : '—';
+        showHAVerifyModal(drugs, lotInfo, function() {
+            haWitnessVerified = true;
+            const witTime = document.getElementById('haWitTime');
+            if (witTime) witTime.textContent = new Date().toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit'});
+            const witResult = document.getElementById('haWitResult');
+            if (witResult) witResult.classList.add('show');
+            const step5Bot = document.getElementById('haStep5Bot');
+            if (step5Bot) step5Bot.style.display = '';
+            showToast('พยานยืนยันสำเร็จ'); setTimeout(()=>showToast(''), 1500);
+        }, 'witness');
     }
 
     /* ── PRN flow (Page 21) — Dynamic Data ── */
@@ -14486,45 +14636,76 @@
     }
 
     /* ── Select patient & populate all steps ── */
-    function prnSelectPt(idx) {
+    function prnSelectPt(idx, navigateToStep) {
+        if (navigateToStep === undefined) navigateToStep = true;
         prnSelectedIdx = idx;
         var p = prnPatients[idx];
-        const setText = (id, value) => { const el = document.getElementById(id); if (el) el.textContent = value; };
-        const setHtml = (id, value) => { const el = document.getElementById(id); if (el) el.innerHTML = value; };
-        const setDisplay = (id, value) => { const el = document.getElementById(id); if (el) el.style.display = value; };
+        if (!p) return;
+        selectedPain = null;
 
         // Step 2 — Patient detail
-        setText('prnAvatar2', p.initials);
-        setText('prnDetailName2', p.name);
-        setHtml('prnDetailMeta2', '<span>HN: '+p.hn+'</span><span>เตียง '+p.bed+'</span><span>'+p.gender+', '+p.age+' ปี</span>');
-        setText('prnAllergyText2', 'แพ้ยา: '+p.allergy);
-        setDisplay('prnDetailAllergy2', p.allergy === '-' ? 'none' : '');
+        document.getElementById('prnAvatar2').textContent = p.initials;
+        document.getElementById('prnDetailName2').textContent = p.name;
+        document.getElementById('prnDetailMeta2').innerHTML = '<span>HN: '+p.hn+'</span><span>เตียง '+p.bed+'</span><span>'+p.gender+', '+p.age+' ปี</span>';
+        document.getElementById('prnAllergyText2').textContent = 'แพ้ยา: '+p.allergy;
+        if (p.allergy === '-') document.getElementById('prnDetailAllergy2').style.display = 'none';
+        else document.getElementById('prnDetailAllergy2').style.display = '';
 
         // Step 2 — Drug card
         var dnHtml = p.drug + ' <span class="pt-badge prn" style="font-size:9px;padding:1px 6px;">PRN</span>';
         if (p.isHighAlert) dnHtml += '<span class="pt-badge halert" style="font-size:8px;padding:1px 5px;background:#fef2f2;color:#dc2626;border:1px solid #fca5a5;">High Alert</span>';
-        setHtml('prnDrugName2', dnHtml);
-        setText('prnDrugSub2', p.route+' · '+p.routeDesc+' · '+p.condition);
+        document.getElementById('prnDrugName2').innerHTML = dnHtml;
+        document.getElementById('prnDrugSub2').textContent = p.route+' · '+p.routeDesc+' · '+p.condition;
         var tagsHtml = '';
         if (p.needWitness) tagsHtml += '<span class="pt-badge" style="background:#fef2f2;color:#dc2626;font-size:9px;">ต้องมีพยาน</span>';
         if (p.isNarcotic) tagsHtml += '<span class="pt-badge" style="background:#faf5ff;color:#7c3aed;font-size:9px;">ยาเสพติด</span>';
-        setHtml('prnDrugTags2', tagsHtml);
+        document.getElementById('prnDrugTags2').innerHTML = tagsHtml;
         var svgOk2 = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>';
-        setHtml('prnDrugInterval2', svgOk2+' ให้ได้ · ล่าสุด '+p.lastGiven+' น. (ผ่าน '+p.hrsAgo+' ชม.) · Interval: '+p.interval);
+        document.getElementById('prnDrugInterval2').innerHTML = svgOk2+' ให้ได้ · ล่าสุด '+p.lastGiven+' น. (ผ่าน '+p.hrsAgo+' ชม.) · Interval: '+p.interval;
 
         // Step 3 — Scan subtitle
-        setText('prnScan3Sub', p.name.replace(/^(นาย|นาง|นางสาว)/,'').trim()+' · '+p.bed+' · HN: '+p.hn);
+        document.getElementById('prnScan3Sub').textContent = p.name.replace(/^(นาย|นาง|นางสาว)/,'').trim()+' · '+p.bed+' · HN: '+p.hn;
 
         // Step 4 — Banner
-        setText('prnBannerSub4', p.drug+' '+p.route+' — '+p.name.replace(/^(นาย|นาง|นางสาว)/,'').trim()+' ('+p.bed+')');
+        document.getElementById('prnBannerSub4').textContent = p.drug+' '+p.route+' — '+p.name.replace(/^(นาย|นาง|นางสาว)/,'').trim()+' ('+p.bed+')';
+
+        // Step 5 — Drug detail (null-safe: step 5 now uses shared multi-drug scan cards)
+        var prnEl;
+        prnEl = document.getElementById('prnBannerSub5'); if (prnEl) prnEl.innerHTML = p.drug+' '+p.route+' · ข้อบ่งชี้: <span id="prnIndicText5">--</span> · Pain score: <span id="prnPainDisplay">--</span>/10';
+        prnEl = document.getElementById('prnDrugName5'); if (prnEl) prnEl.innerHTML = p.drug+' <span class="pt-badge prn" style="font-size:10px;padding:2px 8px;">PRN</span>';
+        prnEl = document.getElementById('prnDose5'); if (prnEl) prnEl.textContent = p.dose;
+        prnEl = document.getElementById('prnRoute5'); if (prnEl) prnEl.textContent = p.routeTh;
+        prnEl = document.getElementById('prnCondition5'); if (prnEl) prnEl.textContent = p.condition;
+        prnEl = document.getElementById('prnLastGiven5'); if (prnEl) prnEl.textContent = p.lastGiven+' น. ('+p.hrsAgo+' ชม.ก่อน)';
+        prnEl = document.getElementById('prnScanResultName'); if (prnEl) prnEl.textContent = p.drugFull;
+        prnEl = document.getElementById('prnLot5'); if (prnEl) prnEl.textContent = p.lot;
+        prnEl = document.getElementById('prnExpiry5'); if (prnEl) prnEl.textContent = p.expiry;
 
         // Step 6 — Success
         var shortName = p.name.replace(/^(นาย|นาง|นางสาว)/,'').trim();
-        setText('prnSuccessSub6', p.drug+' '+p.route+' — '+p.name+' ('+p.bed+')');
-        setText('prnDrugSummary6', p.drug+' (PRN)');
-        setText('prnNextDose6', 'หลัง '+p.intervalHrs+' ชม.');
+        document.getElementById('prnSuccessSub6').textContent = p.drug+' '+p.route+' — '+p.name+' ('+p.bed+')';
+        document.getElementById('prnDrugSummary6').textContent = p.drug+' (PRN)';
+        document.getElementById('prnNextDose6').textContent = 'หลัง '+p.intervalHrs+' ชม.';
 
-        prnGoStep(2);
+        // Step 7 — Post-assessment
+        prnEl = document.getElementById('prnBannerSub7'); if (prnEl) prnEl.textContent = p.drug+' '+p.route+' — '+shortName+' ('+p.bed+')';
+        prnEl = document.getElementById('prnDrugName7'); if (prnEl) prnEl.innerHTML = p.drug+' <span class="pt-badge prn" style="font-size:10px;padding:2px 8px;">PRN</span>';
+        prnEl = document.getElementById('prnRoute7'); if (prnEl) prnEl.textContent = p.routeTh;
+        prnEl = document.getElementById('prnDose7'); if (prnEl) prnEl.textContent = p.dose;
+        prnEl = document.getElementById('prnSuccessSub7'); if (prnEl) prnEl.textContent = p.drug+' '+p.route+' — '+p.name+' ('+p.bed+')';
+        prnEl = document.getElementById('prnDrugSummary7'); if (prnEl) prnEl.textContent = p.drug+' (PRN)';
+
+        document.getElementById('prnIndication').value = '';
+        document.getElementById('prnReason').value = '';
+        document.querySelectorAll('#painScale .pain-dot').forEach(function(dot) {
+            dot.classList.remove('selected');
+            dot.style.background = '';
+            dot.style.borderColor = '';
+        });
+        prnResetScan3();
+        checkPrnAssess();
+        syncMultiDrugCards('prn', getCurrentFlowDrugs('prn'));
+        if (navigateToStep) prnGoStep(2);
     }
 
     /* ── Step navigation ── */
@@ -14547,10 +14728,30 @@
         }
         if(n===6) {
             document.getElementById('prnGivenTime').textContent = new Date().toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit'})+' น.';
+            const patient = getCurrentFlowPatient('prn') || {};
             // Populate indication summary
             var indicMap2 = {pain:'ปวด',nausea:'คลื่นไส้',fever:'ไข้',insomnia:'นอนไม่หลับ',anxiety:'กระวนกระวาย',other:'อื่นๆ'};
             var indVal2 = document.getElementById('prnIndication').value;
             document.getElementById('prnIndicSummary6').textContent = (indicMap2[indVal2]||'--') + (selectedPain!==null ? ' · Pain '+selectedPain+'/10' : '');
+            // Populate drug names dynamically
+            const prnDrugs = getFlowDrugText('prn');
+            const patientLine = patient.name ? patient.name + ' (' + patient.bed + ')' : '';
+            var subEl = document.getElementById('prnSuccessSub6'); if(subEl) subEl.textContent = prnDrugs + (patientLine ? ' — ' + patientLine : '');
+            var drugEl = document.getElementById('prnDrugSummary6'); if(drugEl) drugEl.textContent = prnDrugs + ' (PRN)';
+        }
+        if(n===7) {
+            var p7El = document.getElementById('prnPostAssessForm'); if (p7El) p7El.style.display='';
+            p7El = document.getElementById('prnPostAssessSuccess'); if (p7El) p7El.style.display='none';
+            p7El = document.getElementById('prnStep7Bot'); if (p7El) p7El.style.display='';
+            p7El = document.getElementById('postAssessTime'); if (p7El) p7El.value = new Date().toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit'})+' น.';
+            var gtEl = document.getElementById('prnGivenTime');
+            var gt = gtEl ? gtEl.textContent : '';
+            p7El = document.getElementById('prnPostGivenTime'); if (p7El) p7El.textContent = gt;
+            // Indication for step 7
+            var indicMap3 = {pain:'ปวด',nausea:'คลื่นไส้',fever:'ไข้',insomnia:'นอนไม่หลับ',anxiety:'กระวนกระวาย',other:'อื่นๆ'};
+            var indVal3 = document.getElementById('prnIndication').value;
+            p7El = document.getElementById('prnIndic7'); if (p7El) p7El.textContent = (indicMap3[indVal3]||'--') + (selectedPain!==null ? ' · Pain '+selectedPain+'/10' : '');
+            p7El = document.getElementById('prnPrePainSummary7'); if (p7El) p7El.textContent = selectedPain!==null ? selectedPain+'/10' : '--';
         }
     }
 
@@ -14598,6 +14799,7 @@
         if(ind) ind.addEventListener('change', checkPrnAssess);
         if(rea) rea.addEventListener('input', checkPrnAssess);
         prnRenderList();
+        prnSelectPt(0, false);
     });
 
     function prnScanDrug() {
@@ -14607,9 +14809,9 @@
             var lotInfo = drugLotMap[drugName] || { lot: p.lot };
             showHAVerifyModal(drugName, lotInfo.lot, function() {
                 prnDoScanDrug();
-                showToast('พยาบาลยืนยัน High Alert สำเร็จ — ' + drugName);
+                showToast('พยานยืนยัน High Alert สำเร็จ — ' + drugName);
                 setTimeout(function(){ showToast(''); }, 2000);
-            }, 'dispense');
+            }, 'witness');
             return;
         }
         prnDoScanDrug();
@@ -14763,9 +14965,11 @@
     }
 
     /* ── Select patient & populate all steps ── */
-    function stSelectPt(idx) {
+    function stSelectPt(idx, navigateToStep) {
+        if (navigateToStep === undefined) navigateToStep = true;
         stSelectedIdx = idx;
         var p = stPatients[idx];
+        if (!p) return;
         var shortName = p.name.replace(/^(นาย|นาง|นางสาว)/,'').trim();
 
         // Step 2 — Banner
@@ -14789,22 +14993,19 @@
         // Step 3 — Scan banner
         document.getElementById('stScan3Sub').textContent = shortName+' · '+p.bed+' · HN: '+p.hn;
 
-        // Step 4 — Drug detail
-        document.getElementById('stBanner4Sub').textContent = p.drug+' '+p.route+' · '+shortName+' ('+p.bed+')';
-        document.getElementById('stDrugName4').innerHTML = p.drug+' <span class="pt-badge stat" style="font-size:10px;padding:2px 8px;">STAT</span>';
-        document.getElementById('stDose4').textContent = p.dose;
-        document.getElementById('stRoute4').textContent = p.routeTh;
-        document.getElementById('stOrderTime4').textContent = p.orderTime+' น. (STAT)';
-        document.getElementById('stDoctor4').textContent = p.doctor;
-        if (p.isHighAlert) {
-            document.getElementById('stWarnBox4').style.display = '';
-            document.getElementById('stWarnText4').innerHTML = '<strong>High Alert</strong> — ต้องมีพยาน (ระบบจะขอยืนยันพยานหลังสแกนยา)';
-        } else {
-            document.getElementById('stWarnBox4').style.display = 'none';
-        }
-        document.getElementById('stScanName4').textContent = p.drug;
-        document.getElementById('stLot4').textContent = p.lot;
-        document.getElementById('stExpiry4').textContent = p.expiry;
+        // Step 4 — Drug detail (null-safe: elements may not exist if step4 uses multi-drug cards)
+        var s4;
+        s4 = document.getElementById('stBanner4Sub'); if (s4) s4.textContent = p.drug+' '+p.route+' · '+shortName+' ('+p.bed+')';
+        s4 = document.getElementById('stDrugName4'); if (s4) s4.innerHTML = p.drug+' <span class="pt-badge stat" style="font-size:10px;padding:2px 8px;">STAT</span>';
+        s4 = document.getElementById('stDose4'); if (s4) s4.textContent = p.dose;
+        s4 = document.getElementById('stRoute4'); if (s4) s4.textContent = p.routeTh;
+        s4 = document.getElementById('stOrderTime4'); if (s4) s4.textContent = p.orderTime+' น. (STAT)';
+        s4 = document.getElementById('stDoctor4'); if (s4) s4.textContent = p.doctor;
+        s4 = document.getElementById('stWarnBox4'); if (s4) s4.style.display = p.isHighAlert ? '' : 'none';
+        s4 = document.getElementById('stWarnText4'); if (s4 && p.isHighAlert) s4.innerHTML = '<strong>High Alert</strong> — ต้องมีพยาน (ระบบจะขอยืนยันพยานหลังสแกนยา)';
+        s4 = document.getElementById('stScanName4'); if (s4) s4.textContent = p.drug;
+        s4 = document.getElementById('stLot4'); if (s4) s4.textContent = p.lot;
+        s4 = document.getElementById('stExpiry4'); if (s4) s4.textContent = p.expiry;
 
         // Step 5 — Success
         document.getElementById('stSuccessSub5').textContent = p.drug+' '+p.route+' — '+p.name+' ('+p.bed+')';
@@ -14812,7 +15013,9 @@
         document.getElementById('stOrderSummary5').textContent = p.orderTime+' น.';
         document.getElementById('stElapsedSummary5').textContent = p.elapsedMin+' นาที';
 
-        stGoStep(2);
+        stResetScan3();
+        syncMultiDrugCards('st', getCurrentFlowDrugs('st'));
+        if (navigateToStep) stGoStep(2);
     }
 
     /* ── Step navigation ── */
@@ -14831,6 +15034,12 @@
         document.querySelectorAll('#stStepper .rt-step-line').forEach(function(l,i) { l.classList.toggle('done', i < n-1); });
         if (n === 5) {
             document.getElementById('stGivenTime').textContent = new Date().toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit'}) + ' น.';
+            const patient = getCurrentFlowPatient('st') || {};
+            const stDrugs = getFlowDrugText('st');
+            const patientLine = patient.name ? patient.name + ' (' + patient.bed + ')' : '';
+            var el;
+            el = document.getElementById('stSuccessSub5'); if (el) el.textContent = stDrugs + (patientLine ? ' — ' + patientLine : '');
+            el = document.getElementById('stDrugSummary5'); if (el) el.textContent = stDrugs + ' (STAT)';
         }
     }
 
@@ -14869,9 +15078,9 @@
         if (p.isHighAlert) {
             showHAVerifyModal(p.drug, p.lot, function() {
                 stDoScanDrug();
-                showToast('พยาบาลยืนยัน High Alert สำเร็จ — ' + p.drug);
+                showToast('พยานยืนยัน High Alert สำเร็จ — ' + p.drug);
                 setTimeout(function(){ showToast(''); }, 2000);
-            }, 'dispense');
+            }, 'witness');
             return;
         }
         stDoScanDrug();
@@ -14903,7 +15112,10 @@
     }
 
     // Render list on load
-    document.addEventListener('DOMContentLoaded', function() { stRenderList(); });
+    document.addEventListener('DOMContentLoaded', function() {
+        stRenderList();
+        stSelectPt(0, false);
+    });
 
     /* ── Routine flow (Page 19) ── */
     let rtCurrentStep = 1;
@@ -14925,23 +15137,57 @@
         document.querySelectorAll('#rtStepper .rt-step-line').forEach((line, idx) => {
             line.classList.toggle('done', idx < n - 1);
         });
-        // Populate Step 5 & 6 with selected drug data
+        // Populate Step 5 & 6 with all scanned drug data
         if (n === 5 || n === 6) {
-            const d = rtDrugs[rtActiveDrugIdx];
-            if (d) {
-                const lotInfo = drugLotMap[d.name] || { lot:'N/A', exp:'N/A' };
-                var el;
-                // Step 5
-                el = document.getElementById('rtS5Drug'); if (el) el.textContent = d.name;
-                el = document.getElementById('rtS5Route'); if (el) el.textContent = d.route;
-                el = document.getElementById('rtS5Dose'); if (el) el.textContent = d.dose;
-                el = document.getElementById('rtS5Lot'); if (el) el.textContent = lotInfo.lot + ' · ' + lotInfo.exp;
-                // Step 6
-                el = document.getElementById('rtS6Sub'); if (el) el.textContent = d.name + ' — นายสมชาย มานะ (3A-01)';
-                el = document.getElementById('rtS6Drug'); if (el) el.textContent = d.name;
-                el = document.getElementById('rtS6Dose'); if (el) el.textContent = d.dose;
-                el = document.getElementById('rtS6Route'); if (el) el.textContent = d.route;
-                el = document.getElementById('rtS6Lot'); if (el) el.textContent = lotInfo.lot + ' · ' + lotInfo.exp;
+            const patient = getCurrentFlowPatient('r') || {};
+            const scannedDrugs = getCurrentFlowDrugs('r');
+            const allNames = scannedDrugs.map(d => d.name).join(' · ');
+            const routeText = [...new Set(scannedDrugs.map(d => d.routeTh).filter(Boolean))].join(' · ') || '—';
+            var el;
+            // Step 5 — rebuild grid to show each drug's data
+            if (n === 5) {
+                const grid = document.getElementById('rtStep5Grid');
+                if (grid) {
+                    let drugRows = '';
+                    scannedDrugs.forEach(function(sd, i) {
+                        const rd = rtDrugs[i] || {};
+                        const lotStr = sd.lot && sd.exp ? sd.lot + ' · ' + sd.exp : '—';
+                        drugRows += '<div style="grid-column:1/-1;background:rgba(13,148,136,0.05);border-radius:8px;padding:8px 12px;margin:2px 0;">'
+                            + '<div class="wit-ml">ยา ' + (i+1) + '</div>'
+                            + '<div class="wit-mv" style="color:var(--green);font-size:14px;">' + sd.name + '</div>'
+                            + '</div>'
+                            + '<div><div class="wit-ml">Dose</div><div class="wit-mv">' + (rd.dose || '—') + '</div></div>'
+                            + '<div><div class="wit-ml">Lot / Expiry</div><div class="wit-mv">' + lotStr + '</div></div>';
+                    });
+                    grid.innerHTML = '<div><div class="wit-ml">ผู้ป่วย</div><div class="wit-mv">' + (patient.name || '—') + '</div></div>'
+                        + '<div><div class="wit-ml">HN / เตียง</div><div class="wit-mv">' + [patient.hn, patient.bed].filter(Boolean).join(' · ') + '</div></div>'
+                        + drugRows
+                        + '<div><div class="wit-ml">Route</div><div class="wit-mv">' + routeText + '</div></div>'
+                        + '<div><div class="wit-ml">ผู้ให้ยา</div><div class="wit-mv">นส.สมใจ ดีมาก</div></div>'
+                        + '<div><div class="wit-ml">สถานะ</div><div class="wit-mv" style="color:var(--green);">ให้ยาแล้ว</div></div>';
+                }
+            }
+            // Step 6 — rebuild grid per drug
+            el = document.getElementById('rtS6Sub'); if (el) el.textContent = allNames + (patient.name ? ' — ' + patient.name + ' (' + patient.bed + ')' : '');
+            if (n === 6) {
+                const grid6 = document.getElementById('rtStep6Grid');
+                if (grid6) {
+                    let drugRows6 = '';
+                    scannedDrugs.forEach(function(sd, i) {
+                        const rd = rtDrugs[i] || {};
+                        const lotStr = sd.lot && sd.exp ? sd.lot + ' · ' + sd.exp : '—';
+                        drugRows6 += '<div style="grid-column:1/-1;background:rgba(13,148,136,0.05);border-radius:8px;padding:8px 12px;margin:2px 0;">'
+                            + '<div class="wit-ml">ยา ' + (i+1) + '</div>'
+                            + '<div class="wit-mv" style="color:var(--green);font-size:14px;">' + sd.name + '</div>'
+                            + '</div>'
+                            + '<div><div class="wit-ml">Dose</div><div class="wit-mv">' + (rd.dose || '—') + '</div></div>'
+                            + '<div><div class="wit-ml">Lot / Expiry</div><div class="wit-mv">' + lotStr + '</div></div>';
+                    });
+                    grid6.innerHTML = drugRows6
+                        + '<div><div class="wit-ml">Route</div><div class="wit-mv">' + routeText + '</div></div>'
+                        + '<div><div class="wit-ml">สถานะ</div><div class="wit-mv" style="color:var(--green);">ให้ยาแล้ว</div></div>'
+                        + '<div><div class="wit-ml">ผู้บันทึก</div><div class="wit-mv">นส.สมใจ ดีมาก</div></div>';
+                }
             }
         }
         // Scroll top
@@ -15000,8 +15246,7 @@
             round:'รอบเช้า', drugs:[
                 { name:'Amlodipine 10 mg', dose:'10 mg x 1 เม็ด', route:'PO (รับประทาน)', time:'06:00–08:00 น.', freq:'OD เช้า' },
                 { name:'Metformin 500 mg', dose:'500 mg x 1 เม็ด', route:'PO (รับประทาน)', time:'06:00–08:00 น.', freq:'BID' },
-                { name:'Enalapril 5 mg', dose:'5 mg x 1 เม็ด', route:'PO (รับประทาน)', time:'06:00–08:00 น.', freq:'OD เช้า' },
-                { name:'Furosemide 40 mg', dose:'40 mg x 1 เม็ด', route:'PO (รับประทาน)', time:'06:00–08:00 น.', freq:'OD เช้า' }
+                { name:'Enalapril 5 mg', dose:'5 mg x 1 เม็ด', route:'PO (รับประทาน)', time:'06:00–08:00 น.', freq:'OD เช้า' }
             ]
         },
         '05': {
@@ -15040,7 +15285,8 @@
 
     let currentDispenseBed = '01';
 
-    function rtSelectPatient(bedNum) {
+    function rtSelectPatient(bedNum, navigateToStep) {
+        if (navigateToStep === undefined) navigateToStep = true;
         currentDispenseBed = bedNum;
         var pt = dispensePatients[bedNum];
         if (!pt) return;
@@ -15124,7 +15370,9 @@
         var s6Sub = document.getElementById('rtS6Sub');
         if (s6Sub) s6Sub.textContent = (d0 ? d0.name : '') + ' — ' + pt.name + ' (' + pt.bed + ')';
 
-        rtGoStep(2);
+        rtResetStep3();
+        syncMultiDrugCards('r', getCurrentFlowDrugs('r'));
+        if (navigateToStep) rtGoStep(2);
     }
 
     var rtDrugs = [
@@ -15190,7 +15438,7 @@
                 rtDoScanDrug();
                 showToast('พยานยืนยัน High Alert สำเร็จ — ' + d.name);
                 setTimeout(function(){ showToast(''); }, 2000);
-            }, "dispense");
+            }, "witness");
             return;
         }
         rtDoScanDrug();
@@ -15477,32 +15725,215 @@
     }
 
     /* ── Multi-Drug Scan ── */
-    const multiDrugData = {
-        r:   [{name:'Amlodipine 5 mg',  lot:'AML-2025-108',exp:'15/03/2570'},
-              {name:'Metformin 500 mg', lot:'MET-2025-072',exp:'30/06/2570'},
-              {name:'Omeprazole 20 mg', lot:'OMP-2025-039',exp:'28/02/2570'}],
-        st:  [{name:'Heparin 5000 units',lot:'HEP-2025-042',exp:'30/09/2569'},
-              {name:'Ondansetron 4 mg', lot:'OND-2025-015',exp:'31/05/2570'}],
-        prn: [{name:'Morphine 5 mg',    lot:'MOR-2025-017',exp:'15/06/2569'},
-              {name:'Ondansetron 4 mg', lot:'OND-2025-015',exp:'31/05/2570'}],
-        ha:  [{name:'Heparin 5000 units',lot:'HEP-2025-042',exp:'30/09/2569'},
-              {name:'Warfarin 3 mg',    lot:'WAR-2025-008',exp:'31/12/2569'}],
-        ov:  [{name:'Heparin 5000 units',lot:'HEP-2025-042',exp:'30/09/2569'},
-              {name:'Metoprolol 50 mg', lot:'MTP-2025-021',exp:'31/08/2570'}]
+    const scanButtonHtml = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" style="vertical-align:middle;margin-right:4px;"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg>สแกน';
+    const flowConfirmButtonTemplates = {
+        r: '<svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>ยืนยันให้ยา (%COUNT%)',
+        st: '<svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>ยืนยันให้ยา STAT (%COUNT%)',
+        prn: '<svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>ยืนยันให้ยา PRN (%COUNT%)',
+        ha: '<svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>ไปขั้นตอนพยาน (%COUNT%)',
+        ov: 'ยืนยันให้ยา Overdue (%COUNT%)'
     };
     const multiDrugConfirmMap = {
         r:'rtBtnConfirmDrug', st:'stBtnConfirm', prn:'btnPrnConfirm', ha:'haBtnWit', ov:'ovBtnConfirm'
     };
+
+    function getCurrentFlowPatient(flow) {
+        if (flow === 'r') return dispensePatients[currentDispenseBed] || dispensePatients['01'];
+        if (flow === 'st') return stPatients[stSelectedIdx] || stPatients[0];
+        if (flow === 'prn') return prnPatients[prnSelectedIdx] || prnPatients[0];
+        if (flow === 'ha') return haPatients[haSelectedIdx] || haPatients[0];
+        if (flow === 'ov') return ovPatients[ovSelectedIdx] || ovPatients[0];
+        return null;
+    }
+
+    function getCurrentFlowDrugs(flow) {
+        if (flow === 'r') {
+            return (rtDrugs || []).map(function(d) {
+                const lotInfo = drugLotMap[d.name] || { lot:'N/A', exp:'N/A' };
+                const routeShort = (d.route || '').split(' ')[0] || d.route || 'PO';
+                return {
+                    name: d.name,
+                    requiresWitness: isHighAlertDrug(d.name),
+                    nameHtml: d.name + haBadge(d.name),
+                    scanSub: routeShort + ' · ' + d.dose + ' · ' + d.time + ' · ' + d.freq,
+                    detail: routeShort + ' · ' + d.dose,
+                    routeTh: d.route,
+                    lot: lotInfo.lot,
+                    exp: lotInfo.exp
+                };
+            });
+        }
+
+        if (flow === 'st') {
+            const p = getCurrentFlowPatient(flow);
+            if (!p) return [];
+            const tags = ['<span class="mdc-badge-warn" style="background:#fef9c3;color:#854d0e;border-color:#fde047;">STAT</span>'];
+            if (p.isHighAlert) tags.unshift('<span class="mdc-badge-warn">High Alert</span>');
+            return [{
+                name: p.drug,
+                requiresWitness: p.isHighAlert || isHighAlertDrug(p.drug),
+                nameHtml: p.drug + ' ' + tags.join(' '),
+                scanSub: p.route + ' · ' + p.dose + (p.needWitness ? ' · ต้องมีพยาน' : '') + ' · สั่งเมื่อ ' + p.orderTime + ' น.',
+                detail: p.route + ' · ' + p.dose,
+                routeTh: p.routeTh,
+                lot: p.lot,
+                exp: p.expiry
+            }];
+        }
+
+        if (flow === 'prn') {
+            const p = getCurrentFlowPatient(flow);
+            if (!p) return [];
+            const tags = [];
+            if (p.isHighAlert) tags.push('<span class="mdc-badge-warn">High Alert</span>');
+            if (p.isNarcotic) tags.push('<span class="mdc-badge-warn" style="background:#faf5ff;color:#7c3aed;border-color:#c4b5fd;">ยาเสพติด</span>');
+            return [{
+                name: p.drug,
+                requiresWitness: p.isHighAlert || isHighAlertDrug(p.drug),
+                nameHtml: p.drug + (tags.length ? ' ' + tags.join(' ') : ''),
+                scanSub: p.route + ' · ' + p.dose + ' · ' + p.condition + (p.needWitness ? ' · ต้องมีพยาน' : ''),
+                detail: p.route + ' · ' + p.dose,
+                routeTh: p.routeTh,
+                lot: p.lot,
+                exp: p.expiry
+            }];
+        }
+
+        if (flow === 'ha') {
+            const p = getCurrentFlowPatient(flow);
+            if (!p) return [];
+            return [{
+                name: p.drug,
+                requiresWitness: true,
+                nameHtml: p.drug + ' <span class="mdc-badge-warn">High Alert</span>',
+                scanSub: p.route + ' · ' + p.dose + ' · OD · ' + p.dueTime + ' · ต้องมีพยาน · Double Check',
+                detail: p.detail,
+                routeTh: p.routeTh,
+                lot: p.lot,
+                exp: p.expiry
+            }];
+        }
+
+        if (flow === 'ov') {
+            const p = getCurrentFlowPatient(flow);
+            if (!p) return [];
+            const tags = ['<span class="mdc-badge-warn" style="background:#fff1f2;color:#be123c;border-color:#fda4af;">' + p.overdueScanTag + '</span>'];
+            if (p.isHighAlert) tags.unshift('<span class="mdc-badge-warn">High Alert</span>');
+            return [{
+                name: p.drug,
+                requiresWitness: p.isHighAlert || isHighAlertDrug(p.drug),
+                nameHtml: p.drug + ' ' + tags.join(' '),
+                scanSub: p.route + ' · ' + p.dose + ' · ควรให้ ' + p.dueTime + ' · ' + p.overdueSummary,
+                detail: p.detail,
+                routeTh: p.routeTh,
+                lot: p.lot,
+                exp: p.expiry
+            }];
+        }
+
+        return [];
+    }
+
+    function getFlowDrugText(flow) {
+        return getCurrentFlowDrugs(flow).map(function(d) { return d.name; }).join(' · ');
+    }
+
+    function updateFlowConfirmButton(flow, count) {
+        const btn = document.getElementById(multiDrugConfirmMap[flow]);
+        if (!btn) return;
+        btn.disabled = true;
+        const template = flowConfirmButtonTemplates[flow];
+        if (template) btn.innerHTML = template.replace('%COUNT%', count + '/' + count);
+    }
+
+    function syncMultiDrugCards(flow, items) {
+        const cards = Array.from(document.querySelectorAll('.mdc[data-flow="' + flow + '"]'));
+        cards.forEach(function(card, idx) {
+            const item = items[idx];
+            const btn = document.getElementById(flow + 'drug_' + idx + '_btn');
+            const doneRow = document.getElementById(flow + 'drug_' + idx + '_done');
+            const resultName = document.getElementById(flow + 'drug_' + idx + '_resname');
+            const lotEl = document.getElementById(flow + 'drug_' + idx + '_lot');
+            if (!item) {
+                card.style.display = 'none';
+                card.dataset.done = 'true';
+                if (doneRow) doneRow.style.display = 'none';
+                return;
+            }
+            card.style.display = '';
+            card.dataset.done = 'false';
+            card.classList.remove('done');
+            if (btn) {
+                btn.disabled = false;
+                btn.style.display = '';
+                btn.innerHTML = scanButtonHtml;
+            }
+            if (doneRow) doneRow.style.display = 'none';
+            if (resultName) resultName.textContent = item.name;
+            if (lotEl) lotEl.textContent = '';
+            const nameEl = card.querySelector('.mdc-name');
+            if (nameEl) nameEl.innerHTML = item.nameHtml || item.name;
+            const subEl = card.querySelector('.mdc-sub');
+            if (subEl) subEl.textContent = item.scanSub || '';
+        });
+        updateFlowConfirmButton(flow, items.length);
+    }
+
+    function getCurrentFlowGivenTime(flow) {
+        const timeIdMap = { st:'stGivenTime', prn:'prnGivenTime', ha:'haGivenTime', ov:'ovGivenTime' };
+        if (flow === 'r') return new Date().toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit'}) + ' น.';
+        const el = document.getElementById(timeIdMap[flow]);
+        if (el && el.textContent && el.textContent.trim()) return el.textContent.trim();
+        return new Date().toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit'}) + ' น.';
+    }
+
+    function goCurrentPostAssessI(flow) {
+        const patient = getCurrentFlowPatient(flow);
+        if (!patient) return;
+        const drugs = getCurrentFlowDrugs(flow);
+        const drugText = flow === 'r' ? getFlowDrugText(flow) : ((drugs[0] && drugs[0].name) || patient.drug || '');
+        const detailText = (drugs[0] && drugs[0].detail) || patient.detail || [patient.route, patient.dose].filter(Boolean).join(' · ');
+        const typeMap = { r:'Routine', st:'STAT', prn:'PRN', ha:'High Alert', ov:'Overdue' };
+        const originMap = { r:'pg-routine', st:'pg-stat', prn:'pg-prn', ha:'pg-highalert', ov:'pg-overdue' };
+        goPostAssessI({
+            patient: patient.name,
+            bed: patient.hn + ' · ' + patient.bed,
+            drug: drugText,
+            detail: detailText,
+            type: typeMap[flow] || '',
+            givenTime: getCurrentFlowGivenTime(flow),
+            showPain: flow === 'prn',
+            origin: originMap[flow] || 'pg-dashboard'
+        });
+    }
+
     function scanMultiDrug(flow, idx) {
+        const currentItems = getCurrentFlowDrugs(flow);
+        const data = currentItems[idx];
         const btn = document.getElementById(`${flow}drug_${idx}_btn`);
+        if (!btn) return;
+        if (data && data.requiresWitness && flow !== 'ha') {
+            showHAVerifyModal(data.name, data.lot || 'N/A', function() {
+                showToast('พยานยืนยัน High Alert สำเร็จ — ' + data.name);
+                setTimeout(function(){ showToast(''); }, 2000);
+                completeMultiDrugScan(flow, idx, data);
+            }, 'witness');
+            return;
+        }
+        completeMultiDrugScan(flow, idx, data);
+    }
+
+    function completeMultiDrugScan(flow, idx, data) {
+        const btn = document.getElementById(`${flow}drug_${idx}_btn`);
+        if (!btn) return;
         btn.disabled = true;
         btn.innerHTML = '...กำลังสแกน...';
         setTimeout(() => {
             const card = document.getElementById(`${flow}drug_${idx}`);
+            if (!card) return;
             card.classList.add('done');
             card.dataset.done = 'true';
             document.getElementById(`${flow}drug_${idx}_done`).style.display = '';
-            const data = (multiDrugData[flow]||[])[idx];
             if (data) {
                 document.getElementById(`${flow}drug_${idx}_lot`).textContent = `Lot: ${data.lot} · Exp: ${data.exp}`;
                 document.getElementById(`${flow}drug_${idx}_resname`).textContent = data.name;
@@ -15512,12 +15943,18 @@
         }, 1200);
     }
     function checkMultiDrugDone(flow) {
-        const cards = document.querySelectorAll(`.mdc[data-flow="${flow}"]`);
-        if ([...cards].every(c => c.dataset.done === 'true')) {
+        const cards = [...document.querySelectorAll(`.mdc[data-flow="${flow}"]`)].filter(c => c.style.display !== 'none');
+        if (cards.length && cards.every(c => c.dataset.done === 'true')) {
             const btn = document.getElementById(multiDrugConfirmMap[flow]);
             if (btn) btn.disabled = false;
         }
     }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        rtSelectPatient('01', false);
+        haSelectPt(0, false);
+        ovSelectPt(0, false);
+    });
 
     /* ── Post-Medication Assessment (Index.html inline) ── */
     let postAssessOrigin = 'pg-dashboard';

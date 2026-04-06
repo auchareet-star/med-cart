@@ -987,7 +987,19 @@
         for(let i=1;i<=7;i++){const p=document.getElementById('ovStep'+i);if(p)p.classList.toggle('active',i===n);}
         document.querySelectorAll('#ovStepper .rt-step').forEach(s=>{const sn=parseInt(s.dataset.s);s.classList.remove('active','done');if(sn===n)s.classList.add('active');else if(sn<n)s.classList.add('done');});
         document.querySelectorAll('#ovStepper .rt-step-line').forEach((l,i)=>l.classList.toggle('done',i<n-1));
-        if(n===7){document.getElementById('ovGivenTime').textContent=new Date().toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit'})+' น.';}
+        if(n===6){
+            const drugs = flowDrugText('ov');
+            const confirmEl = document.getElementById('ovConfirmDrug');
+            if (confirmEl) confirmEl.textContent = drugs;
+        }
+        if(n===7){
+            document.getElementById('ovGivenTime').textContent=new Date().toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit'})+' น.';
+            const drugs = flowDrugText('ov');
+            const sub = document.getElementById('ovSuccessSub');
+            if (sub) sub.textContent = drugs + ' — นายธนกร วิเศษสิทธิ์ (3A-10)';
+            const drugEl = document.getElementById('ovSuccessDrug');
+            if (drugEl) drugEl.textContent = drugs;
+        }
     }
 
     function ovBack(){if(ovCurrentStep>1)ovGoStep(ovCurrentStep-1);else nav('pg-dashboard');}
@@ -1084,7 +1096,19 @@
         for(let i=1;i<=7;i++){const p=document.getElementById('haStep'+i);if(p)p.classList.toggle('active',i===n);}
         document.querySelectorAll('#haStepper .rt-step').forEach(s=>{const sn=parseInt(s.dataset.s);s.classList.remove('active','done');if(sn===n)s.classList.add('active');else if(sn<n)s.classList.add('done');});
         document.querySelectorAll('#haStepper .rt-step-line').forEach((l,i)=>l.classList.toggle('done',i<n-1));
-        if(n===7){document.getElementById('haGivenTime').textContent=new Date().toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit'})+' น.';}
+        if(n===6){
+            const drugs = flowDrugText('ha');
+            const confirmEl = document.getElementById('haConfirmDrug');
+            if (confirmEl) confirmEl.textContent = drugs + ' (HA)';
+        }
+        if(n===7){
+            document.getElementById('haGivenTime').textContent=new Date().toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit'})+' น.';
+            const drugs = flowDrugText('ha');
+            const sub = document.getElementById('haSuccessSub');
+            if (sub) sub.textContent = drugs + ' — Double Check ครบถ้วน';
+            const drugEl = document.getElementById('haSuccessDrug');
+            if (drugEl) drugEl.textContent = drugs + ' (HA)';
+        }
     }
 
     function haBack(){if(haCurrentStep>1)haGoStep(haCurrentStep-1);else nav('pg-dashboard');}
@@ -1134,7 +1158,14 @@
             if(sn===n) s.classList.add('active'); else if(sn<n) s.classList.add('done');
         });
         document.querySelectorAll('#prnStepper .rt-step-line').forEach((l,i) => l.classList.toggle('done',i<n-1));
-        if(n===6) { document.getElementById('prnGivenTime').textContent = new Date().toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit'})+' น.'; }
+        if(n===6) {
+            document.getElementById('prnGivenTime').textContent = new Date().toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit'})+' น.';
+            const drugs = flowDrugText('prn');
+            const sub = document.getElementById('prnSuccessSub');
+            if (sub) sub.textContent = drugs + ' — นายสมชาย มานะ (3A-01)';
+            const drugEl = document.getElementById('prnSuccessDrug');
+            if (drugEl) drugEl.textContent = drugs + ' (PRN)';
+        }
     }
 
     function prnBack() { if(prnCurrentStep>1) prnGoStep(prnCurrentStep-1); else nav('pg-dashboard'); }
@@ -1210,6 +1241,11 @@
         if (n === 5) {
             const now = new Date();
             document.getElementById('stGivenTime').textContent = now.toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit'}) + ' น.';
+            const drugs = flowDrugText('st');
+            const sub = document.getElementById('stSuccessSub');
+            if (sub) sub.textContent = drugs + ' — นายธนกร วิเศษสิทธิ์ (3A-10)';
+            const drugEl = document.getElementById('stSuccessDrug');
+            if (drugEl) drugEl.textContent = drugs + ' (STAT)';
         }
     }
 
@@ -1282,6 +1318,19 @@
         document.querySelectorAll('#rtStepper .rt-step-line').forEach((line, idx) => {
             line.classList.toggle('done', idx < n - 1);
         });
+        // Populate drug names dynamically
+        if (n === 5) {
+            const drugs = flowDrugText('r');
+            const el = document.getElementById('rtConfirmDrug');
+            if (el) el.textContent = drugs;
+        }
+        if (n === 6) {
+            const drugs = flowDrugText('r');
+            const sub = document.getElementById('rtSuccessSub');
+            if (sub) sub.textContent = drugs + ' — นายสมชาย มานะ (3A-01)';
+            const drugEl = document.getElementById('rtSuccessDrug');
+            if (drugEl) drugEl.textContent = drugs;
+        }
         // Scroll top
         const panel = document.getElementById('rtStep' + n);
         if (panel) panel.scrollTop = 0;
@@ -1553,6 +1602,11 @@
     }
 
     /* ── Multi-Drug Scan ── */
+    // Helper: join scanned drug names for a flow
+    function flowDrugText(flow) {
+        return (multiDrugData[flow] || []).map(d => d.name).join(' · ');
+    }
+
     // drugData[flow][idx] = { name, lot, exp }
     const multiDrugData = {
         r:   [ { name:'Amlodipine 5 mg',     lot:'AML-2025-108', exp:'15/03/2570' },
