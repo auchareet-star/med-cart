@@ -1460,7 +1460,7 @@
         .db-banner h1 { font-size:30px; font-weight:800; letter-spacing:-.5px; margin-bottom:8px; text-shadow:0 2px 8px rgba(0,0,0,0.1); }
         .db-banner-sub { font-size:13px; opacity:.8; }
         .db-banner-right { display:flex; align-items:center; gap:16px; }
-        .db-progress { position:relative; width:84px; height:84px; }
+        .db-progress { position:relative; width:96px; height:96px; flex:0 0 96px; }
         .db-progress-text { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; }
         .db-progress-num { font-size:22px; font-weight:800; }
         .db-progress-label { font-size:9px; opacity:.7; }
@@ -1574,6 +1574,63 @@
         /* Role section */
         .db-role-section { margin-bottom:24px; }
 
+        /* Shared Cassette monitor */
+        .db-cassette-panel {
+            margin-bottom:22px; padding:18px 20px;
+            background:linear-gradient(135deg,rgba(255,255,255,.95),rgba(248,250,252,.9));
+            border:1px solid rgba(203,213,225,.9); border-radius:22px;
+            box-shadow:0 12px 36px rgba(15,23,42,.07);
+        }
+        .db-cassette-head { display:flex; align-items:center; gap:14px; margin-bottom:16px; }
+        .db-cassette-icon {
+            width:44px; height:44px; border-radius:15px;
+            display:flex; align-items:center; justify-content:center;
+            color:white; background:linear-gradient(135deg,#0F172A,#334155);
+            box-shadow:0 8px 18px rgba(15,23,42,.22);
+            flex-shrink:0;
+        }
+        .db-cassette-title { font-size:16px; font-weight:800; color:#0f172a; letter-spacing:-.2px; }
+        .db-cassette-sub { font-size:11px; color:var(--text-3); margin-top:2px; }
+        .db-cassette-pill {
+            margin-left:auto; display:inline-flex; align-items:center; gap:6px;
+            padding:7px 12px; border-radius:999px;
+            background:#eff6ff; color:#1d4ed8;
+            font-size:11px; font-weight:800; white-space:nowrap;
+        }
+        .db-cassette-body { display:grid; grid-template-columns: minmax(260px,.8fr) 1.4fr; gap:16px; align-items:stretch; }
+        .db-cassette-summary { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+        .db-cassette-stat {
+            border-radius:15px; padding:14px;
+            background:#fff; border:1px solid #e2e8f0;
+            min-height:82px;
+        }
+        .db-cassette-stat-val { font-size:25px; font-weight:850; line-height:1; color:#0f172a; }
+        .db-cassette-stat-label { font-size:10px; font-weight:800; color:var(--text-3); margin-top:7px; }
+        .db-cassette-map {
+            display:grid; grid-template-columns:repeat(3,1fr); gap:10px;
+            background:#f8fafc; border:1px solid #e2e8f0;
+            border-radius:18px; padding:12px;
+        }
+        .db-cassette-drawer {
+            background:white; border:1px solid #e2e8f0;
+            border-radius:15px; padding:10px;
+        }
+        .db-cassette-drawer-head { display:flex; align-items:center; justify-content:space-between; font-size:11px; font-weight:800; color:#334155; margin-bottom:8px; }
+        .db-cassette-drawer-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:5px; }
+        .db-cassette-cell {
+            min-height:30px; border-radius:9px; display:flex; align-items:center; justify-content:center;
+            font-size:9px; font-weight:850; border:1px solid transparent;
+            color:#64748b; background:#f1f5f9;
+        }
+        .db-cassette-cell.ready { background:#dcfce7; color:#15803d; border-color:#bbf7d0; }
+        .db-cassette-cell.patient { background:#ccfbf1; color:#0f766e; border-color:#5eead4; }
+        .db-cassette-cell.medication { background:#dbeafe; color:#1d4ed8; border-color:#93c5fd; }
+        .db-cassette-cell.schedule { background:#ede9fe; color:#6d28d9; border-color:#c4b5fd; }
+        .db-cassette-cell.maintenance { background:#fee2e2; color:#b91c1c; border-color:#fecaca; }
+        .db-cassette-legend { display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; font-size:10.5px; color:var(--text-2); }
+        .db-cassette-legend span { display:inline-flex; align-items:center; gap:5px; font-weight:700; }
+        .db-cassette-legend i { width:9px; height:9px; border-radius:3px; display:inline-block; }
+
         /* Bottom grid */
         .db-bottom { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
         .db-panel {
@@ -1655,11 +1712,22 @@
             .db-actions { grid-template-columns:1fr 1fr; }
             .db-alerts { grid-column:1/-1; flex-direction:row; }
             .db-alert { flex:1; }
+            .db-cassette-body { grid-template-columns:1fr; }
+            #dashBanner { flex-wrap:wrap; }
+            #dashBanner > div:first-child { flex-basis:100%; }
+            #dashBanner > div:nth-child(2) { flex:1; min-height:120px; }
+            #dashBanner > div:nth-child(3) { flex:1; min-width:260px; }
         }
         @media (max-width:768px) {
             .db-stats { grid-template-columns:repeat(2,1fr); }
             .db-actions { grid-template-columns:1fr; }
             .db-bottom { grid-template-columns:1fr; }
+            .db-cassette-head { align-items:flex-start; flex-wrap:wrap; }
+            .db-cassette-pill { margin-left:0; }
+            .db-cassette-summary { grid-template-columns:1fr 1fr; }
+            .db-cassette-map { grid-template-columns:1fr; }
+            #dashBanner > div:nth-child(2) { justify-content:flex-start !important; padding:0 24px 20px !important; border-left:0 !important; }
+            #dashBanner > div:nth-child(3) { padding:0 24px 24px !important; min-width:100% !important; }
         }
 
         /* ══════════════════════════════════════════════
@@ -5744,6 +5812,43 @@
             </div>
         </div>
 
+        <!-- Shared Cassette Monitor — visible for every role -->
+        <div class="db-cassette-panel" id="dashCassettePanel">
+            <div class="db-cassette-head">
+                <div class="db-cassette-icon">
+                    <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="3" width="18" height="18" rx="2"/>
+                        <line x1="3" y1="9" x2="21" y2="9"/>
+                        <line x1="9" y1="21" x2="9" y2="9"/>
+                    </svg>
+                </div>
+                <div style="flex:1;min-width:220px;">
+                    <div class="db-cassette-title">ข้อมูล Cassette รถเข็นยา</div>
+                    <div class="db-cassette-sub" id="dashCassetteSub">Med Cart A-1 · Ward 3A · อัปเดตจากสถานะการจัดยา</div>
+                </div>
+                <div class="db-cassette-pill" id="dashCassetteModePill">
+                    <span style="width:7px;height:7px;background:#22c55e;border-radius:50%;box-shadow:0 0 0 3px rgba(34,197,94,.16);"></span>
+                    ทุก Role มองเห็น
+                </div>
+            </div>
+            <div class="db-cassette-body">
+                <div>
+                    <div class="db-cassette-summary" id="dashCassetteSummary"></div>
+                    <div id="dashCassetteActiveList" style="margin-top:12px;"></div>
+                </div>
+                <div>
+                    <div class="db-cassette-map" id="dashCassetteMap"></div>
+                    <div class="db-cassette-legend">
+                        <span><i style="background:#dcfce7;border:1px solid #bbf7d0;"></i>พร้อมใช้</span>
+                        <span><i style="background:#ccfbf1;border:1px solid #5eead4;"></i>By Patient</span>
+                        <span><i style="background:#dbeafe;border:1px solid #93c5fd;"></i>By Item</span>
+                        <span><i style="background:#ede9fe;border:1px solid #c4b5fd;"></i>By Round</span>
+                        <span><i style="background:#fee2e2;border:1px solid #fecaca;"></i>ไม่พร้อมใช้</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Post-Assessment Quick Link -->
         <div onclick="nav('pg-assess-list')" style="
             background:linear-gradient(135deg,#ecfdf5,#d1fae5);
@@ -5770,9 +5875,9 @@
         <div id="dashRoleSection" class="db-role-section"></div>
 
         <!-- Schedule + Activity -->
-        <div class="db-bottom">
+        <div id="dashBottomGrid" class="db-bottom">
 
-            <div class="db-panel">
+            <div id="dashSchedulePanel" class="db-panel">
                 <div class="db-panel-head" style="justify-content:space-between;">
                     <div style="display:flex;align-items:center;gap:10px;">
                         <div class="db-panel-head-icon" style="background:#f0fdf4;color:var(--green);"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
@@ -5911,7 +6016,7 @@
             </div>
         </div>
 
-        <!-- Role bottom section (super: team + performance) -->
+        <!-- Role bottom section (super: team) -->
         <div id="dashRoleBottom" class="db-role-section"></div>
 
     </div>
@@ -10311,6 +10416,29 @@
             background: linear-gradient(160deg, #F0FDF4, #DCFCE7);
             cursor: not-allowed; pointer-events: none; opacity: 0.6;
         }
+        .ptd-cass-slot.mode-patient {
+            border-color: #5EEAD4;
+            background: linear-gradient(160deg, #F0FDFA, #CCFBF1);
+        }
+        .ptd-cass-slot.mode-medication {
+            border-color: #93C5FD;
+            background: linear-gradient(160deg, #EFF6FF, #DBEAFE);
+        }
+        .ptd-cass-slot.mode-schedule {
+            border-color: #C4B5FD;
+            background: linear-gradient(160deg, #F5F3FF, #EDE9FE);
+        }
+        .ptd-cass-slot.locked-other {
+            border-color: #FCA5A5;
+            background: linear-gradient(160deg, #FFF1F2, #FEE2E2);
+            cursor: not-allowed;
+            opacity: 0.86;
+        }
+        .ptd-cass-slot.locked-other:hover {
+            border-color: #F87171;
+            background: linear-gradient(160deg, #FFF1F2, #FEE2E2);
+            box-shadow: 0 10px 30px rgba(239,68,68,0.10);
+        }
         .ptd-cass-num {
             font-size: 26px; font-weight: 800; color: #CBD5E1;
             font-family: 'Inter', sans-serif; line-height: 1;
@@ -10325,6 +10453,16 @@
         }
         .ptd-cass-slot.selected .ptd-cass-status { color: var(--green-dark); }
         .ptd-cass-slot.occupied .ptd-cass-status { color: #15803D; }
+        .ptd-cass-slot.mode-medication .ptd-cass-status { color: #1D4ED8; }
+        .ptd-cass-slot.mode-schedule .ptd-cass-status { color: #6D28D9; }
+        .ptd-cass-slot.locked-other .ptd-cass-status { color: #B91C1C; }
+        .ptd-cass-mode-chip {
+            position: absolute; left: 8px; top: 8px;
+            padding: 3px 7px; border-radius: 999px;
+            font-size: 8.5px; font-weight: 800;
+            letter-spacing: 0.02em; color: white;
+            box-shadow: 0 3px 10px rgba(15,23,42,0.12);
+        }
 
         .ptd-cass-check {
             position: absolute; top: 8px; right: 8px;
@@ -11312,7 +11450,7 @@
                     <div class="pf-drug-head-icon" style="background:linear-gradient(135deg,#EFF6FF,#DBEAFE);">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
                     </div>
-                    <span class="ibf-dest-head">ปลายทาง (4 ผู้ป่วย)</span>
+                    <span class="ibf-dest-head">ข้อมูลคนไข้ปลายทาง (4 ราย)</span>
                     <span style="margin-left:auto;font-size:10px;color:var(--text-3);font-weight:500;">รอบเช้า</span>
                 </div>
                 <div class="pf-drug-scroll" id="ibfDestScroll">
@@ -11371,11 +11509,11 @@
                             <line x1="7" y1="12" x2="17" y2="12"/>
                         </svg>
                     </div>
-                    <div class="pf-scan-title">สแกนยาเพื่อจัดลงช่อง</div>
-                    <div class="pf-scan-desc">สแกนบาร์โค้ดบนซองยาเพื่อจัดลง Cassette ของผู้ป่วยแต่ละราย</div>
+                    <div class="pf-scan-title">สแกนข้อมูลคนไข้เพื่อจัดยาลงช่อง</div>
+                    <div class="pf-scan-desc">สแกนบาร์โค้ดหรือข้อมูลผู้ป่วยเพื่อยืนยันคนไข้และช่อง Cassette ก่อนจัดยาลงช่องของคนไข้รายนั้น</div>
                     <button class="pf-scan-btn" style="background:linear-gradient(135deg,#1D4ED8,#2563EB,#3B82F6);box-shadow:0 6px 24px rgba(37,99,235,0.3);" onclick="ibfScan()">
                         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg>
-                        สแกนยา
+                        สแกนข้อมูลคนไข้
                     </button>
                 </div>
 
@@ -11384,14 +11522,14 @@
                     <div class="pf-result-head" style="background:linear-gradient(135deg,#EFF6FF,#DBEAFE);border-bottom-color:rgba(59,130,246,0.1);">
                         <span class="pf-result-badge" style="background:linear-gradient(135deg,#DBEAFE,#BFDBFE);color:#2563EB;">
                             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>
-                            ตรงกัน
+                            ข้อมูลคนไข้ตรงกัน
                         </span>
-                        <span class="pf-result-name">Amlodipine 5 mg</span>
+                        <span class="pf-result-name">พร้อมยืนยันจัดยาลงช่อง</span>
                     </div>
                     <div class="pf-result-grid">
                         <div class="pf-result-cell"><div class="pf-result-label">Lot</div><div class="pf-result-value">AML-2025-108</div></div>
                         <div class="pf-result-cell"><div class="pf-result-label">Expiry</div><div class="pf-result-value">03/2570</div></div>
-                        <div class="pf-result-cell"><div class="pf-result-label">ปลายทาง</div><div class="pf-result-value">สมชาย · 3A-01</div></div>
+                        <div class="pf-result-cell"><div class="pf-result-label">ข้อมูลคนไข้ / ช่อง</div><div class="pf-result-value">สมชาย · 3A-01</div></div>
                         <div class="pf-result-cell"><div class="pf-result-label">จำนวน</div><div class="pf-result-value">1 เม็ด</div></div>
                     </div>
                 </div>
@@ -11400,7 +11538,7 @@
                 <div class="pf-action-bar">
                     <button class="pf-act-btn primary" id="ibfBtnConfirm" onclick="ibfConfirm()" disabled style="flex:2;background:linear-gradient(135deg,#1D4ED8,#2563EB);box-shadow:0 4px 18px rgba(37,99,235,0.3);">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
-                        ยืนยันจัดลงช่อง
+                        ยืนยันจัดยาลงช่อง
                     </button>
                     <button class="pf-act-btn outline-green" id="ibfBtnSummary" onclick="ibfPopulateSummary()" disabled style="flex:1;opacity:0.4;cursor:not-allowed;border-color:#2563EB;color:#2563EB;">
                         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
@@ -12101,7 +12239,7 @@
         'pg-highalert':'จ่ายยา High Alert','pg-omit-flow':'งดให้ยา','pg-overdue':'ยาเลยเวลา',
         'pg-prep-patient':'จัดยาตามผู้ป่วย','pg-prep-pt-drugs':'รายการยาผู้ป่วย',
         'pg-prep-fill-pt':'จัดยาลงช่อง','pg-prep-med':'จัดยาตามรายการยา',
-        'pg-prep-med-detail':'รายละเอียดยา','pg-ibf':'จัดยาตามรายการ',
+        'pg-prep-med-detail':'รายละเอียดยา','pg-ibf':'จัดยาตามข้อมูลคนไข้',
         'pg-prep-sched':'จัดยาตามเวลา','pg-sched-detail':'รายการรอบเวลา','pg-trf':'จัดยาตามรอบ',
         'pg-post-assess':'ประเมินหลังให้ยา',
         'pg-assess-list':'รายการประเมินหลังให้ยา'
@@ -12138,10 +12276,23 @@
         }
     });
 
+    var currentWardName = sessionStorage.getItem('mcWard') || 'Ward 3A';
+    var selectedWardName = currentWardName;
+    var wardDataReady = false;
+
     // On load: restore page + login state from URL hash (survive refresh)
     (function() {
         const hash = window.location.hash.replace('#','');
         // Restore login state
+        var savedWard = sessionStorage.getItem('mcWard') || currentWardName;
+        if (savedWard) {
+            currentWardName = savedWard;
+            selectedWardName = savedWard;
+            const loginWard = document.getElementById('loginWardLabel');
+            if (loginWard) loginWard.textContent = savedWard;
+            const dashWard = document.getElementById('dashWard');
+            if (dashWard) dashWard.textContent = savedWard;
+        }
         var savedRole = sessionStorage.getItem('mcRole');
         var savedName = sessionStorage.getItem('mcName');
         var savedRoleText = sessionStorage.getItem('mcRoleText');
@@ -12158,7 +12309,10 @@
 
     /* ── Keep same ward → go to Login ── */
     function keepWard() {
-        document.getElementById('loginWardLabel').textContent = 'Ward 3A';
+        const ward = currentWardName || sessionStorage.getItem('mcWard') || 'Ward 3A';
+        const label = document.getElementById('loginWardLabel');
+        if (label) label.textContent = ward;
+        if (wardDataReady) applyWardSelection(ward, { silent: true });
         nav('pg-login');
     }
 
@@ -12167,6 +12321,7 @@
 
     function pickWard(el) {
         if (el.style.pointerEvents === 'none') return;
+        selectedWardName = el.dataset.name || el.querySelector('.wc-name')?.textContent || currentWardName || 'Ward 3A';
         document.querySelectorAll('.wc').forEach(w => {
             w.classList.remove('chosen');
             const r = w.querySelector('.wc-radio');
@@ -12177,24 +12332,28 @@
         if (radio) radio.innerHTML = checkSvg;
 
         const btn = document.getElementById('btnSelectConfirm');
-        btn.disabled = false;
+        if (btn) btn.disabled = false;
 
         // Update preview panel
         const name = el.querySelector('.wc-name');
         const desc = el.querySelector('.wc-desc');
-        const beds = el.querySelector('.wc-stat strong');
-        const patients = el.querySelectorAll('.wc-stat strong')[1];
-        document.getElementById('wardPreviewEmpty').style.display = 'none';
-        document.getElementById('wardPreviewSelected').style.display = '';
-        document.getElementById('wpName').textContent = name ? name.textContent : '—';
-        document.getElementById('wpDesc').textContent = desc ? desc.textContent : '—';
-        if (beds) {
-            const bedText = beds.parentElement.textContent.trim();
-            document.getElementById('wpBeds').textContent = bedText;
+        const meta = el.querySelector('.wc-meta div');
+        const metaStrong = el.querySelectorAll('.wc-meta strong');
+        const previewEmpty = document.getElementById('wardPreviewEmpty');
+        const previewSelected = document.getElementById('wardPreviewSelected');
+        if (previewEmpty) previewEmpty.style.display = 'none';
+        if (previewSelected) previewSelected.style.display = '';
+        const wpName = document.getElementById('wpName');
+        const wpDesc = document.getElementById('wpDesc');
+        const wpBeds = document.getElementById('wpBeds');
+        const wpPatients = document.getElementById('wpPatients');
+        if (wpName) wpName.textContent = name ? name.textContent : '—';
+        if (wpDesc) wpDesc.textContent = desc ? desc.textContent : '—';
+        if (wpBeds) {
+            wpBeds.textContent = meta ? meta.textContent.trim().split('·')[0].trim() : (metaStrong[0] ? metaStrong[0].textContent + ' เตียง' : '—');
         }
-        if (patients) {
-            const ptText = patients.parentElement.textContent.trim();
-            document.getElementById('wpPatients').textContent = ptText;
+        if (wpPatients) {
+            wpPatients.textContent = meta ? (meta.textContent.trim().split('·')[1] || '').trim() : (metaStrong[1] ? metaStrong[1].textContent + ' ผู้ป่วย' : '—');
         }
 
         // Scroll chosen into view
@@ -12202,9 +12361,19 @@
     }
 
     function confirmNewWard() {
-        const chosen = document.querySelector('.wc.chosen .wc-name');
-        if (!chosen) return;
-        document.getElementById('loginWardLabel').textContent = chosen.textContent;
+        const chosenCard = document.querySelector('.wc.chosen');
+        const chosen = chosenCard?.querySelector('.wc-name');
+        const ward = selectedWardName || chosenCard?.dataset.name || chosen?.textContent;
+        if (!ward) return;
+        const label = document.getElementById('loginWardLabel');
+        if (label) label.textContent = ward;
+        if (wardDataReady) {
+            applyWardSelection(ward);
+        } else {
+            currentWardName = ward;
+            selectedWardName = ward;
+            sessionStorage.setItem('mcWard', ward);
+        }
         nav('pg-login');
     }
 
@@ -12298,8 +12467,13 @@
         sessionStorage.setItem('mcName', name);
         sessionStorage.setItem('mcRoleText', roleText);
 
-        const ward = document.getElementById('loginWardLabel')?.textContent || 'Ward 3A';
-        document.getElementById('dashWard').textContent = ward;
+        const ward = document.getElementById('loginWardLabel')?.textContent || currentWardName || 'Ward 3A';
+        currentWardName = ward;
+        selectedWardName = ward;
+        sessionStorage.setItem('mcWard', ward);
+        const dashWard = document.getElementById('dashWard');
+        if (dashWard) dashWard.textContent = ward;
+        if (wardDataReady) applyWardSelection(ward, { silent: true });
 
         // Update welcome name
         const welcomeH1 = document.getElementById('dashWelcomeName');
@@ -12370,9 +12544,14 @@
         const sec = document.getElementById('dashRoleSection');
         if (sec) sec.innerHTML = getRoleSectionHTML(role, name, roleText);
 
-        // Inject bottom section (super: team + performance below schedule/activity)
+        // Inject bottom section (super: team only; schedule hidden for head nurse)
         const secBottom = document.getElementById('dashRoleBottom');
         if (secBottom) secBottom.innerHTML = getRoleBottomHTML(role);
+
+        const schedulePanel = document.getElementById('dashSchedulePanel');
+        const bottomGrid = document.getElementById('dashBottomGrid');
+        if (schedulePanel) schedulePanel.style.display = role === 'super' ? 'none' : '';
+        if (bottomGrid) bottomGrid.style.gridTemplateColumns = role === 'super' ? '1fr' : '';
 
         // Show permission button in global header for head nurse only
         var permBtn = document.getElementById('ghPermBtn');
@@ -12505,14 +12684,14 @@
                 +'</div>';
         }
 
-        // Super — no top section (team + performance appear below schedule/activity)
+        // Super — no top section (team appears below activity)
         return '';
     }
 
     function getRoleBottomHTML(role) {
         if (role !== 'super') return '';
         const glass = 'background:rgba(255,255,255,0.9);backdrop-filter:blur(14px);border:1px solid var(--border);border-radius:18px;box-shadow:var(--shadow);';
-        return '<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px;">'
+        return '<div style="display:grid;grid-template-columns:1fr;gap:16px;margin-top:16px;">'
             +'<div style="'+glass+'padding:20px 22px;">'
             +'<div style="font-size:14px;font-weight:600;color:var(--text-1);margin-bottom:16px;display:flex;align-items:center;gap:8px;">'
             +'<div style="width:28px;height:28px;background:#f5f3ff;border-radius:8px;display:flex;align-items:center;justify-content:center;">'
@@ -12523,17 +12702,6 @@
             +'<div style="display:flex;align-items:center;gap:12px;padding:10px 12px;background:#f0fdf4;border-radius:12px;"><div style="width:38px;height:38px;background:linear-gradient(135deg,var(--green),#14B8A6);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:white;flex-shrink:0;">สจ</div><div style="flex:1;"><div style="font-size:13px;font-weight:600;color:var(--text-1);">นส.สมใจ ดีมาก</div><div style="font-size:11px;color:#0D9488;margin-top:1px;">พยาบาล · กำลังจ่ายยา</div></div><div style="width:8px;height:8px;background:#4ade80;border-radius:50%;"></div></div>'
             +'<div style="display:flex;align-items:center;gap:12px;padding:10px 12px;background:#eff6ff;border-radius:12px;"><div style="width:38px;height:38px;background:linear-gradient(135deg,#3b82f6,#60a5fa);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:white;flex-shrink:0;">วภ</div><div style="flex:1;"><div style="font-size:13px;font-weight:600;color:var(--text-1);">ภญ.วิภา เจริญยา</div><div style="font-size:11px;color:#3b82f6;margin-top:1px;">เภสัชกร · กำลังจัดยา</div></div><div style="width:8px;height:8px;background:#4ade80;border-radius:50%;"></div></div>'
             +'<div style="display:flex;align-items:center;gap:12px;padding:10px 12px;background:#f8fafc;border-radius:12px;"><div style="width:38px;height:38px;background:linear-gradient(135deg,#64748b,#94a3b8);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:white;flex-shrink:0;">วร</div><div style="flex:1;"><div style="font-size:13px;font-weight:600;color:var(--text-1);">นส.วรรณา รุ่งเรือง</div><div style="font-size:11px;color:var(--text-3);margin-top:1px;">พยาบาล · ว่าง</div></div><div style="width:8px;height:8px;background:#e2e8f0;border-radius:50%;"></div></div>'
-            +'</div></div>'
-            +'<div style="'+glass+'padding:20px 22px;">'
-            +'<div style="font-size:14px;font-weight:600;color:var(--text-1);margin-bottom:16px;display:flex;align-items:center;gap:8px;">'
-            +'<div style="width:28px;height:28px;background:#fffbeb;border-radius:8px;display:flex;align-items:center;justify-content:center;">'
-            +'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2.5"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg>'
-            +'</div>ประสิทธิภาพเวรนี้</div>'
-            +'<div style="display:flex;flex-direction:column;gap:14px;">'
-            +'<div><div style="display:flex;justify-content:space-between;align-items:center;font-size:12px;margin-bottom:6px;"><span style="color:var(--text-2);">ตรงเวลา</span><span style="font-weight:700;color:#0D9488;font-size:14px;">87%</span></div><div style="width:100%;height:7px;background:#f1f5f9;border-radius:4px;overflow:hidden;"><div style="width:87%;height:100%;background:linear-gradient(90deg,#0D9488,#14B8A6);border-radius:4px;"></div></div></div>'
-            +'<div><div style="display:flex;justify-content:space-between;align-items:center;font-size:12px;margin-bottom:6px;"><span style="color:var(--text-2);">7 Rights ผ่าน</span><span style="font-weight:700;color:#3b82f6;font-size:14px;">100%</span></div><div style="width:100%;height:7px;background:#f1f5f9;border-radius:4px;overflow:hidden;"><div style="width:100%;height:100%;background:linear-gradient(90deg,#3b82f6,#60a5fa);border-radius:4px;"></div></div></div>'
-            +'<div><div style="display:flex;justify-content:space-between;align-items:center;font-size:12px;margin-bottom:6px;"><span style="color:var(--text-2);">STAT Overdue</span><span style="font-weight:700;color:#f59e0b;font-size:14px;">13%</span></div><div style="width:100%;height:7px;background:#f1f5f9;border-radius:4px;overflow:hidden;"><div style="width:13%;height:100%;background:linear-gradient(90deg,#f59e0b,#fbbf24);border-radius:4px;"></div></div></div>'
-            +'<div><div style="display:flex;justify-content:space-between;align-items:center;font-size:12px;margin-bottom:6px;"><span style="color:var(--text-2);">การงดให้ยา</span><span style="font-weight:700;color:#0D9488;font-size:14px;">0%</span></div><div style="width:100%;height:7px;background:#f1f5f9;border-radius:4px;overflow:hidden;"><div style="width:0%;height:100%;background:#ef4444;border-radius:4px;"></div></div></div>'
             +'</div></div>'
             +'</div>';
     }
@@ -12944,6 +13112,120 @@
         }
     };
 
+    function cloneWardData(obj) {
+        return JSON.parse(JSON.stringify(obj));
+    }
+
+    function patientInitials(name) {
+        return String(name || '')
+            .replace(/^(นาย|นางสาว|นาง|นส\.|ด\.ช\.|ด\.ญ\.)\s*/,'')
+            .replace(/\s+/g,'')
+            .slice(0, 2) || 'ผป';
+    }
+
+    function patientGenderFromName(name) {
+        const value = String(name || '');
+        if (value.startsWith('นาง') || value.startsWith('นส.') || value.startsWith('ด.ญ.')) return 'หญิง';
+        return 'ชาย';
+    }
+
+    const wardInfo = {
+        'Ward 3A': { desc:'หอผู้ป่วยอายุรกรรม', floor:'ชั้น 3', beds:'24/30 เตียง', patients:'8 ผู้ป่วย', cart:'Med Cart A-1' },
+        'Ward 3B': { desc:'ศัลยกรรมชาย', floor:'ชั้น 3', beds:'28/30 เตียง', patients:'26 ผู้ป่วย', cart:'Med Cart A-2' },
+        'Ward 4A': { desc:'กุมารเวชกรรม', floor:'ชั้น 4', beds:'18/20 เตียง', patients:'15 ผู้ป่วย', cart:'Med Cart B-1' },
+        'Ward 4B': { desc:'สูติ-นรีเวชกรรม', floor:'ชั้น 4', beds:'22/25 เตียง', patients:'20 ผู้ป่วย', cart:'Med Cart B-2' },
+        'Ward 5A': { desc:'ออร์โธปิดิกส์', floor:'ชั้น 5', beds:'24/30 เตียง', patients:'22 ผู้ป่วย', cart:'Med Cart C-1' },
+        'Ward 5B': { desc:'อายุรกรรมชาย', floor:'ชั้น 5', beds:'29/30 เตียง', patients:'29 ผู้ป่วย', cart:'Med Cart C-2' },
+        'Ward 6A': { desc:'จักษุวิทยา', floor:'ชั้น 6', beds:'10/15 เตียง', patients:'8 ผู้ป่วย', cart:'Med Cart D-1' },
+        'Ward 7A': { desc:'โสต ศอ นาสิก', floor:'ชั้น 7', beds:'12/20 เตียง', patients:'10 ผู้ป่วย', cart:'Med Cart D-2' },
+        'ICU': { desc:'ผู้ป่วยวิกฤต', floor:'ชั้น 2', beds:'8/10 เตียง', patients:'8 ผู้ป่วย', cart:'Med Cart ICU-1' },
+        'ER': { desc:'ห้องฉุกเฉิน', floor:'ชั้น 1', beds:'14/20 เตียง', patients:'11 ผู้ป่วย', cart:'Med Cart ER-1' }
+    };
+
+    const wardDrugSets = [
+        [
+            { name:'Amlodipine 5 mg', desc:'1 เม็ด · PO · รอบเช้า', color:'#3B82F6', colorLight:['#EFF6FF','#DBEAFE'], status:'ยังไม่จัด', done:false },
+            { name:'Metformin 500 mg', desc:'1 เม็ด · PO · รอบเช้า', color:'#0D9488', colorLight:['#F0FDFA','#CCFBF1'], status:'ยังไม่จัด', done:false },
+            { name:'Omeprazole 20 mg', desc:'1 แคปซูล · PO · รอบเช้า', color:'#8B5CF6', colorLight:['#F5F3FF','#EDE9FE'], status:'ยังไม่จัด', done:false },
+            { name:'Heparin 5000u', desc:'1 vial · SC · รอบเช้า', color:'#EF4444', colorLight:['#FEF2F2','#FEE2E2'], status:'ยังไม่จัด', done:false, highAlert:true }
+        ],
+        [
+            { name:'Losartan 50 mg', desc:'1 เม็ด · PO · OD เช้า', color:'#3B82F6', colorLight:['#EFF6FF','#DBEAFE'], status:'ยังไม่จัด', done:false },
+            { name:'Simvastatin 20 mg', desc:'1 เม็ด · PO · OD ก่อนนอน', color:'#8B5CF6', colorLight:['#F5F3FF','#EDE9FE'], status:'จัดแล้ว ✓', done:true },
+            { name:'Paracetamol 500 mg', desc:'2 เม็ด · PO · PRN pain/fever', color:'#0D9488', colorLight:['#F0FDF4','#DCFCE7'], status:'ยังไม่จัด', done:false }
+        ],
+        [
+            { name:'Amlodipine 10 mg', desc:'1 เม็ด · PO · OD เช้า', color:'#3B82F6', colorLight:['#EFF6FF','#DBEAFE'], status:'ยังไม่จัด', done:false },
+            { name:'Metformin 500 mg', desc:'1 เม็ด · PO · BID', color:'#0D9488', colorLight:['#F0FDFA','#CCFBF1'], status:'ยังไม่จัด', done:false },
+            { name:'Enalapril 5 mg', desc:'1 เม็ด · PO · OD เช้า', color:'#F59E0B', colorLight:['#FFFBEB','#FEF3C7'], status:'ยังไม่จัด', done:false },
+            { name:'Furosemide 40 mg', desc:'1 เม็ด · PO · OD เช้า', color:'#0D9488', colorLight:['#F0FDFA','#CCFBF1'], status:'ยังไม่จัด', done:false }
+        ],
+        [
+            { name:'Warfarin 3 mg', desc:'1 เม็ด · PO · OD เย็น', color:'#EF4444', colorLight:['#FEF2F2','#FEE2E2'], status:'ยังไม่จัด', done:false, highAlert:true },
+            { name:'Omeprazole 20 mg', desc:'1 แคปซูล · PO · OD', color:'#8B5CF6', colorLight:['#F5F3FF','#EDE9FE'], status:'ยังไม่จัด', done:false }
+        ],
+        [
+            { name:'Metformin 500 mg', desc:'1 เม็ด · PO · BID', color:'#0D9488', colorLight:['#F0FDFA','#CCFBF1'], status:'ยังไม่จัด', done:false },
+            { name:'Glipizide 5 mg', desc:'1 เม็ด · PO · OD เช้า', color:'#3B82F6', colorLight:['#EFF6FF','#DBEAFE'], status:'ยังไม่จัด', done:false },
+            { name:'Atorvastatin 20 mg', desc:'1 เม็ด · PO · OD ก่อนนอน', color:'#8B5CF6', colorLight:['#F5F3FF','#EDE9FE'], status:'ยังไม่จัด', done:false }
+        ],
+        [
+            { name:'Paracetamol 500 mg', desc:'2 เม็ด · PO · PRN pain', color:'#0D9488', colorLight:['#F0FDF4','#DCFCE7'], status:'ยังไม่จัด', done:false },
+            { name:'Amoxicillin 500 mg', desc:'1 แคปซูล · PO · TID', color:'#0D9488', colorLight:['#F0FDF4','#DCFCE7'], status:'จัดแล้ว ✓', done:true }
+        ],
+        [
+            { name:'Insulin Glargine 20u', desc:'1 dose · SC · OD เช้า', color:'#EF4444', colorLight:['#FEF2F2','#FEE2E2'], status:'ยังไม่จัด', done:false, highAlert:true },
+            { name:'Metformin 500 mg', desc:'1 เม็ด · PO · BID', color:'#0D9488', colorLight:['#F0FDFA','#CCFBF1'], status:'ยังไม่จัด', done:false }
+        ],
+        [
+            { name:'Amlodipine 5 mg', desc:'1 เม็ด · PO · OD เช้า', color:'#3B82F6', colorLight:['#EFF6FF','#DBEAFE'], status:'ยังไม่จัด', done:false },
+            { name:'Hydrochlorothiazide 25 mg', desc:'1 เม็ด · PO · OD เช้า', color:'#0D9488', colorLight:['#F0FDFA','#CCFBF1'], status:'ยังไม่จัด', done:false },
+            { name:'Paracetamol 500 mg', desc:'2 เม็ด · PO · PRN fever', color:'#0D9488', colorLight:['#F0FDF4','#DCFCE7'], status:'ยังไม่จัด', done:false }
+        ]
+    ];
+
+    const wardPatientProfiles = {
+        'Ward 3B': { hnPrefix:'6413', names:['นายกิตติ ศัลยดี','นายอำนาจ ผ่าตัด','นายมนตรี ใจกล้า','นายสาธิต ฟื้นดี','นายปรีชา ทรงพล','นายจักรินทร์ ภูผา','นายพิทักษ์ ว่องไว','นายอนันต์ ศรีชัย'], ages:[61,55,49,67,72,44,59,63] },
+        'Ward 4A': { hnPrefix:'6424', names:['ด.ช.ธาม นวลจันทร์','ด.ญ.ใบบัว แสงดี','ด.ช.ภาคิน เรืองฤทธิ์','ด.ญ.มินตรา ดาวเรือง','ด.ช.ปุณณ์ สายชล','ด.ญ.พิมพ์ดาว อ่อนหวาน','ด.ช.กวิน ทองดี','ด.ญ.น้ำฝน ศรีสุข'], ages:[7,5,9,6,11,8,4,10] },
+        'Ward 4B': { hnPrefix:'6428', names:['นางสาวอรพิน คล่องดี','นางมยุรี แก้วใส','นางสาวพิมลวรรณ ศรีทอง','นางสาวกานต์ธิดา สุขสันต์','นางรัตนา ชื่นชม','นางสาวศศิธร บุญช่วย','นางอารีย์ ใจเย็น','นางสาววราภรณ์ แสงทอง'], ages:[31,38,29,34,42,27,36,30] },
+        'Ward 5A': { hnPrefix:'6451', names:['นายภูริทัต เข้มแข็ง','นางสาวชนากานต์ เดินดี','นายอดิศักดิ์ กระดูกดี','นายวรวุฒิ แก้วทน','นางจิตรา ยืนยง','นายธวัชชัย ตั้งตรง','นางสาวนลินี ฟื้นแรง','นายเอกชัย ทรงพลัง'], ages:[52,43,64,58,70,47,39,66] },
+        'Ward 5B': { hnPrefix:'6455', names:['นายสุเมธ ใจมั่น','นายวิโรจน์ รักษ์สุข','นายประเวศ ทองแท้','นายไพโรจน์ มีแรง','นายสกล ชื่นบาน','นายชาญชัย สดใส','นายภาคภูมิ แก้วกล้า','นายประมวล เก่งงาน'], ages:[60,54,73,66,49,58,44,69] },
+        'Ward 6A': { hnPrefix:'6461', names:['นางสาววารี มองชัด','นายธีรเดช ตาดี','นางสมพร แสงแก้ว','นายณัฐพล ใจสว่าง','นางสาวชลธิชา ฟ้าใส','นายศุภชัย เห็นดี','นางอัมพร สุขตา','นายก้องภพ ประกาย'], ages:[46,57,68,42,35,63,71,50] },
+        'Ward 7A': { hnPrefix:'6471', names:['นายธนา เสียงใส','นางสาวเบญจพร ฟังดี','นายรณชัย หายใจคล่อง','นางกมลวรรณ พูดชัด','นายทศพล คอแข็ง','นางสาวธิดารัตน์ จมูกดี','นายวิศรุต คล่องเสียง','นางเพ็ญศรี ใจเย็น'], ages:[39,45,52,48,61,34,44,69] },
+        'ICU': { hnPrefix:'6490', names:['นายวรเมธ วิกฤตดี','นางสาวศิริพร เฝ้าระวัง','นายกฤษฎา ชีพจร','นางละออง หายใจดี','นายภาณุวัฒน์ ความดัน','นางสาวณิชา ฟื้นตัว','นายสมบัติ ออกซิเจน','นางวาสนา ใจสู้'], ages:[66,41,58,72,64,37,70,55] },
+        'ER': { hnPrefix:'6480', names:['นายเอกพล เร่งด่วน','นางสาวปวีณา ฉับไว','นายสิทธิชัย อุบัติเหตุ','นางรจนา เจ็บแน่น','นายพงษ์เทพ ด่วนมาก','ด.ช.ต้นกล้า เล่นซน','นางสาวมาริสา ปวดท้อง','นายณรงค์ชัย ใจเร็ว'], ages:[36,29,47,52,40,8,33,61] }
+    };
+
+    function makeWardPatientData(wardName, profile) {
+        const keys = ['01','02','03','05','08','10','12','15'];
+        const wardPrefix = wardName.replace(/^Ward\s+/,'');
+        const allergies = ['', 'แพ้ยา: Aspirin', '', 'แพ้ยา: NSAIDs', '', '', 'แพ้ยา: Codeine', ''];
+        const tagSets = [[], ['Drug Allergy'], ['Fall Risk'], ['Fall Risk','Drug Allergy'], [], [], ['Drug Allergy'], ['Fall Risk']];
+        const rounds = ['รอบเช้า','รอบเช้า','รอบเช้า','รอบเช้า','รอบเช้า','รอบเช้า','รอบเที่ยง','รอบเที่ยง'];
+        return keys.reduce(function(acc, key, idx) {
+            const name = profile.names[idx] || ('ผู้ป่วย ' + wardName + '-' + key);
+            const gender = patientGenderFromName(name);
+            const age = profile.ages[idx] || (gender === 'หญิง' ? 45 : 58);
+            acc[key] = {
+                avatar: patientInitials(name),
+                name: name,
+                hn: profile.hnPrefix + String(idx + 1).padStart(3, '0'),
+                bed: wardPrefix + '-' + key,
+                age: gender + ', ' + age + ' ปี',
+                allergy: allergies[idx],
+                round: rounds[idx],
+                tags: cloneWardData(tagSets[idx]),
+                drugs: cloneWardData(wardDrugSets[idx])
+            };
+            return acc;
+        }, {});
+    }
+
+    const wardPatientDataTemplates = { 'Ward 3A': cloneWardData(patientData) };
+    Object.keys(wardPatientProfiles).forEach(function(wardName) {
+        wardPatientDataTemplates[wardName] = makeWardPatientData(wardName, wardPatientProfiles[wardName]);
+    });
+
     let currentPatientBed = '01';
 
     function goToPatientDrugs(bedNum) {
@@ -13018,12 +13300,50 @@
     /* ── Drawer / Cassette selection (shared for both pages) ── */
     let ptdSelectedDrawer = 0;
     let ptdSelectedCass = 0;
+    let ptdSelectedMode = null;
+
+    const cassetteModeConfig = {
+        patient: {
+            label: 'จัดตามผู้ป่วย',
+            short: 'ผู้ป่วย',
+            dashboardLabel: 'By Patient',
+            mapLabel: 'By Pt',
+            className: 'mode-patient',
+            chip: 'Patient',
+            chipBg: 'linear-gradient(135deg,var(--green),#14B8A6)',
+            statusBg: 'var(--green-light)',
+            statusColor: 'var(--green)'
+        },
+        medication: {
+            label: 'จัดตามรายการยา',
+            short: 'รายการยา',
+            dashboardLabel: 'By Item',
+            mapLabel: 'By Item',
+            className: 'mode-medication',
+            chip: 'Item',
+            chipBg: 'linear-gradient(135deg,#2563EB,#3B82F6)',
+            statusBg: '#DBEAFE',
+            statusColor: '#2563EB'
+        },
+        schedule: {
+            label: 'จัดตามรอบเวลา',
+            short: 'รอบเวลา',
+            dashboardLabel: 'By Round',
+            mapLabel: 'By Round',
+            className: 'mode-schedule',
+            chip: 'Round',
+            chipBg: 'linear-gradient(135deg,#7C3AED,#A78BFA)',
+            statusBg: '#EDE9FE',
+            statusColor: '#7C3AED'
+        }
+    };
+    const cassetteModeLocks = {};
 
     // Map page IDs to their element IDs
     const hwPageMap = {
-        'pg-prep-pt-drugs': { status:'ptdHwStatus', cassArea:'ptdCassArea', summary:'ptdSelSummary', sumText:'ptdSelText', startBtn:'ptDrugStartBtn' },
-        'pg-prep-med-detail': { status:'mdHwStatus', cassArea:'mdCassArea', summary:'mdSelSummary', sumText:'mdSelText', startBtn:'mdStartBtn' },
-        'pg-sched-detail': { status:'trfHwStatus', cassArea:null, summary:'trfSelSummary', sumText:'trfSelText', startBtn:null }
+        'pg-prep-pt-drugs': { status:'ptdHwStatus', cassArea:'ptdCassArea', summary:'ptdSelSummary', sumText:'ptdSelText', startBtn:'ptDrugStartBtn', mode:'patient' },
+        'pg-prep-med-detail': { status:'mdHwStatus', cassArea:'mdCassArea', summary:'mdSelSummary', sumText:'mdSelText', startBtn:'mdStartBtn', mode:'medication' },
+        'pg-sched-detail': { status:'trfHwStatus', cassArea:null, summary:'trfSelSummary', sumText:'trfSelText', startBtn:null, mode:'schedule' }
     };
 
     function getHwIds(el) {
@@ -13033,9 +13353,112 @@
         return { page, ids: hwPageMap[pageId] || null };
     }
 
+    function ptdCassetteKey(drawer, cass) {
+        return drawer + ':' + cass;
+    }
+
+    function ptdCassetteNum(slot) {
+        const num = slot.querySelector('.ptd-cass-num');
+        return num ? parseInt(num.textContent, 10) : NaN;
+    }
+
+    function ptdSetStartEnabled(page, ids, enabled) {
+        if (ids && ids.startBtn) {
+            const btn = document.getElementById(ids.startBtn);
+            if (btn) {
+                btn.disabled = !enabled;
+                btn.style.opacity = enabled ? '1' : '0.4';
+                btn.style.cursor = enabled ? 'pointer' : 'not-allowed';
+            }
+        }
+        page.querySelectorAll('.ptd-actions .btn-primary').forEach(btn => {
+            btn.disabled = !enabled;
+            btn.style.opacity = enabled ? '1' : '0.4';
+            btn.style.cursor = enabled ? 'pointer' : 'not-allowed';
+        });
+    }
+
+    function ptdSetHardwareStatus(ids, text, bg, color) {
+        if (!ids || !ids.status) return;
+        const status = document.getElementById(ids.status);
+        if (!status) return;
+        status.textContent = text;
+        status.style.background = bg || '#DBEAFE';
+        status.style.color = color || '#2563EB';
+    }
+
+    function ptdClearCassetteSelection(page, ids) {
+        page.querySelectorAll('.ptd-cass-slot').forEach(slot => slot.classList.remove('selected'));
+        if (ids && ids.summary) {
+            const summary = document.getElementById(ids.summary);
+            if (summary) summary.style.display = 'none';
+        }
+        ptdSetStartEnabled(page, ids, false);
+    }
+
+    function ptdSyncCassetteModeUI(page, drawerNum) {
+        const ids = hwPageMap[page.id] || null;
+        const pageMode = ids ? ids.mode : null;
+        page.querySelectorAll('.ptd-cass-slot').forEach(slot => {
+            if (slot.classList.contains('occupied')) return;
+            const cassNum = ptdCassetteNum(slot);
+            if (!Number.isFinite(cassNum)) return;
+            const lock = cassetteModeLocks[ptdCassetteKey(drawerNum, cassNum)];
+            slot.classList.remove('mode-patient', 'mode-medication', 'mode-schedule', 'locked-other');
+            const oldChip = slot.querySelector('.ptd-cass-mode-chip');
+            if (oldChip) oldChip.remove();
+
+            const status = slot.querySelector('.ptd-cass-status');
+            if (!lock) {
+                if (status) status.textContent = 'พร้อมเติมยา';
+                return;
+            }
+
+            const cfg = cassetteModeConfig[lock.mode];
+            if (!cfg) return;
+            slot.classList.add(cfg.className);
+            if (lock.mode !== pageMode) slot.classList.add('locked-other');
+            if (status) status.textContent = 'ใช้: ' + cfg.short;
+
+            const chip = document.createElement('span');
+            chip.className = 'ptd-cass-mode-chip';
+            chip.textContent = cfg.chip;
+            chip.style.background = cfg.chipBg;
+            slot.appendChild(chip);
+        });
+    }
+
+    function resetCassetteModeLocks() {
+        Object.keys(cassetteModeLocks).forEach(key => delete cassetteModeLocks[key]);
+        ptdSelectedDrawer = 0;
+        ptdSelectedCass = 0;
+        ptdSelectedMode = null;
+        Object.entries(hwPageMap).forEach(([pageId, ids]) => {
+            const page = document.getElementById(pageId);
+            if (!page) return;
+            page.querySelectorAll('.ptd-drawer-slot').forEach(slot => slot.classList.remove('selected'));
+            page.querySelectorAll('.ptd-cass-area').forEach(area => area.classList.add('disabled'));
+            if (ids.summary) {
+                const summary = document.getElementById(ids.summary);
+                if (summary) summary.style.display = 'none';
+            }
+            ptdSetHardwareStatus(ids, 'ยังไม่ได้เลือก', '#F1F5F9', 'var(--text-3)');
+            ptdSetStartEnabled(page, ids, false);
+        });
+        document.querySelectorAll('.ptd-cass-slot').forEach(slot => {
+            slot.classList.remove('selected', 'mode-patient', 'mode-medication', 'mode-schedule', 'locked-other');
+            const chip = slot.querySelector('.ptd-cass-mode-chip');
+            if (chip) chip.remove();
+            const status = slot.querySelector('.ptd-cass-status');
+            if (status && !slot.classList.contains('occupied')) status.textContent = 'พร้อมเติมยา';
+        });
+        if (typeof renderDashboardCassettePanel === 'function') renderDashboardCassettePanel();
+    }
+
     function ptdSelectDrawer(el, num) {
         ptdSelectedDrawer = num;
         ptdSelectedCass = 0;
+        ptdSelectedMode = null;
         const { page, ids } = getHwIds(el);
         if (!page) return;
         // highlight drawer
@@ -13045,41 +13468,62 @@
         page.querySelectorAll('.ptd-cass-area').forEach(a => a.classList.remove('disabled'));
         // reset cassette selection
         page.querySelectorAll('.ptd-cass-slot').forEach(c => c.classList.remove('selected'));
+        ptdSyncCassetteModeUI(page, num);
         // update status
-        if (ids && ids.status) {
-            const s = document.getElementById(ids.status);
-            if (s) { s.textContent = 'ชั้น ' + num + ' · เลือก Cassette'; s.style.background = '#DBEAFE'; s.style.color = '#2563EB'; }
-        }
+        const modeLabel = ids && ids.mode && cassetteModeConfig[ids.mode] ? 'สำหรับ' + cassetteModeConfig[ids.mode].label : '';
+        ptdSetHardwareStatus(ids, 'ชั้น ' + num + ' · เลือก Cassette ' + modeLabel, '#DBEAFE', '#2563EB');
         // hide summary & disable start
         if (ids && ids.summary) { const s = document.getElementById(ids.summary); if (s) s.style.display = 'none'; }
-        if (ids && ids.startBtn) { const b = document.getElementById(ids.startBtn); if (b) { b.disabled = true; b.style.opacity = '0.4'; b.style.cursor = 'not-allowed'; } }
-        // Also try generic fallback for sched-detail
-        page.querySelectorAll('.ptd-actions .btn-primary').forEach(b => { b.disabled = true; b.style.opacity = '0.4'; b.style.cursor = 'not-allowed'; });
+        ptdSetStartEnabled(page, ids, false);
     }
 
     function ptdSelectCass(el, num) {
         if (ptdSelectedDrawer === 0) return;
-        ptdSelectedCass = num;
         const { page, ids } = getHwIds(el);
         if (!page) return;
+        const mode = ids ? ids.mode : null;
+        const cfg = cassetteModeConfig[mode] || null;
+        const key = ptdCassetteKey(ptdSelectedDrawer, num);
+        const existingLock = cassetteModeLocks[key];
+
+        if (existingLock && mode && existingLock.mode !== mode) {
+            const lockCfg = cassetteModeConfig[existingLock.mode] || { label: 'โหมดอื่น' };
+            ptdSelectedCass = 0;
+            ptdSelectedMode = null;
+            ptdClearCassetteSelection(page, ids);
+            ptdSyncCassetteModeUI(page, ptdSelectedDrawer);
+            ptdSetHardwareStatus(ids, 'Cassette ' + num + ' ถูกใช้สำหรับ' + lockCfg.label, '#FEE2E2', '#B91C1C');
+            showToast('Cassette ' + num + ' ถูกกำหนดไว้สำหรับ' + lockCfg.label + ' แล้ว');
+            setTimeout(() => showToast(''), 2200);
+            return;
+        }
+
+        ptdSelectedCass = num;
+        ptdSelectedMode = mode;
+        if (mode && !existingLock) {
+            cassetteModeLocks[key] = {
+                mode: mode,
+                drawer: ptdSelectedDrawer,
+                cassette: num,
+                ward: currentWardName || 'Ward 3A'
+            };
+        }
+
+        ptdSyncCassetteModeUI(page, ptdSelectedDrawer);
         // highlight cassette
         page.querySelectorAll('.ptd-cass-slot').forEach(c => c.classList.remove('selected'));
         el.classList.add('selected');
         // update status
-        if (ids && ids.status) {
-            const s = document.getElementById(ids.status);
-            if (s) { s.textContent = 'ชั้น ' + ptdSelectedDrawer + ' · Cassette ' + num; s.style.background = 'var(--green-light)'; s.style.color = 'var(--green)'; }
-        }
+        const statusText = 'ชั้น ' + ptdSelectedDrawer + ' · Cassette ' + num + (cfg ? ' · ' + cfg.label : '');
+        ptdSetHardwareStatus(ids, statusText, cfg ? cfg.statusBg : 'var(--green-light)', cfg ? cfg.statusColor : 'var(--green)');
         // show summary
         if (ids && ids.summary) { const s = document.getElementById(ids.summary); if (s) s.style.display = 'flex'; }
-        if (ids && ids.sumText) { const t = document.getElementById(ids.sumText); if (t) t.textContent = 'เลือกแล้ว: ชั้น ' + ptdSelectedDrawer + ' · Cassette ' + num; }
-        // enable start button by ID
-        if (ids && ids.startBtn) {
-            const b = document.getElementById(ids.startBtn);
-            if (b) { b.disabled = false; b.style.opacity = '1'; b.style.cursor = 'pointer'; }
+        if (ids && ids.sumText) {
+            const t = document.getElementById(ids.sumText);
+            if (t) t.textContent = 'เลือกแล้ว: ชั้น ' + ptdSelectedDrawer + ' · Cassette ' + num + (cfg ? ' · ' + cfg.label : '');
         }
-        // Also enable via generic selector as fallback
-        page.querySelectorAll('.ptd-actions .btn-primary').forEach(b => { b.disabled = false; b.style.opacity = '1'; b.style.cursor = 'pointer'; });
+        ptdSetStartEnabled(page, ids, true);
+        renderDashboardCassettePanel();
     }
 
     function hexToRgb(hex) {
@@ -13408,7 +13852,7 @@
         }).join('');
 
         // Dest head
-        document.querySelector('.ibf-dest-head').textContent = 'ปลายทาง (' + drug.patients.length + ' ผู้ป่วย)';
+        document.querySelector('.ibf-dest-head').textContent = 'ข้อมูลคนไข้ปลายทาง (' + drug.patients.length + ' ราย)';
 
         // Reset summary button
         const sumBtn = document.getElementById('ibfBtnSummary');
@@ -13478,7 +13922,7 @@
                 if (!items[i].classList.contains('done') && !items[i].classList.contains('scanned')) { scanIdx = i; break; }
             }
         }
-        if (scanIdx === -1) { showToast('สแกนครบทุกปลายทางแล้ว'); setTimeout(() => showToast(''), 1500); return; }
+        if (scanIdx === -1) { showToast('สแกนข้อมูลคนไข้ครบทุกคนแล้ว'); setTimeout(() => showToast(''), 1500); return; }
 
         // Check drug interaction — ibf is single drug to multiple patients, no self-interaction needed
         // (interaction check not applicable for item-based since it's same drug)
@@ -13518,7 +13962,7 @@
         document.getElementById('ibfBtnConfirm').style.cursor = 'pointer';
 
         const patient = drug ? drug.patients[scanIdx] : null;
-        showToast('สแกน ' + ibfDrugName + ' สำหรับ ' + (patient ? patient.name : '') + ' (' + ibfScannedSet.size + '/' + (drug ? drug.patients.length : '?') + ')');
+        showToast('สแกนข้อมูลคนไข้ ' + (patient ? patient.name : '') + ' เพื่อจัด ' + ibfDrugName + ' ลงช่อง (' + ibfScannedSet.size + '/' + (drug ? drug.patients.length : '?') + ')');
         setTimeout(() => showToast(''), 1500);
     }
 
@@ -13529,16 +13973,16 @@
         if (ibfScannedSet.size === 0) { container.style.display = 'none'; return; }
         container.style.display = '';
         let html = '<div class="pf-result-head" style="background:linear-gradient(135deg,#EFF6FF,#DBEAFE);border-bottom-color:rgba(59,130,246,0.1);">'
-            + '<span class="pf-result-badge" style="background:linear-gradient(135deg,#DBEAFE,#BFDBFE);color:#2563EB;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg> สแกนแล้ว ' + ibfScannedSet.size + ' รายการ</span>'
-            + '<span class="pf-result-name">พร้อมยืนยันเข้าช่อง</span></div>';
+            + '<span class="pf-result-badge" style="background:linear-gradient(135deg,#DBEAFE,#BFDBFE);color:#2563EB;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg> สแกนข้อมูลคนไข้แล้ว ' + ibfScannedSet.size + ' ราย</span>'
+            + '<span class="pf-result-name">พร้อมยืนยันจัดยาลงช่อง</span></div>';
         html += '<div style="padding:12px 16px;display:flex;flex-direction:column;gap:6px;">';
         ibfScannedSet.forEach(idx => {
             const p = drug ? drug.patients[idx] : null;
             html += '<div style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:linear-gradient(135deg,#EFF6FF,#DBEAFE);border:1px solid rgba(59,130,246,0.12);border-radius:10px;">'
                 + '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>'
                 + '<div style="flex:1;"><div style="font-size:13px;font-weight:700;color:var(--text-1);">' + (p ? p.name : '') + '</div>'
-                + '<div style="font-size:10px;color:var(--text-3);">' + (p ? p.bed + ' · ' + p.qty + ' ' + p.unit : '') + ' · Lot: ' + lotInfo.lot + '</div></div>'
-                + '<span style="font-size:10px;font-weight:700;color:#2563EB;">ตรงกัน</span>'
+                + '<div style="font-size:10px;color:var(--text-3);">' + (p ? p.bed + ' · ' + p.slot + ' · ' + p.qty + ' ' + p.unit : '') + ' · Lot: ' + lotInfo.lot + '</div></div>'
+                + '<span style="font-size:10px;font-weight:700;color:#2563EB;">คนไข้ตรงกัน</span>'
                 + '</div>';
         });
         html += '</div>';
@@ -13574,9 +14018,9 @@
             sumBtn.disabled = false; sumBtn.style.opacity = '1'; sumBtn.style.cursor = 'pointer';
         }
         if (ibfDoneCount >= ibfTotalQty) {
-            showToast('จัดยาครบทุกปลายทางแล้ว — ไปหน้าสรุปผลได้');
+            showToast('จัดยาครบทุกคนไข้ปลายทางแล้ว — ไปหน้าสรุปผลได้');
         } else {
-            showToast('ยืนยัน ' + ibfDoneCount + '/' + ibfTotalQty + ' — สแกนปลายทางถัดไปได้เลย');
+            showToast('ยืนยัน ' + ibfDoneCount + '/' + ibfTotalQty + ' — สแกนข้อมูลคนไข้ถัดไปได้เลย');
         }
         setTimeout(() => showToast(''), 2000);
     }
@@ -13599,10 +14043,10 @@
             + '<span class="fill-ctx-chip">รหัส: <strong>' + drug.code + '</strong></span>'
             + '<span class="fill-ctx-chip">' + drug.form + ' · <strong>' + drug.route + '</strong></span>'
             + '<span class="fill-ctx-chip">ชั้น / Cassette: <strong>' + ptdSelectedDrawer + ' / ' + ptdSelectedCass + '</strong></span>'
-            + '<span class="fill-ctx-chip">ประเภท: <strong>ตามรายการยา</strong></span>';
+            + '<span class="fill-ctx-chip">ประเภท: <strong>ตามข้อมูลคนไข้ปลายทาง</strong></span>';
 
         document.getElementById('sumStats').innerHTML =
-            '<div class="ss"><div class="ss-num blue">' + total + '</div><div class="ss-label">ปลายทางทั้งหมด</div></div>'
+            '<div class="ss"><div class="ss-num blue">' + total + '</div><div class="ss-label">คนไข้ปลายทาง</div></div>'
             + '<div class="ss"><div class="ss-num green">' + doneCount + '</div><div class="ss-label">จัดครบแล้ว</div></div>'
             + '<div class="ss"><div class="ss-num amber">' + notDone + '</div><div class="ss-label">ยังไม่จัด</div></div>'
             + '<div class="ss"><div class="ss-num red">0</div><div class="ss-label">มีปัญหา</div></div>';
@@ -13611,7 +14055,7 @@
             '<div class="sp-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>'
             + '<div class="sp-bar-wrap"><div class="sp-label-row"><span class="sp-label">ความคืบหน้า</span><span class="sp-pct">' + pct + '%</span></div><div class="sp-track"><div class="sp-fill" style="width:' + pct + '%"></div></div></div>';
 
-        var tableHtml = '<div class="sum-table-head"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg> จัดยา ' + ibfDrugName + ' — รายปลายทาง</div>';
+        var tableHtml = '<div class="sum-table-head"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg> จัดยา ' + ibfDrugName + ' — รายคนไข้</div>';
         tableHtml += '<div class="st-row header-row"><div>ผู้ป่วย</div><div style="text-align:center">จำนวน</div><div style="text-align:center">Lot / Expiry</div><div style="text-align:center">Slot</div><div style="text-align:center">สถานะ</div></div>';
         patients.forEach(function(p, i) {
             var isDone = doneFlags[i] || false;
@@ -14221,22 +14665,33 @@
         const ward = document.getElementById('dashWard').textContent;
         document.getElementById('dispWardHdr').textContent = ward;
         document.getElementById('dispWardChip').textContent = ward.replace('Ward ','');
+        renderDispenseList();
         nav('pg-dispense');
     }
 
     function filterPt() {
         const q = document.getElementById('ptSearch').value.trim().toLowerCase();
+        const activeFilter = document.querySelector('.disp-toolbar .filter-btn.active');
+        const filterText = activeFilter ? activeFilter.textContent : 'ทั้งหมด';
         document.querySelectorAll('#ptList .pt-card').forEach(c => {
             const name = (c.dataset.name || '').toLowerCase();
             const hn   = (c.dataset.hn   || '').toLowerCase();
             const bed  = (c.dataset.bed  || '').toLowerCase();
-            c.style.display = (!q || name.includes(q) || hn.includes(q) || bed.includes(q)) ? '' : 'none';
+            const status = c.dataset.status || '';
+            const tags = c.dataset.tags || '';
+            const matchSearch = !q || name.includes(q) || hn.includes(q) || bed.includes(q);
+            let matchFilter = true;
+            if (filterText.includes('รอจ่าย')) matchFilter = status !== 'done';
+            else if (filterText.includes('เกินเวลา')) matchFilter = status === 'overdue';
+            else if (filterText.includes('STAT') || filterText.includes('PRN')) matchFilter = tags.includes('stat') || tags.includes('prn');
+            c.style.display = (matchSearch && matchFilter) ? '' : 'none';
         });
     }
 
     function toggleFilter(el) {
         document.querySelectorAll('.disp-toolbar .filter-btn').forEach(b => b.classList.remove('active'));
         el.classList.add('active');
+        filterPt();
     }
 
     /* ── Overdue flow (Page 24) ── */
@@ -14602,6 +15057,12 @@
     function prnRenderList() {
         var svgOk = '<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>';
         var svgWait = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>';
+        document.querySelectorAll('[id^="prnPtCard"]').forEach(function(card, i) {
+            card.style.display = i < prnPatients.length ? '' : 'none';
+            card.style.opacity = '';
+            card.style.pointerEvents = '';
+            card.onclick = function() { prnSelectPt(i); };
+        });
         prnPatients.forEach(function(p, i) {
             var card = document.getElementById('prnPtCard'+i);
             if (!card) return;
@@ -14631,6 +15092,10 @@
                 var bar = document.getElementById('prnPtBar'+i);
                 if (bar) bar.style.background = 'var(--text-3)';
                 document.getElementById('prnPtCount'+i).style.color = 'var(--text-3)';
+            } else {
+                var okBar = document.getElementById('prnPtBar'+i);
+                if (okBar) okBar.style.background = '';
+                document.getElementById('prnPtCount'+i).style.color = '';
             }
         });
     }
@@ -15485,6 +15950,726 @@
         document.getElementById('rtBtnConfirmDrug').disabled = true;
     }
 
+    /* ── Legacy dispense pages: bind static screens to shared patient/drug data ── */
+    const legacyDispenseOrder = ['10','03','01','02','05','08','12','15'];
+    let currentLegacyDispenseBed = '01';
+    let currentLegacyDrugIdx = 0;
+    let legacyWitnessVerified = false;
+    let legacyLastGivenTime = '08:15 น.';
+    let assessmentListCache = [];
+
+    function escHtml(value) {
+        return String(value ?? '').replace(/[&<>"']/g, function(ch) {
+            return ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' })[ch];
+        });
+    }
+
+    function parseDrugDesc(desc) {
+        const parts = String(desc || '').split('·').map(function(p) { return p.trim(); });
+        return { dose: parts[0] || '—', route: parts[1] || 'PO', schedule: parts[2] || 'รอบเช้า' };
+    }
+
+    function getDispensePatientKeys() {
+        const seen = new Set();
+        const keys = [];
+        legacyDispenseOrder.forEach(function(key) {
+            if (patientData[key]) { seen.add(key); keys.push(key); }
+        });
+        Object.keys(patientData).forEach(function(key) {
+            if (!seen.has(key)) keys.push(key);
+        });
+        return keys;
+    }
+
+    function getLegacyPatient() {
+        return patientData[currentLegacyDispenseBed] || patientData['01'];
+    }
+
+    function getLegacyDrugs() {
+        const pt = getLegacyPatient();
+        return (pt && pt.drugs) ? pt.drugs : [];
+    }
+
+    function getLegacyDrug(idx) {
+        const drugs = getLegacyDrugs();
+        return drugs[idx ?? currentLegacyDrugIdx] || drugs[0] || {};
+    }
+
+    function isLegacyHighAlertDrug(drug) {
+        return !!(drug && (drug.highAlert || isHighAlertDrug(drug.name || '')));
+    }
+
+    function legacyRouteFull(routeShort) {
+        const map = {
+            PO: 'PO (รับประทาน)',
+            SC: 'SC (ฉีดใต้ผิวหนัง)',
+            IV: 'IV (หลอดเลือดดำ)',
+            IM: 'IM (ฉีดเข้ากล้ามเนื้อ)'
+        };
+        return map[routeShort] || routeShort || '—';
+    }
+
+    function legacyRoundTime(pt, drug) {
+        const parsed = parseDrugDesc(drug && drug.desc);
+        const text = (parsed.schedule + ' ' + (pt && pt.round || '')).toLowerCase();
+        if (text.includes('prn')) return 'PRN';
+        if (text.includes('เที่ยง')) return '12:00';
+        if (text.includes('เย็น')) return '18:00';
+        if (text.includes('ก่อนนอน')) return '21:00';
+        return '08:00';
+    }
+
+    function legacyDrugView(drug, pt, idx) {
+        const parsed = parseDrugDesc(drug.desc);
+        const routeShort = parsed.route || 'PO';
+        const lotInfo = drugLotMap[drug.name] || { lot:'N/A', exp:'N/A' };
+        const highAlert = isLegacyHighAlertDrug(drug);
+        const isPrn = /prn/i.test((drug.desc || '') + ' ' + parsed.schedule);
+        return {
+            name: drug.name || '—',
+            dose: parsed.dose || '—',
+            routeShort: routeShort,
+            routeFull: legacyRouteFull(routeShort),
+            time: legacyRoundTime(pt, drug),
+            freq: parsed.schedule || (pt && pt.round) || '—',
+            detail: routeShort + ' · ' + (parsed.dose || '—'),
+            lot: lotInfo.lot,
+            exp: lotInfo.exp,
+            highAlert: highAlert,
+            isPrn: isPrn,
+            done: !!drug.done,
+            statusClass: drug.done ? 'done' : 'wait',
+            statusText: drug.done ? 'ให้แล้ว' : 'รอให้ยา',
+            typeText: isPrn ? 'PRN' : (highAlert ? 'High Alert' : 'Routine'),
+            idx: idx
+        };
+    }
+
+    function legacyPatientMeta(pt) {
+        return [pt.hn, pt.bed].filter(Boolean).join(' · ');
+    }
+
+    function legacyAgeText(pt) {
+        return (pt.age || '').replace(',', '');
+    }
+
+    function legacyWarnTagsHtml(pt, includeHighAlert) {
+        const tags = (pt.tags || []).slice();
+        if (includeHighAlert && !tags.includes('High Alert Drug')) tags.push('High Alert Drug');
+        if (!tags.length && !pt.allergy) return '';
+        return tags.map(function(t) {
+            const cls = t === 'Fall Risk' ? 'fall' : t.includes('High Alert') ? 'halert' : 'allergy';
+            return '<span class="pd-warn-tag ' + cls + '">' + escHtml(t) + '</span>';
+        }).join('');
+    }
+
+    function legacySummaryGridHtml(entries) {
+        return entries.map(function(item) {
+            const valueClass = item.className ? ' ' + item.className : '';
+            const style = item.style ? ' style="' + item.style + '"' : '';
+            const id = item.id ? ' id="' + escHtml(item.id) + '"' : '';
+            return '<div><div class="wit-ml">' + escHtml(item.label) + '</div><div class="wit-mv' + valueClass + '"' + id + style + '>' + escHtml(item.value) + '</div></div>';
+        }).join('');
+    }
+
+    function setLegacyDispensePatient(bedNum) {
+        currentLegacyDispenseBed = patientData[bedNum] ? bedNum : '01';
+        const pendingIdx = getLegacyDrugs().findIndex(function(d) { return !d.done; });
+        currentLegacyDrugIdx = pendingIdx >= 0 ? pendingIdx : 0;
+        legacyWitnessVerified = false;
+        renderLegacyDispensePages();
+    }
+
+    function openDispensePatient(bedNum) {
+        setLegacyDispensePatient(bedNum);
+        resetScanPt();
+        resetWitness();
+        nav('pg-pt-detail');
+    }
+
+    function renderDispenseList() {
+        const list = document.getElementById('ptList');
+        if (!list) return;
+        const keys = getDispensePatientKeys();
+        list.innerHTML = keys.map(function(key) {
+            const pt = patientData[key];
+            const drugs = pt.drugs || [];
+            const pending = drugs.filter(function(d) { return !d.done; }).length;
+            const highAlert = drugs.some(isLegacyHighAlertDrug);
+            const prn = drugs.some(function(d) { return /prn/i.test(d.desc || ''); });
+            const time = drugs[0] ? legacyRoundTime(pt, drugs[0]) : '—';
+            const urgency = pending === 0 ? 'normal' : highAlert ? 'stat' : (key === '03' || key === '02') ? 'soon' : 'normal';
+            const statusClass = pending === 0 ? 'waiting' : (key === '03' || key === '02') ? 'soon' : 'waiting';
+            const statusText = pending === 0 ? 'จ่ายครบแล้ว' : (key === '03' || key === '02') ? 'ใกล้ถึงเวลา' : 'รอจ่าย';
+            const tags = [];
+            if (highAlert) tags.push('high-alert');
+            if (prn) tags.push('prn');
+            if (!tags.length) tags.push('normal');
+            const badges = tags.map(function(tag) {
+                const label = tag === 'high-alert' ? 'High Alert' : tag === 'prn' ? 'PRN' : 'ปกติ';
+                return '<span class="pt-badge ' + tag + '">' + label + '</span>';
+            }).join('');
+            return '<div class="pt-card" onclick="openDispensePatient(\'' + escHtml(key) + '\')" data-name="' + escHtml(pt.name) + '" data-hn="' + escHtml(pt.hn) + '" data-bed="' + escHtml(pt.bed) + '" data-status="' + (pending === 0 ? 'done' : statusClass) + '" data-tags="' + tags.join(' ') + '">'
+                + '<div class="pt-urgency ' + urgency + '"></div>'
+                + '<div class="pt-info">'
+                + '<div class="pt-name">' + escHtml(pt.name) + '</div>'
+                + '<div class="pt-hn">HN: ' + escHtml(pt.hn) + ' &nbsp;·&nbsp; เตียง ' + escHtml(pt.bed) + '</div>'
+                + '<div class="pt-badges">' + badges + '</div>'
+                + '</div>'
+                + '<div class="pt-meta">'
+                + '<div class="pt-time">' + escHtml(time) + '</div>'
+                + '<div class="pt-time-label">' + escHtml(pt.round || 'รอบยา') + '</div>'
+                + '<span class="pt-status-pill ' + statusClass + '"><span class="dot"></span> ' + statusText + '</span>'
+                + '<div class="pt-drugs"><strong>' + (pending || drugs.length) + '</strong>/' + drugs.length + ' รายการยา</div>'
+                + '</div>'
+                + '<svg class="pt-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>'
+                + '</div>';
+        }).join('');
+
+        const strip = document.querySelectorAll('#pg-dispense .disp-strip .ds-chip');
+        if (strip[3]) strip[3].innerHTML = 'ผู้ป่วยรอบนี้: <strong>' + keys.length + '</strong> ราย';
+        if (strip[4]) {
+            const pending = keys.reduce(function(sum, key) {
+                return sum + (patientData[key].drugs || []).filter(function(d) { return !d.done; }).length;
+            }, 0);
+            strip[4].innerHTML = 'ค้าง / รอจ่าย: <strong>' + pending + '</strong> รายการ';
+        }
+        filterPt();
+    }
+
+    function renderPatientDetailPage() {
+        const pt = getLegacyPatient();
+        const drugs = getLegacyDrugs();
+        const views = drugs.map(function(d, idx) { return legacyDrugView(d, pt, idx); });
+        const pending = views.filter(function(d) { return !d.done; }).length;
+        const highAlert = views.some(function(d) { return d.highAlert; });
+
+        const page = document.getElementById('pg-pt-detail');
+        if (!page || !pt) return;
+        const avatar = page.querySelector('.pd-avatar');
+        if (avatar) avatar.textContent = pt.avatar || pt.name.substring(0, 2);
+        const nameEl = page.querySelector('.pd-pt-name');
+        if (nameEl) nameEl.textContent = pt.name;
+        const metaEl = page.querySelector('.pd-pt-meta');
+        const ward = getCurrentWardInfo();
+        if (metaEl) metaEl.innerHTML = '<span>HN: ' + escHtml(pt.hn) + '</span><span>เตียง ' + escHtml(pt.bed) + '</span><span>' + escHtml(pt.age) + '</span><span>' + escHtml(currentWardName) + ' — ' + escHtml(ward.desc) + '</span>';
+        const allergyEl = page.querySelector('.pd-allergy');
+        if (allergyEl) {
+            allergyEl.style.display = pt.allergy ? 'flex' : 'none';
+            if (pt.allergy) allergyEl.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>' + escHtml(pt.allergy);
+        }
+        const warnEl = page.querySelector('.pd-warnings');
+        if (warnEl) {
+            const warnHtml = legacyWarnTagsHtml(pt, highAlert);
+            warnEl.innerHTML = warnHtml;
+            warnEl.style.display = warnHtml ? 'flex' : 'none';
+        }
+        const schedVals = page.querySelectorAll('.pd-sched-val');
+        if (schedVals[0]) schedVals[0].textContent = (views[0] ? views[0].time : '—') + ' น. (' + (pt.round || 'รอบยา').replace('รอบ','') + ')';
+        if (schedVals[1]) schedVals[1].textContent = drugs.length + ' รายการ';
+        if (schedVals[2]) schedVals[2].textContent = String(views.filter(function(d) { return d.done; }).length);
+        if (schedVals[3]) schedVals[3].textContent = String(pending);
+        const schedBadges = page.querySelector('.pd-sched-badges');
+        if (schedBadges) {
+            const normal = views.filter(function(d) { return !d.highAlert && !d.isPrn; }).length;
+            const prn = views.filter(function(d) { return d.isPrn; }).length;
+            const ha = views.filter(function(d) { return d.highAlert; }).length;
+            schedBadges.innerHTML = [
+                normal ? '<span class="pt-badge normal" style="font-size:11px;padding:3px 10px;">ปกติ ' + normal + '</span>' : '',
+                prn ? '<span class="pt-badge prn" style="font-size:11px;padding:3px 10px;">PRN ' + prn + '</span>' : '',
+                ha ? '<span class="pt-badge high-alert" style="font-size:11px;padding:3px 10px;">High Alert ' + ha + '</span>' : ''
+            ].join('');
+        }
+
+        const drugBox = page.querySelector('.pd-drugs');
+        if (drugBox) {
+            const head = '<div class="pd-drugs-head"><div class="pd-drugs-title"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0016.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 002 8.5c0 2.3 1.5 4.05 3 5.5l7 7z"/></svg>รายการยา</div><button class="btn-secondary" style="padding:6px 14px;font-size:12px;width:auto;border-radius:8px;" onclick="showToast(\'เลือกหลายรายการจากข้อมูล dynamic แล้ว\'); setTimeout(()=>showToast(\'\'),1500);">เลือกหลายรายการ</button></div>';
+            drugBox.innerHTML = head + views.map(function(d) {
+                const statusClass = d.done ? 'done' : 'wait';
+                const barClass = d.done ? 'done' : 'waiting';
+                const badges = (d.isPrn ? '<span class="pt-badge prn">PRN</span>' : '') + (d.highAlert ? '<span class="pt-badge high-alert" style="font-size:9px;padding:2px 7px;">High Alert</span>' : '');
+                const warnBadges = d.highAlert ? '<div class="pd-drug-badges"><span class="pt-badge" style="background:#fef2f2;color:#dc2626;font-size:9px;">ต้องมีพยาน</span></div>' : '';
+                return '<div class="pd-drug" onclick="selectLegacyDrugFromDetail(' + d.idx + ')" style="cursor:pointer;' + (d.done ? 'opacity:.7;' : '') + '">'
+                    + '<div class="pd-drug-left ' + barClass + '"></div>'
+                    + '<div class="pd-drug-info"><div class="pd-drug-name">' + escHtml(d.name) + badges + '</div>'
+                    + '<div class="pd-drug-detail">' + escHtml(d.routeShort) + ' · ' + escHtml(d.routeFull.replace(/^[A-Z]+\\s*/, '')) + ' &nbsp;·&nbsp; ' + escHtml(d.freq) + '</div>' + warnBadges + '</div>'
+                    + '<div class="pd-drug-meta"><div class="pd-drug-time">' + escHtml(d.time) + '</div><div class="pd-drug-route">' + escHtml(d.routeShort) + '</div></div>'
+                    + '<span class="pd-drug-status ' + statusClass + '"><span class="dot"></span> ' + escHtml(d.statusText) + '</span>'
+                    + '<button class="pd-drug-btn" onclick="event.stopPropagation();selectLegacyDrugFromDetail(' + d.idx + ');showToast(\'เลือก ' + escHtml(d.name) + '\'); setTimeout(()=>showToast(\'\'),1500);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></button>'
+                    + '</div>';
+            }).join('');
+        }
+        const startBtn = page.querySelector('.pd-actions .btn-primary');
+        if (startBtn) startBtn.onclick = function() { resetScanPt(); nav('pg-scan-pt'); };
+    }
+
+    function renderScanPatientPage() {
+        const pt = getLegacyPatient();
+        const highAlert = getLegacyDrugs().some(isLegacyHighAlertDrug);
+        const page = document.getElementById('pg-scan-pt');
+        if (!page || !pt) return;
+        const avatar = page.querySelector('.spt-avatar');
+        if (avatar) avatar.textContent = pt.avatar || pt.name.substring(0, 2);
+        const nameEl = page.querySelector('.spt-name');
+        if (nameEl) nameEl.textContent = pt.name;
+        const metaEl = page.querySelector('.spt-meta');
+        if (metaEl) metaEl.textContent = 'HN: ' + pt.hn + ' · ' + legacyAgeText(pt) + ' · ' + currentWardName;
+        const warnEl = page.querySelector('.spt-warnings');
+        if (warnEl) {
+            const warnHtml = legacyWarnTagsHtml(pt, highAlert);
+            warnEl.innerHTML = warnHtml;
+            warnEl.style.display = warnHtml ? 'flex' : 'none';
+        }
+        const bedEl = page.querySelector('.spt-bed');
+        if (bedEl) bedEl.textContent = pt.bed;
+        const detail = document.getElementById('sptResultDetail');
+        if (detail) detail.textContent = pt.name + ' · HN: ' + pt.hn + ' · เตียง ' + pt.bed;
+    }
+
+    function selectLegacyDrugFromDetail(idx) {
+        currentLegacyDrugIdx = idx;
+        legacyWitnessVerified = false;
+        renderAdminMedPage(true);
+        nav('pg-admin-med');
+    }
+
+    function renderAdminMedPage(keepResult) {
+        const pt = getLegacyPatient();
+        const drugs = getLegacyDrugs();
+        const page = document.getElementById('pg-admin-med');
+        if (!page || !pt) return;
+        const currentDrug = drugs[currentLegacyDrugIdx] || drugs[0];
+        const currentView = legacyDrugView(currentDrug || {}, pt, currentLegacyDrugIdx);
+
+        const nameEl = page.querySelector('.am-ptbar-name');
+        if (nameEl) nameEl.textContent = pt.name;
+        const metaEl = page.querySelector('.am-ptbar-meta');
+        if (metaEl) metaEl.innerHTML = '<span>HN: ' + escHtml(pt.hn) + '</span><span>เตียง ' + escHtml(pt.bed) + '</span><span>' + escHtml(legacyAgeText(pt)) + '</span>';
+        const warnEl = page.querySelector('.am-ptbar-warn');
+        if (warnEl) {
+            warnEl.style.display = pt.allergy ? '' : 'none';
+            if (pt.allergy) warnEl.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>' + escHtml(pt.allergy);
+        }
+        const timeEl = page.querySelector('.am-ptbar-time');
+        if (timeEl) timeEl.textContent = 'รอบ ' + (currentView.time === 'PRN' ? 'PRN' : currentView.time + ' น.');
+        const head = page.querySelector('.am-col-head');
+        if (head) head.lastChild.textContent = ' รายการยา (' + drugs.length + ')';
+
+        const list = page.querySelector('.am-col-scroll');
+        if (list) {
+            list.innerHTML = drugs.map(function(drug, idx) {
+                const d = legacyDrugView(drug, pt, idx);
+                const active = idx === currentLegacyDrugIdx ? ' active' : '';
+                const disabled = d.done ? ' done' : '';
+                const badges = (d.isPrn ? '<span class="pt-badge prn" style="font-size:9px;padding:1px 6px;">PRN</span>' : '') + (d.highAlert ? '<span class="pt-badge high-alert" style="font-size:8px;padding:1px 5px;">High Alert</span>' : '');
+                return '<div class="am-drug' + active + disabled + '" data-index="' + idx + '" onclick="selectAmDrugByIndex(' + idx + ')" style="' + (d.done ? 'opacity:.6;' : '') + '">'
+                    + '<div class="am-drug-name">' + escHtml(d.name) + ' ' + badges + '</div>'
+                    + '<div class="am-drug-sub">' + escHtml(d.routeShort) + ' · ' + escHtml(d.time) + '</div>'
+                    + '<div class="am-drug-tags"><span class="am-drug-st ' + (d.done ? 'done' : idx === currentLegacyDrugIdx ? 'ready' : 'wait') + '">' + (d.done ? 'ให้แล้ว' : idx === currentLegacyDrugIdx ? 'พร้อมสแกน' : 'ยังไม่สแกน') + '</span></div>'
+                    + '</div>';
+            }).join('');
+        }
+        renderLegacyAdminDrugDetail();
+        if (!keepResult) {
+            const scanResult = document.getElementById('amScanResult');
+            if (scanResult) scanResult.classList.remove('show');
+            const confirmBtn = document.getElementById('btnConfirmAdmin');
+            if (confirmBtn) confirmBtn.disabled = true;
+        }
+        const confirmBtn = document.getElementById('btnConfirmAdmin');
+        if (confirmBtn) confirmBtn.onclick = function() { legacyAdminConfirm(); };
+        renderLegacySummaryPages();
+    }
+
+    function renderLegacyAdminDrugDetail() {
+        const pt = getLegacyPatient();
+        const d = legacyDrugView(getLegacyDrug(), pt, currentLegacyDrugIdx);
+        const nameEl = document.querySelector('#pg-admin-med .am-detail-name');
+        if (nameEl) {
+            const badges = (d.isPrn ? '<span class="pt-badge prn" style="font-size:10px;padding:2px 8px;">PRN</span>' : '') + (d.highAlert ? '<span class="pt-badge high-alert" style="font-size:9px;padding:2px 7px;">High Alert</span>' : '');
+            nameEl.innerHTML = escHtml(d.name) + ' ' + badges;
+        }
+        const grid = document.querySelector('#pg-admin-med .am-detail-grid');
+        if (grid) {
+            grid.innerHTML = '<div><div class="am-dl">ชื่อยาเต็ม</div><div class="am-dv">' + escHtml(d.name) + '</div></div>'
+                + '<div><div class="am-dl">รูปแบบ</div><div class="am-dv">' + escHtml(d.routeShort === 'PO' ? 'ยาเม็ด / แคปซูล' : 'ยาฉีด') + '</div></div>'
+                + '<div><div class="am-dl">Dose สั่ง</div><div class="am-dv green">' + escHtml(d.dose) + '</div></div>'
+                + '<div><div class="am-dl">Route</div><div class="am-dv">' + escHtml(d.routeFull) + '</div></div>'
+                + '<div><div class="am-dl">เวลาให้ยา</div><div class="am-dv">' + escHtml(d.time === 'PRN' ? 'PRN' : d.time + ' น.') + '</div></div>'
+                + '<div><div class="am-dl">Frequency</div><div class="am-dv">' + escHtml(d.freq) + '</div></div>';
+        }
+        const warnBox = document.querySelector('#pg-admin-med .am-warn-box');
+        if (warnBox) {
+            warnBox.style.display = d.highAlert ? 'flex' : 'none';
+            if (d.highAlert) warnBox.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><div><strong>ต้องมีพยาน (Witness required)</strong><br>ยานี้จัดเป็น High Alert Drug — ต้องมีพยาบาลอีก 1 คนร่วมตรวจสอบก่อนให้ยา</div>';
+        }
+        const srName = document.querySelector('#pg-admin-med .am-sr-name');
+        if (srName) srName.textContent = d.name;
+        const srGrid = document.querySelector('#pg-admin-med .am-sr-grid');
+        if (srGrid) {
+            srGrid.innerHTML = '<div><div class="am-sr-l">Barcode</div><div class="am-sr-v">DYN-' + escHtml(String(currentLegacyDrugIdx + 1).padStart(3, '0')) + '</div></div>'
+                + '<div><div class="am-sr-l">จำนวน</div><div class="am-sr-v">' + escHtml(d.dose) + '</div></div>'
+                + '<div><div class="am-sr-l">Lot</div><div class="am-sr-v">' + escHtml(d.lot) + '</div></div>'
+                + '<div><div class="am-sr-l">Expiry</div><div class="am-sr-v">' + escHtml(d.exp) + '</div></div>';
+        }
+    }
+
+    function selectAmDrugByIndex(idx) {
+        const drug = getLegacyDrug(idx);
+        if (!drug || drug.done) return;
+        currentLegacyDrugIdx = idx;
+        legacyWitnessVerified = false;
+        document.querySelectorAll('.am-drug').forEach(function(d) { d.classList.remove('active'); });
+        const active = document.querySelector('.am-drug[data-index="' + idx + '"]');
+        if (active) active.classList.add('active');
+        ['rDrug','rDose','rRoute','rDoc','rReason'].forEach(function(id) {
+            const r = document.getElementById(id);
+            if (r) r.className = 'am-r pend';
+        });
+        const scanResult = document.getElementById('amScanResult');
+        if (scanResult) scanResult.classList.remove('show');
+        const confirmBtn = document.getElementById('btnConfirmAdmin');
+        if (confirmBtn) confirmBtn.disabled = true;
+        renderLegacyAdminDrugDetail();
+        renderLegacySummaryPages();
+    }
+
+    function completeLegacyScanMed() {
+        const d = legacyDrugView(getLegacyDrug(), getLegacyPatient(), currentLegacyDrugIdx);
+        renderLegacyAdminDrugDetail();
+        document.getElementById('amScanResult').classList.add('show');
+        const rights = ['rDrug','rDose','rRoute','rDoc','rReason'];
+        rights.forEach(function(id, i) {
+            setTimeout(function() {
+                const el = document.getElementById(id);
+                if (el) el.className = 'am-r pass';
+            }, i * 80);
+        });
+        setTimeout(function() {
+            document.getElementById('btnConfirmAdmin').disabled = false;
+        }, rights.length * 80);
+        showToast('สแกน ' + d.name + ' สำเร็จ — 7 Rights ผ่านทั้งหมด');
+        setTimeout(function(){ showToast(''); }, 2000);
+    }
+
+    function legacyAdminConfirm(force) {
+        const d = legacyDrugView(getLegacyDrug(), getLegacyPatient(), currentLegacyDrugIdx);
+        if (d.highAlert && !legacyWitnessVerified && !force) {
+            showToast('ต้องสแกนพยานก่อนยืนยันยา High Alert');
+            setTimeout(function(){ showToast(''); }, 2200);
+            renderLegacySummaryPages();
+            nav('pg-witness');
+            return;
+        }
+        legacyLastGivenTime = new Date().toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit'}) + ' น.';
+        renderLegacySummaryPages();
+        nav('pg-record');
+    }
+
+    function renderLegacySummaryPages() {
+        const pt = getLegacyPatient();
+        const d = legacyDrugView(getLegacyDrug(), pt, currentLegacyDrugIdx);
+        const commonEntries = [
+            { label:'ผู้ป่วย', value: pt.name },
+            { label:'HN / เตียง', value: legacyPatientMeta(pt) },
+            { label:'ชื่อยา', value: d.name, className:'green' },
+            { label:'Route / Dose', value: d.routeShort + ' · ' + d.dose },
+            { label:'เวลาเดิม', value: d.time === 'PRN' ? 'PRN' : d.time + ' น.' },
+            { label:'ประเภท', value: d.typeText, style: d.highAlert ? 'color:#dc2626;' : '' }
+        ];
+        const witnessGrid = document.querySelector('#pg-witness .wit-med-grid');
+        if (witnessGrid) witnessGrid.innerHTML = legacySummaryGridHtml([
+            { label:'ผู้ป่วย', value: pt.name },
+            { label:'HN / เตียง', value: legacyPatientMeta(pt) },
+            { label:'ชื่อยา', value: d.name, className:'green' },
+            { label:'Route', value: d.routeFull },
+            { label:'Dose', value: d.dose, className:'green' },
+            { label:'เวลาให้', value: d.time === 'PRN' ? 'PRN' : d.time + ' น.' }
+        ]);
+        const omitGrid = document.querySelector('#pg-omit .omit-med-grid');
+        if (omitGrid) omitGrid.innerHTML = legacySummaryGridHtml(commonEntries);
+        const recGrid = document.querySelector('#pg-record .rec-grid');
+        if (recGrid) recGrid.innerHTML = legacySummaryGridHtml([
+            { label:'ผู้ป่วย', value: pt.name },
+            { label:'HN / เตียง', value: legacyPatientMeta(pt) },
+            { label:'ชื่อยา', value: d.name, className:'green' },
+            { label:'Dose', value: d.dose },
+            { label:'Route', value: d.routeFull },
+            { label:'สถานะ', value: 'ให้ยาแล้ว', className:'green' },
+            { label:'ผู้ให้ยา', value: 'นส.สมใจ ดีมาก (EMP-4821)' },
+            { label:'พยาน', value: d.highAlert ? (legacyWitnessVerified ? 'นส.วรรณา รุ่งเรือง (EMP-3251)' : 'รอสแกนพยาน') : 'ไม่จำเป็น' }
+        ]);
+        const okGrid = document.querySelector('#pg-success .ok-summary-grid');
+        if (okGrid) okGrid.innerHTML = legacySummaryGridHtml([
+            { label:'ผู้ป่วย', value: pt.name },
+            { label:'HN / เตียง', value: legacyPatientMeta(pt) },
+            { label:'ชื่อยา', value: d.name, className:'green' },
+            { label:'สถานะ', value: 'ให้ยาแล้ว', className:'green' },
+            { label:'เวลาให้จริง', value: legacyLastGivenTime },
+            { label:'ผู้บันทึก', value: 'นส.สมใจ ดีมาก' },
+            { label:'พยาน', value: d.highAlert ? (legacyWitnessVerified ? 'นส.วรรณา รุ่งเรือง' : 'รอสแกนพยาน') : 'ไม่จำเป็น' },
+            { label:'บันทึกเมื่อ', value: document.getElementById('okTimestamp')?.textContent || '--', id:'okTimestamp' }
+        ]);
+        const witAction = document.querySelector('#witActions .btn-primary');
+        if (witAction) witAction.onclick = function() { legacyAdminConfirm(true); };
+    }
+
+    function renderLegacyDispensePages() {
+        renderPatientDetailPage();
+        renderScanPatientPage();
+        renderAdminMedPage(false);
+        renderLegacySummaryPages();
+    }
+
+    function getDashboardMetrics() {
+        const keys = getDispensePatientKeys();
+        const drugs = keys.flatMap(function(key) { return patientData[key].drugs || []; });
+        const total = drugs.length;
+        const done = drugs.filter(function(d) { return d.done; }).length;
+        const pending = Math.max(total - done, 0);
+        const highAlert = drugs.filter(isLegacyHighAlertDrug).length;
+        const prn = drugs.filter(function(d) { return /prn/i.test(d.desc || ''); }).length;
+        const percent = total ? Math.round((done / total) * 100) : 0;
+        return { patients: keys.length, total: total, done: done, pending: pending, highAlert: highAlert, prn: prn, percent: percent };
+    }
+
+    function getCurrentDashboardCart() {
+        const info = getCurrentWardInfo();
+        const cartName = info.cart || 'Med Cart A-1';
+        const cartId = cartName.replace(/^Med Cart\s+/,'');
+        let list = [];
+        try { list = cartList || []; } catch (e) { list = []; }
+        const found = list.find(function(c) {
+            return c.name === cartName || c.id === cartId || c.ward === currentWardName;
+        });
+        if (found) return found;
+        const isCritical = /ICU|ER/i.test(currentWardName || '');
+        return {
+            id: cartId,
+            name: cartName,
+            code: 'MC-' + cartId.replace(/[^A-Z0-9]/gi,'').toUpperCase(),
+            ward: currentWardName || 'Ward 3A',
+            wardNote: info.desc,
+            status: 'ready',
+            statusText: 'พร้อมใช้งาน',
+            statusClass: 'online',
+            battery: isCritical ? 95 : 85,
+            battNote: isCritical ? 'กำลังชาร์จ' : 'ใช้งานปกติ',
+            drawers: isCritical ? 8 : 6,
+            cassettes: isCritical ? 32 : 24,
+            cassettesReady: isCritical ? 32 : 24,
+            connection: 'Wi-Fi',
+            signal: 'สัญญาณแรง'
+        };
+    }
+
+    function getDashboardCassetteState() {
+        const cart = getCurrentDashboardCart();
+        const drawers = Math.max(parseInt(cart.drawers, 10) || 6, 1);
+        const total = Math.max(parseInt(cart.cassettes, 10) || drawers * 4, drawers);
+        const readyBase = Math.max(Math.min(parseInt(cart.cassettesReady, 10) || total, total), 0);
+        const perDrawer = Math.max(Math.ceil(total / drawers), 1);
+        const locks = Object.values(cassetteModeLocks).filter(function(lock) {
+            return !lock.ward || lock.ward === (currentWardName || 'Ward 3A');
+        });
+        const validLocks = locks.filter(function(lock) {
+            const index = ((lock.drawer || 1) - 1) * perDrawer + (lock.cassette || 1);
+            return index >= 1 && index <= total;
+        });
+        const byMode = { patient:0, medication:0, schedule:0 };
+        validLocks.forEach(function(lock) {
+            if (byMode[lock.mode] !== undefined) byMode[lock.mode]++;
+        });
+        return {
+            cart: cart,
+            drawers: drawers,
+            total: total,
+            readyBase: readyBase,
+            perDrawer: perDrawer,
+            maintenance: Math.max(total - readyBase, 0),
+            inUse: validLocks.length,
+            available: Math.max(readyBase - validLocks.length, 0),
+            locks: validLocks,
+            byMode: byMode
+        };
+    }
+
+    function renderDashboardCassettePanel() {
+        const panel = document.getElementById('dashCassettePanel');
+        if (!panel) return;
+        const state = getDashboardCassetteState();
+        const cart = state.cart;
+        const sub = document.getElementById('dashCassetteSub');
+        if (sub) sub.textContent = cart.name + ' · ' + (currentWardName || cart.ward) + ' · ' + (cart.statusText || 'พร้อมใช้งาน');
+        const pill = document.getElementById('dashCassetteModePill');
+        if (pill) {
+            const modeText = state.inUse
+                ? state.inUse + ' ช่องกำลังถูกจอง'
+                : 'พร้อมใช้ทุก Role';
+            pill.innerHTML = '<span style="width:7px;height:7px;background:' + (state.inUse ? '#3b82f6' : '#22c55e') + ';border-radius:50%;box-shadow:0 0 0 3px ' + (state.inUse ? 'rgba(59,130,246,.16)' : 'rgba(34,197,94,.16)') + ';"></span>' + modeText;
+        }
+
+        const statData = [
+            { val: state.total, label: 'Cassette ทั้งหมด', color: '#0f172a', bg: '#f8fafc' },
+            { val: state.available, label: 'พร้อมใช้', color: '#15803d', bg: '#f0fdf4' },
+            { val: state.inUse, label: 'ถูกจองตาม Flow', color: '#1d4ed8', bg: '#eff6ff' },
+            { val: state.maintenance, label: 'ไม่พร้อมใช้', color: '#b91c1c', bg: '#fef2f2' }
+        ];
+        const summary = document.getElementById('dashCassetteSummary');
+        if (summary) {
+            summary.innerHTML = statData.map(function(item) {
+                return '<div class="db-cassette-stat" style="background:' + item.bg + ';">'
+                    + '<div class="db-cassette-stat-val" style="color:' + item.color + ';">' + item.val + '</div>'
+                    + '<div class="db-cassette-stat-label">' + item.label + '</div>'
+                    + '</div>';
+            }).join('');
+        }
+
+        const lockByKey = {};
+        state.locks.forEach(function(lock) {
+            lockByKey[ptdCassetteKey(lock.drawer, lock.cassette)] = lock;
+        });
+        const map = document.getElementById('dashCassetteMap');
+        if (map) {
+            let html = '';
+            for (let d = 1; d <= state.drawers; d++) {
+                let cells = '';
+                for (let c = 1; c <= state.perDrawer; c++) {
+                    const globalIndex = ((d - 1) * state.perDrawer) + c;
+                    if (globalIndex > state.total) continue;
+                    const lock = lockByKey[ptdCassetteKey(d, c)];
+                    const cfg = lock ? cassetteModeConfig[lock.mode] : null;
+                    const isMaintenance = !lock && globalIndex > state.readyBase;
+                    const cls = lock ? lock.mode : isMaintenance ? 'maintenance' : 'ready';
+                    const label = lock && cfg ? (cfg.mapLabel || cfg.short) : isMaintenance ? 'ปิด' : 'C' + c;
+                    const title = 'Drawer ' + d + ' · Cassette ' + c + (lock && cfg ? ' · ' + cfg.dashboardLabel + ' (' + cfg.label + ')' : '');
+                    cells += '<div class="db-cassette-cell ' + cls + '" title="' + escHtml(title) + '">' + escHtml(label) + '</div>';
+                }
+                const readyInDrawer = Math.max(Math.min(state.readyBase - ((d - 1) * state.perDrawer), state.perDrawer), 0);
+                html += '<div class="db-cassette-drawer">'
+                    + '<div class="db-cassette-drawer-head"><span>D' + d + '</span><span>' + readyInDrawer + '/' + state.perDrawer + '</span></div>'
+                    + '<div class="db-cassette-drawer-grid">' + cells + '</div>'
+                    + '</div>';
+            }
+            map.innerHTML = html;
+        }
+
+        const active = document.getElementById('dashCassetteActiveList');
+        if (active) {
+            if (!state.locks.length) {
+                active.innerHTML = '<div style="padding:12px 14px;border-radius:14px;background:#f8fafc;border:1px dashed #cbd5e1;color:var(--text-3);font-size:11px;font-weight:700;">ยังไม่มี Cassette ถูกจองสำหรับ Flow ใดใน Ward นี้</div>';
+            } else {
+                active.innerHTML = '<div style="font-size:11px;font-weight:800;color:#334155;margin-bottom:8px;">Cassette ที่กำลังใช้งาน แยกตาม By Item / By Patient</div>'
+                    + state.locks.slice(0, 4).map(function(lock) {
+                        const cfg = cassetteModeConfig[lock.mode] || { label:'กำลังใช้งาน', dashboardLabel:'In Use', chipBg:'#64748b' };
+                        return '<div style="display:flex;align-items:center;gap:9px;padding:9px 10px;border-radius:12px;background:white;border:1px solid #e2e8f0;margin-bottom:6px;">'
+                            + '<span style="width:9px;height:9px;border-radius:3px;background:' + cfg.chipBg + ';"></span>'
+                            + '<div style="flex:1;font-size:11px;color:#334155;font-weight:700;">D' + lock.drawer + ' · Cassette ' + lock.cassette + '</div>'
+                            + '<div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;justify-content:flex-end;">'
+                            + '<span style="font-size:9px;color:white;font-weight:850;background:' + cfg.chipBg + ';padding:3px 7px;border-radius:999px;">' + escHtml(cfg.dashboardLabel) + '</span>'
+                            + '<span style="font-size:10px;color:#64748b;font-weight:700;">' + escHtml(cfg.label) + '</span>'
+                            + '</div>'
+                            + '</div>';
+                    }).join('');
+            }
+        }
+    }
+
+    function renderDashboardDynamic() {
+        const metrics = getDashboardMetrics();
+        const bannerSub = document.querySelector('#pg-dashboard .db-banner-sub');
+        if (bannerSub) bannerSub.innerHTML = 'มีรายการยา <strong style="opacity:1;color:#a7f3d0;">' + metrics.pending + ' รายการ</strong> รอดำเนินการ · จ่ายแล้ว <strong style="opacity:1;color:#a7f3d0;">' + metrics.done + ' จาก ' + metrics.total + '</strong> รายการ';
+        const progressNum = document.querySelector('#pg-dashboard .db-progress-num');
+        if (progressNum) progressNum.textContent = metrics.percent + '%';
+        const progressCircle = document.querySelector('#pg-dashboard .db-progress svg circle:nth-child(2)');
+        if (progressCircle) progressCircle.setAttribute('stroke-dashoffset', String(Math.round(251 - (251 * metrics.percent / 100))));
+        const statNums = document.querySelectorAll('#pg-dashboard .db-stat-num');
+        if (statNums[0]) statNums[0].textContent = metrics.patients;
+        if (statNums[1]) statNums[1].textContent = metrics.total;
+        if (statNums[2]) statNums[2].textContent = metrics.done;
+        if (statNums[3]) statNums[3].textContent = metrics.pending;
+        const cartState = getDashboardCassetteState();
+        if (statNums[4]) statNums[4].innerHTML = cartState.available + '<span style="font-size:15px;color:#94a3b8;font-weight:500;">/' + cartState.total + '</span>';
+        const actionBadges = document.querySelectorAll('#pg-dashboard .db-action-badge');
+        if (actionBadges[0]) actionBadges[0].textContent = metrics.pending + ' รอจ่าย';
+        if (actionBadges[1]) actionBadges[1].textContent = metrics.pending + ' รอจัด';
+        const alertNums = document.querySelectorAll('#dashQuickAlerts .db-alert-num');
+        if (alertNums[0]) alertNums[0].textContent = (typeof stPatients !== 'undefined' ? stPatients.length : 0);
+        if (alertNums[1]) alertNums[1].textContent = metrics.prn || (typeof prnPatients !== 'undefined' ? prnPatients.length : 0);
+        if (alertNums[2]) alertNums[2].textContent = metrics.highAlert;
+        if (alertNums[3]) alertNums[3].textContent = (typeof ovPatients !== 'undefined' ? ovPatients.length : 0);
+
+        const latestPanel = document.querySelectorAll('#pg-dashboard .db-panel')[1];
+        const logWrap = latestPanel ? latestPanel.querySelector('div[style*="flex-direction:column"]') : null;
+        if (logWrap) {
+            const latest = getDispensePatientKeys().slice(0, 5).map(function(key, idx) {
+                const pt = patientData[key];
+                const drug = (pt.drugs || [])[0] || {};
+                return { time: ['08:12','08:08','07:55','07:45','07:30'][idx] || '—', pt: pt, drug: drug, done: !!drug.done };
+            });
+            logWrap.innerHTML = latest.map(function(item, idx) {
+                const border = idx === latest.length - 1 ? '' : 'border-bottom:1px dashed #f1f5f9;';
+                const color = item.done ? '#0D9488' : isLegacyHighAlertDrug(item.drug) ? '#d97706' : '#3b82f6';
+                const bg = item.done ? '#f0fdf4' : isLegacyHighAlertDrug(item.drug) ? '#fffbeb' : '#eff6ff';
+                const action = item.done ? 'จ่ายยา' : 'รอจ่ายยา';
+                return '<div class="db-log-item" style="' + border + 'padding:10px 8px;"><div style="width:32px;height:32px;background:' + bg + ';border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="' + color + '" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div><div style="flex:1;min-width:0;"><div class="db-log-text">' + action + ' <strong>' + escHtml(item.drug.name || '—') + '</strong></div><div style="font-size:11px;color:var(--text-3);">' + escHtml(item.pt.name) + ' · ห้อง ' + escHtml(item.pt.bed) + '</div></div><div class="db-log-time">' + item.time + '</div></div>';
+            }).join('');
+        }
+        renderDashboardCassettePanel();
+    }
+
+    function buildAssessmentRows() {
+        const rows = [];
+        const prn = typeof prnPatients !== 'undefined' ? prnPatients[0] : null;
+        if (prn) rows.push({ status:'pending', patient:prn.name, bed:prn.hn + ' · ' + prn.bed, drug:prn.drug, detail:prn.route + ' · ' + prn.dose, type:'PRN', givenTime:'08:18 น.', showPain:true });
+        const ov = typeof ovPatients !== 'undefined' ? ovPatients[0] : null;
+        if (ov) rows.push({ status:'pending', patient:ov.name, bed:ov.hn + ' · ' + ov.bed, drug:ov.drug, detail:ov.route + ' · ' + ov.dose, type:'Overdue', givenTime:'08:18 น.', showPain:false });
+        const ha = typeof haPatients !== 'undefined' ? haPatients[0] : null;
+        if (ha) rows.push({ status:'pending', patient:ha.name, bed:ha.hn + ' · ' + ha.bed, drug:ha.drug, detail:ha.route + ' · ' + ha.dose, type:'High Alert', givenTime:'08:10 น.', showPain:false });
+        getDispensePatientKeys().forEach(function(key, idx) {
+            const pt = patientData[key];
+            const drug = (pt.drugs || [])[0];
+            if (!drug || rows.length >= 8) return;
+            const d = legacyDrugView(drug, pt, 0);
+            rows.push({ status:'done', patient:pt.name, bed:pt.hn + ' · ' + pt.bed, drug:d.name, detail:d.routeShort + ' · ' + d.dose, type:d.typeText, givenTime:['07:50 น.','07:45 น.','07:40 น.','07:35 น.','07:30 น.'][idx % 5], assessedTime:['08:20 น.','08:10 น.','08:05 น.','08:00 น.','07:55 น.'][idx % 5], showPain:false });
+        });
+        return rows.slice(0, 8);
+    }
+
+    function renderAssessmentListDynamic() {
+        const list = document.getElementById('alList');
+        if (!list) return;
+        assessmentListCache = buildAssessmentRows();
+        const pending = assessmentListCache.filter(function(r) { return r.status === 'pending'; }).length;
+        const done = assessmentListCache.filter(function(r) { return r.status === 'done'; }).length;
+        const summaryNums = document.querySelectorAll('#pg-assess-list [style*="font-size:22px"][style*="font-weight:800"]');
+        if (summaryNums[0]) summaryNums[0].textContent = pending;
+        if (summaryNums[1]) summaryNums[1].textContent = done;
+        if (summaryNums[2]) summaryNums[2].textContent = assessmentListCache.length;
+        const tabs = document.querySelectorAll('#alFilterTabs button');
+        if (tabs[0]) tabs[0].textContent = 'ทั้งหมด (' + assessmentListCache.length + ')';
+        if (tabs[1]) tabs[1].textContent = 'รอประเมิน (' + pending + ')';
+        if (tabs[2]) tabs[2].textContent = 'ประเมินแล้ว (' + done + ')';
+        list.innerHTML = assessmentListCache.map(function(row, idx) {
+            const isPending = row.status === 'pending';
+            const color = row.type === 'PRN' ? '#7c3aed' : row.type === 'High Alert' ? '#d97706' : row.type === 'Overdue' ? '#be123c' : '#059669';
+            const bg = row.type === 'PRN' ? '#f5f3ff' : row.type === 'High Alert' ? '#fffbeb' : row.type === 'Overdue' ? '#fff1f2' : '#f0fdf4';
+            const cardStyle = isPending ? 'background:white;border:1.5px solid #fca5a5;cursor:pointer;' : 'background:#f8fafb;border:1.5px solid #e2e8f0;';
+            const click = isPending ? 'onclick="openAssessmentItem(' + idx + ')" onmouseover="this.style.boxShadow=\'0 4px 18px rgba(220,38,38,0.12)\';this.style.transform=\'translateY(-1px)\'" onmouseout="this.style.boxShadow=\'\';this.style.transform=\'\'"' : '';
+            return '<div class="al-row" data-status="' + row.status + '" style="' + cardStyle + 'border-radius:16px;padding:16px 18px;display:flex;align-items:center;gap:14px;transition:all .18s;" ' + click + '>'
+                + '<div style="width:42px;height:42px;background:' + bg + ';border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="' + color + '" stroke-width="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0016.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 002 8.5c0 2.3 1.5 4.05 3 5.5l7 7z"/></svg></div>'
+                + '<div style="flex:1;min-width:0;"><div style="display:flex;align-items:center;gap:8px;margin-bottom:3px;"><span style="font-size:14px;font-weight:700;color:' + (isPending ? '#1e293b' : '#475569') + ';">' + escHtml(row.patient) + '</span><span style="font-size:10px;color:#64748b;">' + escHtml(row.bed.split('·').pop().trim()) + '</span><span style="font-size:10px;font-weight:700;background:' + bg + ';color:' + color + ';padding:2px 8px;border-radius:6px;border:1px solid #ddd6fe;">' + escHtml(row.type) + '</span></div><div style="font-size:12px;color:#475569;margin-bottom:2px;">' + escHtml(row.drug) + ' · ' + escHtml(row.detail) + '</div><div style="font-size:11px;color:#94a3b8;">ให้ยาเมื่อ ' + escHtml(row.givenTime) + (row.assessedTime ? ' · ประเมินเมื่อ ' + escHtml(row.assessedTime) : '') + '</div></div>'
+                + '<div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0;"><span style="font-size:11px;font-weight:700;background:' + (isPending ? '#fef2f2;color:#dc2626;border:1px solid #fca5a5;' : '#f0fdf4;color:#059669;border:1px solid #86efac;') + 'padding:3px 10px;border-radius:8px;">' + (isPending ? 'รอประเมิน' : 'ประเมินแล้ว') + '</span><span style="font-size:11px;color:' + (isPending ? '#059669' : '#94a3b8') + ';font-weight:600;">' + (isPending ? 'กดเพื่อประเมิน ->' : 'ตอบสนองดีขึ้น') + '</span></div>'
+                + '</div>';
+        }).join('');
+    }
+
+    function openAssessmentItem(idx) {
+        const row = assessmentListCache[idx];
+        if (!row) return;
+        goPostAssessI({ patient:row.patient, bed:row.bed, drug:row.drug, detail:row.detail, type:row.type, givenTime:row.givenTime, showPain:row.showPain, origin:'pg-assess-list' });
+    }
+
     /* ── Omit (Page 15) ── */
     function pickOmit(el) {
         document.querySelectorAll('.omit-opt').forEach(o => {
@@ -15501,6 +16686,10 @@
         const now = new Date();
         document.getElementById('okTimestamp').textContent =
             now.toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit'}) + ' น.';
+        legacyLastGivenTime = document.querySelector('#pg-record .rec-doc-input[type="time"]')?.value
+            ? document.querySelector('#pg-record .rec-doc-input[type="time"]').value + ' น.'
+            : legacyLastGivenTime;
+        renderLegacySummaryPages();
         nav('pg-success');
     }
 
@@ -15522,20 +16711,28 @@
 
     function demoWitness() {
         const now = new Date();
+        legacyWitnessVerified = true;
         document.getElementById('witTime').textContent = now.toLocaleTimeString('th-TH', { hour:'2-digit', minute:'2-digit' });
         document.getElementById('witResult').classList.add('show');
         document.getElementById('witActions').classList.add('show');
+        renderLegacySummaryPages();
         showToast('พยานยืนยันตัวตนสำเร็จ');
         setTimeout(() => showToast(''), 2000);
     }
 
     function resetWitness() {
+        legacyWitnessVerified = false;
         document.getElementById('witResult').classList.remove('show');
         document.getElementById('witActions').classList.remove('show');
+        renderLegacySummaryPages();
     }
 
     /* ── Admin Med (Page 13) ── */
     function selectAmDrug(el) {
+        if (el.dataset.index !== undefined) {
+            selectAmDrugByIndex(parseInt(el.dataset.index, 10));
+            return;
+        }
         if (el.classList.contains('done') || el.style.opacity === '0.6') return;
         document.querySelectorAll('.am-drug').forEach(d => d.classList.remove('active'));
         el.classList.add('active');
@@ -15551,20 +16748,16 @@
     }
 
     function demoScanMed() {
-        document.getElementById('amScanResult').classList.add('show');
-        // ตั้ง 7 Rights เป็น pass ทีละ right พร้อม delay เล็กน้อยเพื่อ UX
-        const rights = ['rDrug','rDose','rRoute','rDoc','rReason'];
-        rights.forEach((id, i) => {
-            setTimeout(() => {
-                const el = document.getElementById(id);
-                if (el) el.className = 'am-r pass';
-            }, i * 80);
-        });
-        setTimeout(() => {
-            document.getElementById('btnConfirmAdmin').disabled = false;
-        }, rights.length * 80);
-        showToast('สแกนยาสำเร็จ — 7 Rights ผ่านทั้งหมด');
-        setTimeout(() => showToast(''), 2000);
+        const d = legacyDrugView(getLegacyDrug(), getLegacyPatient(), currentLegacyDrugIdx);
+        if (d.highAlert && !legacyWitnessVerified) {
+            showHAVerifyModal(d.name, d.lot, function() {
+                legacyWitnessVerified = true;
+                renderLegacySummaryPages();
+                completeLegacyScanMed();
+            }, 'witness');
+            return;
+        }
+        completeLegacyScanMed();
     }
 
     /* ── Scan Patient (Page 12) ── */
@@ -15581,6 +16774,8 @@
         const resultDetail = document.getElementById('sptResultDetail');
         const actions = document.getElementById('sptActions');
         const proceed = document.getElementById('sptProceed');
+        const pt = getLegacyPatient();
+        const mismatchPt = getDispensePatientKeys().map(function(key) { return patientData[key]; }).find(function(p) { return p && p.hn !== pt.hn; }) || patientData['05'] || pt;
 
         if (type === 'match') {
             illust.className = 'spt-illust success';
@@ -15596,11 +16791,12 @@
             resultTitle.className = 'spt-result-title ok';
             resultTitle.textContent = 'ตรงกับผู้ป่วยเป้าหมาย';
             resultDetail.className = 'spt-result-detail ok';
-            resultDetail.textContent = 'สมชาย มานะ · HN: 6401234 · เตียง 3A-01';
+            resultDetail.textContent = pt.name + ' · HN: ' + pt.hn + ' · เตียง ' + pt.bed;
             result.classList.add('show');
 
             proceed.disabled = false;
             proceed.style.opacity = '1';
+            proceed.onclick = function() { renderAdminMedPage(false); nav('pg-admin-med'); };
             actions.classList.add('show');
         } else {
             illust.className = 'spt-illust fail';
@@ -15616,7 +16812,7 @@
             resultTitle.className = 'spt-result-title err';
             resultTitle.textContent = 'ผู้ป่วยไม่ตรงกัน — ไม่สามารถดำเนินการต่อได้';
             resultDetail.className = 'spt-result-detail err';
-            resultDetail.textContent = 'สแกนได้: วิชัย ดีงาม · HN: 6402890 (ไม่ใช่ผู้ป่วยเป้าหมาย)';
+            resultDetail.textContent = 'สแกนได้: ' + mismatchPt.name + ' · HN: ' + mismatchPt.hn + ' (ไม่ใช่ผู้ป่วยเป้าหมาย)';
             result.classList.add('show');
 
             proceed.disabled = true;
@@ -15626,6 +16822,7 @@
     }
 
     function resetScanPt() {
+        renderScanPatientPage();
         const illust = document.getElementById('sptIllust');
         illust.className = 'spt-illust idle';
         document.getElementById('sptIcon').style.color = 'var(--text-3)';
@@ -15635,6 +16832,12 @@
         document.getElementById('sptScanBtn').style.display = '';
         document.getElementById('sptResult').classList.remove('show');
         document.getElementById('sptActions').classList.remove('show');
+        const proceed = document.getElementById('sptProceed');
+        if (proceed) {
+            proceed.disabled = true;
+            proceed.style.opacity = '.5';
+            proceed.onclick = function() { renderAdminMedPage(false); nav('pg-admin-med'); };
+        }
     }
 
     /* ── Summary (Page 9) ── */
@@ -15654,6 +16857,46 @@
 
     /* ── Reset Demo ── */
     function resetDemo() {
+        // Reset app session back to the first-use state.
+        currentRole = 'nurse';
+        currentWardName = 'Ward 3A';
+        selectedWardName = 'Ward 3A';
+        sessionStorage.removeItem('mcRole');
+        sessionStorage.removeItem('mcName');
+        sessionStorage.removeItem('mcRoleText');
+        sessionStorage.removeItem('mcWard');
+        document.body.classList.remove('logged-in');
+        resetCassetteModeLocks();
+        const ghUserSection = document.getElementById('ghUserSection');
+        if (ghUserSection) ghUserSection.style.display = 'none';
+        const ghPermBtn = document.getElementById('ghPermBtn');
+        if (ghPermBtn) ghPermBtn.style.display = 'none';
+        const permSec = document.getElementById('dashPermSection');
+        if (permSec) permSec.style.display = 'none';
+        const userInput = document.getElementById('inputUser');
+        if (userInput) { userInput.value = ''; userInput.classList.remove('error'); }
+        const pwInput = document.getElementById('inputPw');
+        if (pwInput) { pwInput.value = ''; pwInput.classList.remove('error'); pwInput.type = 'password'; }
+        ['loginError','cardError'].forEach(function(id) {
+            const el = document.getElementById(id);
+            if (el) el.classList.remove('show');
+        });
+        resetCardScan();
+
+        // Restore Ward 3A data without preserving session storage.
+        applyWardSelection('Ward 3A', { silent: true });
+        sessionStorage.removeItem('mcWard');
+
+        document.querySelectorAll('.wc').forEach(function(card) {
+            card.classList.remove('chosen');
+            const radio = card.querySelector('.wc-radio');
+            if (radio) radio.innerHTML = '';
+        });
+        const wardBtn = document.getElementById('btnSelectConfirm');
+        if (wardBtn) wardBtn.disabled = true;
+        const wardSearch = document.getElementById('wardSearch');
+        if (wardSearch) { wardSearch.value = ''; filterWards(); }
+
         // Reset all flow steps to 1
         rtGoStep(1);
         stGoStep(1);
@@ -15689,9 +16932,14 @@
             if (el) el.style.display = 'none';
         });
 
-        // Navigate to dashboard
-        nav('pg-dashboard');
-        showToast('รีเซ็ต Demo เรียบร้อยแล้ว');
+        // Navigate to the starting cart information screen
+        setLegacyDispensePatient('01');
+        renderDispenseList();
+        renderDashboardDynamic();
+        renderAssessmentListDynamic();
+        nav('pg-cart');
+        showToast('รีเซ็ต Demo เรียบร้อยแล้ว — กลับไปหน้าข้อมูลรถเข็น');
+        setTimeout(() => showToast(''), 2200);
     }
 
     /* ── Logout ── */
@@ -15950,10 +17198,238 @@
         }
     }
 
-    document.addEventListener('DOMContentLoaded', function() {
-        rtSelectPatient('01', false);
+    function getCurrentWardInfo() {
+        return wardInfo[currentWardName] || wardInfo['Ward 3A'];
+    }
+
+    function wardShortName(wardName) {
+        return String(wardName || 'Ward 3A').replace(/^Ward\s+/,'');
+    }
+
+    function setAllTextById(id, value) {
+        document.querySelectorAll('[id="' + id + '"]').forEach(function(el) {
+            el.textContent = value;
+        });
+    }
+
+    function updateWardChrome(wardName) {
+        const info = wardInfo[wardName] || wardInfo['Ward 3A'];
+        const shortWard = wardShortName(wardName);
+        const cartId = (info.cart || 'Med Cart A-1').replace(/^Med Cart\s+/,'');
+        setAllTextById('loginWardLabel', wardName);
+        setAllTextById('dashWard', wardName);
+        setAllTextById('ghWard', wardName);
+        setAllTextById('prepWardHeader', wardName);
+        setAllTextById('prepWardCtx', wardName);
+        setAllTextById('hwWard', wardName);
+        setAllTextById('dispWardHdr', wardName);
+        setAllTextById('pbpWard', wardName);
+        setAllTextById('pbmWard', wardName);
+        setAllTextById('pbsWard', wardName);
+        setAllTextById('fillWard', shortWard);
+        setAllTextById('dispWardChip', shortWard);
+
+        const bannerWard = document.querySelector('#dashBanner span[style*="letter-spacing"]');
+        if (bannerWard) bannerWard.textContent = wardName + ' · ' + info.desc + ' · รอบเช้า 08:00 น.';
+        const patientStatSub = document.querySelector('#pg-dashboard .db-stat .db-stat-sublabel');
+        if (patientStatSub) patientStatSub.textContent = wardName + ' ทั้งหมด';
+        const cartChipId = document.querySelector('#dashBanner .db-cart-chip-id');
+        if (cartChipId) cartChipId.textContent = cartId;
+        const loginCartName = document.querySelector('#pg-login #loginWardLabel')?.closest('[style*="display:flex"]')?.querySelector('[style*="font-size:12px"][style*="font-weight:600"]');
+        if (loginCartName) loginCartName.textContent = info.cart || 'Med Cart A-1';
+        const assessWardPill = document.querySelector('#pg-assess-list .status-pill');
+        if (assessWardPill) assessWardPill.innerHTML = '<span class="dot"></span> ' + escHtml(wardName);
+    }
+
+    function replaceSharedPatientData(wardName) {
+        const nextData = cloneWardData(wardPatientDataTemplates[wardName] || wardPatientDataTemplates['Ward 3A']);
+        Object.keys(patientData).forEach(function(key) { delete patientData[key]; });
+        Object.assign(patientData, nextData);
+    }
+
+    function routineDrugFromLegacy(drug, pt, idx) {
+        const view = legacyDrugView(drug, pt, idx);
+        return {
+            name: view.name,
+            dose: view.dose,
+            route: view.routeFull,
+            time: view.time === 'PRN' ? 'PRN' : view.time + ' น.',
+            freq: view.freq
+        };
+    }
+
+    function routinePatientFromLegacy(pt) {
+        return {
+            avatar: pt.avatar,
+            name: pt.name,
+            hn: pt.hn,
+            bed: pt.bed,
+            age: pt.age,
+            allergy: pt.allergy,
+            tags: cloneWardData(pt.tags || []),
+            round: pt.round,
+            drugs: (pt.drugs || []).map(function(drug, idx) { return routineDrugFromLegacy(drug, pt, idx); })
+        };
+    }
+
+    function agePartsForFlow(pt) {
+        const gender = String(pt.age || '').split(',')[0].trim() || patientGenderFromName(pt.name);
+        const ageMatch = String(pt.age || '').match(/\d+/);
+        return { gender: gender, age: ageMatch ? parseInt(ageMatch[0], 10) : 0 };
+    }
+
+    function allergyForFlow(pt) {
+        return pt.allergy ? pt.allergy.replace(/^แพ้ยา:\s*/,'') : '-';
+    }
+
+    function collectWardDrugMatches(limit, primaryPredicate, fallbackPredicate) {
+        const rows = [];
+        const seen = new Set();
+        function addMatches(predicate) {
+            getDispensePatientKeys().forEach(function(key) {
+                const pt = patientData[key];
+                (pt.drugs || []).forEach(function(drug, idx) {
+                    if (rows.length >= limit) return;
+                    const view = legacyDrugView(drug, pt, idx);
+                    const matchKey = key + ':' + idx;
+                    if (!seen.has(matchKey) && predicate(view, drug, pt, key)) {
+                        rows.push({ key:key, pt:pt, drug:drug, idx:idx, view:view });
+                        seen.add(matchKey);
+                    }
+                });
+            });
+        }
+        addMatches(primaryPredicate);
+        if (fallbackPredicate && rows.length < limit) addMatches(fallbackPredicate);
+        return rows.slice(0, limit);
+    }
+
+    function flowPatientFromMatch(match, flow, idx) {
+        const pt = match.pt;
+        const view = match.view;
+        const age = agePartsForFlow(pt);
+        const base = {
+            name: pt.name,
+            initials: pt.avatar || patientInitials(pt.name),
+            hn: pt.hn,
+            bed: pt.bed,
+            gender: age.gender,
+            age: age.age,
+            allergy: allergyForFlow(pt),
+            drug: view.name,
+            drugShort: view.name,
+            drugFull: view.name,
+            dose: view.dose,
+            route: view.routeShort,
+            routeTh: view.routeFull,
+            routeDesc: view.routeFull.replace(/^[A-Z]+\s*/,'') || view.routeFull,
+            detail: view.detail,
+            lot: view.lot,
+            expiry: view.exp,
+            isHighAlert: view.highAlert,
+            needWitness: view.highAlert
+        };
+
+        if (flow === 'st') {
+            return Object.assign(base, {
+                orderTime: idx === 0 ? '07:25' : '08:05',
+                elapsedMin: idx === 0 ? 48 : 8,
+                doctor: idx === 0 ? 'นพ.สุรศักดิ์' : 'พญ.นิภา',
+                urgency: view.highAlert ? 'high' : 'moderate'
+            });
+        }
+        if (flow === 'prn') {
+            return Object.assign(base, {
+                condition: view.isPrn ? view.freq : 'q4-6h PRN pain/fever',
+                interval: 'q4-6h',
+                intervalHrs: 4,
+                lastGiven: idx === 0 ? '03:00' : idx === 1 ? '02:00' : '07:30',
+                hrsAgo: idx === 2 ? 0.5 : idx === 1 ? 6 : 5,
+                isNarcotic: false,
+                canGive: idx !== 2,
+                prnCount: 1
+            });
+        }
+        if (flow === 'ha') {
+            return Object.assign(base, {
+                dueTime: idx === 0 ? '08:00 น.' : '07:30 น.'
+            });
+        }
+        if (flow === 'ov') {
+            const elapsed = idx === 0 ? '48 นาที' : '1 ชม. 18 นาที';
+            return Object.assign(base, {
+                dueTime: idx === 0 ? '07:30 น.' : '07:00 น.',
+                overdueText: elapsed,
+                overdueScanTag: 'Overdue ' + elapsed,
+                overdueSummary: 'เลยเวลามา ' + elapsed
+            });
+        }
+        return base;
+    }
+
+    function syncWardFlowDatasets() {
+        const keys = getDispensePatientKeys();
+        const firstKey = keys[0] || '01';
+
+        Object.keys(dispensePatients).forEach(function(key) { delete dispensePatients[key]; });
+        keys.forEach(function(key) {
+            dispensePatients[key] = routinePatientFromLegacy(patientData[key]);
+        });
+
+        const statRows = collectWardDrugMatches(2, function(v) { return !v.done && v.highAlert; }, function(v) { return !v.done; });
+        stPatients.splice(0, stPatients.length, ...statRows.map(function(row, idx) { return flowPatientFromMatch(row, 'st', idx); }));
+
+        const prnRows = collectWardDrugMatches(3, function(v) { return !v.done && v.isPrn; }, function(v) { return !v.done && !v.highAlert; });
+        prnPatients.splice(0, prnPatients.length, ...prnRows.map(function(row, idx) { return flowPatientFromMatch(row, 'prn', idx); }));
+
+        const highAlertRows = collectWardDrugMatches(2, function(v) { return !v.done && v.highAlert; }, function(v) { return v.highAlert; });
+        haPatients.splice(0, haPatients.length, ...highAlertRows.map(function(row, idx) { return flowPatientFromMatch(row, 'ha', idx); }));
+
+        const overdueRows = collectWardDrugMatches(2, function(v) { return !v.done && (v.highAlert || !v.isPrn); }, function(v) { return !v.done; });
+        ovPatients.splice(0, ovPatients.length, ...overdueRows.map(function(row, idx) { return flowPatientFromMatch(row, 'ov', idx); }));
+
+        currentDispenseBed = dispensePatients[currentDispenseBed] ? currentDispenseBed : firstKey;
+        currentLegacyDispenseBed = patientData[currentLegacyDispenseBed] ? currentLegacyDispenseBed : firstKey;
+        stSelectedIdx = 0;
+        prnSelectedIdx = 0;
+        haSelectedIdx = 0;
+        ovSelectedIdx = 0;
+
+        stRenderList();
+        stSelectPt(0, false);
+        prnRenderList();
+        prnSelectPt(0, false);
         haSelectPt(0, false);
         ovSelectPt(0, false);
+        rtSelectPatient(currentDispenseBed || firstKey, false);
+        setLegacyDispensePatient(currentLegacyDispenseBed || firstKey);
+        renderDispenseList();
+        renderDashboardDynamic();
+        renderAssessmentListDynamic();
+    }
+
+    function applyWardSelection(wardName, options) {
+        options = options || {};
+        const resolvedWard = wardInfo[wardName] ? wardName : 'Ward 3A';
+        const previousWard = currentWardName;
+        currentWardName = resolvedWard;
+        selectedWardName = resolvedWard;
+        sessionStorage.setItem('mcWard', resolvedWard);
+        if (previousWard && previousWard !== resolvedWard) resetCassetteModeLocks();
+        updateWardChrome(resolvedWard);
+        if (!wardDataReady) return;
+        replaceSharedPatientData(resolvedWard);
+        syncWardFlowDatasets();
+        if (!options.silent) {
+            const info = getCurrentWardInfo();
+            showToast('เปลี่ยนเป็น ' + resolvedWard + ' — โหลดข้อมูล ' + info.desc + ' แล้ว');
+            setTimeout(function(){ showToast(''); }, 1800);
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        wardDataReady = true;
+        applyWardSelection(currentWardName || 'Ward 3A', { silent: true });
     });
 
     /* ── Post-Medication Assessment (Index.html inline) ── */
