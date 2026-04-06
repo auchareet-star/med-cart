@@ -835,6 +835,26 @@
         setTimeout(() => showToast(''), 2000);
     }
 
+    /* ── Cassette state (shared across pages) ── */
+    const cassState = { filled: 6, total: 24, selections: [] };
+
+    function updateDashboardCassette() {
+        const countEl = document.getElementById('dbCassCount');
+        const infoEl  = document.getElementById('dbCassInfo');
+        if (countEl) {
+            countEl.innerHTML = cassState.filled
+                + '<span style="font-size:15px;color:#CBD5E1;font-weight:500;">/' + cassState.total + '</span>';
+        }
+        if (infoEl) {
+            if (cassState.selections.length > 0) {
+                const last = cassState.selections[cassState.selections.length - 1];
+                infoEl.textContent = last.drawer + ': ' + last.ids.join(', ');
+            } else {
+                infoEl.textContent = 'เติมยาในรถเข็น';
+            }
+        }
+    }
+
     /* ── Drawer / Cassette selection (Page 7) ── */
     const drawerData = {
         1: { label:'Drawer 1', status:'ok', statusText:'พร้อมใช้งาน', cassettes:[
@@ -908,9 +928,14 @@
         const ids = Array.from(selected).map(c => c.querySelector('.cass-id').textContent);
         // Pass context to fill page
         const activeDw = document.querySelector('.dw-btn.active .dw-num');
-        document.getElementById('fillDw').textContent = activeDw ? activeDw.textContent : 'D1';
+        const dwLabel = activeDw ? activeDw.textContent : 'D1';
+        document.getElementById('fillDw').textContent = dwLabel;
         document.getElementById('fillCass').textContent = ids.join(', ');
         document.getElementById('fillWard').textContent = document.getElementById('hwWard').textContent.replace('Ward ','');
+        // Save cassette selection to state
+        cassState.selections.push({ drawer: dwLabel, ids: ids });
+        cassState.filled = Math.min(cassState.filled + ids.length, cassState.total);
+        updateDashboardCassette();
         // Reset scan state
         document.getElementById('scanResult').style.display = 'none';
         document.getElementById('btnConfirmFill').disabled = true;
