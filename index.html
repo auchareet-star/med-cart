@@ -238,9 +238,11 @@
             align-items: center; justify-content: center;
             transition: all .16s ease;
         }
-        .gh-icon-action.perm {
-            background: linear-gradient(135deg,#F5F3FF,#EDE9FE);
-            border-color: #DDD6FE; color: #6D28D9;
+        .gh-icon-action.backend {
+            width: auto; padding: 0 11px; gap: 6px;
+            background: linear-gradient(135deg,#F0FDFA,#CCFBF1);
+            border-color: #99F6E4; color: #0F766E;
+            font-family: 'Prompt', sans-serif; font-size: 11px; font-weight: 800;
         }
         .gh-icon-action.logout {
             background: linear-gradient(135deg,#FFF1F2,#FEE2E2);
@@ -269,12 +271,88 @@
             color: #2563EB; background: #EFF6FF; border-color: #BFDBFE;
         }
         .gh-nav-btn.back { color: #475569; }
+
+        /* Backoffice hub */
+        .bo-body {
+            min-height:100%;
+            background:
+                radial-gradient(circle at 12% 10%, rgba(13,148,136,0.16), transparent 28%),
+                radial-gradient(circle at 86% 6%, rgba(37,99,235,0.14), transparent 30%),
+                linear-gradient(160deg,#F8FAFC 0%,#EEF6F4 48%,#F8FAFC 100%);
+            padding:28px;
+            overflow-y:auto;
+        }
+        .bo-inner { max-width:1180px; margin:0 auto; display:flex; flex-direction:column; gap:18px; }
+        .bo-hero {
+            display:grid; grid-template-columns:minmax(0,1fr) 300px; gap:18px;
+            background:linear-gradient(135deg,#0F766E,#0D9488 55%,#14B8A6);
+            border-radius:30px; padding:26px; color:white; position:relative; overflow:hidden;
+            box-shadow:0 22px 58px rgba(13,148,136,0.22);
+        }
+        .bo-hero::after { content:''; position:absolute; width:260px; height:260px; border-radius:50%; background:rgba(255,255,255,0.09); right:-84px; top:-112px; }
+        .bo-kicker { font-size:10px; font-weight:950; letter-spacing:.18em; text-transform:uppercase; opacity:.68; }
+        .bo-title { font-size:30px; font-weight:950; letter-spacing:-.06em; margin-top:6px; }
+        .bo-sub { font-size:13px; line-height:1.7; opacity:.78; max-width:650px; margin-top:8px; }
+        .bo-hero-card {
+            background:rgba(255,255,255,0.14); border:1px solid rgba(255,255,255,0.24);
+            border-radius:22px; padding:18px; backdrop-filter:blur(12px); position:relative; z-index:1;
+        }
+        .bo-hero-card .label { font-size:10px; font-weight:850; opacity:.7; text-transform:uppercase; letter-spacing:.12em; }
+        .bo-hero-card .value { font-size:20px; font-weight:950; margin-top:6px; }
+        .bo-stat-grid { display:grid; grid-template-columns:repeat(6,minmax(0,1fr)); gap:12px; }
+        .bo-stat {
+            background:white; border:1px solid #E2E8F0; border-radius:20px; padding:16px;
+            box-shadow:0 8px 24px rgba(15,23,42,0.05); min-height:104px; position:relative; overflow:hidden;
+        }
+        .bo-stat::before { content:''; position:absolute; inset:0 auto 0 0; width:4px; background:var(--bo-accent,#0D9488); }
+        .bo-stat-num { font-size:28px; font-weight:950; color:var(--bo-accent,#0D9488); line-height:1; }
+        .bo-stat-label { font-size:11px; color:#334155; font-weight:850; margin-top:10px; }
+        .bo-stat-sub { font-size:9.5px; color:#94A3B8; font-weight:650; margin-top:4px; line-height:1.35; }
+        .bo-grid { display:grid; grid-template-columns:1.3fr .7fr; gap:18px; align-items:start; }
+        .bo-panel { background:white; border:1px solid #E2E8F0; border-radius:26px; padding:18px; box-shadow:0 10px 30px rgba(15,23,42,0.06); }
+        .bo-panel-head { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:14px; }
+        .bo-panel-title { font-size:15px; font-weight:950; color:#0F172A; }
+        .bo-panel-sub { font-size:11px; color:#94A3B8; font-weight:700; margin-top:2px; }
+        .bo-mod-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+        .bo-module {
+            border:1.5px solid var(--bo-border,#E2E8F0); background:linear-gradient(135deg,var(--bo-bg,#F8FAFC),#fff);
+            border-radius:20px; padding:16px; min-height:154px; display:flex; flex-direction:column; gap:12px;
+            cursor:pointer; transition:transform .16s, box-shadow .16s, border-color .16s;
+        }
+        .bo-module:hover { transform:translateY(-2px); box-shadow:0 14px 34px rgba(15,23,42,0.08); border-color:var(--bo-color,#0D9488); }
+        .bo-module.locked { opacity:.62; }
+        .bo-module-top { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; }
+        .bo-module-icon {
+            width:42px; height:42px; border-radius:15px; display:flex; align-items:center; justify-content:center;
+            color:white; background:linear-gradient(135deg,var(--bo-color,#0D9488),var(--bo-color2,#14B8A6));
+            box-shadow:0 8px 18px rgba(13,148,136,0.18);
+        }
+        .bo-module-title { font-size:14px; font-weight:950; color:#0F172A; }
+        .bo-module-desc { font-size:11px; color:#64748B; line-height:1.55; font-weight:650; }
+        .bo-module-foot { margin-top:auto; display:flex; align-items:center; justify-content:space-between; gap:8px; }
+        .bo-chip { font-size:9.5px; font-weight:900; border-radius:999px; padding:4px 9px; background:white; border:1px solid var(--bo-border,#E2E8F0); color:var(--bo-color,#0D9488); }
+        .bo-timeline { display:flex; flex-direction:column; gap:10px; }
+        .bo-log { display:flex; align-items:flex-start; gap:10px; padding:12px; background:#F8FAFC; border:1px solid #E2E8F0; border-radius:16px; }
+        .bo-log-dot { width:10px; height:10px; border-radius:50%; background:var(--bo-color,#0D9488); margin-top:5px; flex-shrink:0; box-shadow:0 0 0 4px var(--bo-bg,#F0FDFA); }
+        .bo-log-title { font-size:12px; font-weight:900; color:#0F172A; }
+        .bo-log-sub { font-size:10px; color:#64748B; font-weight:650; margin-top:2px; line-height:1.4; }
+        @media (max-width: 980px) {
+            .bo-hero, .bo-grid { grid-template-columns:1fr; }
+            .bo-stat-grid { grid-template-columns:repeat(3,minmax(0,1fr)); }
+        }
+        @media (max-width: 640px) {
+            .bo-body { padding:16px; }
+            .bo-stat-grid, .bo-mod-grid { grid-template-columns:1fr; }
+            .bo-title { font-size:24px; }
+        }
         @media (max-width: 900px) {
             #globalHeader { grid-template-columns: 1fr auto minmax(280px, 1fr); padding: 0 16px; gap: 10px; }
             .gh-subtitle, .gh-ward-chip .dc-pill, .gh-time-card { display: none; }
             .gh-user-card { max-width: 120px; padding-right: 8px; }
             .gh-nav-btn { padding: 7px 9px; }
             .gh-nav-btn span { display: none; }
+            .gh-icon-action.backend { width: 34px; padding: 0; }
+            .gh-icon-action.backend span { display: none; }
         }
 
         /* All pages get padding for fixed header/footer */
@@ -1713,104 +1791,138 @@
         .db-role-section { margin-bottom:24px; }
 
         /* Shared Cassette monitor */
+        /* ── Cassette Panel ── */
         .db-cassette-panel {
-            margin-bottom:22px; padding:20px;
-            background:
-                radial-gradient(circle at 8% 0%,rgba(20,184,166,.18),transparent 28%),
-                radial-gradient(circle at 94% 12%,rgba(59,130,246,.16),transparent 30%),
-                linear-gradient(135deg,rgba(255,255,255,.96),rgba(248,250,252,.9));
-            border:1px solid rgba(203,213,225,.86); border-radius:26px;
-            box-shadow:0 18px 50px rgba(15,23,42,.09);
-            position:relative; overflow:hidden;
+            margin-bottom:22px;
+            background:white;
+            border:1.5px solid rgba(226,232,240,0.9);
+            border-radius:24px;
+            box-shadow:0 4px 24px rgba(15,23,42,0.07);
+            overflow:hidden;
         }
-        .db-cassette-panel::after {
-            content:''; position:absolute; inset:12px; border-radius:22px;
-            border:1px solid rgba(255,255,255,.62); pointer-events:none;
+        /* Gradient banner at top */
+        .db-cassette-banner {
+            background:linear-gradient(135deg,#0F766E 0%,#0D9488 40%,#14B8A6 80%,#2DD4BF 100%);
+            padding:20px 24px 18px;
+            position:relative;
+            overflow:hidden;
         }
-        .db-cassette-head { display:flex; align-items:center; gap:14px; margin-bottom:18px; position:relative; z-index:1; }
+        .db-cassette-banner::before {
+            content:'';position:absolute;width:200px;height:200px;border-radius:50%;
+            background:rgba(255,255,255,0.06);top:-60px;right:-40px;pointer-events:none;
+        }
+        .db-cassette-banner::after {
+            content:'';position:absolute;width:120px;height:120px;border-radius:50%;
+            background:rgba(255,255,255,0.05);bottom:-40px;left:60px;pointer-events:none;
+        }
+        .db-cassette-head { display:flex; align-items:center; gap:14px; position:relative; z-index:1; }
         .db-cassette-icon {
-            width:48px; height:48px; border-radius:17px;
+            width:46px; height:46px; border-radius:14px;
             display:flex; align-items:center; justify-content:center;
-            color:white; background:linear-gradient(135deg,#0F766E,#14B8A6);
-            box-shadow:0 12px 24px rgba(13,148,136,.24);
-            flex-shrink:0;
+            background:rgba(255,255,255,0.18); border:1px solid rgba(255,255,255,0.25);
+            backdrop-filter:blur(8px); flex-shrink:0;
         }
-        .db-cassette-kicker { font-size:9px; font-weight:900; color:#0f766e; letter-spacing:.12em; text-transform:uppercase; margin-bottom:2px; }
-        .db-cassette-title { font-size:18px; font-weight:900; color:#0f172a; letter-spacing:-.35px; }
-        .db-cassette-sub { font-size:11px; color:var(--text-3); margin-top:3px; }
+        .db-cassette-kicker { font-size:9px; font-weight:800; color:rgba(255,255,255,0.7); letter-spacing:.14em; text-transform:uppercase; margin-bottom:2px; }
+        .db-cassette-title { font-size:18px; font-weight:900; color:white; letter-spacing:-.3px; }
+        .db-cassette-sub { font-size:11px; color:rgba(255,255,255,0.7); margin-top:2px; }
         .db-cassette-pill {
             margin-left:auto; display:inline-flex; align-items:center; gap:6px;
-            padding:8px 13px; border-radius:999px;
-            background:rgba(239,246,255,.9); color:#1d4ed8; border:1px solid rgba(147,197,253,.65);
+            padding:7px 13px; border-radius:999px;
+            background:rgba(255,255,255,0.15); color:white;
+            border:1px solid rgba(255,255,255,0.25);
             font-size:11px; font-weight:800; white-space:nowrap;
+            backdrop-filter:blur(6px);
         }
-        .db-cassette-body { display:flex; flex-direction:column; gap:16px; position:relative; z-index:1; }
-        .db-cassette-summary { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; }
+        .db-cassette-body { padding:20px 24px; display:flex; flex-direction:column; gap:18px; }
+        .db-cassette-summary { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
         .db-cassette-stat {
-            border-radius:17px; padding:14px 14px 13px;
-            background:rgba(255,255,255,.9); border:1px solid rgba(226,232,240,.9);
-            min-height:86px; position:relative; overflow:hidden;
-            box-shadow:0 6px 18px rgba(15,23,42,.04);
+            border-radius:16px; padding:16px 16px 14px;
+            background:var(--stat-bg,#F8FAFC);
+            border:1.5px solid rgba(226,232,240,0.8);
+            position:relative; overflow:hidden;
+            transition:transform .16s, box-shadow .16s;
         }
-        .db-cassette-stat::before {
-            content:''; position:absolute; top:0; left:0; right:0; height:4px;
-            background:var(--accent,#94a3b8);
+        .db-cassette-stat:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(15,23,42,0.08); }
+        .db-cassette-stat-icon {
+            width:36px;height:36px;border-radius:11px;
+            display:flex;align-items:center;justify-content:center;
+            background:var(--stat-icon-bg,#E2E8F0);
+            margin-bottom:12px;
         }
-        .db-cassette-stat-val { font-size:27px; font-weight:900; line-height:1; color:#0f172a; }
-        .db-cassette-stat-label { font-size:10px; font-weight:850; color:#475569; margin-top:8px; }
-        .db-cassette-stat-note { font-size:9px; color:#94a3b8; margin-top:3px; font-weight:700; }
+        .db-cassette-stat-val { font-size:32px; font-weight:900; line-height:1; color:var(--stat-color,#0f172a); font-family:'Inter',sans-serif; }
+        .db-cassette-stat-label { font-size:11px; font-weight:700; color:#475569; margin-top:8px; }
+        .db-cassette-stat-note { font-size:9.5px; color:#94a3b8; margin-top:3px; font-weight:600; }
+        /* Cassette map section */
         .db-cassette-map-card {
-            background:rgba(255,255,255,.94);
-            border:1px solid rgba(226,232,240,.95);
-            border-radius:22px; padding:14px;
-            box-shadow:0 8px 22px rgba(15,23,42,.05);
+            background:#F8FAFC;
+            border:1.5px solid rgba(226,232,240,0.9);
+            border-radius:18px; overflow:hidden;
         }
-        .db-cassette-map-head { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:12px; }
-        .db-cassette-map-title { color:#0f172a; font-size:12px; font-weight:900; letter-spacing:.02em; }
-        .db-cassette-map-sub { color:#64748b; font-size:10px; font-weight:700; margin-top:2px; }
+        .db-cassette-map-head {
+            display:flex; align-items:center; justify-content:space-between; gap:12px;
+            padding:14px 16px 0;
+            margin-bottom:12px;
+        }
+        .db-cassette-map-title { color:#0f172a; font-size:13px; font-weight:800; letter-spacing:-.1px; }
+        .db-cassette-map-sub { color:#64748b; font-size:10px; font-weight:600; margin-top:2px; }
         .db-cassette-map {
             display:grid; grid-template-columns:repeat(3,1fr); gap:10px;
-            background:#f8fafc; border:1px solid #e2e8f0;
-            border-radius:18px; padding:12px;
+            padding:0 14px 14px;
         }
         .db-cassette-drawer {
-            background:white; border:1px solid #e2e8f0;
-            border-radius:15px; padding:10px;
+            background:white; border:1px solid #E2E8F0;
+            border-radius:14px; padding:12px;
+            box-shadow:0 2px 8px rgba(15,23,42,0.04);
         }
-        .db-cassette-drawer-head { display:flex; align-items:center; justify-content:space-between; font-size:11px; font-weight:900; color:#334155; margin-bottom:8px; }
-        .db-cassette-drawer-grid { display:grid; grid-template-columns:repeat(6,1fr); gap:5px; }
+        .db-cassette-drawer-head {
+            display:flex; align-items:center; justify-content:space-between;
+            font-size:11px; font-weight:800; color:#334155; margin-bottom:10px;
+        }
+        .db-cassette-drawer-badge {
+            font-size:10px; font-weight:700; color:#0D9488;
+            background:#F0FDFA; border:1px solid #99F6E4;
+            padding:2px 8px; border-radius:6px;
+        }
+        .db-cassette-drawer-grid { display:grid; grid-template-columns:repeat(6,1fr); gap:4px; }
         .db-cassette-cell {
-            min-height:32px; border-radius:10px; display:flex; align-items:center; justify-content:center;
-            border:1px solid transparent; position:relative; overflow:hidden;
-            color:#64748b; background:#f1f5f9;
-            transition:transform .14s ease, box-shadow .14s ease;
+            aspect-ratio:1; border-radius:8px; display:flex; align-items:center; justify-content:center;
+            border:1.5px solid transparent; position:relative;
+            background:#F1F5F9; border-color:#E2E8F0;
+            transition:transform .12s ease;
+            cursor:pointer; appearance:none; padding:0; font:inherit;
         }
+        .db-cassette-cell:hover { transform:scale(1.18); z-index:2; }
+        .db-cassette-cell:focus-visible { outline:2px solid #0D9488; outline-offset:2px; z-index:3; }
         .db-cassette-cell::after {
-            content:''; width:9px; height:9px; border-radius:999px;
-            background:rgba(255,255,255,.72); box-shadow:0 0 0 1px rgba(255,255,255,.6);
+            content:''; width:8px; height:8px; border-radius:50%;
+            background:rgba(148,163,184,0.5);
         }
-        .db-cassette-cell.ready { background:#dcfce7; color:#15803d; border-color:#bbf7d0; }
-        .db-cassette-cell.patient {
-            background:linear-gradient(135deg,#99f6e4,#2dd4bf); color:#0f766e; border-color:#5eead4;
-            box-shadow:0 0 0 2px rgba(20,184,166,.14), inset 0 0 0 1px rgba(255,255,255,.45);
+        .db-cassette-cell.completed::before {
+            content:''; position:absolute; top:-3px; right:-3px;
+            width:9px; height:9px; border-radius:50%;
+            background:#22C55E; border:2px solid #fff;
+            box-shadow:0 2px 6px rgba(34,197,94,0.28);
         }
-        .db-cassette-cell.medication {
-            background:linear-gradient(135deg,#bfdbfe,#3b82f6); color:#1d4ed8; border-color:#93c5fd;
-            box-shadow:0 0 0 2px rgba(59,130,246,.14), inset 0 0 0 1px rgba(255,255,255,.45);
+        .db-cassette-cell.ready { background:#DCFCE7; border-color:#BBF7D0; }
+        .db-cassette-cell.ready::after { background:#22C55E; }
+        .db-cassette-cell.patient { background:linear-gradient(135deg,#CCFBF1,#5EEAD4); border-color:#2DD4BF; box-shadow:0 0 0 2px rgba(20,184,166,0.12); }
+        .db-cassette-cell.patient::after { background:rgba(255,255,255,0.9); box-shadow:0 0 4px rgba(13,148,136,0.3); }
+        .db-cassette-cell.medication { background:linear-gradient(135deg,#DBEAFE,#60A5FA); border-color:#93C5FD; box-shadow:0 0 0 2px rgba(59,130,246,0.12); }
+        .db-cassette-cell.medication::after { background:rgba(255,255,255,0.9); }
+        .db-cassette-cell.schedule { background:linear-gradient(135deg,#EDE9FE,#A78BFA); border-color:#C4B5FD; box-shadow:0 0 0 2px rgba(124,58,237,0.12); }
+        .db-cassette-cell.schedule::after { background:rgba(255,255,255,0.9); }
+        .db-cassette-cell.maintenance { background:#FEE2E2; border-color:#FECACA; }
+        .db-cassette-cell.maintenance::after { background:#F87171; }
+        .db-cassette-legend {
+            display:flex; flex-wrap:wrap; gap:6px;
+            padding:12px 14px 14px; border-top:1px solid rgba(226,232,240,0.6);
         }
-        .db-cassette-cell.schedule {
-            background:linear-gradient(135deg,#ddd6fe,#8b5cf6); color:#6d28d9; border-color:#c4b5fd;
-            box-shadow:0 0 0 2px rgba(124,58,237,.14), inset 0 0 0 1px rgba(255,255,255,.45);
+        .db-cassette-legend span {
+            display:inline-flex; align-items:center; gap:5px; font-size:10px; font-weight:700;
+            color:#475569; padding:4px 10px; border-radius:8px;
+            background:white; border:1px solid #E2E8F0;
         }
-        .db-cassette-cell.maintenance { background:#fee2e2; color:#b91c1c; border-color:#fecaca; }
-        .db-cassette-cell.patient::after,
-        .db-cassette-cell.medication::after,
-        .db-cassette-cell.schedule::after {
-            width:14px; height:14px; background:rgba(255,255,255,.78);
-        }
-        .db-cassette-legend { display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; font-size:10.5px; color:#475569; }
-        .db-cassette-legend span { display:inline-flex; align-items:center; gap:6px; font-weight:750; padding:5px 8px; border-radius:999px; background:#f8fafc; border:1px solid #e2e8f0; }
-        .db-cassette-legend i { width:10px; height:10px; border-radius:4px; display:inline-block; }
+        .db-cassette-legend i { width:10px; height:10px; border-radius:4px; display:inline-block; flex-shrink:0; }
         /* Bottom grid */
         .db-bottom { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
         .db-bottom.super-head { grid-template-columns:1fr 1fr; }
@@ -3758,6 +3870,278 @@
         .rt-pt-time { font-size:14px; font-weight:700; color:var(--text-1); }
         .rt-pt-count { font-size:11px; color:var(--text-2); }
 
+        /* Routine patient queue */
+        .rt-queue-wrap {
+            width:100%;
+            max-width:1240px;
+            margin:0 auto;
+            padding:24px 28px 34px;
+            position:relative;
+        }
+        #pg-routine .rt-body {
+            background:
+                radial-gradient(circle at 14% 8%, rgba(20,184,166,0.18), transparent 30%),
+                radial-gradient(circle at 88% 18%, rgba(59,130,246,0.12), transparent 26%),
+                linear-gradient(160deg, #EFF6F8 0%, #F8FAFC 44%, #EEF7F3 100%);
+        }
+        .rt-routine-head {
+            display:grid;
+            grid-template-columns:auto minmax(0,1fr) minmax(260px,340px);
+            gap:16px;
+            align-items:center;
+            margin-bottom:14px;
+            padding:19px 20px;
+            border:1px solid rgba(148,163,184,0.28);
+            border-radius:28px;
+            background:
+                linear-gradient(135deg, rgba(255,255,255,0.94), rgba(240,253,250,0.86)),
+                radial-gradient(circle at top right, rgba(13,148,136,0.18), transparent 38%);
+            backdrop-filter:blur(22px) saturate(160%);
+            box-shadow:0 18px 55px rgba(15,23,42,0.09), inset 0 1px 0 rgba(255,255,255,0.7);
+            position:relative;
+            overflow:hidden;
+        }
+        .rt-routine-head::after {
+            content:'';
+            position:absolute;
+            width:210px;height:210px;
+            border-radius:50%;
+            right:-86px;top:-112px;
+            background:radial-gradient(circle, rgba(20,184,166,0.23), transparent 70%);
+            pointer-events:none;
+        }
+        .rt-routine-icon {
+            width:54px;height:54px;
+            background:linear-gradient(135deg,#059669,#0D9488);
+            border-radius:18px;
+            display:flex;align-items:center;justify-content:center;
+            box-shadow:0 12px 28px rgba(13,148,136,0.28), inset 0 1px 0 rgba(255,255,255,0.24);
+            position:relative;
+            z-index:1;
+        }
+        .rt-routine-title { font-size:25px;font-weight:900;color:#0f172a;letter-spacing:-0.5px; }
+        .rt-routine-eyebrow {
+            display:inline-flex;
+            align-items:center;
+            gap:7px;
+            margin-bottom:5px;
+            padding:4px 9px;
+            border-radius:999px;
+            background:#ecfdf5;
+            border:1px solid rgba(13,148,136,0.16);
+            color:#0f766e;
+            font-size:10px;
+            font-weight:900;
+            letter-spacing:.38px;
+            text-transform:uppercase;
+        }
+        .rt-routine-eyebrow::before {
+            content:'';
+            width:6px;height:6px;border-radius:50%;
+            background:#14b8a6;
+            box-shadow:0 0 0 4px rgba(20,184,166,0.12);
+        }
+        .rt-routine-sub { font-size:13px;color:#64748b;margin-top:4px;font-weight:650; }
+        .rt-routine-search { width:100% !important; }
+        .rt-routine-search input {
+            background:rgba(255,255,255,0.96) !important;
+            border:1px solid rgba(148,163,184,0.35) !important;
+            box-shadow:0 8px 22px rgba(15,23,42,0.06);
+        }
+        .rt-routine-kpis {
+            display:flex;
+            gap:10px;
+            flex-wrap:wrap;
+            margin:0 0 14px;
+        }
+        .rt-routine-tools {
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            gap:12px;
+            margin:0 0 14px;
+            flex-wrap:wrap;
+            padding:10px;
+            border:1px solid rgba(226,232,240,0.72);
+            border-radius:20px;
+            background:rgba(255,255,255,0.72);
+            backdrop-filter:blur(16px);
+            box-shadow:0 10px 30px rgba(15,23,42,0.05);
+        }
+        .rt-routine-filters {
+            display:flex;
+            gap:6px;
+            flex-wrap:wrap;
+            padding:4px;
+            border-radius:999px;
+            background:#f1f5f9;
+            border:1px solid rgba(226,232,240,0.84);
+        }
+        .rt-filter-chip {
+            border:1px solid transparent;
+            background:transparent;
+            color:var(--text-2);
+            border-radius:999px;
+            padding:7px 12px;
+            font-family:'Prompt',sans-serif;
+            font-size:12px;
+            font-weight:800;
+            cursor:pointer;
+            transition:all .16s ease;
+        }
+        .rt-filter-chip:hover { border-color:var(--green-mid); color:var(--green-dark); transform:translateY(-1px); }
+        .rt-filter-chip.active {
+            background:#fff;
+            color:white;
+            color:#0f766e;
+            border-color:rgba(13,148,136,0.22);
+            box-shadow:0 8px 20px rgba(15,23,42,0.08);
+        }
+        .rt-density-note {
+            color:#64748b;
+            font-size:11px;
+            font-weight:750;
+            background:#f8fafc;
+            border:1px solid rgba(226,232,240,0.78);
+            border-radius:999px;
+            padding:7px 11px;
+        }
+        .rt-routine-chip {
+            display:inline-flex;
+            align-items:center;
+            gap:8px;
+            padding:10px 13px;
+            border-radius:999px;
+            border:1px solid rgba(226,232,240,0.76);
+            background:rgba(255,255,255,0.86);
+            color:var(--text-2);
+            font-size:12px;
+            font-weight:750;
+            box-shadow:0 8px 22px rgba(15,23,42,0.05);
+        }
+        .rt-routine-chip strong { color:#0f172a;font-family:'Inter',sans-serif;font-size:14px; }
+        .rt-routine-chip.warn { background:#fff7ed;border-color:#fed7aa;color:#c2410c; }
+        .rt-routine-chip.danger { background:#fef2f2;border-color:#fecaca;color:#dc2626; }
+        .rt-patient-list {
+            display:flex;
+            flex-direction:column;
+            gap:0;
+            border:1px solid rgba(148,163,184,0.32);
+            border-radius:26px;
+            background:rgba(255,255,255,0.92);
+            box-shadow:0 22px 70px rgba(15,23,42,0.10), inset 0 1px 0 rgba(255,255,255,0.85);
+            overflow:auto;
+            max-height:calc(100vh - 300px);
+            min-height:360px;
+        }
+        .rt-list-head { display:none; }
+        .rt-patient-list { display:grid; grid-template-columns:repeat(2,1fr); gap:14px; }
+        .rt-patient-card {
+            position:relative;
+            display:flex;
+            flex-direction:column;
+            background:white;
+            border:1.5px solid rgba(226,232,240,0.8);
+            border-radius:20px;
+            padding:0;
+            cursor:pointer;
+            transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+            overflow:hidden;
+            box-shadow:0 2px 12px rgba(0,0,0,0.04);
+        }
+        .rt-patient-card:hover {
+            transform:translateY(-3px);
+            box-shadow:0 8px 28px rgba(0,0,0,0.10);
+            border-color:var(--rt-accent,#0D9488);
+        }
+        .rt-patient-card[data-highalert="1"] { border-color:rgba(239,68,68,0.3); }
+        .rt-patient-card[data-highalert="1"]:hover { border-color:#EF4444; box-shadow:0 8px 28px rgba(239,68,68,0.12); }
+        /* Accent top strip */
+        .rt-patient-card::before {
+            content:'';
+            display:block;
+            height:4px;
+            width:100%;
+            background:var(--rt-accent,#0D9488);
+        }
+        .rt-bed-badge {
+            position:absolute;
+            top:16px;
+            right:16px;
+            background:var(--rt-soft,#F0FDFA);
+            border:1.5px solid rgba(226,232,240,0.8);
+            border-radius:12px;
+            padding:5px 10px;
+            text-align:center;
+        }
+        .rt-bed-badge strong { display:block;font-size:13px;font-weight:800;color:var(--rt-accent,#0D9488);font-family:'Inter',sans-serif;letter-spacing:-0.2px;line-height:1.2; }
+        .rt-bed-badge span { display:block;font-size:8.5px;color:var(--text-3);font-weight:700;text-transform:uppercase;letter-spacing:.4px;margin-top:1px; }
+        .rt-card-main { padding:16px 18px 0; flex:1; }
+        .rt-card-top { display:flex;align-items:center;gap:12px;margin-bottom:10px; }
+        .rt-card-avatar {
+            width:44px;height:44px;border-radius:14px;flex-shrink:0;
+            display:flex;align-items:center;justify-content:center;
+            background:linear-gradient(135deg,var(--rt-accent,#0D9488),color-mix(in srgb,var(--rt-accent,#0D9488) 70%, white));
+            color:white;font-size:14px;font-weight:800;
+            box-shadow:0 3px 10px color-mix(in srgb,var(--rt-accent,#0D9488) 30%,transparent);
+        }
+        .rt-card-name { font-size:15px;font-weight:800;color:var(--text-1);letter-spacing:-0.2px;line-height:1.3;padding-right:72px; }
+        .rt-card-meta { font-size:11px;color:var(--text-3);margin-top:2px; }
+        .rt-card-badges { display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px; }
+        .rt-card-preview {
+            font-size:11px;color:var(--text-2);
+            white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+            background:#F8FAFC;border:1px solid rgba(226,232,240,0.7);
+            padding:7px 10px;border-radius:10px;
+            margin-bottom:14px;
+        }
+        .rt-card-right {
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            gap:8px;
+            padding:10px 18px 14px;
+            border-top:1px solid rgba(226,232,240,0.6);
+            background:rgba(248,250,252,0.6);
+        }
+        .rt-card-stat {
+            display:flex;
+            align-items:center;
+            gap:8px;
+        }
+        .rt-card-stat strong {
+            font-size:18px;font-weight:800;color:var(--rt-accent,#0D9488);font-family:'Inter',sans-serif;line-height:1;
+        }
+        .rt-card-stat span { font-size:10px;color:var(--text-3);font-weight:600; }
+        /* Progress bar */
+        .rt-card-stat::before { display:none; }
+        .rt-card-time {
+            padding:6px 12px;
+            border-radius:10px;
+            background:#EFF6FF;
+            color:#2563EB;
+            font-size:12px;
+            font-weight:800;
+            white-space:nowrap;
+        }
+        .rt-card-status {
+            font-size:10px;font-weight:700;
+            padding:5px 10px;
+            border-radius:8px;
+            background:var(--rt-soft,#F0FDFA);
+            color:var(--rt-accent,#0D9488);
+            white-space:nowrap;
+        }
+        .rt-patient-empty {
+            grid-column:1/-1;
+            padding:40px;
+            text-align:center;
+            color:var(--text-3);
+            background:white;
+            border:1px dashed var(--border);
+            border-radius:18px;
+        }
+
         /* Drug list for step 2 & 4 */
         .rt-drug {
             padding:14px 16px; border:1.5px solid rgba(226,232,240,0.6);
@@ -5066,6 +5450,14 @@
             .rt-stepper { padding: 10px 12px; overflow-x: auto; justify-content: flex-start; }
             .rt-step-label { display: none; }
             .rt-rights, .am-rights-grid { grid-template-columns: repeat(4,1fr); }
+            .rt-queue-wrap { padding:18px 14px 28px; }
+            .rt-routine-head { grid-template-columns:1fr; padding:16px; gap:12px; }
+            .rt-routine-icon { width:48px;height:48px; }
+            .rt-routine-title { font-size:21px; }
+            .rt-routine-tools { align-items:flex-start; }
+            .rt-patient-list { max-height:none; min-height:0; overflow:visible; }
+            .rt-patient-list { grid-template-columns:1fr; }
+            .rt-patient-card { border-radius:16px; }
         }
 
         /* ── RESPONSIVE: Small Mobile (≤480px) ───── */
@@ -6216,22 +6608,24 @@
 
         <!-- Shared Cassette Monitor — visible for every role -->
         <div class="db-cassette-panel" id="dashCassettePanel">
-            <div class="db-cassette-head">
-                <div class="db-cassette-icon">
-                    <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-                        <rect x="3" y="3" width="18" height="18" rx="2"/>
-                        <line x1="3" y1="9" x2="21" y2="9"/>
-                        <line x1="9" y1="21" x2="9" y2="9"/>
-                    </svg>
-                </div>
-                <div style="flex:1;min-width:220px;">
-                    <div class="db-cassette-kicker">Live Cart Inventory</div>
-                    <div class="db-cassette-title">ข้อมูล Cassette รถเข็นยา</div>
-                    <div class="db-cassette-sub" id="dashCassetteSub">Med Cart A-1 · Ward 3A · อัปเดตจากสถานะการจัดยา</div>
-                </div>
-                <div class="db-cassette-pill" id="dashCassetteModePill">
-                    <span style="width:7px;height:7px;background:#22c55e;border-radius:50%;box-shadow:0 0 0 3px rgba(34,197,94,.16);"></span>
-                    ทุก Role มองเห็น
+            <div class="db-cassette-banner">
+                <div class="db-cassette-head">
+                    <div class="db-cassette-icon">
+                        <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="3" width="18" height="18" rx="2"/>
+                            <line x1="3" y1="9" x2="21" y2="9"/>
+                            <line x1="9" y1="21" x2="9" y2="9"/>
+                        </svg>
+                    </div>
+                    <div style="flex:1;min-width:220px;">
+                        <div class="db-cassette-kicker">Live Cart Inventory</div>
+                        <div class="db-cassette-title">ข้อมูล Cassette รถเข็นยา</div>
+                        <div class="db-cassette-sub" id="dashCassetteSub">Med Cart A-1 · Ward 3A · อัปเดตจากสถานะการจัดยา</div>
+                    </div>
+                    <div class="db-cassette-pill" id="dashCassetteModePill">
+                        <span style="width:7px;height:7px;background:#22c55e;border-radius:50%;box-shadow:0 0 0 3px rgba(34,197,94,.16);"></span>
+                        ทุก Role มองเห็น
+                    </div>
                 </div>
             </div>
             <div class="db-cassette-body">
@@ -6408,6 +6802,57 @@
         <div id="dashRoleBottom" class="db-role-section"></div>
 
     </div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     BACKOFFICE HUB PAGE
+═══════════════════════════════════════════════════════════ -->
+<div id="pg-backoffice" class="page">
+    <div class="bo-body">
+        <div class="bo-inner">
+            <div class="bo-hero">
+                <div style="position:relative;z-index:1;">
+                    <div class="bo-kicker">Backoffice Control</div>
+                    <div class="bo-title">ระบบหลังบ้าน</div>
+                    <div class="bo-sub" id="boHeroSub">จัดการข้อมูลตั้งต้น สิทธิ์การใช้งาน รถเข็นยา และรายงานของ Ward ปัจจุบัน</div>
+                    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:16px;">
+                        <span class="bo-chip" id="boRoleBadge">หัวหน้าเวร</span>
+                        <span class="bo-chip" id="boWardBadge">Ward 3A</span>
+                    </div>
+                </div>
+                <div class="bo-hero-card">
+                    <div class="label">Current Scope</div>
+                    <div class="value" id="boCartScope">Med Cart A-1</div>
+                    <div style="font-size:12px;line-height:1.6;opacity:.75;margin-top:10px;" id="boAccessNote">เลือกเมนูเพื่อเข้าสู่ระบบหลังบ้านแบบ Demo</div>
+                </div>
+            </div>
+
+            <div class="bo-stat-grid" id="boStatGrid"></div>
+
+            <div class="bo-grid">
+                <section class="bo-panel">
+                    <div class="bo-panel-head">
+                        <div>
+                            <div class="bo-panel-title">เมนูระบบหลังบ้าน</div>
+                            <div class="bo-panel-sub">Demo hub สำหรับจัดการข้อมูลตั้งต้นและรายงาน</div>
+                        </div>
+                        <span class="bo-chip" id="boModeChip">Supervisor mode</span>
+                    </div>
+                    <div class="bo-mod-grid" id="boModuleGrid"></div>
+                </section>
+
+                <aside class="bo-panel">
+                    <div class="bo-panel-head">
+                        <div>
+                            <div class="bo-panel-title">System Activity</div>
+                            <div class="bo-panel-sub">สถานะล่าสุดของ Ward/Cart ปัจจุบัน</div>
+                        </div>
+                    </div>
+                    <div class="bo-timeline" id="boTimeline"></div>
+                </aside>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -8700,195 +9145,235 @@
 
 
 <div id="pg-routine" class="page">
+    <div class="rt-body" style="background:linear-gradient(160deg,#f0fdfa 0%,#f8fafc 60%,#eff6ff 100%);min-height:100vh;">
 
-    <div class="rt-body">
+        <!-- ══ Flow Header ══ -->
+        <div style="background:white;border-bottom:1px solid rgba(13,148,136,0.12);padding:0 28px;display:flex;align-items:center;gap:0;height:56px;position:sticky;top:0;z-index:50;box-shadow:0 1px 12px rgba(13,148,136,0.06);">
+            <button onclick="nav('pg-dashboard')" style="display:flex;align-items:center;gap:6px;background:none;border:none;font-size:13px;font-weight:600;color:var(--text-2);cursor:pointer;padding:8px 12px 8px 0;border-right:1px solid var(--border);margin-right:16px;font-family:'Prompt',sans-serif;">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+                Dashboard
+            </button>
+            <div style="width:32px;height:32px;background:linear-gradient(135deg,#0D9488,#14B8A6);border-radius:10px;display:flex;align-items:center;justify-content:center;margin-right:10px;">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="white"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0016.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 002 8.5c0 2.3 1.5 4.05 3 5.5l7 7z"/></svg>
+            </div>
+            <div>
+                <div style="font-size:14px;font-weight:800;color:var(--text-1);letter-spacing:-0.2px;">จ่ายยา Routine</div>
+                <div style="font-size:10px;color:var(--text-3);line-height:1.2;" id="rtStep1Sub">Ward 3A · รอบเช้า 06:00–08:00 น.</div>
+            </div>
+            <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+                <span style="background:linear-gradient(135deg,#F0FDFA,#CCFBF1);color:#0F766E;border:1px solid #99F6E4;font-size:11px;font-weight:700;padding:4px 12px;border-radius:8px;">Routine</span>
+            </div>
+        </div>
 
-        <!-- Premium Stepper -->
-        <div id="rtStepper" class="rt-stepper">
-            <div class="rt-step active" data-s="1" onclick="rtStepClick(1)" style="cursor:pointer;"><div class="rt-step-dot" style="background:linear-gradient(135deg,#0D9488,#14B8A6);border-color:#0D9488;color:white;">1</div><span class="rt-step-label" style="color:#0F766E;">เลือกผู้ป่วย</span></div>
-            <div class="rt-step-line"></div>
-            <div class="rt-step" data-s="2" onclick="rtStepClick(2)" style="cursor:pointer;"><div class="rt-step-dot">2</div><span class="rt-step-label">ข้อมูลผู้ป่วย</span></div>
-            <div class="rt-step-line"></div>
-            <div class="rt-step" data-s="3" onclick="rtStepClick(3)" style="cursor:pointer;"><div class="rt-step-dot">3</div><span class="rt-step-label">สแกนผู้ป่วย</span></div>
-            <div class="rt-step-line"></div>
-            <div class="rt-step" data-s="4" onclick="rtStepClick(4)" style="cursor:pointer;"><div class="rt-step-dot">4</div><span class="rt-step-label">สแกนยา</span></div>
-            <div class="rt-step-line"></div>
-            <div class="rt-step" data-s="5" onclick="rtStepClick(5)" style="cursor:pointer;"><div class="rt-step-dot">5</div><span class="rt-step-label">ยืนยัน</span></div>
-            <div class="rt-step-line"></div>
-            <div class="rt-step" data-s="6" onclick="rtStepClick(6)" style="cursor:pointer;"><div class="rt-step-dot">6</div><span class="rt-step-label">สำเร็จ</span></div>
+        <!-- ══ Stepper ══ -->
+        <div id="rtStepper" style="background:white;border-bottom:1px solid rgba(226,232,240,0.6);padding:14px 28px;display:flex;align-items:center;justify-content:center;gap:0;box-shadow:0 1px 6px rgba(0,0,0,0.03);">
+            <div class="rt-step active" data-s="1" onclick="rtStepClick(1)" style="cursor:pointer;display:flex;align-items:center;gap:6px;">
+                <div class="rt-step-dot" style="width:28px;height:28px;font-size:12px;background:linear-gradient(135deg,#0D9488,#14B8A6);border-color:#0D9488;color:white;">1</div>
+                <span class="rt-step-label" style="color:#0F766E;font-size:11px;font-weight:700;">เลือกผู้ป่วย</span>
+            </div>
+            <div class="rt-step-line" style="flex:1;max-width:40px;"></div>
+            <div class="rt-step" data-s="2" onclick="rtStepClick(2)" style="cursor:pointer;display:flex;align-items:center;gap:6px;">
+                <div class="rt-step-dot" style="width:28px;height:28px;font-size:12px;">2</div>
+                <span class="rt-step-label" style="font-size:11px;">ข้อมูลผู้ป่วย</span>
+            </div>
+            <div class="rt-step-line" style="flex:1;max-width:40px;"></div>
+            <div class="rt-step" data-s="3" onclick="rtStepClick(3)" style="cursor:pointer;display:flex;align-items:center;gap:6px;">
+                <div class="rt-step-dot" style="width:28px;height:28px;font-size:12px;">3</div>
+                <span class="rt-step-label" style="font-size:11px;">สแกนผู้ป่วย</span>
+            </div>
+            <div class="rt-step-line" style="flex:1;max-width:40px;"></div>
+            <div class="rt-step" data-s="4" onclick="rtStepClick(4)" style="cursor:pointer;display:flex;align-items:center;gap:6px;">
+                <div class="rt-step-dot" style="width:28px;height:28px;font-size:12px;">4</div>
+                <span class="rt-step-label" style="font-size:11px;">สแกนยา</span>
+            </div>
+            <div class="rt-step-line" style="flex:1;max-width:40px;"></div>
+            <div class="rt-step" data-s="5" onclick="rtStepClick(5)" style="cursor:pointer;display:flex;align-items:center;gap:6px;">
+                <div class="rt-step-dot" style="width:28px;height:28px;font-size:12px;">5</div>
+                <span class="rt-step-label" style="font-size:11px;">ยืนยัน</span>
+            </div>
+            <div class="rt-step-line" style="flex:1;max-width:40px;"></div>
+            <div class="rt-step" data-s="6" onclick="rtStepClick(6)" style="cursor:pointer;display:flex;align-items:center;gap:6px;">
+                <div class="rt-step-dot" style="width:28px;height:28px;font-size:12px;">6</div>
+                <span class="rt-step-label" style="font-size:11px;">สำเร็จ</span>
+            </div>
         </div>
 
         <!-- ══ STEP 1: เลือกผู้ป่วย ══ -->
         <div class="rt-panel active" id="rtStep1">
-            <div style="max-width:840px;margin:0 auto;padding:28px;width:100%;">
-                <!-- Header -->
-                <div style="display:flex;align-items:center;gap:16px;margin-bottom:24px;">
-                    <div style="width:52px;height:52px;background:linear-gradient(135deg,#059669,#0D9488);border-radius:16px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(13,148,136,0.25);">
-                        <svg width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0016.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 002 8.5c0 2.3 1.5 4.05 3 5.5l7 7z"/></svg>
+            <div style="max-width:960px;margin:0 auto;padding:24px 28px;">
+
+                <!-- KPI row -->
+                <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px;">
+                    <div style="background:white;border:1px solid rgba(226,232,240,0.8);border-radius:16px;padding:16px 18px;box-shadow:0 1px 8px rgba(0,0,0,0.04);display:flex;align-items:center;gap:12px;">
+                        <div style="width:38px;height:38px;background:linear-gradient(135deg,#EFF6FF,#DBEAFE);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+                        </div>
+                        <div><div style="font-size:22px;font-weight:800;color:#1D4ED8;line-height:1;" id="rtTotalPatients">0</div><div style="font-size:10px;color:var(--text-3);margin-top:2px;">ผู้ป่วยทั้งหมด</div></div>
                     </div>
-                    <div style="flex:1;">
-                        <h1 style="font-size:24px;font-weight:800;color:var(--text-1);letter-spacing:-0.3px;">จ่ายยา — เลือกผู้ป่วย</h1>
-                        <p id="rtStep1Sub" style="font-size:13px;color:var(--text-3);margin-top:3px;">Ward 3A · รอบเช้า 06:00–08:00 น. · 6 ผู้ป่วยรอจ่ายยา</p>
+                    <div style="background:white;border:1px solid rgba(226,232,240,0.8);border-radius:16px;padding:16px 18px;box-shadow:0 1px 8px rgba(0,0,0,0.04);display:flex;align-items:center;gap:12px;">
+                        <div style="width:38px;height:38px;background:linear-gradient(135deg,#FFFBEB,#FEF3C7);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#D97706" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                        </div>
+                        <div><div style="font-size:22px;font-weight:800;color:#B45309;line-height:1;" id="rtPendingPatients">0</div><div style="font-size:10px;color:var(--text-3);margin-top:2px;">รอจ่ายยา</div></div>
                     </div>
-                    <div class="disp-search" style="width:240px;">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-                        <input type="text" id="rtPatientSearch" placeholder="ค้นหาผู้ป่วย..." oninput="filterRoutinePatients()" style="padding:10px 14px 10px 38px;font-size:13px;">
+                    <div style="background:white;border:1px solid rgba(226,232,240,0.8);border-radius:16px;padding:16px 18px;box-shadow:0 1px 8px rgba(0,0,0,0.04);display:flex;align-items:center;gap:12px;">
+                        <div style="width:38px;height:38px;background:linear-gradient(135deg,#FEF2F2,#FEE2E2);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                        </div>
+                        <div><div style="font-size:22px;font-weight:800;color:#991B1B;line-height:1;" id="rtHighAlertPatients">0</div><div style="font-size:10px;color:var(--text-3);margin-top:2px;">High Alert</div></div>
+                    </div>
+                    <div style="background:white;border:1px solid rgba(226,232,240,0.8);border-radius:16px;padding:16px 18px;box-shadow:0 1px 8px rgba(0,0,0,0.04);display:flex;align-items:center;gap:12px;">
+                        <div style="width:38px;height:38px;background:linear-gradient(135deg,#F0FDFA,#CCFBF1);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0D9488" stroke-width="2.5"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+                        </div>
+                        <div><div style="font-size:22px;font-weight:800;color:#0F766E;line-height:1;" id="rtVisiblePatients">0</div><div style="font-size:10px;color:var(--text-3);margin-top:2px;">แสดงผล</div></div>
                     </div>
                 </div>
 
-                <!-- Patient cards (2 columns) -->
-                <div id="rtPatientList" style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;">
-                    <div onclick="rtSelectPatient('01')" style="background:rgba(255,255,255,0.9);border:2px solid var(--border);border-radius:16px;padding:18px;cursor:pointer;transition:all .2s;box-shadow:var(--shadow);border-top:3px solid #0D9488;" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 24px rgba(13,148,136,0.12)'" onmouseout="this.style.transform='';this.style.boxShadow='var(--shadow)'">
-                        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
-                            <div style="width:40px;height:40px;background:linear-gradient(135deg,#0D9488,#14B8A6);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:white;">สช</div>
-                            <div><div style="font-size:14px;font-weight:700;color:var(--text-1);">สมชาย มานะ</div><div style="font-size:10px;color:var(--text-3);">3A-01 · HN: 6401234</div></div>
-                        </div>
-                        <div style="display:flex;gap:8px;">
-                            <div style="flex:1;background:#F0FDFA;border-radius:8px;padding:8px;text-align:center;"><div style="font-size:16px;font-weight:700;color:#0D9488;">3</div><div style="font-size:9px;color:var(--text-3);">รายการยา</div></div>
-                            <div style="flex:1;background:#EFF6FF;border-radius:8px;padding:8px;text-align:center;"><div style="font-size:13px;font-weight:700;color:#3B82F6;">06:00–08:00</div><div style="font-size:9px;color:var(--text-3);">รอบเช้า</div></div>
-                        </div>
+                <!-- Search + Filter bar -->
+                <div style="background:white;border:1px solid rgba(226,232,240,0.8);border-radius:16px;padding:14px 18px;margin-bottom:16px;box-shadow:0 1px 8px rgba(0,0,0,0.04);display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+                    <div style="position:relative;flex:1;min-width:200px;">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--text-3);pointer-events:none;"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                        <input type="text" id="rtPatientSearch" placeholder="ค้นหาผู้ป่วย ชื่อ / HN / เตียง..." oninput="filterRoutinePatients()" style="width:100%;padding:9px 14px 9px 36px;font-size:13px;border:1.5px solid var(--border);border-radius:10px;font-family:'Prompt',sans-serif;outline:none;color:var(--text-1);background:#FAFAFA;box-sizing:border-box;">
                     </div>
-
-                    <div onclick="rtSelectPatient('03')" style="background:rgba(255,255,255,0.9);border:2px solid var(--border);border-radius:16px;padding:18px;cursor:pointer;transition:all .2s;box-shadow:var(--shadow);border-top:3px solid #8B5CF6;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''">
-                        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
-                            <div style="width:40px;height:40px;background:linear-gradient(135deg,#8B5CF6,#A78BFA);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:white;">มส</div>
-                            <div><div style="font-size:14px;font-weight:700;color:var(--text-1);">มาลี สุขใจ</div><div style="font-size:10px;color:var(--text-3);">3A-03 · HN: 6404215</div></div>
-                        </div>
-                        <div style="display:flex;gap:8px;">
-                            <div style="flex:1;background:#F5F3FF;border-radius:8px;padding:8px;text-align:center;"><div style="font-size:16px;font-weight:700;color:#7C3AED;">3</div><div style="font-size:9px;color:var(--text-3);">รายการยา</div></div>
-                            <div style="flex:1;background:#EFF6FF;border-radius:8px;padding:8px;text-align:center;"><div style="font-size:13px;font-weight:700;color:#3B82F6;">06:00–08:00</div><div style="font-size:9px;color:var(--text-3);">รอบเช้า</div></div>
-                        </div>
-                    </div>
-
-                    <div onclick="rtSelectPatient('05')" style="background:rgba(255,255,255,0.9);border:2px solid var(--border);border-radius:16px;padding:18px;cursor:pointer;transition:all .2s;box-shadow:var(--shadow);border-top:3px solid #3B82F6;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''">
-                        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
-                            <div style="width:40px;height:40px;background:linear-gradient(135deg,#3B82F6,#60A5FA);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:white;">วด</div>
-                            <div><div style="font-size:14px;font-weight:700;color:var(--text-1);">วิชัย ดีงาม</div><div style="font-size:10px;color:var(--text-3);">3A-05 · HN: 6402890</div></div>
-                        </div>
-                        <div style="display:flex;gap:8px;">
-                            <div style="flex:1;background:#EFF6FF;border-radius:8px;padding:8px;text-align:center;"><div style="font-size:16px;font-weight:700;color:#2563EB;">2</div><div style="font-size:9px;color:var(--text-3);">รายการยา</div></div>
-                            <div style="flex:1;background:#EFF6FF;border-radius:8px;padding:8px;text-align:center;"><div style="font-size:13px;font-weight:700;color:#3B82F6;">06:00–08:00</div><div style="font-size:9px;color:var(--text-3);">รอบเช้า</div></div>
-                        </div>
-                    </div>
-
-                    <div onclick="rtSelectPatient('08')" style="background:rgba(255,255,255,0.9);border:2px solid var(--border);border-radius:16px;padding:18px;cursor:pointer;transition:all .2s;box-shadow:var(--shadow);border-top:3px solid #F59E0B;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''">
-                        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
-                            <div style="width:40px;height:40px;background:linear-gradient(135deg,#F59E0B,#FBBF24);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:white;">กช</div>
-                            <div><div style="font-size:14px;font-weight:700;color:var(--text-1);">กัลยา ชัยวงศ์</div><div style="font-size:10px;color:var(--text-3);">3A-08 · HN: 6403012</div></div>
-                        </div>
-                        <div style="display:flex;gap:8px;">
-                            <div style="flex:1;background:#FFFBEB;border-radius:8px;padding:8px;text-align:center;"><div style="font-size:16px;font-weight:700;color:#D97706;">3</div><div style="font-size:9px;color:var(--text-3);">รายการยา</div></div>
-                            <div style="flex:1;background:#EFF6FF;border-radius:8px;padding:8px;text-align:center;"><div style="font-size:13px;font-weight:700;color:#3B82F6;">06:00–08:00</div><div style="font-size:9px;color:var(--text-3);">รอบเช้า</div></div>
-                        </div>
-                    </div>
-
-                    <div onclick="rtSelectPatient('12')" style="background:rgba(255,255,255,0.9);border:2px solid var(--border);border-radius:16px;padding:18px;cursor:pointer;transition:all .2s;box-shadow:var(--shadow);border-top:3px solid #EC4899;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''">
-                        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
-                            <div style="width:40px;height:40px;background:linear-gradient(135deg,#EC4899,#F472B6);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:white;">ปก</div>
-                            <div><div style="font-size:14px;font-weight:700;color:var(--text-1);">ประสิทธิ์ แก้วงาม</div><div style="font-size:10px;color:var(--text-3);">3A-12 · HN: 6406234</div></div>
-                        </div>
-                        <div style="display:flex;gap:8px;">
-                            <div style="flex:1;background:#FCE7F3;border-radius:8px;padding:8px;text-align:center;"><div style="font-size:16px;font-weight:700;color:#DB2777;">1</div><div style="font-size:9px;color:var(--text-3);">รายการยา</div></div>
-                            <div style="flex:1;background:#EFF6FF;border-radius:8px;padding:8px;text-align:center;"><div style="font-size:13px;font-weight:700;color:#3B82F6;">11:00–12:00</div><div style="font-size:9px;color:var(--text-3);">รอบเที่ยง</div></div>
-                        </div>
-                    </div>
-
-                    <div onclick="rtSelectPatient('15')" style="background:rgba(255,255,255,0.9);border:2px solid var(--border);border-radius:16px;padding:18px;cursor:pointer;transition:all .2s;box-shadow:var(--shadow);border-top:3px solid #06B6D4;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''">
-                        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
-                            <div style="width:40px;height:40px;background:linear-gradient(135deg,#06B6D4,#22D3EE);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:white;">สบ</div>
-                            <div><div style="font-size:14px;font-weight:700;color:var(--text-1);">สมศรี บุญมาก</div><div style="font-size:10px;color:var(--text-3);">3A-15 · HN: 6407890</div></div>
-                        </div>
-                        <div style="display:flex;gap:8px;">
-                            <div style="flex:1;background:#ECFEFF;border-radius:8px;padding:8px;text-align:center;"><div style="font-size:16px;font-weight:700;color:#0891B2;">2</div><div style="font-size:9px;color:var(--text-3);">รายการยา</div></div>
-                            <div style="flex:1;background:#EFF6FF;border-radius:8px;padding:8px;text-align:center;"><div style="font-size:13px;font-weight:700;color:#3B82F6;">11:00–12:00</div><div style="font-size:9px;color:var(--text-3);">รอบเที่ยง</div></div>
-                        </div>
+                    <div style="display:flex;gap:6px;flex-wrap:wrap;">
+                        <button type="button" class="rt-filter-chip active" data-filter="all" onclick="setRoutinePatientFilter('all', this)">ทั้งหมด</button>
+                        <button type="button" class="rt-filter-chip" data-filter="pending" onclick="setRoutinePatientFilter('pending', this)">รอจ่าย</button>
+                        <button type="button" class="rt-filter-chip" data-filter="highalert" onclick="setRoutinePatientFilter('highalert', this)">High Alert</button>
+                        <button type="button" class="rt-filter-chip" data-filter="done" onclick="setRoutinePatientFilter('done', this)">จ่ายครบแล้ว</button>
                     </div>
                 </div>
+
+                <!-- Patient list -->
+                <div id="rtPatientList" class="rt-patient-list"></div>
             </div>
         </div>
 
         <!-- ══ STEP 2: ข้อมูลผู้ป่วย ══ -->
         <div class="rt-panel" id="rtStep2">
-            <div class="rt-inner">
-                <div class="pd-hero" style="margin-bottom:16px;">
-                    <div class="pd-avatar" style="background:linear-gradient(135deg,#0D9488,#14B8A6);">สช</div>
+            <div class="rt-inner" style="max-width:680px;">
+
+                <!-- Patient hero -->
+                <div class="pd-hero" style="background:white;border:1px solid rgba(226,232,240,0.8);border-radius:20px;padding:22px 24px;margin-bottom:16px;box-shadow:0 2px 12px rgba(0,0,0,0.04);position:relative;overflow:hidden;">
+                    <div style="position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#059669,#0D9488,#14B8A6,#2DD4BF);"></div>
+                    <div class="pd-avatar" style="background:linear-gradient(135deg,#0D9488,#14B8A6);width:56px;height:56px;border-radius:16px;font-size:16px;font-weight:800;box-shadow:0 4px 14px rgba(13,148,136,0.25);">สช</div>
                     <div class="pd-pt-info">
-                        <div class="pd-pt-name">นายสมชาย มานะ</div>
-                        <div class="pd-pt-meta"><span>HN: 6401234</span><span>เตียง 3A-01</span><span>ชาย, 58 ปี</span></div>
-                        <div class="pd-allergy"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>แพ้ยา: Penicillin, Sulfonamides</div>
-                        <div class="pd-warnings"><span class="pd-warn-tag fall">Fall Risk</span><span class="pd-warn-tag allergy">Drug Allergy</span></div>
+                        <div class="pd-pt-name" style="font-size:20px;font-weight:800;letter-spacing:-0.3px;">นายสมชาย มานะ</div>
+                        <div class="pd-pt-meta" style="margin-top:4px;display:flex;flex-wrap:wrap;gap:8px;">
+                            <span style="display:inline-flex;align-items:center;gap:4px;font-size:12px;color:var(--text-2);background:#F8FAFC;padding:4px 10px;border-radius:8px;border:1px solid var(--border);">HN: 6401234</span>
+                            <span style="display:inline-flex;align-items:center;gap:4px;font-size:12px;color:var(--text-2);background:#F8FAFC;padding:4px 10px;border-radius:8px;border:1px solid var(--border);">เตียง 3A-01</span>
+                            <span style="display:inline-flex;align-items:center;gap:4px;font-size:12px;color:var(--text-2);background:#F8FAFC;padding:4px 10px;border-radius:8px;border:1px solid var(--border);">ชาย, 58 ปี</span>
+                        </div>
+                        <div class="pd-allergy" style="margin-top:10px;display:flex;align-items:center;gap:6px;font-size:12px;color:#991B1B;background:linear-gradient(135deg,#FEF2F2,#FEE2E2);padding:8px 12px;border-radius:10px;border:1px solid #FECACA;">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                            แพ้ยา: Penicillin, Sulfonamides
+                        </div>
+                        <div class="pd-warnings" style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;">
+                            <span class="pd-warn-tag fall">Fall Risk</span>
+                            <span class="pd-warn-tag allergy">Drug Allergy</span>
+                        </div>
                     </div>
                 </div>
-                <div style="font-size:15px;font-weight:800;color:var(--text-1);margin-bottom:14px;display:flex;align-items:center;gap:10px;letter-spacing:-0.2px;">
-                    <div style="width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,var(--green-light),var(--green-mid));display:flex;align-items:center;justify-content:center;">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5"><rect x="6" y="2" width="12" height="20" rx="4"/><line x1="6" y1="12" x2="18" y2="12"/></svg>
+
+                <!-- Drug list -->
+                <div style="background:white;border:1px solid rgba(226,232,240,0.8);border-radius:20px;padding:20px 24px;box-shadow:0 2px 12px rgba(0,0,0,0.04);">
+                    <div style="font-size:14px;font-weight:800;color:var(--text-1);margin-bottom:14px;display:flex;align-items:center;gap:10px;letter-spacing:-0.2px;">
+                        <div style="width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,var(--green-light),var(--green-mid));display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5"><rect x="6" y="2" width="12" height="20" rx="4"/><line x1="6" y1="12" x2="18" y2="12"/></svg>
+                        </div>
+                        รายการยาปกติ — รอบเช้า (3 รายการ)
                     </div>
-                    รายการยาปกติ — รอบเช้า (3 รายการ)
+                    <div style="display:flex;flex-direction:column;gap:8px;">
+                        <div class="rt-drug" style="border-radius:12px;border:1px solid rgba(226,232,240,0.6);"><div class="rt-drug-bar wait"></div><div class="rt-drug-info"><div class="rt-drug-name">Amlodipine 5 mg</div><div class="rt-drug-sub">PO · รับประทาน · OD เช้า</div></div><div class="rt-drug-right"><span class="am-drug-st wait" style="font-size:11px;">รอให้ยา</span></div></div>
+                        <div class="rt-drug" style="border-radius:12px;border:1px solid rgba(226,232,240,0.6);"><div class="rt-drug-bar wait"></div><div class="rt-drug-info"><div class="rt-drug-name">Metformin 500 mg</div><div class="rt-drug-sub">PO · รับประทาน · BID หลังอาหาร</div></div><div class="rt-drug-right"><span class="am-drug-st wait" style="font-size:11px;">รอให้ยา</span></div></div>
+                        <div class="rt-drug" style="border-radius:12px;border:1px solid rgba(226,232,240,0.6);"><div class="rt-drug-bar wait"></div><div class="rt-drug-info"><div class="rt-drug-name">Omeprazole 20 mg</div><div class="rt-drug-sub">PO · รับประทาน · OD ก่อนอาหารเช้า</div></div><div class="rt-drug-right"><span class="am-drug-st wait" style="font-size:11px;">รอให้ยา</span></div></div>
+                    </div>
                 </div>
-                <div class="rt-drug"><div class="rt-drug-bar wait"></div><div class="rt-drug-info"><div class="rt-drug-name">Amlodipine 5 mg</div><div class="rt-drug-sub">PO · รับประทาน · OD เช้า</div></div><div class="rt-drug-right"><span class="am-drug-st wait" style="font-size:11px;">รอให้ยา</span></div></div>
-                <div class="rt-drug"><div class="rt-drug-bar wait"></div><div class="rt-drug-info"><div class="rt-drug-name">Metformin 500 mg</div><div class="rt-drug-sub">PO · รับประทาน · BID หลังอาหาร</div></div><div class="rt-drug-right"><span class="am-drug-st wait" style="font-size:11px;">รอให้ยา</span></div></div>
-                <div class="rt-drug"><div class="rt-drug-bar wait"></div><div class="rt-drug-info"><div class="rt-drug-name">Omeprazole 20 mg</div><div class="rt-drug-sub">PO · รับประทาน · OD ก่อนอาหารเช้า</div></div><div class="rt-drug-right"><span class="am-drug-st wait" style="font-size:11px;">รอให้ยา</span></div></div>
             </div>
-            <div class="rt-bottom"><button class="btn-secondary" onclick="rtGoStep(1)">ย้อนกลับ</button><button class="btn-primary" onclick="rtGoStep(3)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg>เริ่มสแกนผู้ป่วย</button></div>
+            <div class="rt-bottom" style="background:white;border-top:1px solid var(--border);">
+                <button class="btn-secondary" onclick="rtGoStep(1)"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>ย้อนกลับ</button>
+                <button class="btn-primary" onclick="rtGoStep(3)" style="background:linear-gradient(135deg,#0D9488,#14B8A6);">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg>
+                    เริ่มสแกนผู้ป่วย
+                </button>
+            </div>
         </div>
 
         <!-- ══ STEP 3: สแกนผู้ป่วย ══ -->
         <div class="rt-panel" id="rtStep3">
-            <div class="rt-inner center">
-                <div style="background:rgba(255,255,255,0.88);backdrop-filter:blur(20px);border:1.5px solid rgba(226,232,240,0.4);border-radius:22px;padding:20px 24px;max-width:460px;width:100%;margin-bottom:24px;display:flex;align-items:center;gap:16px;box-shadow:0 2px 16px rgba(0,0,0,0.04);position:relative;overflow:hidden;">
+            <div class="rt-inner center" style="padding:32px 28px;">
+
+                <!-- Patient context card -->
+                <div style="background:white;border:1px solid rgba(13,148,136,0.15);border-radius:20px;padding:18px 22px;max-width:480px;width:100%;margin-bottom:28px;display:flex;align-items:center;gap:16px;box-shadow:0 4px 20px rgba(13,148,136,0.08);position:relative;overflow:hidden;">
                     <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--green),#14B8A6,#2DD4BF);"></div>
                     <div style="width:50px;height:50px;background:linear-gradient(135deg,#059669,#0D9488);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;color:white;flex-shrink:0;box-shadow:0 4px 12px rgba(13,148,136,0.25);">สช</div>
-                    <div style="flex:1;"><div style="font-size:17px;font-weight:800;color:var(--text-1);letter-spacing:-0.2px;">นายสมชาย มานะ</div><div style="font-size:12px;color:var(--text-3);margin-top:2px;">HN: 6401234 · เตียง 3A-01</div></div>
-                    <div style="background:linear-gradient(135deg,var(--green-light),var(--green-mid));padding:8px 16px;border-radius:12px;font-size:18px;font-weight:800;color:var(--green-dark);">3A-01</div>
+                    <div style="flex:1;min-width:0;">
+                        <div style="font-size:17px;font-weight:800;color:var(--text-1);letter-spacing:-0.2px;">นายสมชาย มานะ</div>
+                        <div style="font-size:12px;color:var(--text-3);margin-top:2px;">HN: 6401234 · เตียง 3A-01</div>
+                    </div>
+                    <div style="background:linear-gradient(135deg,#F0FDFA,#CCFBF1);padding:10px 18px;border-radius:12px;font-size:18px;font-weight:800;color:#0F766E;border:1px solid #99F6E4;flex-shrink:0;">3A-01</div>
                 </div>
-                <div class="rt-scan-zone" style="max-width:440px;width:100%;" id="rtScan3Zone">
-                    <div class="rt-scan-circle idle" id="rtScan3Circle">
+
+                <!-- Scan zone -->
+                <div class="rt-scan-zone" style="max-width:440px;width:100%;background:white;border:1px solid rgba(226,232,240,0.8);border-radius:24px;padding:32px 24px;box-shadow:0 4px 24px rgba(0,0,0,0.06);" id="rtScan3Zone">
+                    <div style="font-size:11px;font-weight:700;color:var(--text-3);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:20px;">Right Patient — ยืนยันตัวตนผู้ป่วย</div>
+                    <div class="rt-scan-circle idle" id="rtScan3Circle" style="margin:0 auto 20px;">
                         <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--text-3)" id="rtScan3Icon"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg>
                     </div>
-                    <div style="font-size:20px;font-weight:800;color:var(--text-1);margin-bottom:4px;" id="rtScan3Head">กรุณาสแกนสายรัดข้อมือผู้ป่วย</div>
-                    <div style="font-size:14px;color:var(--text-2);margin-bottom:20px;" id="rtScan3Hint">สแกนบาร์โค้ดที่สายรัดข้อมือเพื่อยืนยันตัวตน</div>
-                    <button class="spt-scan-btn" onclick="rtScanPatient()" id="rtScan3Btn" style="background:linear-gradient(135deg,#0D9488,#14B8A6);box-shadow:0 4px 16px rgba(13,148,136,0.3);">
+                    <div style="font-size:20px;font-weight:800;color:var(--text-1);margin-bottom:6px;text-align:center;" id="rtScan3Head">สแกนสายรัดข้อมือผู้ป่วย</div>
+                    <div style="font-size:13px;color:var(--text-2);margin-bottom:24px;text-align:center;line-height:1.6;" id="rtScan3Hint">สแกนบาร์โค้ดที่สายรัดข้อมือเพื่อยืนยันตัวตน<br>ก่อนจ่ายยาทุกครั้ง</div>
+                    <button class="spt-scan-btn" onclick="rtScanPatient()" id="rtScan3Btn" style="background:linear-gradient(135deg,#0D9488,#14B8A6);box-shadow:0 4px 16px rgba(13,148,136,0.3);width:100%;max-width:280px;margin:0 auto;display:flex;">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg>
                         เริ่มสแกน
                     </button>
-                    <div style="margin-top:12px;">
-                        <button style="background:none;border:1px dashed var(--border);border-radius:8px;padding:5px 12px;font-size:11px;color:var(--text-3);cursor:pointer;" onclick="rtScanPatientFail()">Demo: สแกนไม่ผ่าน</button>
+                    <div style="margin-top:14px;text-align:center;">
+                        <button style="background:none;border:1px dashed var(--border);border-radius:8px;padding:5px 14px;font-size:11px;color:var(--text-3);cursor:pointer;font-family:'Prompt',sans-serif;" onclick="rtScanPatientFail()">Demo: สแกนไม่ผ่าน</button>
                     </div>
                 </div>
             </div>
-            <div class="rt-bottom" id="rtStep3Bottom" style="display:none;"><button class="btn-secondary" onclick="rtResetStep3();rtGoStep(3)">สแกนใหม่</button><button class="btn-primary" id="rtStep3ProceedBtn" onclick="rtGoStep(4)">ดำเนินการต่อ</button></div>
+            <div class="rt-bottom" id="rtStep3Bottom" style="display:none;background:white;border-top:1px solid var(--border);">
+                <button class="btn-secondary" onclick="rtResetStep3();rtGoStep(3)"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>สแกนใหม่</button>
+                <button class="btn-primary" id="rtStep3ProceedBtn" onclick="rtGoStep(4)" style="background:linear-gradient(135deg,#0D9488,#14B8A6);">ดำเนินการต่อ<svg width="16" height="16" viewBox="0 0 24 24" fill="white" style="margin-left:6px;"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg></button>
+            </div>
         </div>
 
         <!-- ══ STEP 4: สแกนยา ══ -->
         <div class="rt-panel" id="rtStep4">
-            <div class="rt-inner" style="max-width:600px;">
-                <div style="font-size:13px;font-weight:700;color:var(--text-2);margin-bottom:14px;display:flex;align-items:center;gap:8px;">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg>
-                    สแกนยาทุกรายการ (สแกนพร้อมกันได้)
+            <div class="rt-inner" style="max-width:680px;padding-bottom:100px;">
+
+                <!-- Header -->
+                <div style="background:white;border:1px solid rgba(13,148,136,0.12);border-radius:18px;padding:16px 20px;margin-bottom:18px;display:flex;align-items:center;gap:14px;box-shadow:0 2px 12px rgba(13,148,136,0.06);">
+                    <div style="width:40px;height:40px;background:linear-gradient(135deg,#F0FDFA,#CCFBF1);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:1px solid #99F6E4;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0D9488" stroke-width="2.5"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg>
+                    </div>
+                    <div>
+                        <div style="font-size:14px;font-weight:800;color:var(--text-1);">สแกนยาทุกรายการ</div>
+                        <div style="font-size:11px;color:var(--text-3);margin-top:1px;">สแกนแต่ละรายการเพื่อตรวจสอบ 7 Rights ก่อนให้ยา</div>
+                    </div>
                 </div>
 
-                <!-- Drug 0: Amlodipine -->
-                <div class="mdc" id="rdrug_0" data-flow="r" data-done="false">
-                    <div class="mdc-bar" style="background:#0d9488;"></div>
+                <!-- Drug cards -->
+                <div class="mdc" id="rdrug_0" data-flow="r" data-done="false" style="margin-bottom:12px;">
+                    <div class="mdc-bar" style="background:linear-gradient(180deg,#059669,#0D9488);"></div>
                     <div class="mdc-body">
                         <div class="mdc-header">
                             <div class="mdc-info">
-                                <div class="mdc-name">Amlodipine 5 mg</div>
+                                <div class="mdc-name" style="font-size:15px;">Amlodipine 5 mg</div>
                                 <div class="mdc-sub">PO · 5 mg × 1 เม็ด · รอบเช้า</div>
                             </div>
-                            <button class="mdc-btn" id="rdrug_0_btn" style="background:linear-gradient(135deg,#0d9488,#14b8a6);" onclick="scanMultiDrug('r',0)">
+                            <button class="mdc-btn" id="rdrug_0_btn" style="background:linear-gradient(135deg,#0d9488,#14b8a6);border-radius:12px;padding:10px 18px;font-weight:700;" onclick="scanMultiDrug('r',0)">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" style="vertical-align:middle;margin-right:4px;"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg>สแกน
                             </button>
                         </div>
                         <div class="mdc-done-row" id="rdrug_0_done" style="display:none;">
                             <div class="mdc-rights">
-                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Patient</div>
-                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Drug</div>
-                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Dose</div>
-                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Route</div>
-                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Time</div>
-                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Doc.</div>
-                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Reason</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 6px;">Patient</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 6px;">Drug</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 6px;">Dose</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 6px;">Route</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 6px;">Time</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 6px;">Doc.</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 6px;">Reason</div>
                             </div>
                             <span class="mdc-result-tag"><svg width="12" height="12" viewBox="0 0 24 24" fill="#166534"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg><span id="rdrug_0_resname">—</span></span>
                             <span style="font-size:11px;color:var(--text-2);" id="rdrug_0_lot">—</span>
@@ -8896,28 +9381,27 @@
                     </div>
                 </div>
 
-                <!-- Drug 1: Metformin -->
-                <div class="mdc" id="rdrug_1" data-flow="r" data-done="false">
-                    <div class="mdc-bar" style="background:#0d9488;"></div>
+                <div class="mdc" id="rdrug_1" data-flow="r" data-done="false" style="margin-bottom:12px;">
+                    <div class="mdc-bar" style="background:linear-gradient(180deg,#059669,#0D9488);"></div>
                     <div class="mdc-body">
                         <div class="mdc-header">
                             <div class="mdc-info">
-                                <div class="mdc-name">Metformin 500 mg</div>
+                                <div class="mdc-name" style="font-size:15px;">Metformin 500 mg</div>
                                 <div class="mdc-sub">PO · 500 mg × 1 เม็ด · รอบเช้า</div>
                             </div>
-                            <button class="mdc-btn" id="rdrug_1_btn" style="background:linear-gradient(135deg,#0d9488,#14b8a6);" onclick="scanMultiDrug('r',1)">
+                            <button class="mdc-btn" id="rdrug_1_btn" style="background:linear-gradient(135deg,#0d9488,#14b8a6);border-radius:12px;padding:10px 18px;font-weight:700;" onclick="scanMultiDrug('r',1)">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" style="vertical-align:middle;margin-right:4px;"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg>สแกน
                             </button>
                         </div>
                         <div class="mdc-done-row" id="rdrug_1_done" style="display:none;">
                             <div class="mdc-rights">
-                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Patient</div>
-                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Drug</div>
-                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Dose</div>
-                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Route</div>
-                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Time</div>
-                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Doc.</div>
-                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Reason</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 6px;">Patient</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 6px;">Drug</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 6px;">Dose</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 6px;">Route</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 6px;">Time</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 6px;">Doc.</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 6px;">Reason</div>
                             </div>
                             <span class="mdc-result-tag"><svg width="12" height="12" viewBox="0 0 24 24" fill="#166534"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg><span id="rdrug_1_resname">—</span></span>
                             <span style="font-size:11px;color:var(--text-2);" id="rdrug_1_lot">—</span>
@@ -8925,28 +9409,27 @@
                     </div>
                 </div>
 
-                <!-- Drug 2: Omeprazole -->
-                <div class="mdc" id="rdrug_2" data-flow="r" data-done="false">
-                    <div class="mdc-bar" style="background:#0d9488;"></div>
+                <div class="mdc" id="rdrug_2" data-flow="r" data-done="false" style="margin-bottom:12px;">
+                    <div class="mdc-bar" style="background:linear-gradient(180deg,#059669,#0D9488);"></div>
                     <div class="mdc-body">
                         <div class="mdc-header">
                             <div class="mdc-info">
-                                <div class="mdc-name">Omeprazole 20 mg</div>
+                                <div class="mdc-name" style="font-size:15px;">Omeprazole 20 mg</div>
                                 <div class="mdc-sub">PO · 20 mg × 1 แคปซูล · รอบเช้า</div>
                             </div>
-                            <button class="mdc-btn" id="rdrug_2_btn" style="background:linear-gradient(135deg,#0d9488,#14b8a6);" onclick="scanMultiDrug('r',2)">
+                            <button class="mdc-btn" id="rdrug_2_btn" style="background:linear-gradient(135deg,#0d9488,#14b8a6);border-radius:12px;padding:10px 18px;font-weight:700;" onclick="scanMultiDrug('r',2)">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" style="vertical-align:middle;margin-right:4px;"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg>สแกน
                             </button>
                         </div>
                         <div class="mdc-done-row" id="rdrug_2_done" style="display:none;">
                             <div class="mdc-rights">
-                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Patient</div>
-                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Drug</div>
-                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Dose</div>
-                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Route</div>
-                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Time</div>
-                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Doc.</div>
-                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Reason</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 6px;">Patient</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 6px;">Drug</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 6px;">Dose</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 6px;">Route</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 6px;">Time</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 6px;">Doc.</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 6px;">Reason</div>
                             </div>
                             <span class="mdc-result-tag"><svg width="12" height="12" viewBox="0 0 24 24" fill="#166534"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg><span id="rdrug_2_resname">—</span></span>
                             <span style="font-size:11px;color:var(--text-2);" id="rdrug_2_lot">—</span>
@@ -8954,20 +9437,35 @@
                     </div>
                 </div>
             </div>
-            <div class="rt-bottom wide"><button class="btn-secondary" onclick="rtGoStep(3)">ย้อนกลับ</button><button class="btn-primary" id="rtBtnConfirmDrug" onclick="rtGoStep(5)" disabled><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>ยืนยันให้ยา (3/3)</button></div>
+            <div class="rt-bottom wide" style="background:white;border-top:1px solid var(--border);">
+                <button class="btn-secondary" onclick="rtGoStep(3)"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>ย้อนกลับ</button>
+                <button class="btn-primary" id="rtBtnConfirmDrug" onclick="rtGoStep(5)" disabled style="background:linear-gradient(135deg,#0D9488,#14B8A6);">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                    ยืนยันให้ยา (3/3)
+                </button>
+            </div>
         </div>
 
         <!-- ══ STEP 5: ยืนยัน ══ -->
         <div class="rt-panel" id="rtStep5">
-            <div class="rt-inner">
-                <div style="background:rgba(255,255,255,0.88);backdrop-filter:blur(20px);border:1.5px solid rgba(13,148,136,0.15);border-radius:22px;padding:20px 24px;margin-bottom:20px;display:flex;align-items:center;gap:16px;box-shadow:0 2px 16px rgba(13,148,136,0.06);position:relative;overflow:hidden;">
-                    <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#059669,#0D9488,#14B8A6);"></div>
-                    <div style="width:48px;height:48px;background:linear-gradient(135deg,#059669,#0D9488);border-radius:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 4px 14px rgba(13,148,136,0.25);">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+            <div class="rt-inner" style="max-width:640px;">
+
+                <!-- Status banner -->
+                <div style="background:linear-gradient(135deg,#059669,#0D9488);border-radius:20px;padding:20px 24px;margin-bottom:18px;display:flex;align-items:center;gap:16px;box-shadow:0 6px 24px rgba(13,148,136,0.2);">
+                    <div style="width:52px;height:52px;background:rgba(255,255,255,0.15);border-radius:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0;backdrop-filter:blur(8px);">
+                        <svg width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
                     </div>
-                    <div><div style="font-size:18px;font-weight:800;color:#0F766E;letter-spacing:-0.2px;">ให้ยาแล้ว — พร้อมบันทึก</div><div style="font-size:12px;color:#0D9488;margin-top:2px;">5 Rights ผ่านครบถ้วน</div></div>
+                    <div>
+                        <div style="font-size:19px;font-weight:800;color:white;letter-spacing:-0.2px;">ให้ยาแล้ว — พร้อมบันทึก</div>
+                        <div style="font-size:12px;color:rgba(255,255,255,0.8);margin-top:3px;display:flex;align-items:center;gap:6px;">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+                            7 Rights ผ่านครบถ้วน
+                        </div>
+                    </div>
                 </div>
-                <div class="rec-card">
+
+                <!-- Drug info card -->
+                <div class="rec-card" style="border-radius:18px;box-shadow:0 2px 12px rgba(0,0,0,0.04);">
                     <div class="rec-card-title"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>ข้อมูลการให้ยา</div>
                     <div class="rec-grid" id="rtStep5Grid">
                         <div><div class="wit-ml">ผู้ป่วย</div><div class="wit-mv" id="rtS5Patient">นายสมชาย มานะ</div></div>
@@ -8980,24 +9478,45 @@
                         <div><div class="wit-ml">สถานะ</div><div class="wit-mv" style="color:var(--green);">ให้ยาแล้ว</div></div>
                     </div>
                 </div>
-                <div class="rec-card">
+
+                <!-- Documentation card -->
+                <div class="rec-card" style="border-radius:18px;box-shadow:0 2px 12px rgba(0,0,0,0.04);">
                     <div class="rec-card-title"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>บันทึกเพิ่มเติม</div>
                     <div class="rec-doc-group"><div class="rec-doc-label">เวลาให้ยาจริง <span style="color:#dc2626;">*</span></div><input type="time" class="rec-doc-input" value="08:05" style="max-width:180px;"></div>
-                    <div class="rec-doc-group"><div class="rec-doc-label">หมายเหตุ</div><textarea class="rec-doc-input" placeholder="พิมพ์หมายเหตุ (ถ้ามี)..." style="min-height:50px;"></textarea></div>
+                    <div class="rec-doc-group"><div class="rec-doc-label">หมายเหตุ</div><textarea class="rec-doc-input" placeholder="พิมพ์หมายเหตุ (ถ้ามี)..." style="min-height:56px;"></textarea></div>
                 </div>
             </div>
-            <div class="rt-bottom"><button class="btn-secondary" onclick="rtGoStep(4)">กลับแก้ไข</button><button class="btn-primary" onclick="rtGoStep(6)"><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>บันทึกผล</button></div>
+            <div class="rt-bottom" style="background:white;border-top:1px solid var(--border);">
+                <button class="btn-secondary" onclick="rtGoStep(4)"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>กลับแก้ไข</button>
+                <button class="btn-primary" onclick="rtGoStep(6)" style="background:linear-gradient(135deg,#059669,#0D9488);">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                    บันทึกผล
+                </button>
+            </div>
         </div>
 
         <!-- ══ STEP 6: สำเร็จ ══ -->
         <div class="rt-panel" id="rtStep6">
-            <div class="rt-inner center">
-                <div style="width:110px;height:110px;background:linear-gradient(135deg,#059669,#0D9488,#14B8A6);border-radius:50%;display:inline-flex;align-items:center;justify-content:center;margin-bottom:24px;box-shadow:0 10px 40px rgba(13,148,136,0.3),0 0 0 8px rgba(13,148,136,0.08);animation:ok-pop .5s cubic-bezier(.2,.8,.4,1.2);">
-                    <svg width="52" height="52" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+            <div class="rt-inner center" style="padding:40px 28px;">
+
+                <!-- Success animation -->
+                <div style="position:relative;width:120px;height:120px;margin:0 auto 28px;">
+                    <div style="position:absolute;inset:0;border-radius:50%;background:rgba(13,148,136,0.08);animation:pulse-ring 2s ease-out infinite;"></div>
+                    <div style="position:absolute;inset:8px;border-radius:50%;background:rgba(13,148,136,0.12);animation:pulse-ring 2s ease-out infinite .4s;"></div>
+                    <div style="width:120px;height:120px;background:linear-gradient(135deg,#059669,#0D9488,#14B8A6);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 12px 40px rgba(13,148,136,0.3);animation:ok-pop .5s cubic-bezier(.2,.8,.4,1.2);position:relative;z-index:1;">
+                        <svg width="54" height="54" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                    </div>
                 </div>
-                <div style="font-size:28px;font-weight:800;color:#0F766E;margin-bottom:6px;letter-spacing:-0.3px;">บันทึกการให้ยาสำเร็จ</div>
-                <div class="ok-sub" style="margin-bottom:20px;" id="rtS6Sub">Amlodipine 5 mg — นายสมชาย มานะ (3A-01)</div>
-                <div class="ok-summary" style="max-width:400px;width:100%;">
+
+                <div style="font-size:28px;font-weight:800;color:#0F766E;margin-bottom:6px;letter-spacing:-0.4px;text-align:center;">บันทึกการให้ยาสำเร็จ</div>
+                <div class="ok-sub" style="margin-bottom:28px;text-align:center;font-size:14px;color:var(--text-2);" id="rtS6Sub">Amlodipine 5 mg — นายสมชาย มานะ (3A-01)</div>
+
+                <!-- Summary card -->
+                <div style="background:white;border:1px solid rgba(13,148,136,0.12);border-radius:20px;padding:20px 24px;max-width:420px;width:100%;margin-bottom:24px;box-shadow:0 4px 20px rgba(13,148,136,0.06);">
+                    <div style="font-size:11px;font-weight:700;color:var(--text-3);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:14px;display:flex;align-items:center;gap:6px;">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                        สรุปการให้ยา
+                    </div>
                     <div class="ok-summary-grid" id="rtStep6Grid">
                         <div><div class="wit-ml">ยา</div><div class="wit-mv" style="color:var(--green);" id="rtS6Drug">Amlodipine 5 mg</div></div>
                         <div><div class="wit-ml">Dose</div><div class="wit-mv" id="rtS6Dose">5 mg x 1 เม็ด</div></div>
@@ -9007,12 +9526,20 @@
                         <div><div class="wit-ml">ผู้บันทึก</div><div class="wit-mv">นส.สมใจ ดีมาก</div></div>
                     </div>
                 </div>
-                <div class="ok-actions" style="max-width:400px;width:100%;">
-                    <button class="btn-primary" onclick="goCurrentPostAssessI('r')" style="background:linear-gradient(135deg,#059669,#10b981);box-shadow:0 5px 18px rgba(5,150,105,.25);border:none;"><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8" fill="none" stroke="white" stroke-width="2"/><line x1="16" y1="13" x2="8" y2="13" stroke="white" stroke-width="2"/></svg>ประเมินหลังให้ยา</button>
-                    <button class="btn-primary" onclick="rtGoStep(1)" style="background:rgba(255,255,255,0.9);color:#0F766E;border:2px solid #99f6e4;">ให้ยารายการถัดไป</button>
-                    <div class="ok-act-row">
-                        <button class="btn-secondary" onclick="rtGoStep(1)">กลับรายการผู้ป่วย</button>
-                        <button class="btn-secondary" onclick="nav('pg-dashboard')" style="border-color:var(--text-3);">กลับ Dashboard</button>
+
+                <!-- Action buttons -->
+                <div class="ok-actions" style="max-width:420px;width:100%;display:flex;flex-direction:column;gap:10px;">
+                    <button class="btn-primary" onclick="goCurrentPostAssessI('r')" style="background:linear-gradient(135deg,#059669,#10b981);box-shadow:0 5px 18px rgba(5,150,105,.25);border:none;padding:14px 24px;border-radius:14px;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:8px;">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8" fill="none" stroke="white" stroke-width="2"/><line x1="16" y1="13" x2="8" y2="13" stroke="white" stroke-width="2"/></svg>
+                        ประเมินหลังให้ยา
+                    </button>
+                    <button class="btn-primary" onclick="rtGoStep(1)" style="background:rgba(255,255,255,0.95);color:#0F766E;border:2px solid #99f6e4;padding:12px 24px;border-radius:14px;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:8px;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0F766E" stroke-width="2.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+                        ให้ยารายการถัดไป
+                    </button>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+                        <button class="btn-secondary" onclick="rtGoStep(1)" style="justify-content:center;border-radius:12px;">กลับรายการผู้ป่วย</button>
+                        <button class="btn-secondary" onclick="nav('pg-dashboard')" style="justify-content:center;border-radius:12px;border-color:var(--text-3);color:var(--text-2);">กลับ Dashboard</button>
                     </div>
                 </div>
             </div>
@@ -12545,8 +13072,9 @@
                 <div class="gh-user-role" id="ghUserRole">หัวหน้าเวร</div>
             </div>
         </div>
-        <button id="ghPermBtn" class="gh-icon-action perm" onclick="openPermPanel()" title="ตั้งค่าสิทธิ์" aria-label="ตั้งค่าสิทธิ์" style="display:none;">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 01-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+        <button id="ghBackendBtn" class="gh-icon-action backend" onclick="nav('pg-backoffice')" title="ระบบหลังบ้าน" aria-label="ระบบหลังบ้าน" style="display:none;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M4 4h16v6H4z"/><path d="M4 14h7v6H4z"/><path d="M15 14h5v6h-5z"/></svg>
+            <span>หลังบ้าน</span>
         </button>
         <button id="ghLogoutBtn" class="gh-icon-action logout" onclick="doLogout()" title="ออกจากระบบ" aria-label="ออกจากระบบ" style="display:none;">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
@@ -12682,7 +13210,7 @@
     /* ── Generic navigation ── */
     const pageNames = {
         'pg-cart-list':'รถเข็นยาทั้งหมด','pg-cart':'ข้อมูลรถเข็นยา','pg-confirm':'ยืนยัน Ward','pg-ward-select':'เลือก Ward',
-        'pg-login':'เข้าสู่ระบบ','pg-role':'เลือกสิทธิ์','pg-dashboard':'Dashboard',
+        'pg-login':'เข้าสู่ระบบ','pg-role':'เลือกสิทธิ์','pg-dashboard':'Dashboard','pg-backoffice':'ระบบหลังบ้าน',
         'pg-prep-type':'เลือกประเภทจัดยา','pg-hw':'เลือก Drawer','pg-fill':'จัดยาเข้าช่อง',
         'pg-summary':'สรุปผลจัดยา','pg-dispense':'รายการผู้ป่วย','pg-pt-detail':'รายละเอียดผู้ป่วย',
         'pg-scan-pt':'สแกนผู้ป่วย','pg-admin-med':'สแกนยา','pg-witness':'พยาน/IDC',
@@ -12718,13 +13246,13 @@
 
     function updateGlobalHeaderActions(targetId) {
         const isLandingPage = landingPages.includes(targetId);
+        const isLoggedIn = document.body.classList.contains('logged-in');
         const navActions = document.getElementById('ghNavActions');
         if (navActions) navActions.style.display = isLandingPage ? 'none' : 'flex';
-        const permBtn = document.getElementById('ghPermBtn');
-        if (permBtn) permBtn.style.display = (!isLandingPage && currentRole === 'super') ? 'flex' : 'none';
+        const backendBtn = document.getElementById('ghBackendBtn');
+        if (backendBtn) backendBtn.style.display = (isLoggedIn && !isLandingPage) ? 'flex' : 'none';
         const logoutBtn = document.getElementById('ghLogoutBtn');
         if (logoutBtn) {
-            const isLoggedIn = document.body.classList.contains('logged-in');
             logoutBtn.style.display = (isLoggedIn && !isLandingPage) ? 'flex' : 'none';
         }
     }
@@ -12808,6 +13336,7 @@
         if (prepHardwareReady && prepHardwarePages.includes(targetId) && typeof renderPrepHardwareFromDashboard === 'function') {
             renderPrepHardwareFromDashboard(targetId);
         }
+        if (wardDataReady && targetId === 'pg-backoffice' && typeof renderBackofficeDynamic === 'function') renderBackofficeDynamic();
         return true;
     }
 
@@ -13121,9 +13650,6 @@
             bottomGrid.style.gridTemplateColumns = '';
         }
 
-        // Show permission button in global header for head nurse only
-        var permBtn = document.getElementById('ghPermBtn');
-        if (permBtn) permBtn.style.display = (role === 'super') ? 'flex' : 'none';
         // Hide perm panel when switching role
         var permSec = document.getElementById('dashPermSection');
         if (permSec) permSec.style.display = 'none';
@@ -14054,7 +14580,7 @@
         const startBtn = page.querySelector('.ptd-actions .btn-primary');
         if (startBtn) {
             startBtn.onclick = function() {
-                ptdCommitCassetteLock('schedule');
+                ptdCommitCassetteLock('schedule', buildScheduleCassetteLockMeta());
                 trfPopulate();
                 nav('pg-trf');
             };
@@ -14071,7 +14597,7 @@
             trfDrugNames.push(row.view.name);
             trfDestNames.push(row.pt.name + ' · ' + row.pt.bed);
             trfQtys.push(row.view.dose);
-            trfTargetRefs.push({ key: row.key, drugIdx: row.idx, hn: row.pt.hn, bed: row.pt.bed, name: row.view.name });
+            trfTargetRefs.push({ key: row.key, drugIdx: row.idx, hn: row.pt.hn, bed: row.pt.bed, name: row.view.name, slot: ibfSlotLabel(idx) });
         });
         trfActiveIdx = 0;
         trfDoneCount = 0;
@@ -14491,7 +15017,195 @@
     function getLockDrugNames(lock) {
         if (!lock) return [];
         if (Array.isArray(lock.drugNames)) return lock.drugNames.filter(Boolean);
+        if (Array.isArray(lock.cassetteItems)) {
+            const seen = {};
+            return lock.cassetteItems.map(function(item) {
+                return item && (item.drugName || item.name);
+            }).filter(function(name) {
+                const key = normalizeIbfDrugName(name);
+                if (!key || seen[key]) return false;
+                seen[key] = true;
+                return true;
+            });
+        }
         return lock.drugName ? [lock.drugName] : [];
+    }
+
+    function cassetteItemUniqueKey(item) {
+        if (!item) return '';
+        return item.sourceKey || [
+            normalizeIbfDrugName(item.drugName || item.name || ''),
+            item.patientHn || '',
+            item.patientBed || item.bed || '',
+            Number.isInteger(item.drugIdx) ? item.drugIdx : ''
+        ].join('|');
+    }
+
+    function normalizeCassetteItem(item) {
+        if (!item) return null;
+        const drugName = item.drugName || item.name || '';
+        if (!drugName) return null;
+        const lotInfo = drugLotMap[drugName] || {};
+        return Object.assign({}, item, {
+            drugName: drugName,
+            patientName: item.patientName || item.patient || '',
+            patientBed: item.patientBed || item.bed || '',
+            patientHn: item.patientHn || item.hn || '',
+            dose: item.dose || item.qtyText || '',
+            route: item.route || '',
+            round: item.round || '',
+            lot: item.lot || lotInfo.lot || 'N/A',
+            exp: item.exp || lotInfo.exp || 'N/A',
+            slot: item.slot || '',
+            status: item.status || (item.done ? 'จัดแล้ว' : 'รอจัด'),
+            done: !!item.done,
+            highAlert: !!(item.highAlert || isHighAlertDrug(drugName))
+        });
+    }
+
+    function mergeCassetteItems(existing, incoming) {
+        const byKey = {};
+        (existing || []).concat(incoming || []).forEach(function(item) {
+            const normalized = normalizeCassetteItem(item);
+            if (!normalized) return;
+            const key = cassetteItemUniqueKey(normalized);
+            if (!key) return;
+            byKey[key] = Object.assign({}, byKey[key] || {}, normalized);
+        });
+        return Object.values(byKey);
+    }
+
+    function cassetteDrugNamesFromItems(items) {
+        const seen = {};
+        return (items || []).map(function(item) {
+            return item && item.drugName;
+        }).filter(function(name) {
+            const key = normalizeIbfDrugName(name);
+            if (!key || seen[key]) return false;
+            seen[key] = true;
+            return true;
+        });
+    }
+
+    function cassetteItemFromPatientDrug(pt, key, drug, idx, extra) {
+        if (!pt || !drug) return null;
+        extra = extra || {};
+        const view = legacyDrugView(drug, pt, idx);
+        const lotInfo = drugLotMap[view.name] || { lot: view.lot || 'N/A', exp: view.exp || 'N/A' };
+        const done = !!(drug.done || drug.prepared || extra.done);
+        return normalizeCassetteItem(Object.assign({
+            sourceKey: key + ':' + idx,
+            key: key,
+            drugIdx: idx,
+            drugName: view.name,
+            patientName: pt.name,
+            patientBed: pt.bed,
+            patientHn: pt.hn,
+            dose: view.dose,
+            route: view.routeShort,
+            round: extra.round || prepRoundFromView(view, pt) || view.freq || pt.round || '',
+            lot: lotInfo.lot || 'N/A',
+            exp: lotInfo.exp || 'N/A',
+            slot: extra.slot || '',
+            status: done ? 'จัดแล้ว' : (extra.status || 'รอจัด'),
+            done: done,
+            highAlert: view.highAlert
+        }, extra));
+    }
+
+    function buildPatientCassetteLockMeta() {
+        const pt = patientData[currentPatientBed];
+        if (!pt) return { cassetteItems: [], drugNames: [] };
+        const useUiStatus = !!(document.getElementById('pg-prep-fill-pt') || {}).classList?.contains('active');
+        const rows = useUiStatus ? Array.from(document.querySelectorAll('#pfListScroll .pf-drug-item')) : [];
+        const items = [];
+        (pt.drugs || []).forEach(function(drug, idx) {
+            const view = legacyDrugView(drug, pt, idx);
+            const preparedHere = String(drug.preparedDrawer || '') === String(ptdSelectedDrawer || '')
+                && String(drug.preparedCassette || '') === String(ptdSelectedCass || '');
+            if (view.done && !preparedHere) return;
+            const uiIdx = pfDrugIndexes.indexOf(idx);
+            const rowDone = uiIdx >= 0 && rows[uiIdx] && rows[uiIdx].classList.contains('done');
+            const item = cassetteItemFromPatientDrug(pt, currentPatientBed, drug, idx, {
+                done: rowDone || !!drug.done || !!drug.prepared,
+                status: rowDone || drug.done || drug.prepared ? 'จัดแล้ว' : 'รอจัด'
+            });
+            if (item) items.push(item);
+        });
+        return {
+            patientKey: currentPatientBed,
+            patientName: pt.name,
+            patientBed: pt.bed,
+            patientHn: pt.hn,
+            cassetteItems: items,
+            drugNames: cassetteDrugNamesFromItems(items)
+        };
+    }
+
+    function buildMedicationCassetteLockMeta() {
+        const drug = getIbfDrugData(ibfDrugName);
+        if (!drug) return { drugName: ibfDrugName, cassetteItems: [], drugNames: [ibfDrugName] };
+        const useUiStatus = !!(document.getElementById('pg-ibf') || {}).classList?.contains('active');
+        const rows = useUiStatus ? Array.from(document.querySelectorAll('#ibfDestScroll .pf-drug-item')) : [];
+        const lotInfo = drugLotMap[ibfDrugName] || { lot:'N/A', exp:'N/A' };
+        const items = (drug.patients || []).map(function(patient, idx) {
+            const done = !!(rows[idx] && rows[idx].classList.contains('done'));
+            return normalizeCassetteItem({
+                sourceKey: (patient.key || patient.hn || patient.bed || patient.name || 'ibf') + ':' + (Number.isInteger(patient.drugIdx) ? patient.drugIdx : idx) + ':' + normalizeIbfDrugName(ibfDrugName),
+                key: patient.key || '',
+                drugIdx: patient.drugIdx,
+                drugName: ibfDrugName,
+                patientName: patient.name,
+                patientBed: patient.bed,
+                patientHn: patient.hn,
+                dose: patient.qty + ' ' + patient.unit,
+                route: drug.route || patient.route || '',
+                round: patient.round || '',
+                lot: lotInfo.lot,
+                exp: lotInfo.exp,
+                slot: patient.slot || ibfSlotLabel(idx),
+                status: done ? 'จัดแล้ว' : 'รอจัด',
+                done: done,
+                highAlert: !!patient.highAlert || isHighAlertDrug(ibfDrugName),
+                interactionSeverity: patient.interactionSeverity || '',
+                interactionDrug: patient.interactionDrug || ''
+            });
+        });
+        return {
+            drugName: ibfDrugName,
+            route: drug.route || '',
+            cassetteItems: items,
+            drugNames: cassetteDrugNamesFromItems(items)
+        };
+    }
+
+    function buildScheduleCassetteLockMeta() {
+        const rows = prepScheduleRows(currentPrepRound, false);
+        const useUiStatus = !!(document.getElementById('pg-trf') || {}).classList?.contains('active');
+        const queueRows = useUiStatus ? Array.from(document.querySelectorAll('#trfQueue .pf-drug-item')) : [];
+        const items = rows.map(function(row, idx) {
+            const done = !!(queueRows[idx] && queueRows[idx].classList.contains('done')) || !!row.view.done;
+            return cassetteItemFromPatientDrug(row.pt, row.key, row.drug, row.idx, {
+                round: row.round || currentPrepRound,
+                dose: row.view.dose,
+                route: row.view.routeShort,
+                slot: ibfSlotLabel(idx),
+                done: done,
+                status: done ? 'จัดแล้ว' : 'รอจัด'
+            });
+        }).filter(Boolean);
+        return {
+            round: currentPrepRound,
+            cassetteItems: items,
+            drugNames: cassetteDrugNamesFromItems(items)
+        };
+    }
+
+    function buildCassetteLockMetaForMode(mode) {
+        if (mode === 'patient') return buildPatientCassetteLockMeta();
+        if (mode === 'medication') return buildMedicationCassetteLockMeta();
+        if (mode === 'schedule') return buildScheduleCassetteLockMeta();
+        return {};
     }
 
     function ptdMedicationDrawerInteraction(drawerNum, drugName) {
@@ -14512,11 +15226,17 @@
         const key = ptdCurrentCassetteKey();
         if (!key) return;
         const lock = cassetteModeLocks[key] || {};
-        cassetteModeCompleted[key] = Object.assign({}, lock, {
-            mode: lock.mode || ptdSelectedMode || 'patient',
+        const mode = lock.mode || ptdSelectedMode || 'patient';
+        const latestMeta = buildCassetteLockMetaForMode(mode) || {};
+        const cassetteItems = mergeCassetteItems(lock.cassetteItems, latestMeta.cassetteItems);
+        const latestDrugNames = cassetteDrugNamesFromItems(cassetteItems);
+        cassetteModeCompleted[key] = Object.assign({}, lock, latestMeta, {
+            mode: mode,
             drawer: ptdSelectedDrawer,
             cassette: ptdSelectedCass,
             ward: currentWardName || DEFAULT_DEMO_WARD,
+            cassetteItems: cassetteItems,
+            drugNames: latestDrugNames.length ? latestDrugNames : (Array.isArray(latestMeta.drugNames) && latestMeta.drugNames.length ? latestMeta.drugNames : getLockDrugNames(lock)),
             completedAt: new Date().toISOString()
         });
         if (typeof renderDashboardCassettePanel === 'function') renderDashboardCassettePanel();
@@ -14618,6 +15338,7 @@
             const status = slot.querySelector('.ptd-cass-status');
             if (status && !slot.classList.contains('occupied')) status.textContent = 'พร้อมเติมยา';
         });
+        closeDashboardDetailModals();
         if (typeof renderDashboardCassettePanel === 'function') renderDashboardCassettePanel();
     }
 
@@ -14698,15 +15419,22 @@
         meta = meta || {};
         const key = ptdCassetteKey(ptdSelectedDrawer, ptdSelectedCass);
         const previous = cassetteModeLocks[key] || {};
-        const drugNames = getLockDrugNames(previous);
+        const cassetteItems = mergeCassetteItems(previous.cassetteItems, meta.cassetteItems);
+        const drugNames = getLockDrugNames(previous).concat(Array.isArray(meta.drugNames) ? meta.drugNames : []);
         if (meta.drugName && !drugNames.some(function(name) { return normalizeIbfDrugName(name) === normalizeIbfDrugName(meta.drugName); })) {
             drugNames.push(meta.drugName);
         }
+        cassetteDrugNamesFromItems(cassetteItems).forEach(function(name) {
+            if (!drugNames.some(function(existing) { return normalizeIbfDrugName(existing) === normalizeIbfDrugName(name); })) {
+                drugNames.push(name);
+            }
+        });
         cassetteModeLocks[key] = Object.assign({}, previous, meta, {
             mode: mode,
             drawer: ptdSelectedDrawer,
             cassette: ptdSelectedCass,
             ward: currentWardName || DEFAULT_DEMO_WARD,
+            cassetteItems: cassetteItems,
             drugNames: drugNames
         });
         if (typeof renderDashboardCassettePanel === 'function') renderDashboardCassettePanel();
@@ -14876,6 +15604,7 @@
         document.getElementById('trfBtnConfirm').disabled = true;
         document.getElementById('trfBtnConfirm').style.opacity = '0.4';
         document.getElementById('trfBtnConfirm').style.cursor = 'not-allowed';
+        ptdCommitCassetteLock('schedule', buildScheduleCassetteLockMeta());
 
         // Enable summary if at least 1 done
         if (trfDoneCount > 0) {
@@ -15295,7 +16024,7 @@
     }
 
     function ibfPopulate() {
-        ptdCommitCassetteLock('medication', { drugName: ibfDrugName });
+        ptdCommitCassetteLock('medication', buildMedicationCassetteLockMeta());
         const drug = getIbfDrugData(ibfDrugName);
         if (!drug) return;
         ibfActiveIdx = 0;
@@ -15305,7 +16034,7 @@
         ibfDrugCode = drug.code;
         ibfQtys = drug.patients.map(p => p.qty);
         ibfTargetRefs = drug.patients.map(function(p) {
-            return { key: p.key, drugIdx: p.drugIdx, hn: p.hn, bed: p.bed, name: p.name };
+            return { key: p.key, drugIdx: p.drugIdx, hn: p.hn, bed: p.bed, name: p.name, slot: p.slot };
         });
 
         // Drug bar
@@ -15495,6 +16224,7 @@
         document.getElementById('ibfBtnConfirm').disabled = true;
         document.getElementById('ibfBtnConfirm').style.opacity = '0.4';
         document.getElementById('ibfBtnConfirm').style.cursor = 'not-allowed';
+        ptdCommitCassetteLock('medication', buildMedicationCassetteLockMeta());
 
         // Enable summary if at least 1 done
         if (ibfDoneCount > 0) {
@@ -15790,7 +16520,7 @@
     }
 
     function pfPopulate() {
-        ptdCommitCassetteLock('patient');
+        ptdCommitCassetteLock('patient', buildPatientCassetteLockMeta());
         const pt = patientData[currentPatientBed];
         if (!pt) return;
         const pendingEntries = pt.drugs.map(function(drug, idx) {
@@ -16144,6 +16874,7 @@
         document.getElementById('pfBtnConfirm').disabled = true;
         document.getElementById('pfBtnConfirm').style.opacity = '0.4';
         document.getElementById('pfBtnConfirm').style.cursor = 'not-allowed';
+        ptdCommitCassetteLock('patient', buildPatientCassetteLockMeta());
 
         // enable summary button when at least 1 drug is done
         if (pfDoneCount > 0) {
@@ -17572,60 +18303,116 @@
     };
 
     let currentDispenseBed = '01';
+    let rtPatientFilter = 'all';
 
     function routinePatientCardHtml(key, idx) {
         const pt = patientData[key];
         if (!pt) return '';
         const drugs = getRoutineDispenseDrugs(pt);
         const pending = drugs.filter(function(d) { return !d.done; }).length;
+        const done = drugs.length - pending;
         const highAlert = drugs.some(isLegacyHighAlertDrug);
         const time = drugs[0] ? legacyRoundTime(pt, drugs[0]) : '—';
         const colors = ['#0D9488','#8B5CF6','#3B82F6','#F59E0B','#EC4899','#06B6D4','#EF4444','#14B8A6'];
-        const color = highAlert ? '#EF4444' : colors[idx % colors.length];
+        const color = pending === 0 ? '#16A34A' : (highAlert ? '#EF4444' : colors[idx % colors.length]);
         const soft = highAlert ? '#FEF2F2' : (pending === 0 ? '#F0FDF4' : '#EFF6FF');
+        const progress = drugs.length ? Math.round((done / drugs.length) * 100) : 0;
         const statusText = pending === 0 ? 'จ่ายครบแล้ว' : (highAlert ? 'รอจ่าย · High Alert' : 'รอจ่าย');
-        const badges = [
-            highAlert ? '<span class="pt-badge high-alert">High Alert</span>' : '<span class="pt-badge normal">ปกติ</span>'
-        ].join('');
+        const preview = drugs.slice(0, 3).map(function(d, drugIdx) {
+            return legacyDrugView(d, pt, drugIdx).name;
+        }).join(' · ') + (drugs.length > 3 ? ' +' + (drugs.length - 3) : '');
+        const allergyText = pt.allergy ? String(pt.allergy).replace(/^แพ้ยา:\s*/, '') : '';
+        const badges = (highAlert ? '<span class="pt-badge high-alert">High Alert</span>' : '<span class="pt-badge normal">Routine</span>')
+            + (allergyText ? '<span class="pt-badge" style="background:#fff7ed;color:#c2410c;border:1px solid #fed7aa;">Allergy</span>' : '')
+            + (pending === 0 ? '<span class="pt-badge" style="background:#f0fdf4;color:#15803d;border:1px solid #86efac;">Complete</span>' : '');
+        const progressW = Math.round(progress);
+        const doneColor = pending === 0 ? '#16A34A' : color;
         return '<div class="rt-patient-card" onclick="rtSelectPatient(\'' + escHtml(key) + '\')" '
-            + 'data-name="' + escHtml(pt.name) + '" data-hn="' + escHtml(pt.hn) + '" data-bed="' + escHtml(pt.bed) + '" '
-            + 'style="background:rgba(255,255,255,0.9);border:2px solid var(--border);border-radius:16px;padding:18px;cursor:pointer;transition:all .2s;box-shadow:var(--shadow);border-top:3px solid ' + color + ';" '
-            + 'onmouseover="this.style.transform=\'translateY(-3px)\';this.style.boxShadow=\'0 8px 24px rgba(13,148,136,0.12)\'" onmouseout="this.style.transform=\'\';this.style.boxShadow=\'var(--shadow)\'">'
-            + '<div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">'
-            + '<div style="width:40px;height:40px;background:linear-gradient(135deg,' + color + ',' + color + '99);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:white;">' + escHtml(pt.avatar || patientInitials(pt.name)) + '</div>'
-            + '<div style="min-width:0;"><div style="font-size:14px;font-weight:700;color:var(--text-1);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + escHtml(pt.name) + '</div><div style="font-size:10px;color:var(--text-3);">เตียง ' + escHtml(pt.bed) + ' · HN: ' + escHtml(pt.hn) + '</div></div>'
+            + 'data-name="' + escHtml(pt.name) + '" data-hn="' + escHtml(pt.hn) + '" data-bed="' + escHtml(pt.bed) + '" data-drugs="' + escHtml(preview) + '" data-status="' + (pending ? 'pending' : 'done') + '" data-highalert="' + (highAlert ? '1' : '0') + '" '
+            + 'style="--rt-accent:' + color + ';--rt-soft:' + soft + ';--rt-progress:' + progress + '%;">'
+            // Top strip already handled by ::before
+            // Bed badge
+            + '<div class="rt-bed-badge"><strong>' + escHtml(pt.bed) + '</strong><span>Bed</span></div>'
+            // Main body
+            + '<div class="rt-card-main">'
+            + '<div class="rt-card-top">'
+            + '<div class="rt-card-avatar">' + escHtml(pt.avatar || patientInitials(pt.name)) + '</div>'
+            + '<div style="min-width:0;flex:1;">'
+            + '<div class="rt-card-name">' + escHtml(pt.name) + '</div>'
+            + '<div class="rt-card-meta">HN: ' + escHtml(pt.hn) + ' · ' + escHtml(pt.age || '') + '</div>'
+            + '</div></div>'
+            // Badges
+            + '<div class="rt-card-badges">' + badges + (allergyText ? '<span style="background:#fff7ed;color:#c2410c;border:1px solid #fed7aa;font-size:9px;font-weight:700;padding:3px 8px;border-radius:6px;display:inline-flex;align-items:center;gap:3px;"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>แพ้: ' + escHtml(allergyText) + '</span>' : '') + '</div>'
+            // Drug preview
+            + '<div class="rt-card-preview"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="vertical-align:middle;margin-right:4px;color:var(--text-3);flex-shrink:0;"><rect x="6" y="2" width="12" height="20" rx="4"/><line x1="6" y1="12" x2="18" y2="12"/></svg>' + escHtml(preview || 'ไม่มีรายการยา') + '</div>'
+            // Progress bar
+            + '<div style="height:4px;background:rgba(226,232,240,0.6);border-radius:2px;overflow:hidden;margin-bottom:0;"><div style="height:100%;width:' + progressW + '%;background:' + doneColor + ';border-radius:2px;transition:width .4s;"></div></div>'
             + '</div>'
-            + '<div class="pt-badges" style="margin-bottom:10px;">' + badges + '</div>'
-            + '<div style="display:flex;gap:8px;">'
-            + '<div style="flex:1;background:' + soft + ';border-radius:8px;padding:8px;text-align:center;"><div style="font-size:16px;font-weight:700;color:' + color + ';">' + pending + '/' + drugs.length + '</div><div style="font-size:9px;color:var(--text-3);">รอจ่าย/ทั้งหมด</div></div>'
-            + '<div style="flex:1;background:#EFF6FF;border-radius:8px;padding:8px;text-align:center;"><div style="font-size:13px;font-weight:700;color:#3B82F6;">' + escHtml(time === 'PRN' ? 'PRN' : time) + '</div><div style="font-size:9px;color:var(--text-3);">' + escHtml(pt.round || 'รอบยา') + '</div></div>'
+            // Footer
+            + '<div class="rt-card-right">'
+            + '<div class="rt-card-stat"><strong>' + (done) + '/' + drugs.length + '</strong><span style="margin-left:4px;">รายการ</span></div>'
+            + '<div style="display:flex;align-items:center;gap:6px;">'
+            + '<div class="rt-card-time"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="vertical-align:middle;margin-right:3px;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>' + escHtml(time === 'PRN' ? 'PRN' : time) + '</div>'
+            + '<div class="rt-card-status">' + escHtml(statusText) + '</div>'
             + '</div>'
-            + '<div style="margin-top:10px;font-size:10px;font-weight:700;color:' + (pending ? color : 'var(--green)') + ';">' + escHtml(statusText) + '</div>'
+            + '</div>'
             + '</div>';
     }
 
     function renderRoutinePatientSelectionPage() {
         const list = document.getElementById('rtPatientList');
         if (!list) return;
-        const keys = getRoutineDispensePatientKeys();
+        const keys = getRoutineDispensePatientKeys().slice().sort(function(a, b) {
+            const ptA = patientData[a] || {};
+            const ptB = patientData[b] || {};
+            return String(ptA.bed || a).localeCompare(String(ptB.bed || b), 'th', { numeric: true, sensitivity: 'base' });
+        });
         const pendingPatients = keys.filter(function(key) {
             return getRoutineDispenseDrugs(patientData[key]).some(function(d) { return !d.done; });
         }).length;
+        const highAlertPatients = keys.filter(function(key) {
+            return getRoutineDispenseDrugs(patientData[key]).some(isLegacyHighAlertDrug);
+        }).length;
         const sub = document.getElementById('rtStep1Sub');
         if (sub) sub.textContent = (currentWardName || DEFAULT_DEMO_WARD) + ' · รอบเช้า 06:00–08:00 น. · ' + pendingPatients + ' ผู้ป่วยรอจ่ายยา';
-        list.innerHTML = keys.map(function(key, idx) {
+        const totalEl = document.getElementById('rtTotalPatients');
+        if (totalEl) totalEl.textContent = keys.length;
+        const pendingEl = document.getElementById('rtPendingPatients');
+        if (pendingEl) pendingEl.textContent = pendingPatients;
+        const highAlertEl = document.getElementById('rtHighAlertPatients');
+        if (highAlertEl) highAlertEl.textContent = highAlertPatients;
+        const rowsHtml = keys.map(function(key, idx) {
             return routinePatientCardHtml(key, idx);
-        }).join('') || '<div style="grid-column:1/-1;padding:24px;text-align:center;color:var(--text-3);background:white;border:1px dashed var(--border);border-radius:16px;">ไม่มีผู้ป่วยยาปกติใน Ward นี้ · ยา PRN อยู่ที่เมนูจ่ายยา PRN</div>';
+        }).join('');
+        list.innerHTML = rowsHtml || '<div class="rt-patient-empty">ไม่มีผู้ป่วยยาปกติใน Ward นี้ · ยา PRN อยู่ที่เมนูจ่ายยา PRN</div>';
+        filterRoutinePatients();
+    }
+
+    function setRoutinePatientFilter(filter, el) {
+        rtPatientFilter = filter || 'all';
+        document.querySelectorAll('.rt-filter-chip').forEach(function(btn) {
+            btn.classList.toggle('active', btn === el || btn.dataset.filter === rtPatientFilter);
+        });
         filterRoutinePatients();
     }
 
     function filterRoutinePatients() {
         const search = document.getElementById('rtPatientSearch');
         const q = search ? search.value.trim().toLowerCase() : '';
+        let visible = 0;
         document.querySelectorAll('#rtPatientList .rt-patient-card').forEach(function(card) {
-            const hay = [card.dataset.name, card.dataset.hn, card.dataset.bed].join(' ').toLowerCase();
-            card.style.display = !q || hay.includes(q) ? '' : 'none';
+            const hay = [card.dataset.name, card.dataset.hn, card.dataset.bed, card.dataset.drugs].join(' ').toLowerCase();
+            const matchSearch = !q || hay.includes(q);
+            const matchFilter = rtPatientFilter === 'all'
+                || (rtPatientFilter === 'pending' && card.dataset.status === 'pending')
+                || (rtPatientFilter === 'done' && card.dataset.status === 'done')
+                || (rtPatientFilter === 'highalert' && card.dataset.highalert === '1');
+            const show = matchSearch && matchFilter;
+            card.style.display = show ? '' : 'none';
+            if (show) visible++;
         });
+        const visibleEl = document.getElementById('rtVisiblePatients');
+        if (visibleEl) visibleEl.textContent = visible;
     }
 
     function rtSelectPatient(bedNum, navigateToStep) {
@@ -18452,6 +19239,133 @@
         };
     }
 
+    function getBackofficeRoleText() {
+        const map = { nurse:'พยาบาล', pharma:'เภสัชกร', doctor:'แพทย์', super:'หัวหน้าเวร' };
+        return map[currentRole] || 'ผู้ใช้งาน';
+    }
+
+    function backofficeIconSvg(type) {
+        const icons = {
+            users:'<path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/>',
+            wards:'<path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/><path d="M9 9h1"/><path d="M9 13h1"/><path d="M9 17h1"/>',
+            drug:'<path d="M10.5 20.5l10-10a4.95 4.95 0 00-7-7l-10 10a4.95 4.95 0 007 7z"/><path d="M8.5 8.5l7 7"/>',
+            cassette:'<rect x="3" y="4" width="18" height="16" rx="3"/><path d="M7 8h10"/><path d="M7 12h4"/><path d="M13 12h4"/><path d="M7 16h10"/>',
+            reports:'<path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/>',
+            integration:'<path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/>'
+        };
+        return '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">' + (icons[type] || icons.reports) + '</svg>';
+    }
+
+    function renderBackofficeDynamic() {
+        const page = document.getElementById('pg-backoffice');
+        if (!page) return;
+        const info = getCurrentWardInfo();
+        const state = getDashboardCassetteState();
+        const metrics = getDashboardMetrics();
+        const wardCount = Object.keys(wardInfo || {}).length;
+        const cartCount = (typeof cartList !== 'undefined' && cartList.length) ? cartList.length : wardCount;
+        const drugMasterCount = new Set(Object.values(patientData).flatMap(function(pt) {
+            return (pt.drugs || []).map(function(drug) { return normalizeIbfDrugName(drug.name || ''); });
+        }).filter(Boolean)).size;
+        const canEdit = currentRole === 'super';
+        const wardName = currentWardName || DEFAULT_DEMO_WARD;
+        const cartName = (state.cart && state.cart.name) || (info && info.cart) || 'Med Cart A-1';
+
+        const heroSub = document.getElementById('boHeroSub');
+        if (heroSub) heroSub.textContent = 'จัดการข้อมูลตั้งต้นของ ' + wardName + ' · ' + (info.desc || 'Ward ปัจจุบัน') + ' และรถเข็นยาที่กำลังใช้งาน';
+        const roleBadge = document.getElementById('boRoleBadge');
+        if (roleBadge) roleBadge.textContent = getBackofficeRoleText() + (canEdit ? ' · แก้ไขได้' : ' · ดูอย่างเดียว');
+        const wardBadge = document.getElementById('boWardBadge');
+        if (wardBadge) wardBadge.textContent = wardName;
+        const cartScope = document.getElementById('boCartScope');
+        if (cartScope) cartScope.textContent = cartName + ' · ' + wardName;
+        const accessNote = document.getElementById('boAccessNote');
+        if (accessNote) accessNote.textContent = canEdit
+            ? 'สิทธิ์หัวหน้าเวรสามารถเปิดตั้งค่าสิทธิ์และจำลองการจัดการข้อมูลหลังบ้านได้'
+            : 'Role นี้เข้าดูโครงสร้างระบบหลังบ้านเพื่อ Demo ได้ แต่เมนูตั้งค่าบางส่วนถูกล็อกไว้';
+        const modeChip = document.getElementById('boModeChip');
+        if (modeChip) modeChip.textContent = canEdit ? 'Admin mode' : 'Read-only demo';
+
+        const stats = [
+            { val: wardCount, label:'Ward', sub:'ตั้งค่าพื้นที่ใช้งาน', color:'#0D9488' },
+            { val: cartCount, label:'Med Cart', sub:'รถเข็นในระบบ', color:'#2563EB' },
+            { val: 3, label:'Roles', sub:'Nurse / Pharma / Supervisor', color:'#7C3AED' },
+            { val: state.total, label:'Cassette', sub: state.drawers + ' Drawer · ' + state.perDrawer + ' ช่อง/Drawer', color:'#E11D48' },
+            { val: drugMasterCount, label:'Drug Master', sub:'รายการยาที่พบใน Ward', color:'#D97706' },
+            { val: metrics.total, label:'MAR Items', sub: metrics.pending + ' รายการรอจ่าย', color:'#0F766E' }
+        ];
+        const statGrid = document.getElementById('boStatGrid');
+        if (statGrid) {
+            statGrid.innerHTML = stats.map(function(item) {
+                return '<div class="bo-stat" style="--bo-accent:' + item.color + ';">'
+                    + '<div class="bo-stat-num">' + escHtml(item.val) + '</div>'
+                    + '<div class="bo-stat-label">' + escHtml(item.label) + '</div>'
+                    + '<div class="bo-stat-sub">' + escHtml(item.sub) + '</div>'
+                    + '</div>';
+            }).join('');
+        }
+
+        const modules = [
+            { id:'users', type:'users', title:'ผู้ใช้งานและสิทธิ์', desc:'จัดการ role, permission และสิทธิ์การเข้าถึงเมนู Demo', color:'#7C3AED', color2:'#A78BFA', bg:'#F5F3FF', border:'#DDD6FE', locked:!canEdit },
+            { id:'wards', type:'wards', title:'Ward & Med Cart', desc:'กำหนด Ward, รถเข็น, Drawer และ Cassette ของพื้นที่ใช้งาน', color:'#0D9488', color2:'#14B8A6', bg:'#F0FDFA', border:'#99F6E4', locked:false },
+            { id:'drug-master', type:'drug', title:'Medication Master', desc:'ตั้งค่ารายการยา High Alert และคู่ Drug Interaction', color:'#2563EB', color2:'#60A5FA', bg:'#EFF6FF', border:'#BFDBFE', locked:!canEdit },
+            { id:'cassette', type:'cassette', title:'Cassette Template', desc:'ดูโครงสร้างมาตรฐาน 6 Drawer / 36 Cassette และสถานะใช้งาน', color:'#E11D48', color2:'#FB7185', bg:'#FFF1F2', border:'#FECDD3', locked:false },
+            { id:'reports', type:'reports', title:'รายงานและ Audit Log', desc:'ดู activity, MAR summary และสถานะการจัด/จ่ายยา', color:'#D97706', color2:'#F59E0B', bg:'#FFFBEB', border:'#FDE68A', locked:false },
+            { id:'integration', type:'integration', title:'HIS / MAR Sync', desc:'จำลองการเชื่อมต่อคำสั่งยาและข้อมูลผู้ป่วยจากระบบโรงพยาบาล', color:'#475569', color2:'#94A3B8', bg:'#F8FAFC', border:'#CBD5E1', locked:!canEdit }
+        ];
+        const moduleGrid = document.getElementById('boModuleGrid');
+        if (moduleGrid) {
+            moduleGrid.innerHTML = modules.map(function(mod) {
+                return '<button class="bo-module' + (mod.locked ? ' locked' : '') + '" onclick="openBackofficeModule(\'' + escHtml(mod.id) + '\')"'
+                    + ' style="--bo-color:' + mod.color + ';--bo-color2:' + mod.color2 + ';--bo-bg:' + mod.bg + ';--bo-border:' + mod.border + ';">'
+                    + '<div class="bo-module-top"><div class="bo-module-icon">' + backofficeIconSvg(mod.type) + '</div><span class="bo-chip" style="--bo-color:' + mod.color + ';--bo-border:' + mod.border + ';">' + (mod.locked ? 'Locked' : 'Open') + '</span></div>'
+                    + '<div><div class="bo-module-title">' + escHtml(mod.title) + '</div><div class="bo-module-desc">' + escHtml(mod.desc) + '</div></div>'
+                    + '<div class="bo-module-foot"><span style="font-size:10px;color:#94A3B8;font-weight:800;">' + escHtml(canEdit || !mod.locked ? 'พร้อมใช้งาน' : 'ต้องใช้สิทธิ์หัวหน้าเวร') + '</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="' + mod.color + '" stroke-width="2.4"><path d="M5 12h14"/><path d="M13 5l7 7-7 7"/></svg></div>'
+                    + '</button>';
+            }).join('');
+        }
+
+        const logs = [
+            { title:'Ward scope', sub: wardName + ' · ' + (info.desc || 'ไม่ระบุรายละเอียด'), color:'#0D9488', bg:'#F0FDFA' },
+            { title:'Cart profile', sub: cartName + ' · ' + state.drawers + ' Drawer / ' + state.total + ' Cassette', color:'#2563EB', bg:'#EFF6FF' },
+            { title:'Cassette usage', sub: state.usedCassettes + '/' + state.total + ' ช่องใช้งานอยู่ · ' + state.completed + ' ช่องเติมยาเรียบร้อยแล้ว', color:'#E11D48', bg:'#FFF1F2' },
+            { title:'MAR workload', sub: metrics.done + '/' + metrics.total + ' จ่ายแล้ว · ' + metrics.highAlert + ' High Alert · ' + metrics.prn + ' PRN', color:'#D97706', bg:'#FFFBEB' }
+        ];
+        const timeline = document.getElementById('boTimeline');
+        if (timeline) {
+            timeline.innerHTML = logs.map(function(log) {
+                return '<div class="bo-log" style="--bo-color:' + log.color + ';--bo-bg:' + log.bg + ';">'
+                    + '<div class="bo-log-dot"></div><div><div class="bo-log-title">' + escHtml(log.title) + '</div><div class="bo-log-sub">' + escHtml(log.sub) + '</div></div>'
+                    + '</div>';
+            }).join('');
+        }
+    }
+
+    function openBackofficeModule(moduleId) {
+        const labels = {
+            users:'ผู้ใช้งานและสิทธิ์',
+            wards:'Ward & Med Cart',
+            'drug-master':'Medication Master',
+            cassette:'Cassette Template',
+            reports:'รายงานและ Audit Log',
+            integration:'HIS / MAR Sync'
+        };
+        const restricted = ['users','drug-master','integration'];
+        if (restricted.includes(moduleId) && currentRole !== 'super') {
+            showToast('Role นี้ดูระบบหลังบ้านได้ แต่ไม่มีสิทธิ์แก้ไขเมนูนี้');
+            setTimeout(function(){ showToast(''); }, 2200);
+            return;
+        }
+        if (moduleId === 'users') {
+            openPermPanel();
+            showToast('เปิดตั้งค่าสิทธิ์จากระบบหลังบ้าน');
+            setTimeout(function(){ showToast(''); }, 1800);
+            return;
+        }
+        showToast('เปิดเมนูระบบหลังบ้าน: ' + (labels[moduleId] || 'Demo'));
+        setTimeout(function(){ showToast(''); }, 1800);
+    }
+
     function renderDashboardCassetteUsageCard(state) {
         state = state || getDashboardCassetteState();
         const statCassette = document.getElementById('dashStatCassette');
@@ -18522,8 +19436,12 @@
         }
 
         const lockByKey = {};
+        state.completedLocks.forEach(function(lock) {
+            lockByKey[ptdCassetteKey(lock.drawer, lock.cassette)] = Object.assign({}, lock, { __completed: true });
+        });
         state.locks.forEach(function(lock) {
-            lockByKey[ptdCassetteKey(lock.drawer, lock.cassette)] = lock;
+            const key = ptdCassetteKey(lock.drawer, lock.cassette);
+            lockByKey[key] = Object.assign({}, lock, { __completed: !!lockByKey[key] });
         });
         const map = document.getElementById('dashCassetteMap');
         if (map) {
@@ -18537,18 +19455,379 @@
                     const cfg = lock ? cassetteModeConfig[lock.mode] : null;
                     const isMaintenance = !lock && globalIndex > state.readyBase;
                     const cls = lock ? lock.mode : isMaintenance ? 'maintenance' : 'ready';
-                    const title = 'Drawer ' + d + ' · Cassette ' + c + (lock && cfg ? ' · ' + cfg.dashboardLabel + ' (' + cfg.label + ')' : '');
-                    cells += '<div class="db-cassette-cell ' + cls + '" title="' + escHtml(title) + '" aria-label="' + escHtml(title) + '"></div>';
+                    const statusText = lock && lock.__completed ? 'เติมยาเรียบร้อยแล้ว' : lock && cfg ? cfg.dashboardLabel + ' (' + cfg.label + ')' : isMaintenance ? 'ไม่พร้อมใช้' : 'พร้อมใช้';
+                    const title = 'Drawer ' + d + ' · Cassette ' + c + ' · ' + statusText;
+                    cells += '<button type="button" class="db-cassette-cell ' + cls + (lock && lock.__completed ? ' completed' : '') + '" title="' + escHtml(title) + '" aria-label="' + escHtml(title) + '" onclick="event.stopPropagation();showCassetteDetailModal(' + d + ',' + c + ')"></button>';
                 }
                 const readyInDrawer = Math.max(Math.min(state.readyBase - ((d - 1) * state.perDrawer), state.perDrawer), 0);
-                html += '<div class="db-cassette-drawer">'
-                    + '<div class="db-cassette-drawer-head"><span>D' + d + '</span><span>' + readyInDrawer + '/' + state.perDrawer + '</span></div>'
+                const locksInDrawer = state.locks.filter(function(l){ return parseInt(l.drawer) === d; });
+                const completedInDrawer = state.completedLocks.filter(function(l){ return parseInt(l.drawer) === d; });
+                const allInDrawer = locksInDrawer.length + completedInDrawer.length;
+                const drawerBadge = allInDrawer > 0
+                    ? '<span style="background:#ccfbf1;color:#0D9488;font-size:9px;font-weight:800;padding:2px 7px;border-radius:5px;border:1px solid #99F6E4;">' + allInDrawer + ' รายการ</span>'
+                    : '<span style="background:#f1f5f9;color:#94a3b8;font-size:9px;font-weight:700;padding:2px 7px;border-radius:5px;">' + readyInDrawer + '/' + state.perDrawer + '</span>';
+                html += '<div class="db-cassette-drawer" onclick="showDrawerDetailModal(' + d + ')" style="cursor:pointer;transition:box-shadow .16s,transform .16s;" onmouseover="this.style.boxShadow=\'0 4px 16px rgba(13,148,136,0.15)\';this.style.transform=\'translateY(-1px)\'" onmouseout="this.style.boxShadow=\'\';this.style.transform=\'\'">'
+                    + '<div class="db-cassette-drawer-head"><span>D' + d + '</span>' + drawerBadge + '</div>'
                     + '<div class="db-cassette-drawer-grid">' + cells + '</div>'
                     + '</div>';
             }
             map.innerHTML = html;
         }
 
+    }
+
+    function closeDashboardDetailModals() {
+        ['cassetteDetailModal', 'drawerDetailModal'].forEach(function(id) {
+            const modal = document.getElementById(id);
+            if (modal) modal.style.display = 'none';
+        });
+    }
+
+    function getPreparedCassetteItemsFromPatientData(drawerNum, cassNum) {
+        const items = [];
+        Object.keys(patientData || {}).forEach(function(key) {
+            const pt = patientData[key];
+            if (!pt || !pt.drugs) return;
+            pt.drugs.forEach(function(drug, idx) {
+                const preparedHere = String(drug.preparedDrawer || '') === String(drawerNum)
+                    && String(drug.preparedCassette || '') === String(cassNum);
+                if (!preparedHere) return;
+                const item = cassetteItemFromPatientDrug(pt, key, drug, idx, {
+                    done: true,
+                    status: 'จัดแล้ว',
+                    round: prepRoundFromView(legacyDrugView(drug, pt, idx), pt),
+                    slot: drug.preparedSlot || '',
+                    preparedTime: drug.preparedTime || ''
+                });
+                if (item) items.push(item);
+            });
+        });
+        return items;
+    }
+
+    function getDashboardCassetteItems(detail) {
+        if (!detail) return [];
+        const fromLock = detail.lock && Array.isArray(detail.lock.cassetteItems)
+            ? detail.lock.cassetteItems.map(normalizeCassetteItem).filter(Boolean)
+            : [];
+        const fromData = getPreparedCassetteItemsFromPatientData(detail.drawer, detail.cassette);
+        const merged = mergeCassetteItems(fromLock, fromData);
+        if (merged.length) return merged;
+        return getLockDrugNames(detail.lock).map(function(name) {
+            return normalizeCassetteItem({ drugName: name, status: detail.isCompleted ? 'จัดแล้ว' : 'รอจัด', done: detail.isCompleted });
+        }).filter(Boolean);
+    }
+
+    function getDashboardCassetteDetail(drawerNum, cassNum) {
+        const state = getDashboardCassetteState();
+        const key = ptdCassetteKey(drawerNum, cassNum);
+        const completed = state.completedLocks.find(function(lock) {
+            return ptdCassetteKey(lock.drawer, lock.cassette) === key;
+        }) || null;
+        const active = state.locks.find(function(lock) {
+            return ptdCassetteKey(lock.drawer, lock.cassette) === key;
+        }) || null;
+        const lock = active || completed || null;
+        const globalIndex = ((drawerNum - 1) * state.perDrawer) + cassNum;
+        const isMaintenance = !lock && globalIndex > state.readyBase;
+        const cfg = lock ? cassetteModeConfig[lock.mode] : null;
+        const detail = {
+            state: state,
+            cart: state.cart || {},
+            drawer: drawerNum,
+            cassette: cassNum,
+            key: key,
+            globalIndex: globalIndex,
+            active: active,
+            completed: completed,
+            lock: lock,
+            cfg: cfg,
+            drugs: getLockDrugNames(lock),
+            isCompleted: !!completed,
+            isActive: !!active,
+            isMaintenance: isMaintenance,
+            isReady: !lock && !isMaintenance
+        };
+        detail.items = getDashboardCassetteItems(detail);
+        detail.drugs = cassetteDrugNamesFromItems(detail.items).length ? cassetteDrugNamesFromItems(detail.items) : detail.drugs;
+        return detail;
+    }
+
+    function formatCassetteDetailTime(iso) {
+        if (!iso) return '-';
+        try {
+            return new Date(iso).toLocaleString('th-TH', { day:'2-digit', month:'short', hour:'2-digit', minute:'2-digit' });
+        } catch (e) {
+            return '-';
+        }
+    }
+
+    function cassetteDetailInfoRow(label, value) {
+        return '<div style="display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid #F1F5F9;">'
+            + '<span style="font-size:12px;color:#64748b;font-weight:700;">' + escHtml(label) + '</span>'
+            + '<span style="font-size:12px;color:#0f172a;font-weight:800;text-align:right;">' + escHtml(value || '-') + '</span>'
+            + '</div>';
+    }
+
+    function showCassetteDetailModal(drawerNum, cassNum) {
+        const detail = getDashboardCassetteDetail(drawerNum, cassNum);
+        if (detail.globalIndex > detail.state.total) return;
+        const cfg = detail.cfg;
+        const modeTheme = {
+            patient:    { color:'#0D9488', bg:'#CCFBF1', border:'#5EEAD4', label:'By Patient' },
+            medication: { color:'#2563EB', bg:'#DBEAFE', border:'#93C5FD', label:'By Item' },
+            schedule:   { color:'#7C3AED', bg:'#EDE9FE', border:'#C4B5FD', label:'By Round' },
+            ready:      { color:'#15803D', bg:'#DCFCE7', border:'#BBF7D0', label:'พร้อมใช้' },
+            completed:  { color:'#1D4ED8', bg:'#DBEAFE', border:'#93C5FD', label:'เติมยาเรียบร้อยแล้ว' },
+            maintenance:{ color:'#DC2626', bg:'#FEE2E2', border:'#FECACA', label:'ไม่พร้อมใช้' }
+        };
+        const modeKey = detail.isMaintenance ? 'maintenance' : detail.lock ? detail.lock.mode : 'ready';
+        const th = detail.isCompleted ? modeTheme.completed : (modeTheme[modeKey] || modeTheme.ready);
+        const statusLabel = detail.isMaintenance
+            ? 'ไม่พร้อมใช้'
+            : detail.isCompleted
+                ? 'เติมยาเรียบร้อยแล้ว'
+                : detail.lock
+                    ? 'กำลังใช้งาน'
+                    : 'พร้อมใช้';
+        const modeLabel = cfg ? (cfg.dashboardLabel + ' · ' + cfg.label) : (detail.isMaintenance ? 'งดใช้งานชั่วคราว' : 'ยังไม่ถูกจอง');
+        const drugList = detail.items.length
+            ? detail.items.map(function(item, index) {
+                const statusColor = item.done ? '#15803D' : '#D97706';
+                const statusBg = item.done ? '#DCFCE7' : '#FEF3C7';
+                const metaParts = [
+                    item.patientName ? item.patientName + (item.patientBed ? ' · ' + item.patientBed : '') : '',
+                    item.dose || '',
+                    item.round || '',
+                    item.slot || ''
+                ].filter(Boolean);
+                const lotText = [item.lot && item.lot !== 'N/A' ? 'Lot ' + item.lot : '', item.exp && item.exp !== 'N/A' ? 'Exp ' + item.exp : ''].filter(Boolean).join(' · ');
+                return '<div style="display:flex;align-items:flex-start;gap:10px;padding:12px;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:14px;">'
+                    + '<div style="width:28px;height:28px;border-radius:10px;background:' + th.bg + ';border:1px solid ' + th.border + ';display:flex;align-items:center;justify-content:center;color:' + th.color + ';font-size:11px;font-weight:900;flex-shrink:0;">' + (index + 1) + '</div>'
+                    + '<div style="flex:1;min-width:0;">'
+                        + '<div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">'
+                            + '<span style="font-size:13px;font-weight:850;color:#0f172a;line-height:1.25;">' + escHtml(item.drugName) + '</span>'
+                            + (item.highAlert ? '<span style="background:#FEE2E2;color:#B91C1C;border:1px solid #FECACA;font-size:9px;font-weight:900;padding:2px 6px;border-radius:999px;">HA</span>' : '')
+                            + (item.interactionSeverity ? '<span style="background:#FFF7ED;color:#C2410C;border:1px solid #FDBA74;font-size:9px;font-weight:900;padding:2px 6px;border-radius:999px;">Interaction</span>' : '')
+                        + '</div>'
+                        + '<div style="font-size:11px;color:#64748b;font-weight:650;line-height:1.45;margin-top:4px;">' + escHtml(metaParts.join(' · ') || 'ยังไม่มีปลายทาง') + '</div>'
+                        + (lotText ? '<div style="font-size:10px;color:#94A3B8;font-weight:650;margin-top:3px;">' + escHtml(lotText) + '</div>' : '')
+                        + (item.interactionDrug ? '<div style="font-size:10px;color:#C2410C;font-weight:750;margin-top:3px;">ชนกับ ' + escHtml(item.interactionDrug) + '</div>' : '')
+                    + '</div>'
+                    + '<span style="font-size:10px;font-weight:900;color:' + statusColor + ';background:' + statusBg + ';border:1px solid rgba(15,23,42,0.06);padding:4px 8px;border-radius:999px;white-space:nowrap;">' + escHtml(item.status) + '</span>'
+                    + '</div>';
+            }).join('')
+            : '<div style="padding:18px;border:1px dashed #CBD5E1;border-radius:14px;background:#F8FAFC;text-align:center;color:#64748b;font-size:13px;font-weight:700;">'
+                + (detail.isMaintenance ? 'ช่องนี้ไม่พร้อมใช้ จึงยังไม่มีรายการยา' : 'ช่องนี้ยังว่าง พร้อมเลือกใช้งาน')
+            + '</div>';
+        const infoRows = [
+            cassetteDetailInfoRow('รถเข็น', detail.cart.name || 'Med Cart'),
+            cassetteDetailInfoRow('Ward', currentWardName || detail.cart.ward || DEFAULT_DEMO_WARD),
+            cassetteDetailInfoRow('ตำแหน่ง', 'Drawer ' + detail.drawer + ' · Cassette ' + detail.cassette),
+            cassetteDetailInfoRow('ประเภท', modeLabel),
+            cassetteDetailInfoRow('สถานะ', statusLabel),
+            cassetteDetailInfoRow('รายการยา', detail.items.length ? detail.items.length + ' รายการ' : '-'),
+            cassetteDetailInfoRow('เวลาบันทึก', formatCassetteDetailTime((detail.completed && detail.completed.completedAt) || (detail.lock && detail.lock.completedAt)))
+        ].join('');
+
+        let modal = document.getElementById('cassetteDetailModal');
+        if (!modal) {
+            modal = document.createElement('div');
+            modal.id = 'cassetteDetailModal';
+            document.body.appendChild(modal);
+        }
+        modal.style.cssText = 'position:fixed;inset:0;z-index:10020;display:flex;align-items:center;justify-content:center;background:rgba(15,23,42,0.5);backdrop-filter:blur(8px);padding:18px;';
+        modal.onclick = function(e) { if (e.target === modal) modal.style.display = 'none'; };
+        modal.innerHTML =
+            '<div style="width:100%;max-width:760px;max-height:90vh;background:white;border-radius:28px;box-shadow:0 28px 82px rgba(15,23,42,0.32);overflow:hidden;animation:fadeInUp .22s ease;display:flex;flex-direction:column;">'
+                + '<div style="padding:22px 24px;background:linear-gradient(135deg,' + th.bg + ',#fff);border-bottom:1px solid #E2E8F0;position:relative;overflow:hidden;flex-shrink:0;">'
+                    + '<div style="position:absolute;width:190px;height:190px;border-radius:50%;background:rgba(255,255,255,0.58);right:-70px;top:-90px;"></div>'
+                    + '<button type="button" id="cassetteDetailCloseBtn" aria-label="ปิดรายละเอียด Cassette" style="position:absolute;top:14px;right:14px;width:34px;height:34px;border:none;border-radius:50%;background:rgba(255,255,255,0.8);box-shadow:0 4px 14px rgba(15,23,42,0.08);display:flex;align-items:center;justify-content:center;cursor:pointer;color:#334155;">'
+                        + '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.7"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>'
+                    + '</button>'
+                    + '<div style="display:flex;gap:16px;align-items:center;position:relative;z-index:1;padding-right:34px;">'
+                        + '<div style="width:64px;height:64px;border-radius:21px;background:white;border:2px solid ' + th.border + ';display:flex;align-items:center;justify-content:center;box-shadow:0 12px 26px rgba(15,23,42,0.12);flex-shrink:0;">'
+                            + '<span style="font-size:20px;font-weight:950;color:' + th.color + ';">C' + detail.cassette + '</span>'
+                        + '</div>'
+                        + '<div style="min-width:0;">'
+                            + '<div style="font-size:10px;font-weight:950;color:' + th.color + ';letter-spacing:.16em;text-transform:uppercase;">Cassette Detail</div>'
+                            + '<div style="font-size:24px;font-weight:950;color:#0f172a;letter-spacing:-.05em;margin-top:2px;">Drawer ' + detail.drawer + ' · Cassette ' + detail.cassette + '</div>'
+                            + '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:8px;">'
+                                + '<span style="font-size:11px;font-weight:900;color:' + th.color + ';background:' + th.bg + ';border:1px solid ' + th.border + ';padding:5px 10px;border-radius:999px;">' + escHtml(statusLabel) + '</span>'
+                                + '<span style="font-size:11px;font-weight:900;color:#475569;background:white;border:1px solid #E2E8F0;padding:5px 10px;border-radius:999px;">' + escHtml(modeLabel) + '</span>'
+                            + '</div>'
+                        + '</div>'
+                    + '</div>'
+                + '</div>'
+                + '<div style="padding:20px 24px 22px;overflow-y:auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px;">'
+                    + '<div>'
+                        + '<div style="font-size:11px;font-weight:900;color:#94a3b8;letter-spacing:.14em;text-transform:uppercase;margin-bottom:10px;">รายละเอียดช่อง</div>'
+                        + '<div style="border:1px solid #E2E8F0;border-radius:18px;padding:0 14px;background:#F8FAFC;">' + infoRows + '</div>'
+                    + '</div>'
+                    + '<div>'
+                        + '<div style="font-size:11px;font-weight:900;color:#94a3b8;letter-spacing:.14em;text-transform:uppercase;margin-bottom:10px;">รายการยาในช่องนี้</div>'
+                        + '<div style="display:grid;gap:8px;">' + drugList + '</div>'
+                    + '</div>'
+                    + '<div style="grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:10px;">'
+                        + '<button type="button" id="cassetteDetailDrawerBtn" style="height:44px;border:1px solid #CBD5E1;background:#F8FAFC;color:#334155;border-radius:14px;font-size:13px;font-weight:900;cursor:pointer;">ดูทั้ง Drawer</button>'
+                        + '<button type="button" id="cassetteDetailDoneBtn" style="height:44px;border:none;background:#0D9488;color:white;border-radius:14px;font-size:13px;font-weight:900;cursor:pointer;box-shadow:0 8px 18px rgba(13,148,136,0.22);">ปิด</button>'
+                    + '</div>'
+                + '</div>'
+            + '</div>';
+        const closeBtn = document.getElementById('cassetteDetailCloseBtn');
+        const doneBtn = document.getElementById('cassetteDetailDoneBtn');
+        const drawerBtn = document.getElementById('cassetteDetailDrawerBtn');
+        if (closeBtn) closeBtn.onclick = function() { modal.style.display = 'none'; };
+        if (doneBtn) doneBtn.onclick = function() { modal.style.display = 'none'; };
+        if (drawerBtn) drawerBtn.onclick = function() {
+            modal.style.display = 'none';
+            showDrawerDetailModal(drawerNum);
+        };
+    }
+
+    function showDrawerDetailModal(drawerNum) {
+        const state = getDashboardCassetteState();
+        const cart = state.cart || {};
+        const modeTheme = {
+            patient:     { color:'#0D9488', light:'#CCFBF1', border:'#5EEAD4', bg:'linear-gradient(135deg,#CCFBF1,#F0FDFA)', dot:'#14B8A6', label:'By Patient' },
+            medication:  { color:'#2563EB', light:'#DBEAFE', border:'#93C5FD', bg:'linear-gradient(135deg,#DBEAFE,#EFF6FF)', dot:'#3B82F6', label:'By Item' },
+            schedule:    { color:'#7C3AED', light:'#EDE9FE', border:'#C4B5FD', bg:'linear-gradient(135deg,#EDE9FE,#F5F3FF)', dot:'#A78BFA', label:'By Round' },
+            completed:   { color:'#1D4ED8', light:'#DBEAFE', border:'#93C5FD', bg:'linear-gradient(135deg,#DBEAFE,#EFF6FF)', dot:'#3B82F6', label:'เติมแล้ว' },
+            maintenance: { color:'#DC2626', light:'#FEE2E2', border:'#FECACA', bg:'linear-gradient(135deg,#FEE2E2,#FEF2F2)', dot:'#F87171', label:'ไม่พร้อม' },
+            ready:       { color:'#15803D', light:'#DCFCE7', border:'#BBF7D0', bg:'linear-gradient(135deg,#DCFCE7,#F0FDF4)', dot:'#22C55E', label:'พร้อมใช้' }
+        };
+        const cassettes = [];
+        for (let c = 1; c <= state.perDrawer; c++) {
+            const globalIndex = ((drawerNum - 1) * state.perDrawer) + c;
+            if (globalIndex > state.total) break;
+            const detail = getDashboardCassetteDetail(drawerNum, c);
+            const modeKey = detail.isMaintenance ? 'maintenance' : detail.lock ? detail.lock.mode : 'ready';
+            const themeKey = detail.isCompleted ? 'completed' : modeKey;
+            cassettes.push({
+                num: c,
+                detail: detail,
+                theme: modeTheme[themeKey] || modeTheme.ready,
+                statusLabel: detail.isMaintenance ? 'ไม่พร้อมใช้' : detail.isCompleted ? 'เติมยาเรียบร้อยแล้ว' : detail.lock ? 'กำลังจัดยา' : 'พร้อมใช้',
+                modeLabel: detail.cfg ? detail.cfg.dashboardLabel : (detail.isMaintenance ? 'Maintenance' : 'Ready')
+            });
+        }
+        const occupied = cassettes.filter(function(c){ return c.detail.lock || c.detail.items.length || c.detail.isCompleted; });
+        const completed = cassettes.filter(function(c){ return c.detail.isCompleted; });
+        const ready = cassettes.filter(function(c){ return c.detail.isReady; });
+        const maintenance = cassettes.filter(function(c){ return c.detail.isMaintenance; });
+        const totalItems = cassettes.reduce(function(sum, c){ return sum + (c.detail.items || []).length; }, 0);
+
+        const cassetteGrid = cassettes.map(function(c) {
+            const th = c.theme;
+            const itemCount = (c.detail.items || []).length;
+            return '<button type="button" onclick="event.stopPropagation();showCassetteDetailModal(' + drawerNum + ',' + c.num + ')" title="Drawer ' + drawerNum + ' · Cassette ' + c.num + '" style="border:none;background:' + th.bg + ';border:1.5px solid ' + th.border + ';border-radius:16px;min-height:68px;display:flex;flex-direction:column;align-items:flex-start;justify-content:space-between;padding:10px;cursor:pointer;box-shadow:0 2px 10px rgba(15,23,42,0.05);position:relative;overflow:hidden;">'
+                + '<span style="position:absolute;width:54px;height:54px;border-radius:50%;background:rgba(255,255,255,0.6);right:-22px;top:-20px;"></span>'
+                + '<div style="display:flex;align-items:center;justify-content:space-between;width:100%;position:relative;z-index:1;">'
+                    + '<span style="font-size:13px;font-weight:950;color:' + th.color + ';">C' + c.num + '</span>'
+                    + '<span style="width:9px;height:9px;border-radius:50%;background:' + th.dot + ';box-shadow:0 0 0 3px rgba(255,255,255,0.7);"></span>'
+                + '</div>'
+                + '<div style="position:relative;z-index:1;">'
+                    + '<div style="font-size:9px;font-weight:900;color:' + th.color + ';line-height:1;">' + escHtml(c.statusLabel) + '</div>'
+                    + '<div style="font-size:9px;color:#64748b;font-weight:750;margin-top:3px;">' + itemCount + ' รายการยา</div>'
+                + '</div>'
+                + '</button>';
+        }).join('');
+
+        const statCards = [
+            { val:cassettes.length, label:'Cassette', sub:'ทั้งหมด', color:'#0f172a', bg:'#F8FAFC' },
+            { val:occupied.length, label:'ใช้งาน', sub:totalItems + ' รายการยา', color:'#0D9488', bg:'#F0FDFA' },
+            { val:completed.length, label:'เติมแล้ว', sub:'บันทึกครบ', color:'#1D4ED8', bg:'#EFF6FF' },
+            { val:ready.length, label:'พร้อมใช้', sub:'เลือกได้', color:'#15803D', bg:'#F0FDF4' },
+            { val:maintenance.length, label:'ไม่พร้อม', sub:'งดใช้', color:'#B91C1C', bg:'#FEF2F2' }
+        ].map(function(card) {
+            return '<div style="background:' + card.bg + ';border:1px solid #E2E8F0;border-radius:16px;padding:12px 14px;min-width:104px;">'
+                + '<div style="font-size:24px;font-weight:950;color:' + card.color + ';line-height:1;">' + card.val + '</div>'
+                + '<div style="font-size:11px;font-weight:900;color:#334155;margin-top:6px;">' + escHtml(card.label) + '</div>'
+                + '<div style="font-size:9px;font-weight:700;color:#94A3B8;margin-top:2px;">' + escHtml(card.sub) + '</div>'
+                + '</div>';
+        }).join('');
+
+        const cassCards = occupied.length > 0
+            ? occupied.map(function(c) {
+                const th = c.theme;
+                const items = c.detail.items || [];
+                const preview = items.slice(0, 3).map(function(item) {
+                    return '<div style="display:flex;gap:8px;align-items:flex-start;padding:8px 0;border-top:1px solid #F1F5F9;">'
+                        + '<span style="width:8px;height:8px;border-radius:50%;background:' + th.dot + ';margin-top:5px;flex-shrink:0;"></span>'
+                        + '<div style="flex:1;min-width:0;"><div style="font-size:12px;font-weight:850;color:#0f172a;">' + escHtml(item.drugName) + '</div>'
+                        + '<div style="font-size:10px;color:#64748b;font-weight:650;line-height:1.35;">' + escHtml([item.patientName, item.patientBed, item.dose, item.round].filter(Boolean).join(' · ')) + '</div></div>'
+                        + '<span style="font-size:9px;font-weight:900;color:' + (item.done ? '#15803D' : '#D97706') + ';background:' + (item.done ? '#DCFCE7' : '#FEF3C7') + ';border-radius:999px;padding:3px 7px;white-space:nowrap;">' + escHtml(item.status || (item.done ? 'จัดแล้ว' : 'รอจัด')) + '</span>'
+                        + '</div>';
+                }).join('');
+                const extraCount = Math.max(items.length - 3, 0);
+                return '<button type="button" onclick="showCassetteDetailModal(' + drawerNum + ',' + c.num + ')" style="text-align:left;width:100%;border:none;background:white;border:1.5px solid ' + th.border + ';border-radius:20px;margin-bottom:12px;overflow:hidden;box-shadow:0 5px 18px rgba(15,23,42,0.05);cursor:pointer;padding:0;">'
+                    + '<div style="background:' + th.bg + ';padding:14px 16px;display:flex;align-items:center;gap:12px;">'
+                        + '<div style="width:44px;height:44px;background:white;border:1px solid ' + th.border + ';border-radius:14px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(15,23,42,0.08);font-size:14px;font-weight:950;color:' + th.color + ';">C' + c.num + '</div>'
+                        + '<div style="flex:1;min-width:0;"><div style="font-size:14px;font-weight:950;color:#0f172a;">Cassette ' + c.num + '</div><div style="font-size:11px;color:#475569;font-weight:750;margin-top:2px;">' + escHtml(c.modeLabel) + ' · ' + items.length + ' รายการยา</div></div>'
+                        + '<span style="font-size:10px;font-weight:900;color:' + th.color + ';background:rgba(255,255,255,0.78);border:1px solid ' + th.border + ';border-radius:999px;padding:5px 9px;">' + escHtml(c.statusLabel) + '</span>'
+                    + '</div>'
+                    + '<div style="padding:4px 16px 12px;">' + (preview || '<div style="font-size:12px;color:#94A3B8;font-weight:700;padding:12px 0;">ยังไม่มีรายการยาในช่องนี้</div>') + (extraCount ? '<div style="font-size:10px;color:#64748b;font-weight:850;padding-top:8px;border-top:1px solid #F1F5F9;">+' + extraCount + ' รายการเพิ่มเติม · กดเพื่อดูทั้งหมด</div>' : '') + '</div>'
+                    + '</button>';
+            }).join('')
+            : '<div style="text-align:center;padding:42px 20px;background:white;border:1px dashed #CBD5E1;border-radius:22px;">'
+                + '<div style="width:58px;height:58px;background:#F1F5F9;border-radius:18px;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;">'
+                    + '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>'
+                + '</div>'
+                + '<div style="font-size:15px;font-weight:900;color:#475569;">Drawer นี้ยังว่างอยู่</div>'
+                + '<div style="font-size:12px;color:#94A3B8;font-weight:650;margin-top:4px;">ทุก Cassette พร้อมสำหรับการจัดยาใหม่</div>'
+            + '</div>';
+
+        let modal = document.getElementById('drawerDetailModal');
+        if (!modal) {
+            modal = document.createElement('div');
+            modal.id = 'drawerDetailModal';
+            document.body.appendChild(modal);
+        }
+        modal.style.cssText = 'position:fixed;inset:0;z-index:9990;display:flex;align-items:center;justify-content:center;background:rgba(15,23,42,0.54);backdrop-filter:blur(10px);padding:18px;';
+        modal.onclick = function(e) { if (e.target === modal) modal.style.display = 'none'; };
+        modal.innerHTML =
+        '<div style="background:#F8FAFC;border-radius:30px;width:100%;max-width:920px;max-height:90vh;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 30px 90px rgba(15,23,42,0.34);animation:fadeInUp .22s cubic-bezier(0.22,1,0.36,1);">'
+            + '<div style="background:linear-gradient(135deg,#FFFFFF 0%,#F0FDFA 52%,#EFF6FF 100%);border-bottom:1px solid #E2E8F0;padding:22px 24px 20px;position:relative;overflow:hidden;flex-shrink:0;">'
+                + '<div style="position:absolute;width:220px;height:220px;border-radius:50%;background:rgba(13,148,136,0.08);top:-120px;right:-70px;"></div>'
+                + '<div style="display:flex;align-items:flex-start;gap:16px;position:relative;z-index:1;">'
+                    + '<div style="width:58px;height:58px;background:linear-gradient(135deg,#0D9488,#14B8A6);border-radius:20px;display:flex;align-items:center;justify-content:center;box-shadow:0 14px 30px rgba(13,148,136,0.24);flex-shrink:0;">'
+                        + '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>'
+                    + '</div>'
+                    + '<div style="flex:1;min-width:0;">'
+                        + '<div style="font-size:10px;font-weight:950;color:#0D9488;letter-spacing:.18em;text-transform:uppercase;">Drawer Overview</div>'
+                        + '<div style="font-size:27px;font-weight:950;color:#0f172a;letter-spacing:-.05em;margin-top:2px;">Drawer ' + drawerNum + '</div>'
+                        + '<div style="font-size:12px;color:#64748b;font-weight:750;margin-top:4px;">' + escHtml(cart.name || 'Med Cart') + ' · ' + escHtml(currentWardName || cart.ward || DEFAULT_DEMO_WARD) + ' · ' + cassettes.length + ' Cassette</div>'
+                    + '</div>'
+                    + '<button type="button" id="drawerDetailCloseBtn" aria-label="ปิดรายละเอียด Drawer" style="width:40px;height:40px;background:white;border:1px solid #E2E8F0;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 8px 20px rgba(15,23,42,0.08);flex-shrink:0;">'
+                        + '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#334155" stroke-width="2.8"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>'
+                    + '</button>'
+                + '</div>'
+                + '<div style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin-top:20px;position:relative;z-index:1;">' + statCards + '</div>'
+            + '</div>'
+            + '<div style="padding:20px;overflow-y:auto;flex:1;display:grid;grid-template-columns:minmax(260px,0.92fr) minmax(0,1.08fr);gap:18px;">'
+                + '<div style="display:flex;flex-direction:column;gap:14px;">'
+                    + '<div style="background:white;border:1px solid #E2E8F0;border-radius:24px;padding:16px;box-shadow:0 8px 28px rgba(15,23,42,0.05);">'
+                        + '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;"><div><div style="font-size:13px;font-weight:950;color:#0f172a;">Drawer Map</div><div style="font-size:10px;color:#94A3B8;font-weight:750;margin-top:2px;">กดช่องเพื่อดูรายละเอียดราย Cassette</div></div><span style="font-size:10px;font-weight:900;color:#0D9488;background:#F0FDFA;border:1px solid #99F6E4;border-radius:999px;padding:5px 9px;">' + cassettes.length + ' ช่อง</span></div>'
+                        + '<div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;">' + cassetteGrid + '</div>'
+                    + '</div>'
+                    + '<div style="background:white;border:1px solid #E2E8F0;border-radius:20px;padding:14px 16px;box-shadow:0 6px 18px rgba(15,23,42,0.04);">'
+                        + '<div style="font-size:11px;font-weight:950;color:#94A3B8;letter-spacing:.14em;text-transform:uppercase;margin-bottom:10px;">Legend</div>'
+                        + '<div style="display:flex;flex-wrap:wrap;gap:8px;">'
+                            + '<span style="font-size:10px;font-weight:850;color:#0D9488;background:#F0FDFA;border:1px solid #99F6E4;border-radius:999px;padding:5px 9px;">By Patient</span>'
+                            + '<span style="font-size:10px;font-weight:850;color:#2563EB;background:#EFF6FF;border:1px solid #BFDBFE;border-radius:999px;padding:5px 9px;">By Item</span>'
+                            + '<span style="font-size:10px;font-weight:850;color:#7C3AED;background:#F5F3FF;border:1px solid #DDD6FE;border-radius:999px;padding:5px 9px;">By Round</span>'
+                            + '<span style="font-size:10px;font-weight:850;color:#15803D;background:#F0FDF4;border:1px solid #BBF7D0;border-radius:999px;padding:5px 9px;">Ready</span>'
+                        + '</div>'
+                    + '</div>'
+                + '</div>'
+                + '<div style="min-width:0;">'
+                    + '<div style="display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin:2px 2px 12px;"><div><div style="font-size:15px;font-weight:950;color:#0f172a;">Cassette ที่มีรายการ</div><div style="font-size:11px;color:#94A3B8;font-weight:750;margin-top:2px;">แสดงรายการยาจากข้อมูล dynamic ในช่องนี้</div></div><span style="font-size:11px;font-weight:950;color:#0D9488;background:#F0FDFA;border:1px solid #99F6E4;border-radius:999px;padding:6px 10px;">' + occupied.length + ' ช่อง</span></div>'
+                    + '<div>' + cassCards + '</div>'
+                + '</div>'
+            + '</div>'
+        + '</div>';
+        const closeBtn = document.getElementById('drawerDetailCloseBtn');
+        if (closeBtn) closeBtn.onclick = function() { modal.style.display = 'none'; };
     }
 
     function renderDashboardDynamic() {
@@ -18891,6 +20170,8 @@
         drug.preparedTime = new Date().toLocaleTimeString('th-TH', { hour:'2-digit', minute:'2-digit' }) + ' น.';
         drug.preparedDrawer = ptdSelectedDrawer || '';
         drug.preparedCassette = ptdSelectedCass || '';
+        drug.preparedSlot = ref.slot || '';
+        drug.preparedFlow = summaryFlow.mode || '';
         return true;
     }
 
@@ -18991,12 +20272,16 @@
         sessionStorage.removeItem('mcName');
         sessionStorage.removeItem('mcRoleText');
         sessionStorage.removeItem('mcWard');
+        sessionStorage.removeItem('mcSummaryFlow');
+        appNavStack.length = 0;
+        summaryFlow = Object.assign({}, defaultSummaryFlow);
         document.body.classList.remove('logged-in');
+        closeDashboardDetailModals();
         resetCassetteModeLocks();
         const ghUserSection = document.getElementById('ghUserSection');
         if (ghUserSection) ghUserSection.style.display = 'none';
-        const ghPermBtn = document.getElementById('ghPermBtn');
-        if (ghPermBtn) ghPermBtn.style.display = 'none';
+        const ghBackendBtn = document.getElementById('ghBackendBtn');
+        if (ghBackendBtn) ghBackendBtn.style.display = 'none';
         const ghLogoutBtn = document.getElementById('ghLogoutBtn');
         if (ghLogoutBtn) ghLogoutBtn.style.display = 'none';
         const permSec = document.getElementById('dashPermSection');
@@ -19065,7 +20350,8 @@
         renderDispenseList();
         renderDashboardDynamic();
         renderAssessmentListDynamic();
-        nav('pg-cart');
+        nav('pg-cart', false, { replaceCurrent: true });
+        appNavStack.length = 0;
         showToast('รีเซ็ต Demo เรียบร้อยแล้ว — กลับไปหน้าข้อมูลรถเข็น');
         setTimeout(() => showToast(''), 2200);
     }
@@ -19079,8 +20365,8 @@
         // Hide user section
         document.body.classList.remove('logged-in');
         document.getElementById('ghUserSection').style.display = 'none';
-        const ghPermBtn = document.getElementById('ghPermBtn');
-        if (ghPermBtn) ghPermBtn.style.display = 'none';
+        const ghBackendBtn = document.getElementById('ghBackendBtn');
+        if (ghBackendBtn) ghBackendBtn.style.display = 'none';
         const ghLogoutBtn = document.getElementById('ghLogoutBtn');
         if (ghLogoutBtn) ghLogoutBtn.style.display = 'none';
         // Reset login form
@@ -19630,6 +20916,7 @@
         renderPrepScheduleDetail();
         renderDashboardDynamic();
         renderAssessmentListDynamic();
+        if (getActivePageId && getActivePageId() === 'pg-backoffice' && typeof renderBackofficeDynamic === 'function') renderBackofficeDynamic();
     }
 
     function applyWardSelection(wardName, options) {
