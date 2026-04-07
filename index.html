@@ -12567,25 +12567,25 @@
 </div>
 
 <!-- Permission Modal — Role-based -->
-<div id="permModal" style="display:none;position:fixed;inset:0;z-index:998;align-items:center;justify-content:center;background:rgba(0,0,0,0.45);backdrop-filter:blur(6px);">
-    <div style="background:white;border-radius:24px;width:100%;max-width:680px;max-height:90vh;overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,0.2);animation:fadeInUp .3s ease;display:flex;flex-direction:column;">
+<div id="permModal" onclick="if(event.target===this) closePermModal()" style="display:none;position:fixed;inset:0;z-index:10050;align-items:center;justify-content:center;background:rgba(0,0,0,0.45);backdrop-filter:blur(6px);">
+    <div role="dialog" aria-modal="true" aria-labelledby="permModalTitle" style="background:white;border-radius:24px;width:100%;max-width:680px;max-height:90vh;overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,0.2);animation:fadeInUp .3s ease;display:flex;flex-direction:column;">
         <!-- Purple header -->
         <div style="background:linear-gradient(135deg,#5B21B6,#7C3AED);padding:22px 28px;color:white;position:relative;overflow:hidden;flex-shrink:0;">
-            <div style="position:absolute;width:100px;height:100px;border-radius:50%;background:rgba(255,255,255,0.06);top:-30px;right:-20px;"></div>
+            <div style="position:absolute;width:100px;height:100px;border-radius:50%;background:rgba(255,255,255,0.06);top:-30px;right:-20px;pointer-events:none;"></div>
             <div style="display:flex;align-items:center;justify-content:space-between;">
                 <div>
-                    <div style="font-size:20px;font-weight:800;">ตั้งค่าสิทธิ์การใช้งาน</div>
+                    <div id="permModalTitle" style="font-size:20px;font-weight:800;">ตั้งค่าสิทธิ์การใช้งาน</div>
                     <div style="font-size:12px;opacity:.75;margin-top:4px;">กำหนดสิทธิ์ตามบทบาท — เฉพาะหัวหน้าเวร</div>
                 </div>
-                <button onclick="closePermModal()" style="width:36px;height:36px;border:1px solid rgba(255,255,255,0.3);border-radius:10px;background:rgba(255,255,255,0.12);cursor:pointer;display:flex;align-items:center;justify-content:center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+                <button id="permCloseBtn" type="button" onclick="event.preventDefault();event.stopPropagation();closePermModal();return false;" aria-label="ปิดหน้าตั้งค่าสิทธิ์" style="width:36px;height:36px;border:1px solid rgba(255,255,255,0.3);border-radius:10px;background:rgba(255,255,255,0.12);cursor:pointer;display:flex;align-items:center;justify-content:center;position:relative;z-index:2;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" style="pointer-events:none;"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
             </div>
         </div>
         <!-- Body — scrollable -->
         <div style="padding:24px 28px;overflow-y:auto;flex:1;" id="permModalBody"></div>
         <!-- Footer -->
         <div style="padding:16px 28px;border-top:1px solid var(--border);display:flex;gap:12px;flex-shrink:0;">
-            <button onclick="closePermModal()" style="flex:1;padding:14px;border:1.5px solid var(--border);border-radius:14px;background:white;color:var(--text-2);font-family:'Prompt',sans-serif;font-size:14px;font-weight:600;cursor:pointer;">ยกเลิก</button>
-            <button onclick="savePermModal()" style="flex:2;padding:14px;border:none;border-radius:14px;background:linear-gradient(135deg,#5B21B6,#7C3AED);color:white;font-family:'Prompt',sans-serif;font-size:14px;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(124,58,237,0.3);display:flex;align-items:center;justify-content:center;gap:6px;">
+            <button type="button" onclick="closePermModal()" style="flex:1;padding:14px;border:1.5px solid var(--border);border-radius:14px;background:white;color:var(--text-2);font-family:'Prompt',sans-serif;font-size:14px;font-weight:600;cursor:pointer;">ยกเลิก</button>
+            <button type="button" onclick="savePermModal()" style="flex:2;padding:14px;border:none;border-radius:14px;background:linear-gradient(135deg,#5B21B6,#7C3AED);color:white;font-family:'Prompt',sans-serif;font-size:14px;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(124,58,237,0.3);display:flex;align-items:center;justify-content:center;gap:6px;">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
                 บันทึกสิทธิ์
             </button>
@@ -13341,7 +13341,11 @@
 
     function openPermPanel() {
         renderPermModal();
-        document.getElementById('permModal').style.display = 'flex';
+        bindPermModalCloseButton();
+        var modal = document.getElementById('permModal');
+        if (!modal) return;
+        modal.style.display = 'flex';
+        modal.setAttribute('aria-hidden', 'false');
     }
 
     function renderPermModal() {
@@ -13429,7 +13433,22 @@
     }
 
     function closePermModal() {
-        document.getElementById('permModal').style.display = 'none';
+        var modal = document.getElementById('permModal');
+        if (!modal) return;
+        modal.style.display = 'none';
+        modal.setAttribute('aria-hidden', 'true');
+        if (modal.contains(document.activeElement)) document.activeElement.blur();
+    }
+
+    function bindPermModalCloseButton() {
+        var closeBtn = document.getElementById('permCloseBtn');
+        if (!closeBtn || closeBtn.dataset.bound === '1') return;
+        closeBtn.dataset.bound = '1';
+        closeBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            closePermModal();
+        });
     }
 
     function savePermModal() {
@@ -13437,6 +13456,12 @@
         showToast('บันทึกสิทธิ์ทั้งหมดสำเร็จ');
         setTimeout(function(){ showToast(''); }, 2000);
     }
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key !== 'Escape') return;
+        var modal = document.getElementById('permModal');
+        if (modal && modal.style.display !== 'none') closePermModal();
+    });
 
     function startCardScan(mode) {
         const box = document.getElementById('cardScanBox');
