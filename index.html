@@ -1295,108 +1295,90 @@
         }
 
         /* Ward card */
+        /* Ward cards */
         .wc {
-            background: rgba(255,255,255,0.85);
-            backdrop-filter: blur(12px);
+            background: white;
             border: 2px solid var(--border);
             border-radius: 16px;
-            padding: 18px;
+            padding: 16px;
             cursor: pointer;
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 10px;
             transition: all .2s;
-            flex-shrink: 0;
+            position: relative;
         }
-        .wc:hover { border-color: var(--green-mid); box-shadow: 0 2px 10px rgba(0,0,0,0.04); }
-        .wc.chosen { border-color: var(--green); background: var(--green-light); box-shadow: 0 0 0 3px rgba(13,148,136,.12); }
+        .wc:hover  { border-color: #94A3B8; box-shadow: 0 4px 16px rgba(0,0,0,0.07); transform: translateY(-1px); }
+        .wc.chosen { border-color: var(--green); background: #F0FDF9; box-shadow: 0 0 0 3px rgba(13,148,136,.14); }
 
-        /* Ward icon avatar */
+        /* Top row: icon + info + checkmark */
+        .wc-top { display: flex; align-items: flex-start; gap: 10px; }
         .wc-icon {
-            width: 44px; height: 44px;
-            background: var(--bg);
-            border-radius: 12px;
-            display: flex; align-items: center; justify-content: center;
-            flex-shrink: 0;
-            color: var(--text-2);
-            transition: all .15s;
+            width: 40px; height: 40px; border-radius: 12px;
+            display: flex; align-items: center; justify-content: center; flex-shrink: 0;
         }
-        .wc.chosen .wc-icon { background: var(--green); color: white; }
-
-        /* Ward info */
         .wc-info { flex: 1; min-width: 0; }
-        .wc-name { font-size: 16px; font-weight: 700; color: var(--text-1); line-height: 1.2; }
-        .wc-desc { font-size: 12px; color: var(--text-2); margin-top: 2px; }
-
-        /* Ward meta */
-        .wc-meta { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-
-        .wc-status-pill {
-            display: flex; align-items: center; gap: 4px;
-            padding: 3px 10px;
-            border-radius: var(--r-full);
-            font-size: 11px; font-weight: 600;
-        }
-        .wc-status-pill.ok    { background: var(--green-light); color: var(--green); }
-        .wc-status-pill.full  { background: #fff7ed; color: #d97706; }
-        .wc-status-pill.off   { background: #fef2f2; color: #dc2626; }
-
-        .wc-stats {
-            display: flex; align-items: center; gap: 10px;
-        }
-
-        .wc-stat {
-            display: flex; align-items: center; gap: 4px;
-            font-size: 12px; color: var(--text-2);
-        }
-        .wc-stat strong { color: var(--text-1); font-weight: 700; font-size: 14px; }
-
-        /* Radio indicator */
-        .wc-radio {
-            width: 24px; height: 24px;
-            border: 2px solid var(--border);
-            border-radius: 50%;
-            flex-shrink: 0;
+        .wc-name { font-size: 15px; font-weight: 700; color: var(--text-1); line-height: 1.2; }
+        .wc-desc { font-size: 11px; color: var(--text-2); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .wc-check {
+            width: 22px; height: 22px; border-radius: 50%;
+            border: 2px solid #CBD5E1; flex-shrink: 0;
             display: flex; align-items: center; justify-content: center;
-            transition: all .15s;
+            transition: all .2s; margin-top: 1px; background: white;
         }
-        .wc.chosen .wc-radio { background: var(--green); border-color: var(--green); }
+        .wc.chosen .wc-check { background: var(--green); border-color: var(--green); }
+
+        /* Status + patient count */
+        .wc-meta { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+        .wc-status-pill {
+            display: inline-flex; align-items: center; gap: 4px;
+            padding: 2px 8px; border-radius: 999px;
+            font-size: 10px; font-weight: 700;
+        }
+        .wc-status-pill.ok   { background: #D1FAE5; color: #065F46; }
+        .wc-status-pill.full { background: #FEF3C7; color: #92400E; }
+        .wc-status-pill.off  { background: #F1F5F9; color: #64748B; }
+        .wc-patients { font-size: 11px; color: var(--text-2); }
+        .wc-patients strong { color: var(--text-1); font-weight: 700; }
+
+        /* Occupancy bar */
+        .wc-occ { display: flex; flex-direction: column; gap: 4px; }
+        .wc-occ-row { display: flex; justify-content: space-between; font-size: 10px; color: var(--text-3); font-weight: 600; }
+        .wc-occ-track { height: 5px; background: #F1F5F9; border-radius: 999px; overflow: hidden; }
+        .wc-occ-fill  { height: 100%; border-radius: 999px; background: #10B981; transition: width .4s; }
+        .wc-occ-fill.warn { background: #F59E0B; }
+        .wc-occ-fill.crit { background: #EF4444; }
+
+        /* Floor section header */
+        .ws-floor-hdr { grid-column: 1/-1; display: flex; align-items: center; gap: 10px; padding: 4px 0; }
+        .ws-floor-badge { font-size: 11px; font-weight: 800; color: #475569; background: #F1F5F9; padding: 3px 10px; border-radius: 6px; flex-shrink: 0; }
+        .ws-floor-line  { flex: 1; height: 1px; background: var(--border); }
 
         /* No results */
-        .ws-empty {
-            text-align: center;
-            padding: 48px 20px;
-            color: var(--text-3);
-        }
-        .ws-empty-icon { margin-bottom: 12px; }
-        .ws-empty-text { font-size: 16px; font-weight: 600; color: var(--text-2); }
+        .ws-empty { grid-column: 1/-1; text-align: center; padding: 48px 20px; color: var(--text-3); }
+        .ws-empty-text { font-size: 16px; font-weight: 600; color: var(--text-2); margin-top: 12px; }
         .ws-empty-hint { font-size: 13px; margin-top: 4px; }
 
-        /* Sticky bottom bar */
+        /* Bottom bar */
         .ws-bottom {
-            position: sticky;
-            bottom: 0;
-            background: var(--white);
-            border-top: 1px solid var(--border);
-            padding: 16px 24px;
-            display: flex;
-            gap: 12px;
-            box-shadow: 0 -4px 20px rgba(0,0,0,0.06);
-            margin: 0 -24px;
+            display: flex; align-items: center; gap: 12px;
+            padding: 14px 0; flex-shrink: 0;
+            border-top: 1px solid var(--border); margin-top: 12px;
         }
-
-        .ws-bottom .btn-primary,
-        .ws-bottom .btn-secondary { flex: 1; }
-
-        .ws-bottom .btn-primary { padding: 18px 20px; font-size: 17px; }
-        .ws-bottom .btn-primary:disabled {
-            opacity: .5;
-            cursor: not-allowed;
-            transform: none !important;
-            box-shadow: none !important;
+        .ws-sel-preview {
+            flex: 1; display: flex; align-items: center; gap: 12px;
+            background: #F0FDF9; border: 1.5px solid #A7F3D0;
+            border-radius: 12px; padding: 10px 14px; min-width: 0;
         }
-
-        .ws-bottom .btn-secondary { padding: 16px 20px; font-size: 15px; }
+        .ws-sel-icon {
+            width: 36px; height: 36px; border-radius: 10px;
+            background: var(--green); display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+        }
+        .ws-sel-name { font-size: 14px; font-weight: 700; color: var(--text-1); }
+        .ws-sel-meta { font-size: 11px; color: var(--text-2); margin-top: 1px; }
+        .ws-no-sel { flex: 1; font-size: 13px; color: var(--text-3); }
+        .ws-btn-group { display: flex; gap: 10px; flex-shrink: 0; }
+        .ws-btn-group .btn-primary:disabled { opacity: .45; cursor: not-allowed; transform: none !important; box-shadow: none !important; }
 
         /* ══════════════════════════════════════════════
            PAGE 4 — LOGIN
@@ -6035,138 +6017,299 @@
             <span class="ws-results-count" id="wardCount">ทั้งหมด <strong>10</strong> Ward</span>
         </div>
 
-        <!-- Ward list (grid columns) -->
-        <div class="ws-list" id="wardList" style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;align-content:start;">
+        <!-- Ward list grouped by floor -->
+        <div class="ws-list" id="wardList" style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;align-content:start;">
 
-            <!-- Ward 3B — ศัลยกรรม — น้ำเงิน -->
-            <div class="wc" onclick="pickWard(this)" data-name="Ward 3B" data-desc="ศัลยกรรมชาย" data-floor="ชั้น 3" style="border-top:3px solid #3b82f6;">
-                <div class="wc-icon" style="background:#eff6ff;color:#3b82f6;">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
-                </div>
-                <div class="wc-info"><div class="wc-name">Ward 3B</div><div class="wc-desc">ศัลยกรรมชาย · ชั้น 3</div></div>
-                <div class="wc-meta"><span class="wc-status-pill ok"><span class="dot"></span>พร้อม</span><div style="font-size:12px;color:var(--text-2);"><strong>28</strong>/30 เตียง · <strong>26</strong> ผู้ป่วย</div></div>
-                <div class="wc-radio"></div>
+            <!-- ── ชั้น 1 ── -->
+            <div class="ws-floor-hdr" data-floor-hdr="ชั้น 1">
+                <span class="ws-floor-badge">ชั้น 1</span><div class="ws-floor-line"></div>
             </div>
 
-            <!-- Ward 4A — กุมาร — ชมพู -->
-            <div class="wc" onclick="pickWard(this)" data-name="Ward 4A" data-desc="กุมารเวชกรรม" data-floor="ชั้น 4" style="border-top:3px solid #ec4899;">
-                <div class="wc-icon" style="background:#fce7f3;color:#ec4899;">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+            <!-- ER -->
+            <div class="wc" onclick="pickWard(this)" data-name="ER" data-desc="ห้องฉุกเฉิน" data-floor="ชั้น 1" data-beds="14" data-total="20" data-patients="11" style="border-top:3px solid #dc2626;">
+                <div class="wc-top">
+                    <div class="wc-icon" style="background:#fef2f2;color:#dc2626;">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                    </div>
+                    <div class="wc-info">
+                        <div class="wc-name">ER</div>
+                        <div class="wc-desc">ห้องฉุกเฉิน · ชั้น 1</div>
+                    </div>
+                    <div class="wc-check"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg></div>
                 </div>
-                <div class="wc-info"><div class="wc-name">Ward 4A</div><div class="wc-desc">กุมารเวชกรรม · ชั้น 4</div></div>
-                <div class="wc-meta"><span class="wc-status-pill ok"><span class="dot"></span>พร้อม</span><div style="font-size:12px;color:var(--text-2);"><strong>18</strong>/20 เตียง · <strong>15</strong> ผู้ป่วย</div></div>
-                <div class="wc-radio"></div>
+                <div class="wc-meta">
+                    <span class="wc-status-pill ok">พร้อม</span>
+                    <span class="wc-patients"><strong>11</strong> ผู้ป่วย</span>
+                </div>
+                <div class="wc-occ">
+                    <div class="wc-occ-track"><div class="wc-occ-fill" style="width:70%"></div></div>
+                    <div class="wc-occ-row"><span>เตียง</span><span>14/20</span></div>
+                </div>
             </div>
 
-            <!-- Ward 4B — สูติ — ม่วง -->
-            <div class="wc" onclick="pickWard(this)" data-name="Ward 4B" data-desc="สูติ-นรีเวชกรรม" data-floor="ชั้น 4" style="border-top:3px solid #a855f7;">
-                <div class="wc-icon" style="background:#faf5ff;color:#a855f7;">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0016.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 002 8.5c0 2.3 1.5 4.05 3 5.5l7 7z"/></svg>
-                </div>
-                <div class="wc-info"><div class="wc-name">Ward 4B</div><div class="wc-desc">สูติ-นรีเวชกรรม · ชั้น 4</div></div>
-                <div class="wc-meta"><span class="wc-status-pill ok"><span class="dot"></span>พร้อม</span><div style="font-size:12px;color:var(--text-2);"><strong>22</strong>/25 เตียง · <strong>20</strong> ผู้ป่วย</div></div>
-                <div class="wc-radio"></div>
+            <!-- ── ชั้น 2 ── -->
+            <div class="ws-floor-hdr" data-floor-hdr="ชั้น 2">
+                <span class="ws-floor-badge">ชั้น 2</span><div class="ws-floor-line"></div>
             </div>
 
-            <!-- Ward 5A — ออร์โธ — เขียวอมฟ้า -->
-            <div class="wc" onclick="pickWard(this)" data-name="Ward 5A" data-desc="ออร์โธปิดิกส์" data-floor="ชั้น 5" style="border-top:3px solid #14b8a6;">
-                <div class="wc-icon" style="background:#f0fdfa;color:#14b8a6;">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V6a2 2 0 00-2-2H8a2 2 0 00-2 2v14"/><path d="M2 20h20"/><path d="M14 12v.01"/></svg>
+            <!-- ICU -->
+            <div class="wc" onclick="pickWard(this)" data-name="ICU" data-desc="ผู้ป่วยวิกฤต" data-floor="ชั้น 2" data-beds="8" data-total="10" data-patients="8" style="border-top:3px solid #ef4444;">
+                <div class="wc-top">
+                    <div class="wc-icon" style="background:#fef2f2;color:#ef4444;">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                    </div>
+                    <div class="wc-info">
+                        <div class="wc-name">ICU</div>
+                        <div class="wc-desc">ผู้ป่วยวิกฤต · ชั้น 2</div>
+                    </div>
+                    <div class="wc-check"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg></div>
                 </div>
-                <div class="wc-info"><div class="wc-name">Ward 5A</div><div class="wc-desc">ออร์โธปิดิกส์ · ชั้น 5</div></div>
-                <div class="wc-meta"><span class="wc-status-pill ok"><span class="dot"></span>พร้อม</span><div style="font-size:12px;color:var(--text-2);"><strong>24</strong>/30 เตียง · <strong>22</strong> ผู้ป่วย</div></div>
-                <div class="wc-radio"></div>
+                <div class="wc-meta">
+                    <span class="wc-status-pill ok">พร้อม</span>
+                    <span class="wc-patients"><strong>8</strong> ผู้ป่วย</span>
+                </div>
+                <div class="wc-occ">
+                    <div class="wc-occ-track"><div class="wc-occ-fill warn" style="width:80%"></div></div>
+                    <div class="wc-occ-row"><span>เตียง</span><span>8/10</span></div>
+                </div>
             </div>
 
-            <!-- Ward 5B — อายุรกรรม — ส้ม (เตียงเกือบเต็ม) -->
-            <div class="wc" onclick="pickWard(this)" data-name="Ward 5B" data-desc="อายุรกรรมชาย" data-floor="ชั้น 5" style="border-top:3px solid #f59e0b;">
-                <div class="wc-icon" style="background:#fffbeb;color:#f59e0b;">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                </div>
-                <div class="wc-info"><div class="wc-name">Ward 5B</div><div class="wc-desc">อายุรกรรมชาย · ชั้น 5</div></div>
-                <div class="wc-meta"><span class="wc-status-pill full"><span class="dot"></span>เกือบเต็ม</span><div style="font-size:12px;color:#d97706;"><strong>29</strong>/30 เตียง · <strong>29</strong> ผู้ป่วย</div></div>
-                <div class="wc-radio"></div>
+            <!-- ── ชั้น 3 ── -->
+            <div class="ws-floor-hdr" data-floor-hdr="ชั้น 3">
+                <span class="ws-floor-badge">ชั้น 3</span><div class="ws-floor-line"></div>
             </div>
 
-            <!-- Ward 6A — จักษุ — ฟ้าอ่อน -->
-            <div class="wc" onclick="pickWard(this)" data-name="Ward 6A" data-desc="จักษุวิทยา" data-floor="ชั้น 6" style="border-top:3px solid #06b6d4;">
-                <div class="wc-icon" style="background:#ecfeff;color:#06b6d4;">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            <!-- Ward 3B -->
+            <div class="wc" onclick="pickWard(this)" data-name="Ward 3B" data-desc="ศัลยกรรมชาย" data-floor="ชั้น 3" data-beds="28" data-total="30" data-patients="26" style="border-top:3px solid #3b82f6;">
+                <div class="wc-top">
+                    <div class="wc-icon" style="background:#eff6ff;color:#3b82f6;">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                    </div>
+                    <div class="wc-info">
+                        <div class="wc-name">Ward 3B</div>
+                        <div class="wc-desc">ศัลยกรรมชาย · ชั้น 3</div>
+                    </div>
+                    <div class="wc-check"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg></div>
                 </div>
-                <div class="wc-info"><div class="wc-name">Ward 6A</div><div class="wc-desc">จักษุวิทยา · ชั้น 6</div></div>
-                <div class="wc-meta"><span class="wc-status-pill ok"><span class="dot"></span>พร้อม</span><div style="font-size:12px;color:var(--text-2);"><strong>10</strong>/15 เตียง · <strong>8</strong> ผู้ป่วย</div></div>
-                <div class="wc-radio"></div>
+                <div class="wc-meta">
+                    <span class="wc-status-pill ok">พร้อม</span>
+                    <span class="wc-patients"><strong>26</strong> ผู้ป่วย</span>
+                </div>
+                <div class="wc-occ">
+                    <div class="wc-occ-track"><div class="wc-occ-fill warn" style="width:93%"></div></div>
+                    <div class="wc-occ-row"><span>เตียง</span><span>28/30</span></div>
+                </div>
             </div>
 
-            <!-- Ward 7A — โสต ศอ — เขียว -->
-            <div class="wc" onclick="pickWard(this)" data-name="Ward 7A" data-desc="โสต ศอ นาสิก" data-floor="ชั้น 7" style="border-top:3px solid var(--green);">
-                <div class="wc-icon" style="background:var(--green-light);color:var(--green);">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
-                </div>
-                <div class="wc-info"><div class="wc-name">Ward 7A</div><div class="wc-desc">โสต ศอ นาสิก · ชั้น 7</div></div>
-                <div class="wc-meta"><span class="wc-status-pill ok"><span class="dot"></span>พร้อม</span><div style="font-size:12px;color:var(--text-2);"><strong>12</strong>/20 เตียง · <strong>10</strong> ผู้ป่วย</div></div>
-                <div class="wc-radio"></div>
+            <!-- ── ชั้น 4 ── -->
+            <div class="ws-floor-hdr" data-floor-hdr="ชั้น 4">
+                <span class="ws-floor-badge">ชั้น 4</span><div class="ws-floor-line"></div>
             </div>
 
-            <!-- ICU — แดง -->
-            <div class="wc" onclick="pickWard(this)" data-name="ICU" data-desc="ผู้ป่วยวิกฤต" data-floor="ชั้น 2" style="border-top:3px solid #ef4444;">
-                <div class="wc-icon" style="background:#fef2f2;color:#ef4444;">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+            <!-- Ward 4A -->
+            <div class="wc" onclick="pickWard(this)" data-name="Ward 4A" data-desc="กุมารเวชกรรม" data-floor="ชั้น 4" data-beds="18" data-total="20" data-patients="15" style="border-top:3px solid #ec4899;">
+                <div class="wc-top">
+                    <div class="wc-icon" style="background:#fce7f3;color:#ec4899;">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+                    </div>
+                    <div class="wc-info">
+                        <div class="wc-name">Ward 4A</div>
+                        <div class="wc-desc">กุมารเวชกรรม · ชั้น 4</div>
+                    </div>
+                    <div class="wc-check"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg></div>
                 </div>
-                <div class="wc-info"><div class="wc-name">ICU</div><div class="wc-desc">ผู้ป่วยวิกฤต · ชั้น 2</div></div>
-                <div class="wc-meta"><span class="wc-status-pill ok"><span class="dot"></span>พร้อม</span><div style="font-size:12px;color:var(--text-2);"><strong>8</strong>/10 เตียง · <strong>8</strong> ผู้ป่วย</div></div>
-                <div class="wc-radio"></div>
+                <div class="wc-meta">
+                    <span class="wc-status-pill ok">พร้อม</span>
+                    <span class="wc-patients"><strong>15</strong> ผู้ป่วย</span>
+                </div>
+                <div class="wc-occ">
+                    <div class="wc-occ-track"><div class="wc-occ-fill warn" style="width:90%"></div></div>
+                    <div class="wc-occ-row"><span>เตียง</span><span>18/20</span></div>
+                </div>
             </div>
 
-            <!-- ER — แดงเข้ม -->
-            <div class="wc" onclick="pickWard(this)" data-name="ER" data-desc="ฉุกเฉิน" data-floor="ชั้น 1" style="border-top:3px solid #dc2626;">
-                <div class="wc-icon" style="background:#fef2f2;color:#dc2626;">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            <!-- Ward 4B -->
+            <div class="wc" onclick="pickWard(this)" data-name="Ward 4B" data-desc="สูติ-นรีเวชกรรม" data-floor="ชั้น 4" data-beds="22" data-total="25" data-patients="20" style="border-top:3px solid #a855f7;">
+                <div class="wc-top">
+                    <div class="wc-icon" style="background:#faf5ff;color:#a855f7;">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0016.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 002 8.5c0 2.3 1.5 4.05 3 5.5l7 7z"/></svg>
+                    </div>
+                    <div class="wc-info">
+                        <div class="wc-name">Ward 4B</div>
+                        <div class="wc-desc">สูติ-นรีเวชกรรม · ชั้น 4</div>
+                    </div>
+                    <div class="wc-check"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg></div>
                 </div>
-                <div class="wc-info"><div class="wc-name">ER</div><div class="wc-desc">ห้องฉุกเฉิน · ชั้น 1</div></div>
-                <div class="wc-meta"><span class="wc-status-pill ok"><span class="dot"></span>พร้อม</span><div style="font-size:12px;color:var(--text-2);"><strong>14</strong>/20 เตียง · <strong>11</strong> ผู้ป่วย</div></div>
-                <div class="wc-radio"></div>
+                <div class="wc-meta">
+                    <span class="wc-status-pill ok">พร้อม</span>
+                    <span class="wc-patients"><strong>20</strong> ผู้ป่วย</span>
+                </div>
+                <div class="wc-occ">
+                    <div class="wc-occ-track"><div class="wc-occ-fill warn" style="width:88%"></div></div>
+                    <div class="wc-occ-row"><span>เตียง</span><span>22/25</span></div>
+                </div>
             </div>
 
-            <!-- Ward 8A — ปิดปรับปรุง — เทา -->
-            <div class="wc" style="pointer-events:none;opacity:.5;border-top:3px solid #94a3b8;" data-name="Ward 8A" data-desc="ปิดปรับปรุง" data-floor="ชั้น 8">
-                <div class="wc-icon" style="background:#f1f5f9;color:#94a3b8;">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+            <!-- ── ชั้น 5 ── -->
+            <div class="ws-floor-hdr" data-floor-hdr="ชั้น 5">
+                <span class="ws-floor-badge">ชั้น 5</span><div class="ws-floor-line"></div>
+            </div>
+
+            <!-- Ward 5A -->
+            <div class="wc" onclick="pickWard(this)" data-name="Ward 5A" data-desc="ออร์โธปิดิกส์" data-floor="ชั้น 5" data-beds="24" data-total="30" data-patients="22" style="border-top:3px solid #14b8a6;">
+                <div class="wc-top">
+                    <div class="wc-icon" style="background:#f0fdfa;color:#14b8a6;">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V6a2 2 0 00-2-2H8a2 2 0 00-2 2v14"/><path d="M2 20h20"/><path d="M14 12v.01"/></svg>
+                    </div>
+                    <div class="wc-info">
+                        <div class="wc-name">Ward 5A</div>
+                        <div class="wc-desc">ออร์โธปิดิกส์ · ชั้น 5</div>
+                    </div>
+                    <div class="wc-check"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg></div>
                 </div>
-                <div class="wc-info"><div class="wc-name">Ward 8A</div><div class="wc-desc">ปิดปรับปรุง · ชั้น 8</div></div>
-                <div class="wc-meta"><span class="wc-status-pill off"><span class="dot"></span>ปิดปรับปรุง</span></div>
-                <div class="wc-radio" style="opacity:.3;"></div>
+                <div class="wc-meta">
+                    <span class="wc-status-pill ok">พร้อม</span>
+                    <span class="wc-patients"><strong>22</strong> ผู้ป่วย</span>
+                </div>
+                <div class="wc-occ">
+                    <div class="wc-occ-track"><div class="wc-occ-fill" style="width:80%"></div></div>
+                    <div class="wc-occ-row"><span>เตียง</span><span>24/30</span></div>
+                </div>
+            </div>
+
+            <!-- Ward 5B — เกือบเต็ม -->
+            <div class="wc" onclick="pickWard(this)" data-name="Ward 5B" data-desc="อายุรกรรมชาย" data-floor="ชั้น 5" data-beds="29" data-total="30" data-patients="29" style="border-top:3px solid #f59e0b;">
+                <div class="wc-top">
+                    <div class="wc-icon" style="background:#fffbeb;color:#f59e0b;">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    </div>
+                    <div class="wc-info">
+                        <div class="wc-name">Ward 5B</div>
+                        <div class="wc-desc">อายุรกรรมชาย · ชั้น 5</div>
+                    </div>
+                    <div class="wc-check"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg></div>
+                </div>
+                <div class="wc-meta">
+                    <span class="wc-status-pill full">เกือบเต็ม</span>
+                    <span class="wc-patients"><strong>29</strong> ผู้ป่วย</span>
+                </div>
+                <div class="wc-occ">
+                    <div class="wc-occ-track"><div class="wc-occ-fill crit" style="width:97%"></div></div>
+                    <div class="wc-occ-row"><span>เตียง</span><span>29/30</span></div>
+                </div>
+            </div>
+
+            <!-- ── ชั้น 6 ── -->
+            <div class="ws-floor-hdr" data-floor-hdr="ชั้น 6">
+                <span class="ws-floor-badge">ชั้น 6</span><div class="ws-floor-line"></div>
+            </div>
+
+            <!-- Ward 6A -->
+            <div class="wc" onclick="pickWard(this)" data-name="Ward 6A" data-desc="จักษุวิทยา" data-floor="ชั้น 6" data-beds="10" data-total="15" data-patients="8" style="border-top:3px solid #06b6d4;">
+                <div class="wc-top">
+                    <div class="wc-icon" style="background:#ecfeff;color:#06b6d4;">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                    </div>
+                    <div class="wc-info">
+                        <div class="wc-name">Ward 6A</div>
+                        <div class="wc-desc">จักษุวิทยา · ชั้น 6</div>
+                    </div>
+                    <div class="wc-check"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg></div>
+                </div>
+                <div class="wc-meta">
+                    <span class="wc-status-pill ok">พร้อม</span>
+                    <span class="wc-patients"><strong>8</strong> ผู้ป่วย</span>
+                </div>
+                <div class="wc-occ">
+                    <div class="wc-occ-track"><div class="wc-occ-fill" style="width:67%"></div></div>
+                    <div class="wc-occ-row"><span>เตียง</span><span>10/15</span></div>
+                </div>
+            </div>
+
+            <!-- ── ชั้น 7 ── -->
+            <div class="ws-floor-hdr" data-floor-hdr="ชั้น 7">
+                <span class="ws-floor-badge">ชั้น 7</span><div class="ws-floor-line"></div>
+            </div>
+
+            <!-- Ward 7A -->
+            <div class="wc" onclick="pickWard(this)" data-name="Ward 7A" data-desc="โสต ศอ นาสิก" data-floor="ชั้น 7" data-beds="12" data-total="20" data-patients="10" style="border-top:3px solid #0D9488;">
+                <div class="wc-top">
+                    <div class="wc-icon" style="background:#F0FDFA;color:#0D9488;">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+                    </div>
+                    <div class="wc-info">
+                        <div class="wc-name">Ward 7A</div>
+                        <div class="wc-desc">โสต ศอ นาสิก · ชั้น 7</div>
+                    </div>
+                    <div class="wc-check"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg></div>
+                </div>
+                <div class="wc-meta">
+                    <span class="wc-status-pill ok">พร้อม</span>
+                    <span class="wc-patients"><strong>10</strong> ผู้ป่วย</span>
+                </div>
+                <div class="wc-occ">
+                    <div class="wc-occ-track"><div class="wc-occ-fill" style="width:60%"></div></div>
+                    <div class="wc-occ-row"><span>เตียง</span><span>12/20</span></div>
+                </div>
+            </div>
+
+            <!-- ── ชั้น 8 ── -->
+            <div class="ws-floor-hdr" data-floor-hdr="ชั้น 8">
+                <span class="ws-floor-badge">ชั้น 8</span><div class="ws-floor-line"></div>
+            </div>
+
+            <!-- Ward 8A — ปิดปรับปรุง -->
+            <div class="wc" style="opacity:.4;pointer-events:none;border-top:3px solid #94a3b8;" data-name="Ward 8A" data-desc="ปิดปรับปรุง" data-floor="ชั้น 8">
+                <div class="wc-top">
+                    <div class="wc-icon" style="background:#f1f5f9;color:#94a3b8;">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+                    </div>
+                    <div class="wc-info">
+                        <div class="wc-name">Ward 8A</div>
+                        <div class="wc-desc">ปิดปรับปรุง · ชั้น 8</div>
+                    </div>
+                    <div class="wc-check"></div>
+                </div>
+                <div class="wc-meta">
+                    <span class="wc-status-pill off">ปิดปรับปรุง</span>
+                </div>
             </div>
 
             <!-- Empty state (hidden by default) -->
             <div class="ws-empty" id="wardEmpty" style="display:none;">
-                <div class="ws-empty-icon">
-                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                         stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text-3)">
-                        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
-                        <line x1="8" y1="11" x2="14" y2="11"/>
-                    </svg>
-                </div>
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" style="color:var(--text-3);margin:0 auto;">
+                    <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                    <line x1="8" y1="11" x2="14" y2="11"/>
+                </svg>
                 <div class="ws-empty-text">ไม่พบ Ward ที่ค้นหา</div>
                 <div class="ws-empty-hint">ลองเปลี่ยนคำค้นหา หรือตรวจสอบตัวสะกด</div>
             </div>
         </div>
 
         <!-- Bottom bar -->
-        <div style="padding:16px 0;display:flex;gap:12px;flex-shrink:0;border-top:1px solid var(--border);margin-top:12px;">
-            <button class="btn-secondary" onclick="nav('pg-confirm')" style="flex:1;">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5
-                             17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
-                </svg>
-                ยกเลิก
-            </button>
-            <button class="btn-primary" id="btnSelectConfirm" onclick="confirmNewWard()" disabled style="flex:2;">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
-                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
-                </svg>
-                ยืนยัน Ward นี้
-            </button>
+        <div class="ws-bottom">
+            <!-- Selected ward preview (hidden until a ward is picked) -->
+            <div class="ws-sel-preview" id="wsSelPreview" style="display:none;">
+                <div class="ws-sel-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>
+                </div>
+                <div>
+                    <div class="ws-sel-name" id="wsSelName">—</div>
+                    <div class="ws-sel-meta" id="wsSelMeta">—</div>
+                </div>
+            </div>
+            <!-- Placeholder when nothing selected -->
+            <div class="ws-no-sel" id="wsNoSel">กรุณาเลือก Ward ที่ต้องการ</div>
+            <!-- Action buttons -->
+            <div class="ws-btn-group">
+                <button class="btn-secondary" onclick="nav('pg-confirm')" style="padding:12px 20px;font-size:14px;">
+                    ยกเลิก
+                </button>
+                <button class="btn-primary" id="btnSelectConfirm" onclick="confirmNewWard()" disabled style="padding:12px 28px;font-size:15px;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                    ยืนยัน Ward นี้
+                </button>
+            </div>
         </div>
     </div>
 </div>
@@ -13460,41 +13603,38 @@
     function pickWard(el) {
         if (el.style.pointerEvents === 'none') return;
         selectedWardName = el.dataset.name || el.querySelector('.wc-name')?.textContent || currentWardName || DEFAULT_DEMO_WARD;
-        document.querySelectorAll('.wc').forEach(w => {
-            w.classList.remove('chosen');
-            const r = w.querySelector('.wc-radio');
-            if (r) r.innerHTML = '';
-        });
-        el.classList.add('chosen');
-        const radio = el.querySelector('.wc-radio');
-        if (radio) radio.innerHTML = checkSvg;
 
+        // Update card states
+        document.querySelectorAll('.wc').forEach(w => w.classList.remove('chosen'));
+        el.classList.add('chosen');
+
+        // Enable confirm button
         const btn = document.getElementById('btnSelectConfirm');
         if (btn) btn.disabled = false;
 
-        // Update preview panel
-        const name = el.querySelector('.wc-name');
-        const desc = el.querySelector('.wc-desc');
-        const meta = el.querySelector('.wc-meta div');
-        const metaStrong = el.querySelectorAll('.wc-meta strong');
-        const previewEmpty = document.getElementById('wardPreviewEmpty');
-        const previewSelected = document.getElementById('wardPreviewSelected');
-        if (previewEmpty) previewEmpty.style.display = 'none';
-        if (previewSelected) previewSelected.style.display = '';
-        const wpName = document.getElementById('wpName');
-        const wpDesc = document.getElementById('wpDesc');
-        const wpBeds = document.getElementById('wpBeds');
-        const wpPatients = document.getElementById('wpPatients');
-        if (wpName) wpName.textContent = name ? name.textContent : '—';
-        if (wpDesc) wpDesc.textContent = desc ? desc.textContent : '—';
-        if (wpBeds) {
-            wpBeds.textContent = meta ? meta.textContent.trim().split('·')[0].trim() : (metaStrong[0] ? metaStrong[0].textContent + ' เตียง' : '—');
-        }
-        if (wpPatients) {
-            wpPatients.textContent = meta ? (meta.textContent.trim().split('·')[1] || '').trim() : (metaStrong[1] ? metaStrong[1].textContent + ' ผู้ป่วย' : '—');
+        // Update bottom bar preview
+        const name    = el.dataset.name    || '—';
+        const desc    = el.dataset.desc    || '';
+        const floor   = el.dataset.floor   || '';
+        const beds    = el.dataset.beds;
+        const total   = el.dataset.total;
+        const patients = el.dataset.patients;
+
+        const selPreview = document.getElementById('wsSelPreview');
+        const noSel      = document.getElementById('wsNoSel');
+        const selName    = document.getElementById('wsSelName');
+        const selMeta    = document.getElementById('wsSelMeta');
+
+        if (selPreview) selPreview.style.display = 'flex';
+        if (noSel)      noSel.style.display = 'none';
+        if (selName)    selName.textContent = name + (floor ? ' · ' + floor : '');
+        if (selMeta) {
+            const parts = [desc];
+            if (beds && total) parts.push(beds + '/' + total + ' เตียง');
+            if (patients)      parts.push(patients + ' ผู้ป่วย');
+            selMeta.textContent = parts.filter(Boolean).join(' · ');
         }
 
-        // Scroll chosen into view
         el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
 
@@ -13531,6 +13671,19 @@
             const match = !q || name.includes(q) || desc.includes(q) || floor.includes(q);
             c.style.display = match ? '' : 'none';
             if (match) visible++;
+        });
+
+        // Hide floor headers when all cards in that floor are hidden
+        document.querySelectorAll('#wardList .ws-floor-hdr').forEach(hdr => {
+            const floorKey = (hdr.dataset.floorHdr || '').toLowerCase();
+            // Check if any card with this floor is visible
+            let anyVisible = false;
+            cards.forEach(c => {
+                if ((c.dataset.floor || '').toLowerCase() === floorKey && c.style.display !== 'none') {
+                    anyVisible = true;
+                }
+            });
+            hdr.style.display = anyVisible ? '' : 'none';
         });
 
         document.getElementById('wardEmpty').style.display = visible === 0 ? '' : 'none';

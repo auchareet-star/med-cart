@@ -146,214 +146,171 @@
             transition:all .22s ease; z-index:10080; box-shadow:0 16px 38px rgba(15,23,42,0.26);
         }
         .toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+        /* ── PERMISSION MODAL ──────────────────────── */
         .modal-backdrop {
-            display:none; position:fixed; inset:0; z-index:10050; align-items:center; justify-content:center;
-            background:rgba(15,23,42,0.46); backdrop-filter:blur(8px); padding:18px;
+            display:none; position:fixed; inset:0; z-index:10050;
+            align-items:center; justify-content:center;
+            background:rgba(15,23,42,0.5); backdrop-filter:blur(10px); padding:20px;
         }
         .modal-card {
-            width:100%; max-width:1160px; max-height:92vh; overflow:hidden; display:flex; flex-direction:column;
-            background:white; border-radius:24px; box-shadow:0 24px 80px rgba(0,0,0,0.2);
+            width:100%; max-width:780px; max-height:88vh; overflow:hidden;
+            display:flex; flex-direction:column;
+            background:white; border-radius:24px; box-shadow:0 32px 80px rgba(0,0,0,0.28);
         }
+
+        /* Header */
         .modal-head {
-            background:linear-gradient(135deg,#5B21B6,#7C3AED); padding:22px 28px; color:white;
-            display:flex; align-items:center; justify-content:space-between; gap:12px;
+            position:relative; overflow:hidden;
+            background:linear-gradient(135deg,#4C1D95 0%,#7C3AED 55%,#8B5CF6 100%);
+            color:white; flex-shrink:0;
         }
-        .modal-title { font-size:20px; font-weight:900; }
-        .modal-sub { font-size:12px; opacity:.75; margin-top:4px; }
+        .modal-head::before {
+            content:''; position:absolute; width:300px; height:300px; border-radius:50%;
+            background:rgba(255,255,255,0.07); top:-120px; right:-60px; pointer-events:none;
+        }
+        .modal-head::after {
+            content:''; position:absolute; width:160px; height:160px; border-radius:50%;
+            background:rgba(255,255,255,0.05); bottom:-60px; left:60px; pointer-events:none;
+        }
+        .modal-head-top {
+            position:relative; z-index:1;
+            padding:22px 24px 16px; display:flex; align-items:flex-start;
+            justify-content:space-between; gap:12px;
+        }
+        .modal-head-left { display:flex; align-items:center; gap:14px; }
+        .modal-head-icon {
+            width:46px; height:46px; border-radius:14px; flex-shrink:0;
+            background:rgba(255,255,255,0.18); display:flex; align-items:center; justify-content:center;
+        }
+        .modal-title { font-size:19px; font-weight:900; letter-spacing:-.3px; }
+        .modal-sub { font-size:12px; opacity:.7; margin-top:3px; }
+        .modal-chips { display:flex; gap:8px; margin-top:9px; }
+        .modal-chip {
+            background:rgba(255,255,255,0.16); border:1px solid rgba(255,255,255,0.25);
+            border-radius:999px; padding:4px 11px; font-size:11px; font-weight:700;
+        }
+        .modal-chip strong { font-weight:900; margin-right:2px; }
         .modal-close {
-            width:36px; height:36px; border:1px solid rgba(255,255,255,0.3); border-radius:10px;
-            background:rgba(255,255,255,0.12); color:white; cursor:pointer; display:flex; align-items:center; justify-content:center;
+            width:34px; height:34px; border:1px solid rgba(255,255,255,0.28); border-radius:10px;
+            background:rgba(255,255,255,0.12); color:white; cursor:pointer;
+            display:flex; align-items:center; justify-content:center; flex-shrink:0;
+            transition:background .15s;
         }
-        .modal-body { padding:24px 28px; overflow-y:auto; display:flex; flex-direction:column; gap:14px; }
-        .perm-flow {
-            display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px;
+        .modal-close:hover { background:rgba(255,255,255,0.24); }
+
+        /* Tabs inside header */
+        .modal-tabs {
+            position:relative; z-index:1;
+            display:flex; padding:0 24px;
+            border-top:1px solid rgba(255,255,255,0.14);
         }
-        .perm-flow-card {
-            border:1px solid #E2E8F0; border-radius:18px; padding:14px;
-            background:linear-gradient(135deg,#FFFFFF,#F8FAFC); display:flex; gap:12px; align-items:flex-start;
+        .modal-tab {
+            padding:12px 18px; font-size:13px; font-weight:800; cursor:pointer;
+            border:none; background:transparent; color:rgba(255,255,255,0.55);
+            font-family:'Prompt',sans-serif; border-bottom:3px solid transparent;
+            transition:color .18s, border-color .18s;
         }
-        .perm-flow-card.active { border-color:#C4B5FD; background:linear-gradient(135deg,#F5F3FF,#FFFFFF); box-shadow:0 12px 28px rgba(124,58,237,0.12); }
-        .perm-flow-num {
-            width:32px; height:32px; border-radius:12px; display:flex; align-items:center; justify-content:center;
-            background:#EDE9FE; color:#6D28D9; font-size:13px; font-weight:950; flex-shrink:0;
+        .modal-tab.active { color:white; border-bottom-color:white; }
+        .modal-tab:hover:not(.active) { color:rgba(255,255,255,0.82); }
+
+        /* Body */
+        .modal-body { flex:1; overflow:hidden; padding:0; min-height:0; }
+
+        /* ── ROLE PERMISSION MATRIX (Tab 1) ───── */
+        .pm-matrix-wrap { overflow-x:auto; }
+        .pm-matrix { width:100%; border-collapse:collapse; min-width:420px; }
+        .pm-matrix thead th {
+            padding:14px 10px 12px; font-size:11px; font-weight:800; color:#64748B;
+            text-align:center; border-bottom:2px solid #F1F5F9;
+            background:white; position:sticky; top:0; z-index:2;
         }
-        .perm-flow-title { font-size:12px; font-weight:950; color:#0F172A; }
-        .perm-flow-sub { font-size:10px; font-weight:750; color:#64748B; line-height:1.45; margin-top:3px; }
-        .perm-tabs {
-            display:flex; align-items:center; gap:8px; padding:5px;
-            border:1px solid #E2E8F0; border-radius:16px; background:#F8FAFC;
+        .pm-matrix thead th.pm-col-left { text-align:left; padding-left:20px; min-width:190px; }
+        .pm-matrix tbody tr:hover td { background:#FAFBFE; }
+        .pm-matrix tbody td {
+            padding:11px 10px; border-bottom:1px solid #F8FAFC;
+            vertical-align:middle; text-align:center;
         }
-        .perm-tab {
-            flex:1; border:0; border-radius:12px; padding:11px 14px; cursor:pointer;
-            background:transparent; color:#64748B; font-size:12px; font-weight:900;
-            display:flex; align-items:center; justify-content:center; gap:7px;
+        .pm-matrix tbody td.pm-col-left { text-align:left; padding-left:20px; padding-right:12px; }
+        .pm-matrix tbody tr:last-child td { border-bottom:none; }
+        .pm-role-col-head { display:flex; flex-direction:column; align-items:center; gap:5px; }
+        .pm-role-col-icon { width:32px; height:32px; border-radius:10px; margin-bottom:1px; display:flex; align-items:center; justify-content:center; }
+        .pm-role-col-count { font-size:10px; font-weight:800; border-radius:999px; padding:2px 9px; }
+        .pm-perm-icon { width:30px; height:30px; border-radius:8px; flex-shrink:0; display:flex; align-items:center; justify-content:center; }
+        .pm-perm-name { font-size:13px; font-weight:800; color:#0F172A; }
+        .pm-perm-desc { font-size:11px; color:#94A3B8; margin-top:1px; }
+
+        /* Toggle switch */
+        .pm-toggle { position:relative; width:44px; height:26px; flex-shrink:0; display:inline-block; cursor:pointer; }
+        .pm-toggle-track { position:absolute; inset:0; border-radius:999px; background:#CBD5E1; transition:background .2s; }
+        .pm-toggle-knob { position:absolute; top:3px; left:3px; width:20px; height:20px; border-radius:50%; background:white; box-shadow:0 1px 4px rgba(0,0,0,0.22); transition:transform .2s; }
+        .pm-toggle.on .pm-toggle-track { background:linear-gradient(135deg,#059669,#10B981); }
+        .pm-toggle.on .pm-toggle-knob { transform:translateX(18px); }
+
+        /* ── MASTER-DETAIL LAYOUT (Tab 2) ── */
+        .pm-md-layout { display:flex; height:100%; }
+        /* Left panel — user list */
+        .pm-md-left {
+            width:220px; flex-shrink:0; display:flex; flex-direction:column;
+            border-right:1.5px solid #F1F5F9; overflow:hidden;
         }
-        .perm-tab.active { background:white; color:#6D28D9; box-shadow:0 8px 18px rgba(15,23,42,0.07); }
-        .perm-summary {
-            display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px;
+        .pm-md-search { padding:10px 12px; border-bottom:1px solid #F1F5F9; flex-shrink:0; }
+        .pm-md-search-wrap { position:relative; }
+        .pm-md-search-icon { position:absolute; left:9px; top:50%; transform:translateY(-50%); color:#94A3B8; pointer-events:none; }
+        .pm-md-search-input { width:100%; padding:7px 28px 7px 30px; border:1.5px solid #E2E8F0; border-radius:9px; font-family:'Prompt',sans-serif; font-size:11px; background:#F8FAFC; color:#0F172A; outline:none; transition:border-color .15s; }
+        .pm-md-search-input:focus { border-color:#A78BFA; background:white; }
+        .pm-md-clear { position:absolute; right:8px; top:50%; transform:translateY(-50%); border:none; background:none; cursor:pointer; color:#94A3B8; font-size:15px; line-height:1; padding:0; }
+        .pm-rf-bar { display:flex; gap:4px; padding:6px 12px 10px; flex-wrap:wrap; flex-shrink:0; border-bottom:1px solid #F1F5F9; }
+        .pm-rf-chip { border:1.5px solid #E2E8F0; border-radius:999px; padding:4px 10px; font-family:'Prompt',sans-serif; font-size:10px; font-weight:800; cursor:pointer; background:white; color:#64748B; transition:all .12s; white-space:nowrap; }
+        .pm-rf-chip.active { border-color:#C4B5FD; color:#6D28D9; background:#F5F3FF; }
+        .pm-user-list { flex:1; overflow-y:auto; }
+        .pm-user-item {
+            display:flex; align-items:center; gap:9px; padding:10px 12px;
+            cursor:pointer; transition:background .1s; border-bottom:1px solid #F8FAFC; user-select:none;
         }
-        .perm-summary-card {
-            border:1px solid #E2E8F0; border-radius:16px; padding:14px;
-            background:linear-gradient(135deg,#FFFFFF,#F8FAFC);
+        .pm-user-item:hover { background:#F8FAFC; }
+        .pm-user-item.selected { background:#F5F3FF; border-left:3px solid #7C3AED; padding-left:9px; }
+        .pm-ov-count { font-size:9px; font-weight:900; border-radius:999px; padding:2px 6px; background:#EDE9FE; color:#6D28D9; white-space:nowrap; flex-shrink:0; }
+        /* Right panel — permission detail */
+        .pm-md-right { flex:1; overflow-y:auto; min-width:0; display:flex; flex-direction:column; }
+        .pm-detail-empty {
+            flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center;
+            color:#94A3B8; font-size:13px; text-align:center; gap:10px; padding:32px;
         }
-        .perm-summary-num { font-size:24px; font-weight:950; color:#6D28D9; line-height:1; }
-        .perm-summary-label { font-size:10px; color:#64748B; font-weight:850; margin-top:6px; }
-        .perm-section {
-            border:1px solid #E2E8F0; border-radius:20px; padding:16px;
-            background:white; box-shadow:0 6px 18px rgba(15,23,42,0.04);
+        .pm-detail-header { padding:16px 20px 14px; border-bottom:2px solid #F1F5F9; flex-shrink:0; }
+        .pm-detail-perm-row {
+            display:flex; align-items:center; gap:12px; padding:13px 20px;
+            border-bottom:1px solid #F8FAFC; transition:background .1s;
         }
-        .perm-section-head { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; margin-bottom:12px; }
-        .perm-row {
-            display:flex; align-items:center; justify-content:space-between; gap:12px;
-            padding:14px 16px; border:1px solid var(--border); border-radius:16px; background:#F8FAFC;
+        .pm-detail-perm-row:last-child { border-bottom:none; }
+        .pm-detail-perm-row.overridden { background:#FFFBEB; }
+        .pm-detail-perm-row:hover { background:#FAFBFE; }
+        .pm-detail-perm-row.overridden:hover { background:#FEF9C3; }
+        .pm-pov-icon { width:30px; height:30px; border-radius:9px; flex-shrink:0; display:flex; align-items:center; justify-content:center; }
+        .pm-pov-info { flex:1; min-width:0; }
+        .pm-pov-name { font-size:12px; font-weight:800; color:#0F172A; }
+        .pm-pov-desc { font-size:10px; color:#94A3B8; margin-top:1px; }
+        /* 3-way segmented control */
+        .pm-seg3 { display:flex; border:1.5px solid #E2E8F0; border-radius:10px; overflow:hidden; flex-shrink:0; }
+        .pm-seg3-btn {
+            border:none; padding:7px 11px; font-family:'Prompt',sans-serif;
+            font-size:11px; font-weight:800; cursor:pointer; color:#94A3B8;
+            background:transparent; transition:all .13s; white-space:nowrap;
         }
-        .perm-name { font-size:13px; font-weight:900; }
-        .perm-desc { font-size:11px; color:var(--text-3); margin-top:2px; line-height:1.45; }
-        .perm-badge {
-            border-radius:999px; padding:5px 10px; font-size:10px; font-weight:900;
-            border:1px solid #DDD6FE; color:#6D28D9; background:#F5F3FF; white-space:nowrap;
-        }
-        .perm-badge.ok { color:#047857; background:#ECFDF5; border-color:#A7F3D0; }
-        .perm-badge.off { color:#B91C1C; background:#FEF2F2; border-color:#FECACA; }
-        .perm-grid {
-            display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:9px;
-        }
-        .perm-cell {
-            min-height:78px; border:1px solid #E2E8F0; border-radius:15px; padding:11px;
-            background:#F8FAFC; cursor:pointer; text-align:left;
-            transition:transform .14s, box-shadow .14s, border-color .14s, background .14s;
-        }
-        .perm-cell:hover { transform:translateY(-1px); box-shadow:0 10px 22px rgba(15,23,42,0.07); }
-        .perm-cell.on { background:#F0FDFA; border-color:#99F6E4; }
-        .perm-cell.off { background:#FEF2F2; border-color:#FECACA; }
-        .perm-cell.inherit { background:#F8FAFC; border-color:#E2E8F0; }
-        .perm-cell.include { background:#ECFDF5; border-color:#A7F3D0; }
-        .perm-cell.exclude { background:#FEF2F2; border-color:#FECACA; }
-        .perm-cell-title {
-            display:flex; align-items:center; justify-content:space-between; gap:8px;
-            font-size:11px; font-weight:950; color:#0F172A; line-height:1.35;
-        }
-        .perm-cell-sub { font-size:9.5px; color:#94A3B8; font-weight:750; line-height:1.4; margin-top:6px; }
-        .perm-state {
-            display:inline-flex; border-radius:999px; padding:3px 7px; font-size:8.5px;
-            font-weight:950; white-space:nowrap; color:#64748B; background:white; border:1px solid #E2E8F0;
-        }
-        .perm-state.on, .perm-state.include { color:#047857; background:#D1FAE5; border-color:#A7F3D0; }
-        .perm-state.off, .perm-state.exclude { color:#B91C1C; background:#FEE2E2; border-color:#FECACA; }
-        .perm-state.inherit { color:#475569; background:white; border-color:#CBD5E1; }
-        .perm-user-grid { display:flex; flex-direction:column; gap:12px; }
-        .perm-user-meta { display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-top:6px; }
-        .perm-help {
-            display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px;
-            padding:12px; border:1px dashed #CBD5E1; border-radius:16px; background:#F8FAFC;
-        }
-        .perm-help-item { font-size:10px; line-height:1.45; color:#64748B; font-weight:750; }
-        .perm-help-item strong { display:block; color:#0F172A; font-size:10.5px; margin-bottom:2px; }
-        .perm-user-workspace {
-            display:grid; grid-template-columns:310px minmax(0,1fr); gap:14px; align-items:start;
-        }
-        .perm-user-panel {
-            border:1px solid #E2E8F0; border-radius:20px; padding:14px;
-            background:linear-gradient(135deg,#FFFFFF,#F8FAFC);
-            box-shadow:0 6px 18px rgba(15,23,42,0.04);
-        }
-        .perm-user-search {
-            width:100%; border:1px solid #CBD5E1; border-radius:14px;
-            padding:11px 12px; font-family:'Prompt',sans-serif; font-size:12px;
-            font-weight:750; outline:none; color:#0F172A; background:white;
-        }
-        .perm-user-search:focus { border-color:#A78BFA; box-shadow:0 0 0 4px rgba(167,139,250,0.18); }
-        .perm-user-filterbar { display:flex; gap:6px; flex-wrap:wrap; margin-top:10px; }
-        .perm-filter-btn {
-            border:1px solid #E2E8F0; border-radius:999px; padding:6px 9px;
-            background:white; color:#64748B; font-size:9.5px; font-weight:900; cursor:pointer;
-        }
-        .perm-filter-btn.active { color:#6D28D9; background:#F5F3FF; border-color:#DDD6FE; }
-        .perm-user-count { font-size:10px; color:#94A3B8; font-weight:850; margin:12px 2px 8px; }
-        .perm-user-list { display:flex; flex-direction:column; gap:8px; max-height:390px; overflow:auto; padding-right:2px; }
-        .perm-person-card {
-            display:flex; align-items:center; gap:10px; width:100%; text-align:left;
-            border:1px solid #E2E8F0; border-radius:16px; background:white;
-            padding:11px; cursor:pointer; transition:all .14s ease;
-        }
-        .perm-person-card:hover { transform:translateY(-1px); box-shadow:0 10px 22px rgba(15,23,42,0.07); }
-        .perm-person-card.active { border-color:#A78BFA; background:#F5F3FF; box-shadow:0 12px 24px rgba(124,58,237,0.12); }
-        .perm-person-avatar {
-            width:36px; height:36px; border-radius:13px; display:flex; align-items:center; justify-content:center;
-            color:white; font-size:11px; font-weight:950; background:linear-gradient(135deg,#7C3AED,#A78BFA); flex-shrink:0;
-        }
-        .perm-person-main { flex:1; min-width:0; }
-        .perm-person-name { font-size:11.5px; font-weight:950; color:#0F172A; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-        .perm-person-meta { font-size:9.5px; color:#94A3B8; font-weight:750; margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-        .perm-person-count {
-            font-size:9px; font-weight:950; border-radius:999px; padding:3px 7px;
-            color:#64748B; background:#F8FAFC; border:1px solid #E2E8F0; white-space:nowrap;
-        }
-        .perm-person-count.has { color:#047857; background:#ECFDF5; border-color:#A7F3D0; }
-        .perm-detail-card {
-            border:1px solid #E2E8F0; border-radius:20px; padding:16px; background:white;
-            box-shadow:0 6px 18px rgba(15,23,42,0.04);
-        }
-        .perm-detail-head { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; margin-bottom:12px; }
-        .perm-detail-actions { display:flex; align-items:center; gap:8px; flex-wrap:wrap; justify-content:flex-end; }
-        .perm-empty { padding:28px; text-align:center; color:#94A3B8; font-size:12px; font-weight:800; border:1px dashed #CBD5E1; border-radius:18px; background:#F8FAFC; }
-        .perm-exception-workspace {
-            display:grid; grid-template-columns:300px minmax(0,1fr); gap:14px; align-items:start;
-        }
-        .perm-selected-perm {
-            border:1px solid #DDD6FE; border-radius:18px; padding:14px;
-            background:linear-gradient(135deg,#F5F3FF,#FFFFFF); margin-bottom:12px;
-        }
-        .perm-selected-top { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; }
-        .perm-role-default-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; margin-top:12px; }
-        .perm-role-default-card {
-            border:1px solid #E2E8F0; border-radius:14px; padding:10px; background:white;
-            text-align:left; cursor:pointer; font-family:'Prompt',sans-serif; transition:all .14s ease;
-        }
-        .perm-role-default-card:hover { transform:translateY(-1px); box-shadow:0 10px 22px rgba(15,23,42,0.07); }
-        .perm-role-default-card.on { border-color:#A7F3D0; background:#F0FDFA; }
-        .perm-role-default-card.off { border-color:#FECACA; background:#FEF2F2; }
-        .perm-role-default-name { font-size:10px; color:#64748B; font-weight:900; }
-        .perm-role-default-value { font-size:12px; color:#0F172A; font-weight:950; margin-top:3px; }
-        .perm-role-default-sub { font-size:9px; color:#94A3B8; font-weight:750; margin-top:2px; }
-        .perm-permission-list { display:flex; flex-direction:column; gap:8px; margin-top:12px; max-height:470px; overflow:auto; padding-right:2px; }
-        .perm-permission-card {
-            width:100%; border:1px solid #E2E8F0; border-radius:16px; background:white;
-            padding:12px; cursor:pointer; text-align:left; transition:all .14s ease;
-        }
-        .perm-permission-card:hover { transform:translateY(-1px); box-shadow:0 10px 22px rgba(15,23,42,0.07); }
-        .perm-permission-card.active { border-color:#A78BFA; background:#F5F3FF; box-shadow:0 12px 24px rgba(124,58,237,0.12); }
-        .perm-permission-top { display:flex; align-items:center; justify-content:space-between; gap:10px; }
-        .perm-permission-name { font-size:12px; font-weight:950; color:#0F172A; }
-        .perm-exception-list { display:flex; flex-direction:column; gap:9px; max-height:470px; overflow:auto; padding-right:2px; }
-        .perm-exception-toolbar {
-            border:1px solid #E2E8F0; border-radius:18px; background:#F8FAFC; padding:12px; margin-bottom:12px;
-        }
-        .perm-exception-row {
-            display:grid; grid-template-columns:minmax(0,1fr) auto; gap:12px; align-items:center;
-            border:1px solid #E2E8F0; border-radius:16px; background:#FFFFFF; padding:12px;
-        }
-        .perm-exception-row.include { border-color:#A7F3D0; background:#F0FDF4; }
-        .perm-exception-row.exclude { border-color:#FECACA; background:#FEF2F2; }
-        .perm-exception-person { display:flex; align-items:center; gap:10px; min-width:0; }
-        .perm-exception-copy { min-width:0; }
-        .perm-exception-name { font-size:11.5px; font-weight:950; color:#0F172A; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-        .perm-exception-meta { font-size:9.5px; color:#94A3B8; font-weight:750; margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-        .perm-exception-status { display:flex; align-items:center; gap:6px; flex-wrap:wrap; margin-top:6px; }
-        .perm-choice-group { display:flex; gap:6px; flex-wrap:wrap; justify-content:flex-end; }
-        .perm-choice-btn {
-            border:1px solid #E2E8F0; border-radius:999px; padding:7px 10px;
-            background:white; color:#64748B; font-size:9.5px; font-weight:950; cursor:pointer;
-        }
-        .perm-choice-btn.active.inherit { color:#475569; background:#F8FAFC; border-color:#CBD5E1; }
-        .perm-choice-btn.active.include { color:#047857; background:#D1FAE5; border-color:#86EFAC; }
-        .perm-choice-btn.active.exclude { color:#B91C1C; background:#FEE2E2; border-color:#FCA5A5; }
-        .perm-mini-note {
-            border:1px solid #BAE6FD; border-radius:14px; padding:10px 12px; background:#F0F9FF;
-            color:#0369A1; font-size:10px; font-weight:800; line-height:1.55; margin-top:10px;
-        }
+        .pm-seg3-btn + .pm-seg3-btn { border-left:1.5px solid #E2E8F0; }
+        .pm-seg3-btn.s-role    { background:#F1F5F9; color:#475569; }
+        .pm-seg3-btn.s-include { background:#D1FAE5; color:#047857; }
+        .pm-seg3-btn.s-exclude { background:#FEE2E2; color:#B91C1C; }
+        /* Shared */
+        .pm-avatar { width:36px; height:36px; border-radius:10px; flex-shrink:0; display:flex; align-items:center; justify-content:center; color:white; font-size:12px; font-weight:900; }
+        .pm-user-name { font-size:12px; font-weight:800; color:#0F172A; }
+        .pm-user-meta { font-size:10px; color:#94A3B8; margin-top:1px; }
+        .pm-role-pill { display:inline-block; border-radius:999px; padding:2px 8px; font-size:10px; font-weight:800; }
+        .pm-no-results { padding:28px 12px; text-align:center; color:#94A3B8; font-size:12px; line-height:1.7; }
+
+        /* Foot */
         .modal-foot {
-            padding:16px 28px; border-top:1px solid var(--border); display:flex; gap:12px;
+            padding:14px 24px; border-top:1px solid #F1F5F9;
+            display:flex; gap:10px; flex-shrink:0;
         }
         .modal-foot button { flex:1; justify-content:center; }
         @media (max-width: 980px) {
@@ -368,13 +325,6 @@
             .bo-stat-grid, .bo-mod-grid { grid-template-columns:1fr; }
             .bo-title { font-size:24px; }
             .time-card { display:none; }
-            .perm-summary, .perm-grid, .perm-help, .perm-flow, .perm-role-default-grid { grid-template-columns:1fr; }
-            .perm-user-workspace { grid-template-columns:1fr; }
-            .perm-exception-workspace { grid-template-columns:1fr; }
-            .perm-exception-row { grid-template-columns:1fr; }
-            .perm-choice-group { justify-content:flex-start; }
-            .perm-user-list { max-height:260px; }
-            .perm-permission-list, .perm-exception-list { max-height:260px; }
         }
     </style>
 </head>
@@ -452,13 +402,25 @@
     <div class="modal-backdrop" id="permModal" onclick="if(event.target===this) closePermModal()">
         <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="permModalTitle">
             <div class="modal-head">
-                <div>
-                    <div id="permModalTitle" class="modal-title">ตั้งค่าสิทธิ์การใช้งาน</div>
-                    <div class="modal-sub">ตั้งค่า Role เป็นค่าเริ่มต้น แล้วกำหนดข้อยกเว้นรายพนักงานเมื่อจำเป็น</div>
+                <div class="modal-head-top">
+                    <div class="modal-head-left">
+                        <div class="modal-head-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/><path d="M9 12l2 2 4-4" stroke-width="2.2"/></svg>
+                        </div>
+                        <div>
+                            <div id="permModalTitle" class="modal-title">ตั้งค่าสิทธิ์การใช้งาน</div>
+                            <div class="modal-sub">กำหนดสิทธิ์ตาม Role แล้วตั้งข้อยกเว้นรายบุคคลเมื่อจำเป็น</div>
+                            <div class="modal-chips" id="pmChips"></div>
+                        </div>
+                    </div>
+                    <button class="modal-close" onclick="closePermModal()" aria-label="ปิด">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    </button>
                 </div>
-                <button class="modal-close" onclick="closePermModal()" aria-label="ปิดหน้าตั้งค่าสิทธิ์">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-                </button>
+                <div class="modal-tabs">
+                    <button class="modal-tab active" data-tab="role" onclick="pmSetTab('role')">สิทธิ์ตาม Role</button>
+                    <button class="modal-tab" data-tab="user" onclick="pmSetTab('user')">สิทธิ์ตามผู้ใช้</button>
+                </div>
             </div>
             <div class="modal-body" id="permModalBody"></div>
             <div class="modal-foot">
@@ -475,85 +437,6 @@
         const STANDARD_CART_CASSETTES = 36;
         const CASSETTE_LOCK_STORE = 'mcCassetteModeLocks';
         const CASSETTE_COMPLETED_STORE = 'mcCassetteModeCompleted';
-        const PERMISSION_POLICY_STORE = 'mcPermissionPolicy';
-        let currentPermissionTab = 'role';
-        let selectedPermissionUserId = 'u-pranee';
-        let selectedExceptionPermissionKey = 'dispense';
-        let permUserSearch = '';
-        let permUserRoleFilter = 'all';
-        let permUserOverrideFilter = 'all';
-
-        const permissionDefs = [
-            { key:'dashboard', label:'Dashboard', desc:'ดูภาพรวม Ward และรถเข็น' },
-            { key:'dispense', label:'จ่ายยา', desc:'Routine / STAT / PRN / High Alert' },
-            { key:'prep', label:'จัดยา', desc:'Patient / Item / Schedule-based' },
-            { key:'assessment', label:'ประเมินหลังให้ยา', desc:'Post-medication assessment' },
-            { key:'backoffice', label:'หลังบ้าน', desc:'เข้า Backoffice hub' },
-            { key:'userAdmin', label:'ตั้งค่าสิทธิ์', desc:'จัดการ role และ user override' },
-            { key:'drugMaster', label:'Medication Master', desc:'ตั้งค่า High Alert / Interaction' },
-            { key:'reports', label:'รายงาน', desc:'Audit log และ MAR summary' }
-        ];
-
-        const permissionRoleMeta = {
-            nurse: { label:'พยาบาล', desc:'สิทธิ์พื้นฐานสำหรับงานจ่ายยาและประเมินหลังให้ยา', color:'#0D9488' },
-            pharma: { label:'เภสัชกร', desc:'สิทธิ์หลักสำหรับจัดยา ตรวจรายการยา และดูรายงาน', color:'#2563EB' },
-            super: { label:'หัวหน้าเวร', desc:'สิทธิ์ดูแลภาพรวม ตั้งค่า และเข้าระบบหลังบ้าน', color:'#7C3AED' }
-        };
-
-        const permissionUsers = [
-            { id:'u-pranee', name:'นส.ปราณี หัวหน้าเวร', role:'super', ward:'Ward 5A', code:'EMP-5012' },
-            { id:'u-somjai', name:'นส.สมใจ ดีมาก', role:'nurse', ward:'Ward 5A', code:'EMP-1042' },
-            { id:'u-narin', name:'นส.นรินทร์ เวรดึก', role:'nurse', ward:'Ward 3A', code:'EMP-1188' },
-            { id:'u-kanda', name:'ภญ.กานดา ตรวจยา', role:'pharma', ward:'Ward 5A', code:'EMP-2207' },
-            { id:'u-malee', name:'นส.มาลี จ่ายครบ', role:'nurse', ward:'Ward 3A', code:'EMP-1055' },
-            { id:'u-wichai', name:'นายวิชัย เวรเช้า', role:'nurse', ward:'Ward 4A', code:'EMP-1098' },
-            { id:'u-aree', name:'นางอารีย์ เวรบ่าย', role:'nurse', ward:'Ward 5B', code:'EMP-1132' },
-            { id:'u-pimdao', name:'นส.พิมพ์ดาว ICU', role:'nurse', ward:'ICU', code:'EMP-1210' },
-            { id:'u-sakchai', name:'ภก.ศักดิ์ชัย คลังยา', role:'pharma', ward:'Ward 3A', code:'EMP-2215' },
-            { id:'u-nicha', name:'ภญ.ณิชา ตรวจสอบ', role:'pharma', ward:'Ward 5A', code:'EMP-2240' },
-            { id:'u-pornchai', name:'นายพรชัย หัวหน้าเวร', role:'super', ward:'Ward 3B', code:'EMP-5031' },
-            { id:'u-lalita', name:'นส.ลลิตา หัวหน้าเวร', role:'super', ward:'ER', code:'EMP-5062' },
-            { id:'u-benjawan', name:'นางเบญจวรรณ เวรดึก', role:'nurse', ward:'Ward 4B', code:'EMP-1287' },
-            { id:'u-thana', name:'นายธนา Float Nurse', role:'nurse', ward:'Ward 6A', code:'EMP-1314' }
-        ];
-
-        function defaultPermissionPolicy() {
-            return {
-                roles: {
-                    nurse: {
-                        dashboard:true, dispense:true, prep:true, assessment:true,
-                        backoffice:false, userAdmin:false, drugMaster:false, reports:true
-                    },
-                    pharma: {
-                        dashboard:true, dispense:false, prep:true, assessment:false,
-                        backoffice:true, userAdmin:false, drugMaster:false, reports:true
-                    },
-                    super: {
-                        dashboard:true, dispense:true, prep:true, assessment:true,
-                        backoffice:true, userAdmin:true, drugMaster:true, reports:true
-                    }
-                },
-                overrides: {
-                    'u-kanda': { drugMaster:'include' },
-                    'u-narin': { assessment:'exclude' }
-                }
-            };
-        }
-
-        function loadPermissionPolicy() {
-            const base = defaultPermissionPolicy();
-            let stored = {};
-            try { stored = JSON.parse(sessionStorage.getItem(PERMISSION_POLICY_STORE) || '{}') || {}; } catch (e) { stored = {}; }
-            Object.keys(base.roles).forEach(function(roleKey) {
-                base.roles[roleKey] = Object.assign({}, base.roles[roleKey], (stored.roles || {})[roleKey] || {});
-            });
-            Object.keys(stored.overrides || {}).forEach(function(userId) {
-                base.overrides[userId] = Object.assign({}, base.overrides[userId] || {}, stored.overrides[userId]);
-            });
-            return base;
-        }
-
-        let permissionPolicy = loadPermissionPolicy();
 
         const wardInfo = {
             'Ward 3A': { desc:'หอผู้ป่วยอายุรกรรม', floor:'ชั้น 3', beds:'24/30 เตียง', patients:'8 ผู้ป่วย', cart:'Med Cart A-1' },
@@ -769,329 +652,257 @@
             setTimeout(function(){ showToast(''); }, 1800);
         }
 
-        function openPermPanel() {
-            permissionPolicy = loadPermissionPolicy();
-            currentPermissionTab = 'role';
-            renderPermissionPanel();
-            document.getElementById('permModal').style.display = 'flex';
-            showToast('เปิดตั้งค่าสิทธิ์จากระบบหลังบ้าน');
-            setTimeout(function(){ showToast(''); }, 1600);
+        /* ── PERMISSION PANEL DATA ─────────────── */
+        var PM_DEFS = [
+            { key:'dashboard', label:'Dashboard',        desc:'ดูภาพรวม Ward และรถเข็น',              bg:'#EDE9FE', stroke:'#7C3AED' },
+            { key:'dispense',  label:'จ่ายยา',           desc:'Routine / STAT / PRN / High Alert',    bg:'#CCFBF1', stroke:'#0D9488' },
+            { key:'prep',      label:'จัดยา',            desc:'จัดตามผู้ป่วย / ตามยา / ตามรอบ',      bg:'#DBEAFE', stroke:'#2563EB' },
+            { key:'assess',    label:'ประเมินหลังให้ยา', desc:'Post-medication assessment',           bg:'#D1FAE5', stroke:'#059669' },
+            { key:'backoffice',label:'หลังบ้าน',         desc:'เข้า Backoffice hub',                  bg:'#EDE9FE', stroke:'#7C3AED' },
+            { key:'userAdmin', label:'ตั้งค่าสิทธิ์',   desc:'จัดการ Role และ User override',        bg:'#FEE2E2', stroke:'#DC2626' },
+            { key:'reports',   label:'รายงาน',           desc:'Audit log และ MAR summary',            bg:'#E0F2FE', stroke:'#0369A1' }
+        ];
+        var PM_ROLES = {
+            nurse: { label:'พยาบาล', en:'Registered Nurse',       color:'#0D9488', bg:'#CCFBF1' },
+            pharma:{ label:'เภสัชกร', en:'Pharmacist',            color:'#2563EB', bg:'#DBEAFE' },
+            super: { label:'หัวหน้าเวร', en:'Charge Nurse / Supervisor', color:'#7C3AED', bg:'#EDE9FE' }
+        };
+        var PM_USERS = [
+            { id:'u1', name:'นส.ปราณี หัวหน้าเวร', role:'super', ward:'Ward 5A', code:'EMP-5012' },
+            { id:'u2', name:'นส.สมใจ ดีมาก',       role:'nurse', ward:'Ward 5A', code:'EMP-1042' },
+            { id:'u3', name:'นส.นรินทร์ เวรดึก',    role:'nurse', ward:'Ward 3A', code:'EMP-1188' },
+            { id:'u4', name:'ภญ.วิภา เจริญยา',      role:'pharma',ward:'Ward 3A', code:'EMP-2201' },
+            { id:'u5', name:'ภก.ถนอม มั่นคง',       role:'pharma',ward:'Ward 5A', code:'EMP-2308' }
+        ];
+        var pmRolePerms = {
+            nurse: { dashboard:true,  dispense:true,  prep:true,  assess:true,  backoffice:false, userAdmin:false, reports:false },
+            pharma:{ dashboard:true,  dispense:false, prep:true,  assess:false, backoffice:false, userAdmin:false, reports:true  },
+            super: { dashboard:true,  dispense:true,  prep:true,  assess:true,  backoffice:true,  userAdmin:true,  reports:true  }
+        };
+        var pmOverrides = {};   /* { userId: { permKey: 'include'|'exclude' } } */
+        var pmTab = 'role';
+        var pmFocusPerm = 'dispense';
+        var pmSearch = '';
+        var pmRoleFilter = '';
+        var pmSelectedUser = null;
+
+        function pmInitials(name) {
+            return String(name||'').replace(/^(นาย|นางสาว|นาง|นส\.|ภญ\.|ภก\.)\s*/,'').replace(/\s+/g,'').slice(0,2)||'US';
+        }
+        function pmEffective(userId, permKey) {
+            var user = PM_USERS.find(function(u){ return u.id===userId; });
+            if (!user) return false;
+            var ov = (pmOverrides[userId]||{})[permKey];
+            if (ov==='include') return true;
+            if (ov==='exclude') return false;
+            return !!(pmRolePerms[user.role]||{})[permKey];
+        }
+        function pmPermIcon(pd) {
+            return '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="'+pd.stroke+'" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'
+                + ({
+                    dashboard: '<rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/>',
+                    dispense:  '<path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2v-4M9 21H5a2 2 0 01-2-2v-4m0 0h18"/>',
+                    prep:      '<path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/>',
+                    assess:    '<path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/>',
+                    backoffice:'<circle cx="12" cy="12" r="3"/><path d="M19.07 4.93A10 10 0 115 5"/>',
+                    userAdmin: '<path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>',
+                    reports:   '<path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>'
+                }[pd.key]||'<circle cx="12" cy="12" r="10"/>')
+                + '</svg>';
+        }
+        function pmRoleIcon(roleKey) {
+            var icons = {
+                nurse:  '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0016.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 002 8.5c0 2.3 1.5 4.05 3 5.5l7 7z"/></svg>',
+                pharma: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>',
+                super:  '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/><path d="M9 12l2 2 4-4"/></svg>'
+            };
+            return icons[roleKey]||'';
         }
 
-        function persistPermissionPolicy() {
-            try { sessionStorage.setItem(PERMISSION_POLICY_STORE, JSON.stringify(permissionPolicy)); } catch (e) {}
-        }
-
-        function rolePermissionCount(roleKey) {
-            const rolePerms = permissionPolicy.roles[roleKey] || {};
-            return permissionDefs.filter(function(pd) { return !!rolePerms[pd.key]; }).length;
-        }
-
-        function userOverrideCount(userId) {
-            const overrides = permissionPolicy.overrides[userId] || {};
-            return Object.keys(overrides).filter(function(key) { return overrides[key] && overrides[key] !== 'inherit'; }).length;
-        }
-
-        function permissionExceptionCount(permKey) {
-            return permissionUsers.reduce(function(sum, user) {
-                const override = (permissionPolicy.overrides[user.id] || {})[permKey];
-                return sum + (override && override !== 'inherit' ? 1 : 0);
-            }, 0);
-        }
-
-        function totalOverrideCount() {
-            return permissionUsers.reduce(function(sum, user) { return sum + userOverrideCount(user.id); }, 0);
-        }
-
-        function getPermissionDef(permKey) {
-            return permissionDefs.find(function(pd) { return pd.key === permKey; }) || permissionDefs[0];
-        }
-
-        function effectivePermission(user, permKey) {
-            const roleValue = !!((permissionPolicy.roles[user.role] || {})[permKey]);
-            const override = ((permissionPolicy.overrides[user.id] || {})[permKey]) || 'inherit';
-            if (override === 'include') return true;
-            if (override === 'exclude') return false;
-            return roleValue;
-        }
-
-        function overrideLabel(mode) {
-            if (mode === 'include') return 'Include';
-            if (mode === 'exclude') return 'Exclude';
-            return 'ตาม Role';
-        }
-
-        function renderPermissionSummary() {
-            const roleCount = Object.keys(permissionRoleMeta).length;
-            const userCount = permissionUsers.length;
-            const overrideCount = totalOverrideCount();
-            return '<div class="perm-summary">'
-                + '<div class="perm-summary-card"><div class="perm-summary-num">' + roleCount + '</div><div class="perm-summary-label">Role ที่กำหนดสิทธิ์</div></div>'
-                + '<div class="perm-summary-card"><div class="perm-summary-num">' + userCount + '</div><div class="perm-summary-label">User สำหรับ Override</div></div>'
-                + '<div class="perm-summary-card"><div class="perm-summary-num">' + overrideCount + '</div><div class="perm-summary-label">Include / Exclude ที่ตั้งไว้</div></div>'
-                + '</div>';
-        }
-
-        function renderPermissionFlow() {
-            return '<div class="perm-flow" aria-label="Permission setup flow">'
-                + '<div class="perm-flow-card ' + (currentPermissionTab === 'role' ? 'active' : '') + '">'
-                + '<div class="perm-flow-num">1</div><div><div class="perm-flow-title">ตั้งค่า Role เป็นฐานก่อน</div><div class="perm-flow-sub">กำหนดว่าพยาบาล เภสัชกร และหัวหน้าเวร “โดยปกติ” ใช้สิทธิ์อะไรได้บ้าง</div></div>'
-                + '</div>'
-                + '<div class="perm-flow-card ' + (currentPermissionTab === 'user' ? 'active' : '') + '">'
-                + '<div class="perm-flow-num">2</div><div><div class="perm-flow-title">ค่อยทำข้อยกเว้นรายพนักงาน</div><div class="perm-flow-sub">เลือกสิทธิ์หนึ่งรายการ แล้วระบุว่าใครให้ใช้เพิ่มหรือใครต้องถูกระงับสิทธิ์</div></div>'
-                + '</div>'
-                + '</div>';
-        }
-
-        function renderPermTabs() {
-            return '<div class="perm-tabs" role="tablist" aria-label="Permission setting mode">'
-                + '<button type="button" class="perm-tab ' + (currentPermissionTab === 'role' ? 'active' : '') + '" onclick="setPermTab(\'role\')">ตั้งค่า Role Default</button>'
-                + '<button type="button" class="perm-tab ' + (currentPermissionTab === 'user' ? 'active' : '') + '" onclick="setPermTab(\'user\')">ตั้งข้อยกเว้นรายคน</button>'
-                + '</div>';
-        }
-
-        function renderRoleCell(roleKey, pd) {
-            const enabled = !!((permissionPolicy.roles[roleKey] || {})[pd.key]);
-            return '<button type="button" class="perm-cell ' + (enabled ? 'on' : 'off') + '" onclick="toggleRolePermission(\'' + roleKey + '\',\'' + pd.key + '\')">'
-                + '<div class="perm-cell-title"><span>' + escHtml(pd.label) + '</span><span class="perm-state ' + (enabled ? 'on' : 'off') + '">' + (enabled ? 'เปิด' : 'ปิด') + '</span></div>'
-                + '<div class="perm-cell-sub">' + escHtml(pd.desc) + '</div>'
-                + '</button>';
-        }
-
-        function renderPermissionRoleTab() {
-            const intro = '<div class="perm-mini-note">วิธีใช้: เปิด/ปิดสิทธิ์ของ Role นี้เป็นค่าเริ่มต้นก่อน เช่น พยาบาลเปิดจ่ายยา แต่ปิดตั้งค่าสิทธิ์ จากนั้นถ้ามีบางคนต้องต่างจาก Role ให้ไปแท็บ “ตั้งข้อยกเว้นรายคน”</div>';
-            return intro + Object.keys(permissionRoleMeta).map(function(roleKey) {
-                const meta = permissionRoleMeta[roleKey];
-                const count = rolePermissionCount(roleKey);
-                return '<section class="perm-section" style="--role-color:' + meta.color + ';">'
-                    + '<div class="perm-section-head">'
-                    + '<div><div class="perm-name" style="color:' + meta.color + ';">' + escHtml(meta.label) + '</div><div class="perm-desc">' + escHtml(meta.desc) + '</div></div>'
-                    + '<span class="perm-badge">' + count + '/' + permissionDefs.length + ' สิทธิ์</span>'
-                    + '</div>'
-                    + '<div class="perm-grid">' + permissionDefs.map(function(pd) { return renderRoleCell(roleKey, pd); }).join('') + '</div>'
-                    + '</section>';
+        /* Tab 1 — Permission × Role matrix */
+        function pmRenderRoleTab() {
+            var roleKeys = Object.keys(PM_ROLES);
+            var headCols = roleKeys.map(function(rk) {
+                var meta = PM_ROLES[rk];
+                var count = PM_DEFS.filter(function(pd){ return !!(pmRolePerms[rk]||{})[pd.key]; }).length;
+                return '<th>'
+                    + '<div class="pm-role-col-head">'
+                    + '<div class="pm-role-col-icon" style="background:'+meta.bg+';color:'+meta.color+';">'+pmRoleIcon(rk)+'</div>'
+                    + '<div style="font-size:12px;font-weight:800;color:'+meta.color+';">'+escHtml(meta.label)+'</div>'
+                    + '<span class="pm-role-col-count" style="background:'+meta.bg+';color:'+meta.color+';">'+count+'/'+PM_DEFS.length+'</span>'
+                    + '</div></th>';
             }).join('');
-        }
-
-        function renderUserCell(user, pd) {
-            const overrides = permissionPolicy.overrides[user.id] || {};
-            const mode = overrides[pd.key] || 'inherit';
-            const effective = effectivePermission(user, pd.key);
-            return '<button type="button" class="perm-cell ' + mode + '" onclick="cycleUserPermissionOverride(\'' + user.id + '\',\'' + pd.key + '\')">'
-                + '<div class="perm-cell-title"><span>' + escHtml(pd.label) + '</span><span class="perm-state ' + mode + '">' + overrideLabel(mode) + '</span></div>'
-                + '<div class="perm-cell-sub">ผลลัพธ์: ' + (effective ? 'เปิด' : 'ปิด') + ' · ' + escHtml(pd.desc) + '</div>'
-                + '</button>';
-        }
-
-        function userInitials(name) {
-            return String(name || '').replace(/^(นาย|นางสาว|นาง|นส\.|ภญ\.|ภก\.)\s*/, '').replace(/\s+/g, '').slice(0, 2) || 'US';
-        }
-
-        function getPermissionUser(userId) {
-            return permissionUsers.find(function(user) { return user.id === userId; }) || permissionUsers[0] || null;
-        }
-
-        function filteredPermissionUsers() {
-            const q = String(permUserSearch || '').trim().toLowerCase();
-            const permKey = selectedExceptionPermissionKey || (permissionDefs[0] || {}).key;
-            return permissionUsers.filter(function(user) {
-                const roleMatch = permUserRoleFilter === 'all' || user.role === permUserRoleFilter;
-                const override = (permissionPolicy.overrides[user.id] || {})[permKey];
-                const overrideMatch = permUserOverrideFilter === 'all'
-                    || (permUserOverrideFilter === 'overridden' ? !!override : !override);
-                const haystack = [user.name, user.code, user.ward, (permissionRoleMeta[user.role] || {}).label].join(' ').toLowerCase();
-                return roleMatch && overrideMatch && (!q || haystack.includes(q));
-            });
-        }
-
-        function renderFilterButton(group, value, label, activeValue) {
-            return '<button type="button" class="perm-filter-btn ' + (activeValue === value ? 'active' : '') + '" onclick="setPermUserFilter(\'' + group + '\',\'' + value + '\')">' + escHtml(label) + '</button>';
-        }
-
-        function renderPermissionPicker() {
-            const listHtml = permissionDefs.map(function(pd) {
-                const count = permissionExceptionCount(pd.key);
-                return '<button type="button" class="perm-permission-card ' + (pd.key === selectedExceptionPermissionKey ? 'active' : '') + '" onclick="setPermExceptionPermission(\'' + pd.key + '\')">'
-                    + '<div class="perm-permission-top"><span class="perm-permission-name">' + escHtml(pd.label) + '</span><span class="perm-badge ' + (count ? 'ok' : '') + '">' + count + ' คน</span></div>'
-                    + '<div class="perm-cell-sub">' + escHtml(pd.desc) + '</div>'
-                    + '</button>';
-            }).join('');
-            return '<aside class="perm-user-panel">'
-                + '<div class="perm-name">เลือกสิทธิ์ที่ต้องการตั้งข้อยกเว้น</div>'
-                + '<div class="perm-desc">เลือกหนึ่งสิทธิ์ก่อน แล้วค่อยระบุพนักงานที่ต้องต่างจาก Role</div>'
-                + '<div class="perm-permission-list">' + listHtml + '</div>'
-                + '</aside>';
-        }
-
-        function renderPermissionDefaultOverview(pd) {
-            return '<div class="perm-role-default-grid">' + Object.keys(permissionRoleMeta).map(function(roleKey) {
-                const meta = permissionRoleMeta[roleKey];
-                const enabled = !!((permissionPolicy.roles[roleKey] || {})[pd.key]);
-                const includeCount = permissionUsers.filter(function(user) {
-                    return user.role === roleKey && ((permissionPolicy.overrides[user.id] || {})[pd.key]) === 'include';
-                }).length;
-                const excludeCount = permissionUsers.filter(function(user) {
-                    return user.role === roleKey && ((permissionPolicy.overrides[user.id] || {})[pd.key]) === 'exclude';
-                }).length;
-                return '<button type="button" class="perm-role-default-card ' + (enabled ? 'on' : 'off') + '" onclick="setPermUserFilter(\'role\',\'' + roleKey + '\')">'
-                    + '<div class="perm-role-default-name">' + escHtml(meta.label) + '</div>'
-                    + '<div class="perm-role-default-value">' + (enabled ? 'Role เปิดสิทธิ์นี้' : 'Role ปิดสิทธิ์นี้') + '</div>'
-                    + '<div class="perm-role-default-sub">เพิ่ม ' + includeCount + ' · ระงับ ' + excludeCount + '</div>'
-                    + '</button>';
-            }).join('') + '</div>';
-        }
-
-        function renderPermissionExceptionRow(user, pd) {
-            const roleMeta = permissionRoleMeta[user.role] || { label:user.role, color:'#64748B' };
-            const roleValue = !!((permissionPolicy.roles[user.role] || {})[pd.key]);
-            const mode = ((permissionPolicy.overrides[user.id] || {})[pd.key]) || 'inherit';
-            const effective = effectivePermission(user, pd.key);
-            const stateText = mode === 'include' ? 'ยกเว้น: ให้ใช้ได้' : mode === 'exclude' ? 'ยกเว้น: ไม่ให้ใช้ได้' : 'ตาม Role';
-            return '<div class="perm-exception-row ' + mode + '">'
-                + '<div class="perm-exception-person">'
-                + '<div class="perm-person-avatar" style="background:linear-gradient(135deg,' + roleMeta.color + ',#A78BFA);">' + escHtml(userInitials(user.name)) + '</div>'
-                + '<div class="perm-exception-copy">'
-                + '<div class="perm-exception-name">' + escHtml(user.name) + '</div>'
-                + '<div class="perm-exception-meta">' + escHtml(roleMeta.label) + ' · ' + escHtml(user.ward) + ' · ' + escHtml(user.code) + '</div>'
-                + '<div class="perm-exception-status">'
-                + '<span class="perm-badge ' + (effective ? 'ok' : 'off') + '">' + (effective ? 'ใช้งานได้' : 'ใช้งานไม่ได้') + '</span>'
-                + '<span class="perm-badge">Role: ' + (roleValue ? 'เปิด' : 'ปิด') + '</span>'
-                + '<span class="perm-badge ' + (mode === 'include' ? 'ok' : mode === 'exclude' ? 'off' : '') + '">' + stateText + '</span>'
-                + '</div>'
-                + '</div>'
-                + '</div>'
-                + '<div class="perm-choice-group" aria-label="ตั้งข้อยกเว้น ' + escHtml(user.name) + '">'
-                + '<button type="button" class="perm-choice-btn inherit ' + (mode === 'inherit' ? 'active' : '') + '" onclick="setUserPermissionOverride(\'' + user.id + '\',\'' + pd.key + '\',\'inherit\')">ตาม Role</button>'
-                + '<button type="button" class="perm-choice-btn include ' + (mode === 'include' ? 'active' : '') + '" onclick="setUserPermissionOverride(\'' + user.id + '\',\'' + pd.key + '\',\'include\')">อนุญาตเพิ่ม</button>'
-                + '<button type="button" class="perm-choice-btn exclude ' + (mode === 'exclude' ? 'active' : '') + '" onclick="setUserPermissionOverride(\'' + user.id + '\',\'' + pd.key + '\',\'exclude\')">ระงับสิทธิ์</button>'
-                + '</div>'
-                + '</div>';
-        }
-
-        function renderPermissionExceptionPanel(users, pd) {
-            const roleFilters = renderFilterButton('role', 'all', 'ทุก Role', permUserRoleFilter)
-                + Object.keys(permissionRoleMeta).map(function(roleKey) {
-                    return renderFilterButton('role', roleKey, permissionRoleMeta[roleKey].label, permUserRoleFilter);
+            var bodyRows = PM_DEFS.map(function(pd) {
+                var cells = roleKeys.map(function(rk) {
+                    var on = !!(pmRolePerms[rk]||{})[pd.key];
+                    return '<td onclick="pmToggleRole(\''+rk+'\',\''+pd.key+'\')" style="cursor:pointer;">'
+                        + '<div class="pm-toggle '+(on?'on':'')+'">'
+                        + '<div class="pm-toggle-track"></div><div class="pm-toggle-knob"></div>'
+                        + '</div></td>';
                 }).join('');
-            const overrideFilters = renderFilterButton('override', 'all', 'ทั้งหมด', permUserOverrideFilter)
-                + renderFilterButton('override', 'overridden', 'มีข้อยกเว้น', permUserOverrideFilter)
-                + renderFilterButton('override', 'plain', 'ตาม Role', permUserOverrideFilter);
-            const selectedRoleMeta = permissionRoleMeta[permUserRoleFilter];
-            const roleDefault = selectedRoleMeta
-                ? selectedRoleMeta.label + ' default: ' + (!!((permissionPolicy.roles[permUserRoleFilter] || {})[pd.key]) ? 'เปิดสิทธิ์นี้' : 'ปิดสิทธิ์นี้')
-                : 'เลือก Role เพื่อดู default ของกลุ่มนั้น หรือดูทุก Role พร้อมกัน';
-            const includeCount = permissionUsers.filter(function(user) { return ((permissionPolicy.overrides[user.id] || {})[pd.key]) === 'include'; }).length;
-            const excludeCount = permissionUsers.filter(function(user) { return ((permissionPolicy.overrides[user.id] || {})[pd.key]) === 'exclude'; }).length;
-            const listHtml = users.length ? users.map(function(user) { return renderPermissionExceptionRow(user, pd); }).join('') : '<div class="perm-empty">ไม่พบพนักงานตามเงื่อนไข</div>';
-            return '<section class="perm-detail-card">'
-                + '<div class="perm-selected-perm">'
-                + '<div class="perm-selected-top">'
-                + '<div><div class="perm-name" style="font-size:15px;">' + escHtml(pd.label) + '</div>'
-                + '<div class="perm-desc" style="margin-top:6px;">' + escHtml(pd.desc) + '</div></div>'
-                + '<div class="perm-detail-actions"><span class="perm-badge ok">อนุญาตเพิ่ม ' + includeCount + '</span><span class="perm-badge off">ระงับ ' + excludeCount + '</span></div>'
-                + '</div>'
-                + renderPermissionDefaultOverview(pd)
-                + '<div class="perm-mini-note">ดูค่า default ของแต่ละ Role ด้านบน แล้วแก้เฉพาะคนที่ต้องต่างจาก Role ด้านล่าง เช่น Role พยาบาลเปิดจ่ายยา แต่ระงับสิทธิ์เฉพาะพนักงานบางคน</div>'
-                + '</div>'
-                + '<div class="perm-exception-toolbar">'
-                + '<div class="perm-desc" style="margin-bottom:8px;">' + escHtml(roleDefault) + '</div>'
-                + '<input class="perm-user-search" value="' + escHtml(permUserSearch) + '" oninput="setPermUserSearch(this.value)" placeholder="ค้นหาชื่อ / รหัส / Ward">'
-                + '<div class="perm-user-filterbar">' + roleFilters + '</div>'
-                + '<div class="perm-user-filterbar">' + overrideFilters + '</div>'
-                + '<div class="perm-user-count">แสดง ' + users.length + ' จาก ' + permissionUsers.length + ' คน</div>'
-                + '</div>'
-                + '<div class="perm-exception-list">' + listHtml + '</div>'
-                + '</section>';
+                return '<tr>'
+                    + '<td class="pm-col-left">'
+                    + '<div style="display:flex;align-items:center;gap:10px;">'
+                    + '<div class="pm-perm-icon" style="background:'+pd.bg+';">'+pmPermIcon(pd)+'</div>'
+                    + '<div><div class="pm-perm-name">'+escHtml(pd.label)+'</div>'
+                    + '<div class="pm-perm-desc">'+escHtml(pd.desc)+'</div></div>'
+                    + '</div></td>'
+                    + cells + '</tr>';
+            }).join('');
+            return '<div style="overflow-y:auto;height:100%;"><div class="pm-matrix-wrap"><table class="pm-matrix">'
+                + '<thead><tr><th class="pm-col-left">สิทธิ์การใช้งาน</th>'+headCols+'</tr></thead>'
+                + '<tbody>'+bodyRows+'</tbody>'
+                + '</table></div></div>';
         }
 
-        function renderPermissionUserTab() {
-            const help = '<div class="perm-help">'
-                + '<div class="perm-help-item"><strong>ตาม Role</strong>ใช้สิทธิ์พื้นฐานของ role โดยไม่ override</div>'
-                + '<div class="perm-help-item"><strong>อนุญาตเพิ่ม</strong>เปิดสิทธิ์นี้เพิ่มให้พนักงาน แม้ role จะปิดอยู่</div>'
-                + '<div class="perm-help-item"><strong>ระงับสิทธิ์</strong>ปิดสิทธิ์นี้เฉพาะพนักงาน แม้ role จะเปิดอยู่</div>'
+        /* Tab 2 — Master-Detail */
+        function pmSetOv(userId, permKey, mode) {
+            if (!pmOverrides[userId]) pmOverrides[userId]={};
+            if (mode==='inherit') delete pmOverrides[userId][permKey];
+            else pmOverrides[userId][permKey]=mode;
+            if (!Object.keys(pmOverrides[userId]).length) delete pmOverrides[userId];
+            pmRender();
+        }
+        function pmClearUserOv(userId) { delete pmOverrides[userId]; pmRender(); }
+        function pmSetSearch(val) {
+            pmSearch = val; pmRender();
+            var el = document.getElementById('pmMdSearch');
+            if (el) { el.focus(); el.setSelectionRange(val.length, val.length); }
+        }
+        function pmSetRoleFilter(role) { pmRoleFilter = role; pmRender(); }
+        function pmSelectUser(userId) { pmSelectedUser = userId; pmRender(); }
+
+        function pmRenderUserTab() {
+            var q = pmSearch.toLowerCase();
+            var filtered = PM_USERS.filter(function(u) {
+                if (pmRoleFilter && u.role !== pmRoleFilter) return false;
+                if (q && u.name.toLowerCase().indexOf(q) < 0 && u.code.toLowerCase().indexOf(q) < 0) return false;
+                return true;
+            });
+
+            /* ── Left: search + user list ── */
+            var roleChips = [['','ทั้งหมด']].concat(Object.keys(PM_ROLES).map(function(rk){
+                return [rk, PM_ROLES[rk].label];
+            })).map(function(t){
+                return '<button class="pm-rf-chip'+(pmRoleFilter===t[0]?' active':'')+'" onclick="pmSetRoleFilter(\''+t[0]+'\')">'+escHtml(t[1])+'</button>';
+            }).join('');
+
+            var userItems = filtered.length === 0
+                ? '<div class="pm-no-results">ไม่พบผู้ใช้</div>'
+                : filtered.map(function(u) {
+                    var rm = PM_ROLES[u.role]||{color:'#64748B',bg:'#F1F5F9',label:u.role};
+                    var ovCount = Object.keys(pmOverrides[u.id]||{}).length;
+                    var sel = pmSelectedUser === u.id;
+                    return '<div class="pm-user-item'+(sel?' selected':'')+'" onclick="pmSelectUser(\''+u.id+'\')">'
+                        + '<div class="pm-avatar" style="width:34px;height:34px;font-size:11px;border-radius:9px;flex-shrink:0;background:linear-gradient(135deg,'+rm.color+',#A78BFA);">'+escHtml(pmInitials(u.name))+'</div>'
+                        + '<div style="flex:1;min-width:0;">'
+                        + '<div style="font-size:11px;font-weight:800;color:#0F172A;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+escHtml(u.name)+'</div>'
+                        + '<div style="display:flex;gap:4px;align-items:center;margin-top:2px;">'
+                        + '<span class="pm-role-pill" style="background:'+rm.bg+';color:'+rm.color+';">'+escHtml(rm.label)+'</span>'
+                        + (ovCount ? '<span class="pm-ov-count">'+ovCount+'</span>' : '')
+                        + '</div></div>'
+                        + '</div>';
+                }).join('');
+
+            var leftPanel = '<div class="pm-md-left">'
+                + '<div class="pm-md-search"><div class="pm-md-search-wrap">'
+                + '<span class="pm-md-search-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg></span>'
+                + '<input id="pmMdSearch" class="pm-md-search-input" type="text" placeholder="ค้นหา..." value="'+escHtml(pmSearch)+'" oninput="pmSetSearch(this.value)">'
+                + (pmSearch ? '<button class="pm-md-clear" onclick="pmSetSearch(\'\')">×</button>' : '')
+                + '</div></div>'
+                + '<div class="pm-rf-bar">'+roleChips+'</div>'
+                + '<div class="pm-user-list">'+userItems+'</div>'
                 + '</div>';
-            const pd = getPermissionDef(selectedExceptionPermissionKey);
-            const users = filteredPermissionUsers();
-            return help + '<div class="perm-exception-workspace">' + renderPermissionPicker() + renderPermissionExceptionPanel(users, pd) + '</div>';
+
+            /* ── Right: selected user detail ── */
+            var user = pmSelectedUser ? PM_USERS.find(function(u){ return u.id===pmSelectedUser; }) : null;
+            var rightPanel;
+
+            if (!user) {
+                rightPanel = '<div class="pm-md-right"><div class="pm-detail-empty">'
+                    + '<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#E2E8F0" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.58-7 8-7s8 3 8 7"/></svg>'
+                    + '<div style="color:#94A3B8;">เลือกผู้ใช้ทางซ้าย<br><span style="font-size:11px;color:#CBD5E1;">เพื่อจัดการสิทธิ์เฉพาะบุคคล</span></div>'
+                    + '</div></div>';
+            } else {
+                var rm = PM_ROLES[user.role]||{label:user.role,color:'#64748B',bg:'#F1F5F9'};
+                var userOvs = pmOverrides[user.id]||{};
+                var ovTotal = Object.keys(userOvs).length;
+
+                var detailHeader = '<div class="pm-detail-header">'
+                    + '<div style="display:flex;align-items:center;gap:12px;">'
+                    + '<div class="pm-avatar" style="width:46px;height:46px;font-size:15px;border-radius:13px;flex-shrink:0;background:linear-gradient(135deg,'+rm.color+',#A78BFA);">'+escHtml(pmInitials(user.name))+'</div>'
+                    + '<div style="flex:1;min-width:0;">'
+                    + '<div style="font-size:15px;font-weight:900;color:#0F172A;">'+escHtml(user.name)+'</div>'
+                    + '<div style="display:flex;gap:6px;align-items:center;margin-top:5px;flex-wrap:wrap;">'
+                    + '<span class="pm-role-pill" style="background:'+rm.bg+';color:'+rm.color+';font-size:11px;padding:3px 10px;">'+escHtml(rm.label)+'</span>'
+                    + '<span style="font-size:11px;color:#94A3B8;">'+escHtml(user.code)+'</span>'
+                    + '<span style="font-size:11px;color:#94A3B8;">'+escHtml(user.ward)+'</span>'
+                    + (ovTotal ? '<span class="pm-ov-count">'+ovTotal+' override</span>' : '')
+                    + '</div></div>'
+                    + (ovTotal ? '<button onclick="pmClearUserOv(\''+user.id+'\')" style="border:none;background:none;cursor:pointer;font-family:inherit;font-size:11px;font-weight:800;color:#94A3B8;padding:4px 0;white-space:nowrap;display:flex;align-items:center;gap:3px;flex-shrink:0;">ล้างทั้งหมด</button>' : '')
+                    + '</div></div>';
+
+                var permRows = PM_DEFS.map(function(pd) {
+                    var ov = userOvs[pd.key] || 'inherit';
+                    var roleHas = !!(pmRolePerms[user.role]||{})[pd.key];
+                    return '<div class="pm-detail-perm-row'+(ov!=='inherit'?' overridden':'')+'">'
+                        + '<div class="pm-pov-icon" style="background:'+pd.bg+';">'+pmPermIcon(pd)+'</div>'
+                        + '<div class="pm-pov-info">'
+                        + '<div class="pm-pov-name">'+escHtml(pd.label)+'</div>'
+                        + '<div class="pm-pov-desc">'+escHtml(pd.desc)+'</div>'
+                        + '</div>'
+                        + '<div class="pm-seg3">'
+                        + '<button class="pm-seg3-btn'+(ov==='inherit'?' s-role':'')+'" onclick="pmSetOv(\''+user.id+'\',\''+pd.key+'\',\'inherit\')">ตาม Role '+(roleHas?'✓':'✗')+'</button>'
+                        + '<button class="pm-seg3-btn'+(ov==='include'?' s-include':'')+'" onclick="pmSetOv(\''+user.id+'\',\''+pd.key+'\',\'include\')">Include</button>'
+                        + '<button class="pm-seg3-btn'+(ov==='exclude'?' s-exclude':'')+'" onclick="pmSetOv(\''+user.id+'\',\''+pd.key+'\',\'exclude\')">Exclude</button>'
+                        + '</div>'
+                        + '</div>';
+                }).join('');
+
+                rightPanel = '<div class="pm-md-right">'+detailHeader+permRows+'</div>';
+            }
+
+            return '<div class="pm-md-layout">'+leftPanel+rightPanel+'</div>';
         }
 
-        function renderPermissionPanel() {
-            const body = document.getElementById('permModalBody');
+        function pmRender() {
+            var body = document.getElementById('permModalBody');
+            var chips = document.getElementById('pmChips');
             if (!body) return;
-            body.innerHTML = renderPermissionFlow() + renderPermissionSummary() + renderPermTabs()
-                + (currentPermissionTab === 'role' ? renderPermissionRoleTab() : renderPermissionUserTab());
-        }
-
-        function setPermTab(tab) {
-            currentPermissionTab = tab === 'user' ? 'user' : 'role';
-            if (currentPermissionTab === 'user' && !getPermissionUser(selectedPermissionUserId)) {
-                selectedPermissionUserId = (permissionUsers[0] || {}).id || '';
+            var totalOv = Object.keys(pmOverrides).reduce(function(s,uid){ return s+Object.keys(pmOverrides[uid]).length; }, 0);
+            if (chips) {
+                chips.innerHTML = '<span class="modal-chip"><strong>'+Object.keys(PM_ROLES).length+'</strong> Role</span>'
+                    + '<span class="modal-chip"><strong>'+PM_USERS.length+'</strong> User</span>'
+                    + (totalOv?'<span class="modal-chip"><strong>'+totalOv+'</strong> Override</span>':'');
             }
-            renderPermissionPanel();
+            body.innerHTML = pmTab==='role' ? pmRenderRoleTab() : pmRenderUserTab();
         }
 
-        function setPermUserSearch(value) {
-            permUserSearch = value || '';
-            renderPermissionPanel();
-            const input = document.querySelector('.perm-user-search');
-            if (input) {
-                input.focus();
-                input.setSelectionRange(input.value.length, input.value.length);
-            }
+        function pmToggleRole(roleKey, permKey) {
+            if (!pmRolePerms[roleKey]) pmRolePerms[roleKey]={};
+            pmRolePerms[roleKey][permKey] = !pmRolePerms[roleKey][permKey];
+            pmRender();
+        }
+        function pmSetTab(tab) {
+            pmTab=tab; pmSearch=''; pmRoleFilter='';
+            if (tab==='user' && !pmSelectedUser && PM_USERS.length) pmSelectedUser=PM_USERS[0].id;
+            document.querySelectorAll('.modal-tab').forEach(function(el){
+                el.classList.toggle('active', el.dataset.tab===tab);
+            });
+            pmRender();
         }
 
-        function setPermUserFilter(group, value) {
-            if (group === 'role') permUserRoleFilter = value || 'all';
-            if (group === 'override') permUserOverrideFilter = value || 'all';
-            renderPermissionPanel();
+        function openPermPanel() {
+            pmTab='role'; pmSearch=''; pmRoleFilter=''; pmSelectedUser=PM_USERS.length?PM_USERS[0].id:null;
+            pmRender();
+            document.getElementById('permModal').style.display = 'flex';
         }
-
-        function selectPermissionUser(userId) {
-            selectedPermissionUserId = userId;
-            renderPermissionPanel();
-        }
-
-        function setPermExceptionPermission(permKey) {
-            selectedExceptionPermissionKey = getPermissionDef(permKey).key;
-            renderPermissionPanel();
-        }
-
-        function toggleRolePermission(roleKey, permKey) {
-            if (!permissionPolicy.roles[roleKey]) permissionPolicy.roles[roleKey] = {};
-            permissionPolicy.roles[roleKey][permKey] = !permissionPolicy.roles[roleKey][permKey];
-            renderPermissionPanel();
-        }
-
-        function setUserPermissionOverride(userId, permKey, mode) {
-            if (!permissionPolicy.overrides[userId]) permissionPolicy.overrides[userId] = {};
-            if (mode === 'inherit') delete permissionPolicy.overrides[userId][permKey];
-            else permissionPolicy.overrides[userId][permKey] = mode === 'exclude' ? 'exclude' : 'include';
-            if (!Object.keys(permissionPolicy.overrides[userId]).length) delete permissionPolicy.overrides[userId];
-            renderPermissionPanel();
-        }
-
-        function cycleUserPermissionOverride(userId, permKey) {
-            if (!permissionPolicy.overrides[userId]) permissionPolicy.overrides[userId] = {};
-            const current = permissionPolicy.overrides[userId][permKey] || 'inherit';
-            const next = current === 'inherit' ? 'include' : current === 'include' ? 'exclude' : 'inherit';
-            if (next === 'inherit') delete permissionPolicy.overrides[userId][permKey];
-            else permissionPolicy.overrides[userId][permKey] = next;
-            renderPermissionPanel();
-        }
-
-        function clearUserOverrides(userId) {
-            delete permissionPolicy.overrides[userId];
-            renderPermissionPanel();
-        }
-
         function closePermModal() {
             document.getElementById('permModal').style.display = 'none';
         }
-
         function savePermModal() {
-            persistPermissionPolicy();
             closePermModal();
-            showToast('บันทึกสิทธิ์ Role และ User Override เรียบร้อยแล้ว');
+            showToast('บันทึกสิทธิ์เรียบร้อยแล้ว');
             setTimeout(function(){ showToast(''); }, 1800);
         }
 
