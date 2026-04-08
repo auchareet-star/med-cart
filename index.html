@@ -84,12 +84,12 @@
         .header-brand { display: flex; align-items: center; gap: 14px; }
 
         .brand-icon {
-            width: 48px; height: 48px;
-            background: linear-gradient(135deg, var(--green) 0%, #14B8A6 100%);
+            width: 44px; height: 44px;
+            background: var(--green);
             border-radius: 14px;
             display: flex; align-items: center; justify-content: center;
             flex-shrink: 0;
-            box-shadow: 0 2px 8px rgba(13,148,136,0.25);
+            box-shadow: 0 2px 8px rgba(13,148,136,0.2);
         }
 
         .brand-name {
@@ -174,10 +174,10 @@
             display: flex; align-items: center; gap: 12px; min-width: 0;
         }
         .gh-brand-icon {
-            width: 40px; height: 40px;
-            background: linear-gradient(135deg, var(--green), #14B8A6);
-            border-radius: 14px; display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 8px 22px rgba(13,148,136,0.18);
+            width: 38px; height: 38px;
+            background: var(--green);
+            border-radius: 12px; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 2px 8px rgba(13,148,136,0.2);
             flex-shrink: 0;
         }
         .gh-title-stack { min-width: 0; }
@@ -192,9 +192,9 @@
         }
         .gh-ward-chip {
             display: inline-flex; align-items: center; gap: 8px;
-            padding: 7px 10px; border: 1px solid rgba(13,148,136,0.18);
-            border-radius: 999px; background: linear-gradient(135deg,#F0FDFA,#ECFDF5);
-            color: var(--text-2); font-size: 11px; font-weight: 700;
+            padding: 7px 10px; border: 1px solid #CCFBF1;
+            border-radius: 999px; background: #F0FDFA;
+            color: #0F766E; font-size: 11px; font-weight: 700;
             white-space: nowrap; flex-shrink: 0;
         }
         .gh-ward-icon {
@@ -210,7 +210,7 @@
         .gh-time-card {
             min-width: 74px; text-align: right;
             padding: 6px 10px; border-radius: 12px;
-            background: rgba(248,250,252,0.8); border: 1px solid rgba(226,232,240,0.85);
+            background: var(--bg); border: 1px solid var(--border-light);
         }
         .gh-time { font-size: 15px; font-weight: 750; color: var(--text-1); font-family: 'Inter', sans-serif; line-height: 1; }
         .gh-date { font-size: 9px; color: var(--text-3); margin-top: 4px; white-space: nowrap; }
@@ -218,9 +218,9 @@
             align-items: center; gap: 8px;
             min-width: 0; max-width: 190px;
             padding: 5px 10px 5px 6px;
-            border: 1px solid rgba(226,232,240,0.95);
-            border-radius: 16px; background: rgba(255,255,255,0.9);
-            box-shadow: 0 3px 12px rgba(15,23,42,0.04);
+            border: 1px solid var(--border-light);
+            border-radius: 16px; background: var(--white);
+            box-shadow: 0 1px 3px rgba(15,23,42,0.04);
         }
         .gh-avatar {
             width: 32px; height: 32px;
@@ -243,19 +243,19 @@
         }
         .gh-icon-action.backend {
             width: auto; padding: 0 11px; gap: 6px;
-            background: linear-gradient(135deg,#F0FDFA,#CCFBF1);
-            border-color: #99F6E4; color: #0F766E;
+            background: #F0FDFA;
+            border-color: #CCFBF1; color: #0F766E;
             font-family: 'Prompt', sans-serif; font-size: 11px; font-weight: 800;
         }
         .gh-icon-action.logout {
-            background: linear-gradient(135deg,#FFF1F2,#FEE2E2);
+            background: #FFF1F2;
             border-color: #FECACA; color: #DC2626;
         }
         .gh-icon-action:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(15,23,42,0.1); }
         .gh-nav-actions {
             display: flex; align-items: center; gap: 6px;
-            padding: 4px; border: 1px solid rgba(226,232,240,0.9);
-            border-radius: 14px; background: rgba(248,250,252,0.82);
+            padding: 4px; border: 1px solid var(--border-light);
+            border-radius: 14px; background: var(--bg);
             justify-self: center;
         }
         .gh-nav-btn {
@@ -292,7 +292,7 @@
         /* ── ROLE SELECTION PAGE ─────────────────────── */
         .role-body {
             flex:1; display:flex; align-items:center; justify-content:center;
-            padding:32px; background:linear-gradient(160deg,#F4F6FA 0%,#EBF0F7 50%,#F0F4F8 100%);
+            padding:32px; background:var(--bg);
         }
         .role-frame { width:100%; max-width:900px; text-align:center; }
 
@@ -354,9 +354,9 @@
             display:flex; align-items:center; gap:8px; justify-content:center;
             width:100%;
         }
-        .role-btn.nurse  { background:linear-gradient(135deg,var(--green),#14B8A6); box-shadow:0 4px 14px rgba(13,148,136,0.25); }
-        .role-btn.pharma { background:linear-gradient(135deg,#3b82f6,#60a5fa); box-shadow:0 4px 14px rgba(59,130,246,0.25); }
-        .role-btn.super  { background:linear-gradient(135deg,#7c3aed,#a78bfa); box-shadow:0 4px 14px rgba(124,58,237,0.25); }
+        .role-btn.nurse  { background:var(--green); box-shadow:0 2px 8px rgba(13,148,136,0.25); }
+        .role-btn.pharma { background:#3b82f6; box-shadow:0 2px 8px rgba(59,130,246,0.25); }
+        .role-btn.super  { background:#7c3aed; box-shadow:0 2px 8px rgba(124,58,237,0.25); }
 
         @media (max-width:768px) { .role-grid { grid-template-columns:1fr; max-width:360px; margin:32px auto 0; } }
 
@@ -391,7 +391,7 @@
         .op-body {
             flex: 1;
             overflow-y: auto;
-            background: linear-gradient(160deg, #F8FAFC 0%, #EEF6F6 48%, #F8FAFC 100%);
+            background: var(--bg);
             padding: 28px;
         }
         .op-shell { max-width: 1180px; margin: 0 auto; display: flex; flex-direction: column; gap: 18px; }

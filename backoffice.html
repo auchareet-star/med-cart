@@ -123,14 +123,14 @@
             background:white; border:1px solid var(--bo-border,#E2E8F0);
             color:var(--bo-color,#0D9488);
         }
-        .bo-hero .bo-chip { background:rgba(255,255,255,0.16); border-color:rgba(255,255,255,0.26); color:white; }
+        .bo-hero .bo-chip { background:#F0FDFA; border-color:#CCFBF1; color:#0F766E; }
         .bo-hero-card {
-            background:rgba(255,255,255,0.14); border:1px solid rgba(255,255,255,0.24);
-            border-radius:22px; padding:18px; backdrop-filter:blur(12px); position:relative; z-index:1;
+            background:var(--bg); border:1px solid var(--border-light);
+            border-radius:16px; padding:18px; backdrop-filter:none; position:relative; z-index:1;
         }
-        .bo-hero-card .label { font-size:10px; font-weight:850; opacity:.7; text-transform:uppercase; letter-spacing:.12em; }
-        .bo-hero-card .value { font-size:20px; font-weight:950; margin-top:6px; }
-        .bo-hero-card .note { font-size:12px; line-height:1.6; opacity:.75; margin-top:10px; }
+        .bo-hero-card .label { font-size:10px; font-weight:850; color:var(--text-3); text-transform:uppercase; letter-spacing:.12em; }
+        .bo-hero-card .value { font-size:20px; font-weight:950; margin-top:6px; color:var(--green); }
+        .bo-hero-card .note { font-size:12px; line-height:1.6; color:var(--text-2); margin-top:10px; }
         .bo-stat-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:14px; }
         .bo-stat {
             background:var(--white); border:1px solid var(--border-light); border-radius:14px; padding:16px;
@@ -639,51 +639,109 @@
         </div>
     </header>
 
-    <main class="bo-body">
-        <div class="bo-inner">
-            <section class="bo-hero">
-                <div style="position:relative;z-index:1;">
-                    <div class="bo-kicker">Backoffice Control</div>
-                    <div class="bo-title">ระบบหลังบ้าน</div>
-                    <div class="bo-sub" id="boHeroSub">จัดการข้อมูลตั้งต้น สิทธิ์การใช้งาน รถเข็นยา และรายงานของ Ward ปัจจุบัน</div>
-                    <div class="chip-row">
-                        <span class="bo-chip" id="boRoleBadge">หัวหน้าเวร</span>
-                        <span class="bo-chip" id="boWardBadge">Ward 3A</span>
+    <div class="bo-layout">
+        <!-- ── SIDEBAR ── -->
+        <aside class="bo-sidebar">
+            <div class="bo-sidebar-header">
+                <div class="bo-brand-compact">
+                    <div class="bo-brand-compact-icon">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.4"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
+                    </div>
+                    <div>
+                        <div style="font-size:13px;font-weight:850;color:var(--text-1);">Backoffice</div>
+                        <div style="font-size:9px;color:var(--text-3);font-weight:700;">Med Cart Control</div>
                     </div>
                 </div>
-                <aside class="bo-hero-card">
-                    <div class="label">Current Scope</div>
-                    <div class="value" id="boCartScope">Med Cart A-1</div>
-                    <div class="note" id="boAccessNote">เลือกเมนูเพื่อเข้าสู่ระบบหลังบ้านแบบ Demo</div>
-                </aside>
-            </section>
-
-            <section class="bo-stat-grid" id="boStatGrid"></section>
-
-            <section class="bo-grid">
-                <div class="bo-panel">
-                    <div class="bo-panel-head">
-                        <div>
-                            <div class="bo-panel-title">เมนูระบบหลังบ้าน</div>
-                            <div class="bo-panel-sub">แยกไฟล์จากหน้าบ้านแล้ว เปิดทำงานเป็น Backoffice HTML</div>
-                        </div>
-                        <span class="bo-chip" id="boModeChip">Supervisor mode</span>
-                    </div>
-                    <div class="bo-mod-grid" id="boModuleGrid"></div>
+            </div>
+            <nav class="bo-sidebar-nav">
+                <div class="bo-nav-item active" onclick="boNavTo('home',this)">
+                    <div class="bo-nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+                    หน้าแรก
                 </div>
-
-                <aside class="bo-panel">
-                    <div class="bo-panel-head">
-                        <div>
-                            <div class="bo-panel-title">System Activity</div>
-                            <div class="bo-panel-sub">สถานะล่าสุดของ Ward/Cart ปัจจุบัน</div>
-                        </div>
+                <div class="bo-nav-item" onclick="boNavTo('perm',this)">
+                    <div class="bo-nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg></div>
+                    สิทธิ์การใช้งาน
+                </div>
+                <div class="bo-nav-item" onclick="boNavTo('ward',this)">
+                    <div class="bo-nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v6H4z"/><path d="M4 14h7v6H4z"/><path d="M15 14h5v6h-5z"/></svg></div>
+                    Ward & Med Cart
+                </div>
+                <div class="bo-nav-item" onclick="boNavTo('med',this)">
+                    <div class="bo-nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8"/></svg></div>
+                    รายการยา
+                </div>
+                <div class="bo-nav-item" onclick="boNavTo('report',this)">
+                    <div class="bo-nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"/></svg></div>
+                    รายงาน
+                </div>
+                <div class="bo-nav-item" onclick="boNavTo('his',this)">
+                    <div class="bo-nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.66 0 3-4.03 3-9s-1.34-9-3-9m0 18c-1.66 0-3-4.03-3-9s1.34-9 3-9"/></svg></div>
+                    HIS / MAR Sync
+                </div>
+            </nav>
+            <div class="bo-sidebar-bottom">
+                <div class="bo-sidebar-context">CURRENT SCOPE</div>
+                <div class="bo-context-chip">
+                    <div style="width:24px;height:24px;background:linear-gradient(135deg,var(--green),#14B8A6);border-radius:7px;display:flex;align-items:center;justify-content:center;">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M4 4h16v6H4z"/><path d="M4 14h7v6H4z"/></svg>
                     </div>
-                    <div class="bo-timeline" id="boTimeline"></div>
-                </aside>
-            </section>
+                    <div>
+                        <div style="font-size:11px;font-weight:850;color:var(--text-1);" id="sidebarWard">Ward 3A</div>
+                        <div style="font-size:9px;color:var(--text-3);" id="sidebarCart">Med Cart A-1</div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- ── CONTENT ── -->
+        <div class="bo-content">
+            <main class="bo-body">
+                <div class="bo-inner">
+                    <section class="bo-hero">
+                        <div style="position:relative;z-index:1;">
+                            <div class="bo-kicker">Backoffice Control</div>
+                            <div class="bo-title">ระบบหลังบ้าน</div>
+                            <div class="bo-sub" id="boHeroSub">จัดการข้อมูลตั้งต้น สิทธิ์การใช้งาน รถเข็นยา และรายงานของ Ward ปัจจุบัน</div>
+                            <div class="chip-row">
+                                <span class="bo-chip" id="boRoleBadge">หัวหน้าเวร</span>
+                                <span class="bo-chip" id="boWardBadge">Ward 3A</span>
+                            </div>
+                        </div>
+                        <aside class="bo-hero-card">
+                            <div class="label">Current Scope</div>
+                            <div class="value" id="boCartScope">Med Cart A-1</div>
+                            <div class="note" id="boAccessNote">เลือกเมนูเพื่อเข้าสู่ระบบหลังบ้านแบบ Demo</div>
+                        </aside>
+                    </section>
+
+                    <section class="bo-stat-grid" id="boStatGrid"></section>
+
+                    <section class="bo-grid">
+                        <div class="bo-panel">
+                            <div class="bo-panel-head">
+                                <div>
+                                    <div class="bo-panel-title">เมนูระบบหลังบ้าน</div>
+                                    <div class="bo-panel-sub">แยกไฟล์จากหน้าบ้านแล้ว เปิดทำงานเป็น Backoffice HTML</div>
+                                </div>
+                                <span class="bo-chip" id="boModeChip">Supervisor mode</span>
+                            </div>
+                            <div class="bo-mod-grid" id="boModuleGrid"></div>
+                        </div>
+
+                        <aside class="bo-panel">
+                            <div class="bo-panel-head">
+                                <div>
+                                    <div class="bo-panel-title">System Activity</div>
+                                    <div class="bo-panel-sub">สถานะล่าสุดของ Ward/Cart ปัจจุบัน</div>
+                                </div>
+                            </div>
+                            <div class="bo-timeline" id="boTimeline"></div>
+                        </aside>
+                    </section>
+                </div>
+            </main>
         </div>
-    </main>
+    </div>
 
     <div class="modal-backdrop" id="permModal" onclick="if(event.target===this) closePermModal()">
         <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="permModalTitle">
@@ -691,7 +749,7 @@
                 <div class="modal-head-top">
                     <div class="modal-head-left">
                         <div class="modal-head-icon">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/><path d="M9 12l2 2 4-4" stroke-width="2.2"/></svg>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0D9488" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/><path d="M9 12l2 2 4-4" stroke-width="2.2"/></svg>
                         </div>
                         <div>
                             <div id="permModalTitle" class="modal-title">ตั้งค่าสิทธิ์การใช้งาน</div>
@@ -700,7 +758,7 @@
                         </div>
                     </div>
                     <button class="modal-close" onclick="closePermModal()" aria-label="ปิด">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
                     </button>
                 </div>
                 <div class="modal-tabs">
@@ -718,11 +776,11 @@
     <!-- Ward & Med Cart Modal -->
     <div class="modal-backdrop" id="wardModal" onclick="if(event.target===this) closeWardModal()">
         <div class="modal-card" style="max-width:820px;" role="dialog" aria-modal="true">
-            <div class="modal-head" style="background:linear-gradient(135deg,#065F46 0%,#0D9488 55%,#14B8A6 100%);">
+            <div class="modal-head">
                 <div class="modal-head-top">
                     <div class="modal-head-left">
                         <div class="modal-head-icon">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/><path d="M9 9h1"/><path d="M9 13h1"/><path d="M9 17h1"/></svg>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0D9488" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/><path d="M9 9h1"/><path d="M9 13h1"/><path d="M9 17h1"/></svg>
                         </div>
                         <div>
                             <div class="modal-title">Ward & Med Cart Assignment</div>
@@ -731,7 +789,7 @@
                         </div>
                     </div>
                     <button class="modal-close" onclick="closeWardModal()" aria-label="ปิด">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
                     </button>
                 </div>
                 <div class="modal-tabs">
@@ -742,7 +800,7 @@
             <div class="modal-body" id="wardModalBody"></div>
             <div class="modal-foot">
                 <button class="btn" onclick="closeWardModal()">ปิด</button>
-                <button class="btn primary" style="border-color:#99F6E4;color:#0F766E;background:linear-gradient(135deg,#F0FDFA,#ECFDF5);" onclick="saveWardModal()">
+                <button class="btn primary" onclick="saveWardModal()">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
                     บันทึกข้อมูล
                 </button>
@@ -752,11 +810,11 @@
 
     <div class="modal-backdrop" id="reportModal" onclick="if(event.target===this) closeReportModal()">
         <div class="modal-card" style="max-width:940px;" role="dialog" aria-modal="true" aria-labelledby="reportModalTitle">
-            <div class="modal-head" style="background:linear-gradient(135deg,#111827 0%,#1F2937 60%,#D97706 135%);">
+            <div class="modal-head">
                 <div class="modal-head-top">
                     <div class="modal-head-left">
-                        <div class="modal-head-icon" style="background:rgba(217,119,6,.34);">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/></svg>
+                        <div class="modal-head-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0D9488" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/></svg>
                         </div>
                         <div>
                             <div id="reportModalTitle" class="modal-title">รายงานและ Audit Log</div>
@@ -765,7 +823,7 @@
                         </div>
                     </div>
                     <button class="modal-close" onclick="closeReportModal()" aria-label="ปิด">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
                     </button>
                 </div>
             </div>
@@ -782,6 +840,20 @@
     <div class="toast" id="toast"></div>
 
     <script>
+        /* ── Sidebar Navigation ── */
+        function boNavTo(target, el) {
+            document.querySelectorAll('.bo-nav-item').forEach(n => n.classList.remove('active'));
+            if (el) el.classList.add('active');
+            switch(target) {
+                case 'perm':  openPermPanel(); break;
+                case 'ward':  openWardModal(); break;
+                case 'report': openReportModal(); break;
+                case 'med': showToast('เปิดโมดูลรายการยา (Demo)'); break;
+                case 'his': showToast('เปิดโมดูล HIS/MAR Sync (Demo)'); break;
+                default: break; // 'home' stays on dashboard
+            }
+        }
+
         const DEFAULT_DEMO_WARD = 'Ward 3A';
         const STANDARD_CART_DRAWERS = 6;
         const STANDARD_CART_CASSETTES = 36;
