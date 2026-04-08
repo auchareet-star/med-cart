@@ -313,6 +313,109 @@
             display:flex; gap:10px; flex-shrink:0;
         }
         .modal-foot button { flex:1; justify-content:center; }
+        /* ── WARD & MED CART MODAL ─────────────── */
+        .wm-md-layout { display:flex; height:100%; }
+        .wm-md-left {
+            width:240px; flex-shrink:0; display:flex; flex-direction:column;
+            border-right:1.5px solid #F1F5F9; overflow:hidden;
+        }
+        .wm-left-head {
+            padding:12px 14px; border-bottom:1px solid #F1F5F9;
+            display:flex; align-items:center; justify-content:space-between; flex-shrink:0;
+        }
+        .wm-left-title { font-size:11px; font-weight:900; color:#64748B; text-transform:uppercase; letter-spacing:.08em; }
+        .wm-add-btn {
+            width:26px; height:26px; border-radius:8px;
+            background:linear-gradient(135deg,#0D9488,#14B8A6);
+            color:white; border:none; cursor:pointer; font-size:18px; line-height:1;
+            display:flex; align-items:center; justify-content:center;
+            transition:transform .15s, box-shadow .15s;
+        }
+        .wm-add-btn:hover { transform:scale(1.1); box-shadow:0 4px 12px rgba(13,148,136,0.3); }
+        .wm-item-list { flex:1; overflow-y:auto; }
+        .wm-item {
+            display:flex; align-items:center; gap:10px;
+            padding:10px 14px; cursor:pointer; border-bottom:1px solid #F8FAFC;
+            transition:background .1s; position:relative;
+        }
+        .wm-item:hover { background:#F8FAFC; }
+        .wm-item.selected { background:#F0FDF9; border-left:3px solid #0D9488; padding-left:11px; }
+        .wm-item-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+        .wm-item-info { flex:1; min-width:0; }
+        .wm-item-name { font-size:12px; font-weight:800; color:#0F172A; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+        .wm-item-sub  { font-size:10px; color:#94A3B8; margin-top:1px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+        .wm-status-dot { width:7px; height:7px; border-radius:50%; flex-shrink:0; }
+        .wm-status-dot.active      { background:#10B981; }
+        .wm-status-dot.inactive    { background:#CBD5E1; }
+        .wm-status-dot.maintenance { background:#F59E0B; }
+
+        /* Right panel — form */
+        .wm-md-right { flex:1; overflow-y:auto; min-width:0; display:flex; flex-direction:column; }
+        .wm-empty {
+            flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center;
+            color:#94A3B8; font-size:13px; text-align:center; gap:10px; padding:32px;
+        }
+        .wm-form-wrap { padding:20px 24px; display:flex; flex-direction:column; gap:0; }
+        .wm-form-hero {
+            display:flex; align-items:center; gap:14px; margin-bottom:20px;
+            padding-bottom:18px; border-bottom:2px solid #F1F5F9;
+        }
+        .wm-form-avatar {
+            width:50px; height:50px; border-radius:15px; flex-shrink:0;
+            display:flex; align-items:center; justify-content:center;
+            font-size:18px; font-weight:900; color:white;
+        }
+        .wm-form-hero-name { font-size:17px; font-weight:900; color:#0F172A; }
+        .wm-form-hero-sub  { font-size:12px; color:#94A3B8; margin-top:3px; }
+        .wm-section-head { font-size:10px; font-weight:900; color:#94A3B8; text-transform:uppercase; letter-spacing:.1em; margin-bottom:10px; margin-top:18px; }
+        .wm-section-head:first-child { margin-top:0; }
+        .wm-field-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+        .wm-field { display:flex; flex-direction:column; gap:5px; }
+        .wm-field.full { grid-column:1/-1; }
+        .wm-label { font-size:10px; font-weight:800; color:#475569; text-transform:uppercase; letter-spacing:.06em; }
+        .wm-input, .wm-select {
+            border:1.5px solid #E2E8F0; border-radius:10px; padding:9px 12px;
+            font-family:'Prompt',sans-serif; font-size:13px; font-weight:600; color:#0F172A;
+            background:white; outline:none; transition:border-color .15s, box-shadow .15s;
+            width:100%;
+        }
+        .wm-input:focus, .wm-select:focus { border-color:#0D9488; box-shadow:0 0 0 3px rgba(13,148,136,0.1); }
+        .wm-input[readonly] { background:#F8FAFC; color:#64748B; cursor:default; }
+        .wm-select { cursor:pointer; }
+        .wm-status-row { display:flex; gap:8px; }
+        .wm-status-opt {
+            flex:1; display:flex; align-items:center; justify-content:center; gap:6px;
+            border:1.5px solid #E2E8F0; border-radius:10px; padding:9px 8px;
+            cursor:pointer; font-size:11px; font-weight:800; color:#64748B;
+            transition:all .15s;
+        }
+        .wm-status-opt.active   { border-color:#10B981; background:#F0FDF4; color:#047857; }
+        .wm-status-opt.maintenance { border-color:#F59E0B; background:#FFFBEB; color:#92400E; }
+        .wm-status-opt.inactive { border-color:#94A3B8; background:#F8FAFC; color:#475569; }
+        .wm-occ-bar { height:7px; background:#F1F5F9; border-radius:999px; overflow:hidden; margin-top:4px; }
+        .wm-occ-fill { height:100%; border-radius:999px; transition:width .4s; }
+        .wm-color-row { display:flex; gap:8px; flex-wrap:wrap; }
+        .wm-color-swatch {
+            width:28px; height:28px; border-radius:8px; cursor:pointer;
+            border:2px solid transparent; transition:transform .15s, border-color .15s;
+        }
+        .wm-color-swatch:hover { transform:scale(1.15); }
+        .wm-color-swatch.selected { border-color:#0F172A; transform:scale(1.1); }
+        .wm-cart-link {
+            display:flex; align-items:center; gap:10px; padding:10px 12px;
+            background:#F0FDF9; border:1.5px solid #99F6E4; border-radius:12px; margin-top:4px;
+        }
+        .wm-cart-link-icon { width:30px; height:30px; border-radius:8px; background:#0D9488; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+        .wm-divider { height:1px; background:#F1F5F9; margin:18px 0; }
+        .wm-stat-row { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
+        .wm-stat-card { background:#F8FAFC; border:1px solid #F1F5F9; border-radius:10px; padding:10px 12px; }
+        .wm-stat-val { font-size:20px; font-weight:900; color:#0F172A; line-height:1; }
+        .wm-stat-lbl { font-size:10px; color:#94A3B8; font-weight:700; margin-top:4px; }
+        .wm-danger-zone { margin-top:4px; padding:12px; background:#FFF1F2; border:1px solid #FECDD3; border-radius:10px; display:flex; align-items:center; justify-content:space-between; gap:12px; }
+        .wm-danger-text { font-size:11px; color:#BE123C; font-weight:700; }
+        .wm-danger-btn { border:1.5px solid #FECDD3; background:white; color:#BE123C; border-radius:8px; padding:6px 12px; font-size:11px; font-weight:800; cursor:pointer; font-family:'Prompt',sans-serif; transition:all .15s; }
+        .wm-danger-btn:hover { background:#FFF1F2; border-color:#FB7185; }
+
         @media (max-width: 980px) {
             .topbar { height:auto; padding:14px 18px; align-items:flex-start; flex-direction:column; }
             .top-scope { justify-content:flex-start; }
@@ -429,6 +532,41 @@
             </div>
         </div>
     </div>
+    <!-- Ward & Med Cart Modal -->
+    <div class="modal-backdrop" id="wardModal" onclick="if(event.target===this) closeWardModal()">
+        <div class="modal-card" style="max-width:820px;" role="dialog" aria-modal="true">
+            <div class="modal-head" style="background:linear-gradient(135deg,#065F46 0%,#0D9488 55%,#14B8A6 100%);">
+                <div class="modal-head-top">
+                    <div class="modal-head-left">
+                        <div class="modal-head-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/><path d="M9 9h1"/><path d="M9 13h1"/><path d="M9 17h1"/></svg>
+                        </div>
+                        <div>
+                            <div class="modal-title">Ward & Med Cart</div>
+                            <div class="modal-sub">จัดการข้อมูล Ward แผนก จำนวนเตียง และรถเข็นยาที่เชื่อมต่อ</div>
+                            <div class="modal-chips" id="wmChips"></div>
+                        </div>
+                    </div>
+                    <button class="modal-close" onclick="closeWardModal()" aria-label="ปิด">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    </button>
+                </div>
+                <div class="modal-tabs">
+                    <button class="modal-tab active" data-wm-tab="ward" onclick="wmSetTab('ward')">Ward</button>
+                    <button class="modal-tab" data-wm-tab="cart" onclick="wmSetTab('cart')">Med Cart</button>
+                </div>
+            </div>
+            <div class="modal-body" id="wardModalBody"></div>
+            <div class="modal-foot">
+                <button class="btn" onclick="closeWardModal()">ปิด</button>
+                <button class="btn primary" style="border-color:#99F6E4;color:#0F766E;background:linear-gradient(135deg,#F0FDFA,#ECFDF5);" onclick="saveWardModal()">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+                    บันทึกข้อมูล
+                </button>
+            </div>
+        </div>
+    </div>
+
     <div class="toast" id="toast"></div>
 
     <script>
@@ -646,6 +784,10 @@
             }
             if (moduleId === 'users') {
                 openPermPanel();
+                return;
+            }
+            if (moduleId === 'wards') {
+                openWardModal();
                 return;
             }
             showToast('เปิดเมนูระบบหลังบ้าน: ' + (labels[moduleId] || 'Demo'));
@@ -906,6 +1048,366 @@
             setTimeout(function(){ showToast(''); }, 1800);
         }
 
+        /* ══════════════════════════════════════════
+           WARD & MED CART MANAGEMENT
+        ══════════════════════════════════════════ */
+        var WM_COLORS = ['#0D9488','#3B82F6','#EC4899','#A855F7','#14B8A6','#F59E0B','#06B6D4','#EF4444','#DC2626','#94A3B8'];
+
+        var WM_WARDS = [
+            { id:'ww1',  name:'Ward 3A',  dept:'หอผู้ป่วยอายุรกรรม',  floor:'3', bedsTotal:30, bedsOcc:24, patients:8,  status:'active',   color:'#0D9488', cartId:'wc1'  },
+            { id:'ww2',  name:'Ward 3B',  dept:'ศัลยกรรมชาย',          floor:'3', bedsTotal:30, bedsOcc:28, patients:26, status:'active',   color:'#3B82F6', cartId:'wc2'  },
+            { id:'ww3',  name:'Ward 4A',  dept:'กุมารเวชกรรม',          floor:'4', bedsTotal:20, bedsOcc:18, patients:15, status:'active',   color:'#EC4899', cartId:'wc3'  },
+            { id:'ww4',  name:'Ward 4B',  dept:'สูติ-นรีเวชกรรม',       floor:'4', bedsTotal:25, bedsOcc:22, patients:20, status:'active',   color:'#A855F7', cartId:'wc4'  },
+            { id:'ww5',  name:'Ward 5A',  dept:'ออร์โธปิดิกส์',          floor:'5', bedsTotal:30, bedsOcc:24, patients:22, status:'active',   color:'#14B8A6', cartId:'wc5'  },
+            { id:'ww6',  name:'Ward 5B',  dept:'อายุรกรรมชาย',          floor:'5', bedsTotal:30, bedsOcc:29, patients:29, status:'active',   color:'#F59E0B', cartId:'wc6'  },
+            { id:'ww7',  name:'Ward 6A',  dept:'จักษุวิทยา',             floor:'6', bedsTotal:15, bedsOcc:10, patients:8,  status:'active',   color:'#06B6D4', cartId:'wc7'  },
+            { id:'ww8',  name:'Ward 7A',  dept:'โสต ศอ นาสิก',           floor:'7', bedsTotal:20, bedsOcc:12, patients:10, status:'active',   color:'#0D9488', cartId:'wc8'  },
+            { id:'ww9',  name:'ICU',      dept:'ผู้ป่วยวิกฤต',           floor:'2', bedsTotal:10, bedsOcc:8,  patients:8,  status:'active',   color:'#EF4444', cartId:'wc9'  },
+            { id:'ww10', name:'ER',       dept:'ห้องฉุกเฉิน',            floor:'1', bedsTotal:20, bedsOcc:14, patients:11, status:'active',   color:'#DC2626', cartId:'wc10' },
+            { id:'ww11', name:'Ward 8A',  dept:'ปิดปรับปรุง',            floor:'8', bedsTotal:30, bedsOcc:0,  patients:0,  status:'inactive', color:'#94A3B8', cartId:null   }
+        ];
+
+        var WM_CARTS = [
+            { id:'wc1',  name:'Med Cart A-1',   code:'A-1',   wardId:'ww1',  drawers:6, cassettes:36, status:'active',      lastSync:'08:45' },
+            { id:'wc2',  name:'Med Cart A-2',   code:'A-2',   wardId:'ww2',  drawers:6, cassettes:36, status:'active',      lastSync:'09:12' },
+            { id:'wc3',  name:'Med Cart B-1',   code:'B-1',   wardId:'ww3',  drawers:6, cassettes:36, status:'active',      lastSync:'09:30' },
+            { id:'wc4',  name:'Med Cart B-2',   code:'B-2',   wardId:'ww4',  drawers:6, cassettes:36, status:'active',      lastSync:'08:55' },
+            { id:'wc5',  name:'Med Cart C-1',   code:'C-1',   wardId:'ww5',  drawers:6, cassettes:36, status:'active',      lastSync:'07:30' },
+            { id:'wc6',  name:'Med Cart C-2',   code:'C-2',   wardId:'ww6',  drawers:6, cassettes:36, status:'maintenance', lastSync:'วานนี้' },
+            { id:'wc7',  name:'Med Cart D-1',   code:'D-1',   wardId:'ww7',  drawers:4, cassettes:24, status:'active',      lastSync:'10:05' },
+            { id:'wc8',  name:'Med Cart D-2',   code:'D-2',   wardId:'ww8',  drawers:4, cassettes:24, status:'active',      lastSync:'09:45' },
+            { id:'wc9',  name:'Med Cart ICU-1', code:'ICU-1', wardId:'ww9',  drawers:6, cassettes:36, status:'active',      lastSync:'10:15' },
+            { id:'wc10', name:'Med Cart ER-1',  code:'ER-1',  wardId:'ww10', drawers:6, cassettes:36, status:'active',      lastSync:'10:20' }
+        ];
+
+        var wmTab = 'ward';
+        var wmSelectedWard = WM_WARDS[0].id;
+        var wmSelectedCart = WM_CARTS[0].id;
+        var wmDirty = {};  /* track edited field values { wardId: {field:val} } */
+
+        function wmGetField(itemId, field, defaultVal) {
+            return wmDirty[itemId] && wmDirty[itemId][field] !== undefined
+                ? wmDirty[itemId][field]
+                : defaultVal;
+        }
+        function wmSetField(itemId, field, val) {
+            if (!wmDirty[itemId]) wmDirty[itemId] = {};
+            wmDirty[itemId][field] = val;
+            wmRender();
+            /* re-focus the changed input */
+            var el = document.querySelector('[data-wm-field="'+field+'"]');
+            if (el && el !== document.activeElement) { /* keep focus */ }
+        }
+        function wmSelectWard(id) { wmSelectedWard = id; wmRender(); }
+        function wmSelectCart(id) { wmSelectedCart = id; wmRender(); }
+        function wmSetTab(tab) {
+            wmTab = tab;
+            document.querySelectorAll('[data-wm-tab]').forEach(function(el){
+                el.classList.toggle('active', el.dataset.wmTab === tab);
+            });
+            wmRender();
+        }
+        function wmSetStatus(itemId, field, val) {
+            if (!wmDirty[itemId]) wmDirty[itemId] = {};
+            wmDirty[itemId][field] = val;
+            wmRender();
+        }
+        function wmSetColor(wardId, color) {
+            if (!wmDirty[wardId]) wmDirty[wardId] = {};
+            wmDirty[wardId].color = color;
+            wmRender();
+        }
+
+        function wmStatusLabel(s) {
+            return { active:'ใช้งาน', inactive:'ปิดใช้งาน', maintenance:'ซ่อมบำรุง' }[s] || s;
+        }
+        function wmStatusDot(s) {
+            return '<span class="wm-status-dot '+(s||'inactive')+'"></span>';
+        }
+
+        /* ── Ward Tab ── */
+        function wmRenderWardTab() {
+            /* Left list */
+            var items = WM_WARDS.map(function(w) {
+                var name  = wmGetField(w.id, 'name',  w.name);
+                var dept  = wmGetField(w.id, 'dept',  w.dept);
+                var floor = wmGetField(w.id, 'floor', w.floor);
+                var color = wmGetField(w.id, 'color', w.color);
+                var status= wmGetField(w.id, 'status',w.status);
+                var sel = wmSelectedWard === w.id;
+                var cart = WM_CARTS.find(function(c){ return c.id === w.cartId; });
+                return '<div class="wm-item'+(sel?' selected':'')+'" onclick="wmSelectWard(\''+w.id+'\')">'
+                    + '<div class="wm-item-dot" style="background:'+escHtml(color)+';"></div>'
+                    + '<div class="wm-item-info">'
+                    + '<div class="wm-item-name">'+escHtml(name)+'</div>'
+                    + '<div class="wm-item-sub">'+escHtml(dept)+' · ชั้น '+escHtml(floor)+(cart?' · '+escHtml(cart.name):'')+'</div>'
+                    + '</div>'
+                    + wmStatusDot(status)
+                    + '</div>';
+            }).join('');
+
+            var left = '<div class="wm-md-left">'
+                + '<div class="wm-left-head"><span class="wm-left-title">'+WM_WARDS.length+' Ward</span>'
+                + '<button class="wm-add-btn" title="เพิ่ม Ward">+</button></div>'
+                + '<div class="wm-item-list">'+items+'</div>'
+                + '</div>';
+
+            /* Right detail */
+            var ward = WM_WARDS.find(function(w){ return w.id === wmSelectedWard; });
+            var right;
+            if (!ward) {
+                right = '<div class="wm-md-right"><div class="wm-empty">'
+                    + '<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#E2E8F0" stroke-width="1.5"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/></svg>'
+                    + '<div>เลือก Ward ทางซ้าย</div></div></div>';
+            } else {
+                var name   = wmGetField(ward.id,'name',   ward.name);
+                var dept   = wmGetField(ward.id,'dept',   ward.dept);
+                var floor  = wmGetField(ward.id,'floor',  ward.floor);
+                var total  = wmGetField(ward.id,'bedsTotal',ward.bedsTotal);
+                var color  = wmGetField(ward.id,'color',  ward.color);
+                var status = wmGetField(ward.id,'status', ward.status);
+                var cart   = WM_CARTS.find(function(c){ return c.id === ward.cartId; });
+                var occPct = ward.bedsTotal > 0 ? Math.round(ward.bedsOcc/ward.bedsTotal*100) : 0;
+                var occColor = occPct >= 95 ? '#EF4444' : occPct >= 80 ? '#F59E0B' : '#10B981';
+
+                /* Color picker */
+                var colorPicker = WM_COLORS.map(function(c) {
+                    return '<div class="wm-color-swatch'+(color===c?' selected':'')+'" style="background:'+c+';" onclick="wmSetColor(\''+ward.id+'\',\''+c+'\')"></div>';
+                }).join('');
+
+                /* Status options */
+                var statusOpts = ['active','maintenance','inactive'].map(function(s) {
+                    var labels = {active:'ใช้งาน',maintenance:'ซ่อมบำรุง',inactive:'ปิดใช้งาน'};
+                    return '<div class="wm-status-opt'+(status===s?' '+s:'')+'" onclick="wmSetStatus(\''+ward.id+'\',\'status\',\''+s+'\')">'
+                        + '<div class="wm-status-dot '+s+'"></div>'+escHtml(labels[s])+'</div>';
+                }).join('');
+
+                /* Cart select */
+                var cartOptions = '<option value="">— ไม่มีรถเข็น —</option>'
+                    + WM_CARTS.map(function(c){
+                        return '<option value="'+c.id+'"'+(ward.cartId===c.id?' selected':'')+'>'+escHtml(c.name)+'</option>';
+                    }).join('');
+
+                right = '<div class="wm-md-right"><div class="wm-form-wrap">'
+                    /* Hero */
+                    + '<div class="wm-form-hero">'
+                    + '<div class="wm-form-avatar" style="background:'+escHtml(color)+';min-width:50px;">'+escHtml(name.slice(0,2))+'</div>'
+                    + '<div><div class="wm-form-hero-name">'+escHtml(name)+'</div>'
+                    + '<div class="wm-form-hero-sub">ชั้น '+escHtml(String(floor))+' · '+escHtml(dept)+'</div></div>'
+                    + '</div>'
+
+                    /* Stats */
+                    + '<div class="wm-stat-row">'
+                    + '<div class="wm-stat-card"><div class="wm-stat-val" style="color:'+escHtml(color)+';">'+ward.bedsOcc+'/'+ward.bedsTotal+'</div><div class="wm-stat-lbl">เตียง (ครอง)</div></div>'
+                    + '<div class="wm-stat-card"><div class="wm-stat-val" style="color:'+escHtml(color)+';">'+ward.patients+'</div><div class="wm-stat-lbl">ผู้ป่วยปัจจุบัน</div></div>'
+                    + '<div class="wm-stat-card"><div class="wm-stat-val" style="color:'+escHtml(occColor)+';">'+occPct+'%</div><div class="wm-stat-lbl">Occupancy</div><div class="wm-occ-bar"><div class="wm-occ-fill" style="width:'+occPct+'%;background:'+escHtml(occColor)+'"></div></div></div>'
+                    + '</div>'
+
+                    + '<div class="wm-divider"></div>'
+
+                    /* Basic info */
+                    + '<div class="wm-section-head">ข้อมูลทั่วไป</div>'
+                    + '<div class="wm-field-grid">'
+                    + '<div class="wm-field full"><div class="wm-label">ชื่อ Ward</div><input class="wm-input" data-wm-field="name" value="'+escHtml(name)+'" oninput="if(!wmDirty[\''+ward.id+'\'])wmDirty[\''+ward.id+'\']={}; wmDirty[\''+ward.id+'\'].name=this.value; document.querySelector(\'.wm-form-hero-name\').textContent=this.value || \'—\'; document.querySelector(\'.wm-form-avatar\').textContent=this.value.slice(0,2)||\'W\';"></div>'
+                    + '<div class="wm-field full"><div class="wm-label">แผนก / Department</div><input class="wm-input" data-wm-field="dept" value="'+escHtml(dept)+'" oninput="if(!wmDirty[\''+ward.id+'\'])wmDirty[\''+ward.id+'\']={}; wmDirty[\''+ward.id+'\'].dept=this.value;"></div>'
+                    + '<div class="wm-field"><div class="wm-label">ชั้น</div><input class="wm-input" type="number" min="1" max="20" value="'+escHtml(String(floor))+'" oninput="if(!wmDirty[\''+ward.id+'\'])wmDirty[\''+ward.id+'\']={}; wmDirty[\''+ward.id+'\'].floor=this.value;"></div>'
+                    + '<div class="wm-field"><div class="wm-label">จำนวนเตียงทั้งหมด</div><input class="wm-input" type="number" min="1" max="100" value="'+escHtml(String(total))+'" oninput="if(!wmDirty[\''+ward.id+'\'])wmDirty[\''+ward.id+'\']={}; wmDirty[\''+ward.id+'\'].bedsTotal=this.value;"></div>'
+                    + '</div>'
+
+                    /* Color */
+                    + '<div class="wm-section-head" style="margin-top:16px;">สีประจำ Ward</div>'
+                    + '<div class="wm-color-row">'+colorPicker+'</div>'
+
+                    /* Status */
+                    + '<div class="wm-section-head" style="margin-top:16px;">สถานะ</div>'
+                    + '<div class="wm-status-row">'+statusOpts+'</div>'
+
+                    /* Linked cart */
+                    + '<div class="wm-section-head" style="margin-top:16px;">รถเข็นยาที่เชื่อมต่อ</div>'
+                    + (cart
+                        ? '<div class="wm-cart-link">'
+                        + '<div class="wm-cart-link-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M7 8h10"/><path d="M7 12h10"/></svg></div>'
+                        + '<div style="flex:1;"><div style="font-size:13px;font-weight:800;color:#0F172A;">'+escHtml(cart.name)+'</div>'
+                        + '<div style="font-size:11px;color:#64748B;margin-top:2px;">'+cart.drawers+' Drawer · '+cart.cassettes+' Cassette · ซิงค์ล่าสุด '+escHtml(cart.lastSync)+'</div></div>'
+                        + '<select class="wm-select" style="width:auto;font-size:11px;padding:6px 8px;">'+cartOptions+'</select>'
+                        + '</div>'
+                        : '<select class="wm-select">'+cartOptions+'</select>'
+                    )
+
+                    /* Danger zone */
+                    + '<div class="wm-divider"></div>'
+                    + '<div class="wm-danger-zone">'
+                    + '<div><div class="wm-danger-text">ลบ Ward นี้ออกจากระบบ</div><div style="font-size:10px;color:#94A3B8;margin-top:2px;">การลบจะยกเลิกการเชื่อมต่อรถเข็นยาและผู้ใช้ที่ผูกกับ Ward นี้</div></div>'
+                    + '<button class="wm-danger-btn">ลบ Ward</button>'
+                    + '</div>'
+                    + '</div></div>';
+            }
+
+            return '<div class="wm-md-layout">'+left+right+'</div>';
+        }
+
+        /* ── Cart Tab ── */
+        function wmRenderCartTab() {
+            /* Left list */
+            var items = WM_CARTS.map(function(c) {
+                var name   = wmGetField(c.id,'name',c.name);
+                var status = wmGetField(c.id,'status',c.status);
+                var ward   = WM_WARDS.find(function(w){ return w.id===c.wardId; });
+                var wardColor = ward ? wmGetField(ward.id,'color',ward.color) : '#94A3B8';
+                var sel = wmSelectedCart === c.id;
+                return '<div class="wm-item'+(sel?' selected':'')+'" onclick="wmSelectCart(\''+c.id+'\')">'
+                    + '<div class="wm-item-dot" style="background:'+escHtml(wardColor)+';"></div>'
+                    + '<div class="wm-item-info">'
+                    + '<div class="wm-item-name">'+escHtml(name)+'</div>'
+                    + '<div class="wm-item-sub">'+(ward?escHtml(ward.name)+' · ':'')+c.drawers+'D / '+c.cassettes+'C</div>'
+                    + '</div>'
+                    + wmStatusDot(status)
+                    + '</div>';
+            }).join('');
+
+            var left = '<div class="wm-md-left">'
+                + '<div class="wm-left-head"><span class="wm-left-title">'+WM_CARTS.length+' Med Cart</span>'
+                + '<button class="wm-add-btn" title="เพิ่ม Med Cart">+</button></div>'
+                + '<div class="wm-item-list">'+items+'</div>'
+                + '</div>';
+
+            /* Right detail */
+            var cart = WM_CARTS.find(function(c){ return c.id === wmSelectedCart; });
+            var right;
+            if (!cart) {
+                right = '<div class="wm-md-right"><div class="wm-empty">'
+                    + '<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#E2E8F0" stroke-width="1.5"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M7 8h10"/><path d="M7 12h10"/></svg>'
+                    + '<div>เลือก Med Cart ทางซ้าย</div></div></div>';
+            } else {
+                var cname   = wmGetField(cart.id,'name',   cart.name);
+                var ccode   = wmGetField(cart.id,'code',   cart.code);
+                var cstatus = wmGetField(cart.id,'status', cart.status);
+                var cdrawers= wmGetField(cart.id,'drawers',cart.drawers);
+                var ward    = WM_WARDS.find(function(w){ return w.id===cart.wardId; });
+                var cartColor = ward ? wmGetField(ward.id,'color',ward.color) : '#0D9488';
+
+                /* Ward select */
+                var wardOptions = '<option value="">— ไม่ผูก Ward —</option>'
+                    + WM_WARDS.map(function(w){
+                        return '<option value="'+w.id+'"'+(cart.wardId===w.id?' selected':'')+'>'+escHtml(wmGetField(w.id,'name',w.name))+'</option>';
+                    }).join('');
+
+                /* Drawer options */
+                var drawerOptions = [4,6,8].map(function(n){
+                    return '<option value="'+n+'"'+(cdrawers==n?' selected':'')+'>'+n+' Drawer ('+n*6+' Cassette)</option>';
+                }).join('');
+
+                /* Status */
+                var statusOpts = ['active','maintenance','inactive'].map(function(s) {
+                    var labels = {active:'ใช้งาน',maintenance:'ซ่อมบำรุง',inactive:'ปิดใช้งาน'};
+                    return '<div class="wm-status-opt'+(cstatus===s?' '+s:'')+'" onclick="wmSetStatus(\''+cart.id+'\',\'status\',\''+s+'\')">'
+                        + '<div class="wm-status-dot '+s+'"></div>'+escHtml(labels[s])+'</div>';
+                }).join('');
+
+                right = '<div class="wm-md-right"><div class="wm-form-wrap">'
+                    /* Hero */
+                    + '<div class="wm-form-hero">'
+                    + '<div class="wm-form-avatar" style="background:'+escHtml(cartColor)+';min-width:50px;font-size:14px;">'
+                    + '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M7 8h10"/><path d="M7 12h10"/></svg>'
+                    + '</div>'
+                    + '<div><div class="wm-form-hero-name">'+escHtml(cname)+'</div>'
+                    + '<div class="wm-form-hero-sub">รหัส: '+escHtml(ccode)+' · '+(ward?escHtml(ward.name)+' · ':'')+'ซิงค์ล่าสุด '+escHtml(cart.lastSync)+'</div></div>'
+                    + '</div>'
+
+                    /* Stats */
+                    + '<div class="wm-stat-row">'
+                    + '<div class="wm-stat-card"><div class="wm-stat-val" style="color:'+escHtml(cartColor)+';">'+cdrawers+'</div><div class="wm-stat-lbl">Drawer</div></div>'
+                    + '<div class="wm-stat-card"><div class="wm-stat-val" style="color:'+escHtml(cartColor)+';">'+(cdrawers*6)+'</div><div class="wm-stat-lbl">Cassette ทั้งหมด</div></div>'
+                    + '<div class="wm-stat-card"><div class="wm-stat-val" style="color:'+(cstatus==='active'?'#10B981':cstatus==='maintenance'?'#F59E0B':'#94A3B8')+';">'+wmStatusLabel(cstatus)+'</div><div class="wm-stat-lbl">สถานะ</div></div>'
+                    + '</div>'
+
+                    + '<div class="wm-divider"></div>'
+
+                    /* Fields */
+                    + '<div class="wm-section-head">ข้อมูลรถเข็นยา</div>'
+                    + '<div class="wm-field-grid">'
+                    + '<div class="wm-field"><div class="wm-label">ชื่อรถเข็น</div><input class="wm-input" value="'+escHtml(cname)+'" oninput="if(!wmDirty[\''+cart.id+'\'])wmDirty[\''+cart.id+'\']={}; wmDirty[\''+cart.id+'\'].name=this.value; document.querySelector(\'.wm-form-hero-name\').textContent=this.value;"></div>'
+                    + '<div class="wm-field"><div class="wm-label">รหัสรถเข็น</div><input class="wm-input" value="'+escHtml(ccode)+'" oninput="if(!wmDirty[\''+cart.id+'\'])wmDirty[\''+cart.id+'\']={}; wmDirty[\''+cart.id+'\'].code=this.value;"></div>'
+                    + '<div class="wm-field full"><div class="wm-label">Ward ที่เชื่อมต่อ</div><select class="wm-select">'+wardOptions+'</select></div>'
+                    + '<div class="wm-field full"><div class="wm-label">จำนวน Drawer</div><select class="wm-select" onchange="if(!wmDirty[\''+cart.id+'\'])wmDirty[\''+cart.id+'\']={}; wmDirty[\''+cart.id+'\'].drawers=+this.value; wmRender();">'+drawerOptions+'</select></div>'
+                    + '</div>'
+
+                    /* Status */
+                    + '<div class="wm-section-head" style="margin-top:16px;">สถานะ</div>'
+                    + '<div class="wm-status-row">'+statusOpts+'</div>'
+
+                    /* Drawer map */
+                    + '<div class="wm-section-head" style="margin-top:16px;">แผนผัง Drawer</div>'
+                    + wmRenderDrawerMap(cdrawers, cartColor)
+
+                    /* Danger zone */
+                    + '<div class="wm-divider"></div>'
+                    + '<div class="wm-danger-zone">'
+                    + '<div><div class="wm-danger-text">ลบรถเข็นออกจากระบบ</div><div style="font-size:10px;color:#94A3B8;margin-top:2px;">การลบจะยกเลิกการผูกกับ Ward และ Cassette ทั้งหมด</div></div>'
+                    + '<button class="wm-danger-btn">ลบรถเข็น</button>'
+                    + '</div>'
+                    + '</div></div>';
+            }
+
+            return '<div class="wm-md-layout">'+left+right+'</div>';
+        }
+
+        function wmRenderDrawerMap(drawerCount, color) {
+            var rows = '';
+            for (var d = 1; d <= drawerCount; d++) {
+                var cassettes = '';
+                for (var c = 1; c <= 6; c++) {
+                    cassettes += '<div style="width:28px;height:28px;border-radius:6px;background:white;border:1.5px solid #E2E8F0;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;color:#94A3B8;">'+c+'</div>';
+                }
+                rows += '<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">'
+                    + '<div style="width:28px;height:28px;border-radius:7px;background:'+escHtml(color)+';display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:900;color:white;flex-shrink:0;">'+d+'</div>'
+                    + '<div style="display:flex;gap:5px;flex-wrap:wrap;">'+cassettes+'</div>'
+                    + '</div>';
+            }
+            return '<div style="background:#F8FAFC;border:1px solid #F1F5F9;border-radius:10px;padding:12px;">'+rows+'</div>';
+        }
+
+        function wmRender() {
+            var body = document.getElementById('wardModalBody');
+            var chips = document.getElementById('wmChips');
+            if (!body) return;
+            if (chips) {
+                var activeWards = WM_WARDS.filter(function(w){ return wmGetField(w.id,'status',w.status)==='active'; }).length;
+                var activeCarts = WM_CARTS.filter(function(c){ return wmGetField(c.id,'status',c.status)==='active'; }).length;
+                chips.innerHTML = '<span class="modal-chip"><strong>'+WM_WARDS.length+'</strong> Ward</span>'
+                    + '<span class="modal-chip"><strong>'+WM_CARTS.length+'</strong> Med Cart</span>'
+                    + '<span class="modal-chip"><strong>'+activeWards+'</strong> ใช้งานอยู่</span>';
+            }
+            body.innerHTML = wmTab === 'ward' ? wmRenderWardTab() : wmRenderCartTab();
+        }
+
+        function openWardModal() {
+            wmTab = 'ward';
+            wmSelectedWard = WM_WARDS[0].id;
+            wmSelectedCart = WM_CARTS[0].id;
+            document.querySelectorAll('[data-wm-tab]').forEach(function(el){
+                el.classList.toggle('active', el.dataset.wmTab === 'ward');
+            });
+            wmRender();
+            document.getElementById('wardModal').style.display = 'flex';
+        }
+        function closeWardModal() {
+            document.getElementById('wardModal').style.display = 'none';
+        }
+        function saveWardModal() {
+            /* Apply dirty values back to WM_WARDS / WM_CARTS */
+            WM_WARDS.forEach(function(w) {
+                if (wmDirty[w.id]) Object.assign(w, wmDirty[w.id]);
+            });
+            WM_CARTS.forEach(function(c) {
+                if (wmDirty[c.id]) Object.assign(c, wmDirty[c.id]);
+            });
+            wmDirty = {};
+            closeWardModal();
+            showToast('บันทึก Ward & Med Cart เรียบร้อยแล้ว');
+            setTimeout(function(){ showToast(''); }, 2000);
+        }
+
         function goFrontOffice() {
             let target = sessionStorage.getItem('mcFrontPage') || 'pg-dashboard';
             if (target === 'pg-backoffice') target = 'pg-dashboard';
@@ -913,7 +1415,10 @@
         }
 
         document.addEventListener('keydown', function(event) {
-            if (event.key === 'Escape') closePermModal();
+            if (event.key === 'Escape') {
+                closePermModal();
+                closeWardModal();
+            }
         });
 
         tick();
