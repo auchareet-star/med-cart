@@ -1,0 +1,1468 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ระบบหลังบ้าน | Med Cart</title>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --green:#0D9488;
+            --green-dark:#0F766E;
+            --text-1:#0F172A;
+            --text-2:#64748B;
+            --text-3:#94A3B8;
+            --border:#E2E8F0;
+            --bg:#F8FAFC;
+        }
+        body {
+            min-height: 100vh;
+            font-family: 'Prompt','Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+            color: var(--text-1);
+            background:
+                radial-gradient(circle at 10% 8%, rgba(13,148,136,0.16), transparent 30%),
+                radial-gradient(circle at 88% 4%, rgba(37,99,235,0.14), transparent 32%),
+                linear-gradient(160deg,#F8FAFC 0%,#EEF6F4 48%,#F8FAFC 100%);
+            overflow-x: hidden;
+        }
+        button { font-family: inherit; }
+        .topbar {
+            height: 68px;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 18px;
+            padding: 0 28px;
+            background: rgba(255,255,255,0.9);
+            border-bottom: 1px solid rgba(226,232,240,0.8);
+            backdrop-filter: blur(20px) saturate(160%);
+            box-shadow: 0 1px 0 rgba(15,23,42,0.03), 0 10px 28px rgba(15,23,42,0.05);
+        }
+        .brand { display:flex; align-items:center; gap:12px; min-width:0; }
+        .brand-icon {
+            width: 42px; height: 42px; border-radius: 15px;
+            display:flex; align-items:center; justify-content:center;
+            color:white; background:linear-gradient(135deg,var(--green-dark),#14B8A6);
+            box-shadow:0 12px 24px rgba(13,148,136,0.22);
+            flex-shrink:0;
+        }
+        .brand-title { font-size:16px; font-weight:900; letter-spacing:-.03em; line-height:1.1; }
+        .brand-sub { font-size:10.5px; color:var(--text-3); margin-top:3px; font-weight:700; }
+        .top-scope { display:flex; align-items:center; gap:8px; flex-wrap:wrap; justify-content:center; }
+        .scope-chip {
+            display:inline-flex; align-items:center; gap:7px;
+            border:1px solid #CCFBF1; background:#F0FDFA; color:#0F766E;
+            border-radius:999px; padding:7px 12px; font-size:11px; font-weight:850;
+            white-space:nowrap;
+        }
+        .top-actions { display:flex; align-items:center; gap:9px; justify-content:flex-end; }
+        .time-card {
+            text-align:right; padding:7px 11px; border:1px solid var(--border);
+            border-radius:14px; background:white;
+        }
+        .time { font-family:'Inter',sans-serif; font-weight:800; font-size:15px; line-height:1; }
+        .date { font-size:9px; color:var(--text-3); margin-top:4px; white-space:nowrap; }
+        .btn {
+            border:1px solid var(--border); border-radius:14px; padding:10px 14px;
+            background:white; color:var(--text-2); font-size:12px; font-weight:850;
+            cursor:pointer; display:inline-flex; align-items:center; gap:8px;
+            transition:transform .16s, box-shadow .16s, border-color .16s, background .16s;
+        }
+        .btn:hover { transform:translateY(-1px); box-shadow:0 10px 24px rgba(15,23,42,0.08); border-color:#CBD5E1; }
+        .btn.primary { border-color:#99F6E4; color:#0F766E; background:linear-gradient(135deg,#F0FDFA,#ECFDF5); }
+        .bo-body { padding: 28px; }
+        .bo-inner { max-width:1180px; margin:0 auto; display:flex; flex-direction:column; gap:18px; }
+        .bo-hero {
+            display:grid; grid-template-columns:minmax(0,1fr) 320px; gap:18px;
+            background:linear-gradient(135deg,#0F766E,#0D9488 55%,#14B8A6);
+            border-radius:30px; padding:26px; color:white; position:relative; overflow:hidden;
+            box-shadow:0 22px 58px rgba(13,148,136,0.22);
+        }
+        .bo-hero::after {
+            content:''; position:absolute; width:260px; height:260px; border-radius:50%;
+            background:rgba(255,255,255,0.09); right:-84px; top:-112px;
+        }
+        .bo-kicker { font-size:10px; font-weight:950; letter-spacing:.18em; text-transform:uppercase; opacity:.68; }
+        .bo-title { font-size:30px; font-weight:950; letter-spacing:-.06em; margin-top:6px; }
+        .bo-sub { font-size:13px; line-height:1.7; opacity:.78; max-width:650px; margin-top:8px; }
+        .chip-row { display:flex; gap:8px; flex-wrap:wrap; margin-top:16px; }
+        .bo-chip {
+            font-size:9.5px; font-weight:900; border-radius:999px; padding:5px 10px;
+            background:white; border:1px solid var(--bo-border,#E2E8F0);
+            color:var(--bo-color,#0D9488);
+        }
+        .bo-hero .bo-chip { background:rgba(255,255,255,0.16); border-color:rgba(255,255,255,0.26); color:white; }
+        .bo-hero-card {
+            background:rgba(255,255,255,0.14); border:1px solid rgba(255,255,255,0.24);
+            border-radius:22px; padding:18px; backdrop-filter:blur(12px); position:relative; z-index:1;
+        }
+        .bo-hero-card .label { font-size:10px; font-weight:850; opacity:.7; text-transform:uppercase; letter-spacing:.12em; }
+        .bo-hero-card .value { font-size:20px; font-weight:950; margin-top:6px; }
+        .bo-hero-card .note { font-size:12px; line-height:1.6; opacity:.75; margin-top:10px; }
+        .bo-stat-grid { display:grid; grid-template-columns:repeat(6,minmax(0,1fr)); gap:12px; }
+        .bo-stat {
+            background:white; border:1px solid #E2E8F0; border-radius:20px; padding:16px;
+            box-shadow:0 8px 24px rgba(15,23,42,0.05); min-height:104px; position:relative; overflow:hidden;
+        }
+        .bo-stat::before { content:''; position:absolute; inset:0 auto 0 0; width:4px; background:var(--bo-accent,#0D9488); }
+        .bo-stat-num { font-size:28px; font-weight:950; color:var(--bo-accent,#0D9488); line-height:1; }
+        .bo-stat-label { font-size:11px; color:#334155; font-weight:850; margin-top:10px; }
+        .bo-stat-sub { font-size:9.5px; color:#94A3B8; font-weight:650; margin-top:4px; line-height:1.35; }
+        .bo-grid { display:grid; grid-template-columns:1.3fr .7fr; gap:18px; align-items:start; }
+        .bo-panel { background:white; border:1px solid #E2E8F0; border-radius:26px; padding:18px; box-shadow:0 10px 30px rgba(15,23,42,0.06); }
+        .bo-panel-head { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:14px; }
+        .bo-panel-title { font-size:15px; font-weight:950; color:#0F172A; }
+        .bo-panel-sub { font-size:11px; color:#94A3B8; font-weight:700; margin-top:2px; }
+        .bo-mod-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+        .bo-module {
+            border:1.5px solid var(--bo-border,#E2E8F0); background:linear-gradient(135deg,var(--bo-bg,#F8FAFC),#fff);
+            border-radius:20px; padding:16px; min-height:154px; display:flex; flex-direction:column; gap:12px;
+            cursor:pointer; transition:transform .16s, box-shadow .16s, border-color .16s; text-align:left;
+        }
+        .bo-module:hover { transform:translateY(-2px); box-shadow:0 14px 34px rgba(15,23,42,0.08); border-color:var(--bo-color,#0D9488); }
+        .bo-module.locked { opacity:.62; }
+        .bo-module-top { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; }
+        .bo-module-icon {
+            width:42px; height:42px; border-radius:15px; display:flex; align-items:center; justify-content:center;
+            color:white; background:linear-gradient(135deg,var(--bo-color,#0D9488),var(--bo-color2,#14B8A6));
+            box-shadow:0 8px 18px rgba(13,148,136,0.18);
+        }
+        .bo-module-title { font-size:14px; font-weight:950; color:#0F172A; }
+        .bo-module-desc { font-size:11px; color:#64748B; line-height:1.55; font-weight:650; }
+        .bo-module-foot { margin-top:auto; display:flex; align-items:center; justify-content:space-between; gap:8px; }
+        .bo-timeline { display:flex; flex-direction:column; gap:10px; }
+        .bo-log { display:flex; align-items:flex-start; gap:10px; padding:12px; background:#F8FAFC; border:1px solid #E2E8F0; border-radius:16px; }
+        .bo-log-dot { width:10px; height:10px; border-radius:50%; background:var(--bo-color,#0D9488); margin-top:5px; flex-shrink:0; box-shadow:0 0 0 4px var(--bo-bg,#F0FDFA); }
+        .bo-log-title { font-size:12px; font-weight:900; color:#0F172A; }
+        .bo-log-sub { font-size:10px; color:#64748B; font-weight:650; margin-top:2px; line-height:1.4; }
+        .toast {
+            position:fixed; left:50%; bottom:28px; transform:translateX(-50%) translateY(20px);
+            background:#0F172A; color:white; padding:12px 18px; border-radius:999px;
+            font-size:12px; font-weight:800; opacity:0; pointer-events:none;
+            transition:all .22s ease; z-index:10080; box-shadow:0 16px 38px rgba(15,23,42,0.26);
+        }
+        .toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+        /* ── PERMISSION MODAL ──────────────────────── */
+        .modal-backdrop {
+            display:none; position:fixed; inset:0; z-index:10050;
+            align-items:center; justify-content:center;
+            background:rgba(15,23,42,0.5); backdrop-filter:blur(10px); padding:20px;
+        }
+        .modal-card {
+            width:100%; max-width:780px; height:88vh; max-height:88vh; overflow:hidden;
+            display:flex; flex-direction:column;
+            background:white; border-radius:24px; box-shadow:0 32px 80px rgba(0,0,0,0.28);
+        }
+
+        /* Header */
+        .modal-head {
+            position:relative; overflow:hidden;
+            background:linear-gradient(135deg,#4C1D95 0%,#7C3AED 55%,#8B5CF6 100%);
+            color:white; flex-shrink:0;
+        }
+        .modal-head::before {
+            content:''; position:absolute; width:300px; height:300px; border-radius:50%;
+            background:rgba(255,255,255,0.07); top:-120px; right:-60px; pointer-events:none;
+        }
+        .modal-head::after {
+            content:''; position:absolute; width:160px; height:160px; border-radius:50%;
+            background:rgba(255,255,255,0.05); bottom:-60px; left:60px; pointer-events:none;
+        }
+        .modal-head-top {
+            position:relative; z-index:1;
+            padding:22px 24px 16px; display:flex; align-items:flex-start;
+            justify-content:space-between; gap:12px;
+        }
+        .modal-head-left { display:flex; align-items:center; gap:14px; }
+        .modal-head-icon {
+            width:46px; height:46px; border-radius:14px; flex-shrink:0;
+            background:rgba(255,255,255,0.18); display:flex; align-items:center; justify-content:center;
+        }
+        .modal-title { font-size:19px; font-weight:900; letter-spacing:-.3px; }
+        .modal-sub { font-size:12px; opacity:.7; margin-top:3px; }
+        .modal-chips { display:flex; gap:8px; margin-top:9px; }
+        .modal-chip {
+            background:rgba(255,255,255,0.16); border:1px solid rgba(255,255,255,0.25);
+            border-radius:999px; padding:4px 11px; font-size:11px; font-weight:700;
+        }
+        .modal-chip strong { font-weight:900; margin-right:2px; }
+        .modal-close {
+            width:34px; height:34px; border:1px solid rgba(255,255,255,0.28); border-radius:10px;
+            background:rgba(255,255,255,0.12); color:white; cursor:pointer;
+            display:flex; align-items:center; justify-content:center; flex-shrink:0;
+            transition:background .15s;
+        }
+        .modal-close:hover { background:rgba(255,255,255,0.24); }
+
+        /* Tabs inside header */
+        .modal-tabs {
+            position:relative; z-index:1;
+            display:flex; padding:0 24px;
+            border-top:1px solid rgba(255,255,255,0.14);
+        }
+        .modal-tab {
+            padding:12px 18px; font-size:13px; font-weight:800; cursor:pointer;
+            border:none; background:transparent; color:rgba(255,255,255,0.55);
+            font-family:'Prompt',sans-serif; border-bottom:3px solid transparent;
+            transition:color .18s, border-color .18s;
+        }
+        .modal-tab.active { color:white; border-bottom-color:white; }
+        .modal-tab:hover:not(.active) { color:rgba(255,255,255,0.82); }
+
+        /* Body */
+        .modal-body { flex:1; overflow:hidden; padding:0; min-height:1px; }
+
+        /* ── ROLE PERMISSION MATRIX (Tab 1) ───── */
+        .pm-matrix-wrap { overflow-x:auto; }
+        .pm-matrix { width:100%; border-collapse:collapse; min-width:420px; }
+        .pm-matrix thead th {
+            padding:14px 10px 12px; font-size:11px; font-weight:800; color:#64748B;
+            text-align:center; border-bottom:2px solid #F1F5F9;
+            background:white; position:sticky; top:0; z-index:2;
+        }
+        .pm-matrix thead th.pm-col-left { text-align:left; padding-left:20px; min-width:190px; }
+        .pm-matrix tbody tr:hover td { background:#FAFBFE; }
+        .pm-matrix tbody td {
+            padding:11px 10px; border-bottom:1px solid #F8FAFC;
+            vertical-align:middle; text-align:center;
+        }
+        .pm-matrix tbody td.pm-col-left { text-align:left; padding-left:20px; padding-right:12px; }
+        .pm-matrix tbody tr:last-child td { border-bottom:none; }
+        .pm-role-col-head { display:flex; flex-direction:column; align-items:center; gap:5px; }
+        .pm-role-col-icon { width:32px; height:32px; border-radius:10px; margin-bottom:1px; display:flex; align-items:center; justify-content:center; }
+        .pm-role-col-count { font-size:10px; font-weight:800; border-radius:999px; padding:2px 9px; }
+        .pm-perm-icon { width:30px; height:30px; border-radius:8px; flex-shrink:0; display:flex; align-items:center; justify-content:center; }
+        .pm-perm-name { font-size:13px; font-weight:800; color:#0F172A; }
+        .pm-perm-desc { font-size:11px; color:#94A3B8; margin-top:1px; }
+
+        /* Toggle switch */
+        .pm-toggle { position:relative; width:44px; height:26px; flex-shrink:0; display:inline-block; cursor:pointer; }
+        .pm-toggle-track { position:absolute; inset:0; border-radius:999px; background:#CBD5E1; transition:background .2s; }
+        .pm-toggle-knob { position:absolute; top:3px; left:3px; width:20px; height:20px; border-radius:50%; background:white; box-shadow:0 1px 4px rgba(0,0,0,0.22); transition:transform .2s; }
+        .pm-toggle.on .pm-toggle-track { background:linear-gradient(135deg,#059669,#10B981); }
+        .pm-toggle.on .pm-toggle-knob { transform:translateX(18px); }
+
+        /* ── MASTER-DETAIL LAYOUT (Tab 2) ── */
+        .pm-md-layout { display:flex; height:100%; }
+        /* Left panel — user list */
+        .pm-md-left {
+            width:220px; flex-shrink:0; display:flex; flex-direction:column;
+            border-right:1.5px solid #F1F5F9; overflow:hidden;
+        }
+        .pm-md-search { padding:10px 12px; border-bottom:1px solid #F1F5F9; flex-shrink:0; }
+        .pm-md-search-wrap { position:relative; }
+        .pm-md-search-icon { position:absolute; left:9px; top:50%; transform:translateY(-50%); color:#94A3B8; pointer-events:none; }
+        .pm-md-search-input { width:100%; padding:7px 28px 7px 30px; border:1.5px solid #E2E8F0; border-radius:9px; font-family:'Prompt',sans-serif; font-size:11px; background:#F8FAFC; color:#0F172A; outline:none; transition:border-color .15s; }
+        .pm-md-search-input:focus { border-color:#A78BFA; background:white; }
+        .pm-md-clear { position:absolute; right:8px; top:50%; transform:translateY(-50%); border:none; background:none; cursor:pointer; color:#94A3B8; font-size:15px; line-height:1; padding:0; }
+        .pm-rf-bar { display:flex; gap:4px; padding:6px 12px 10px; flex-wrap:wrap; flex-shrink:0; border-bottom:1px solid #F1F5F9; }
+        .pm-rf-chip { border:1.5px solid #E2E8F0; border-radius:999px; padding:4px 10px; font-family:'Prompt',sans-serif; font-size:10px; font-weight:800; cursor:pointer; background:white; color:#64748B; transition:all .12s; white-space:nowrap; }
+        .pm-rf-chip.active { border-color:#C4B5FD; color:#6D28D9; background:#F5F3FF; }
+        .pm-user-list { flex:1; overflow-y:auto; }
+        .pm-user-item {
+            display:flex; align-items:center; gap:9px; padding:10px 12px;
+            cursor:pointer; transition:background .1s; border-bottom:1px solid #F8FAFC; user-select:none;
+        }
+        .pm-user-item:hover { background:#F8FAFC; }
+        .pm-user-item.selected { background:#F5F3FF; border-left:3px solid #7C3AED; padding-left:9px; }
+        .pm-ov-count { font-size:9px; font-weight:900; border-radius:999px; padding:2px 6px; background:#EDE9FE; color:#6D28D9; white-space:nowrap; flex-shrink:0; }
+        /* Right panel — permission detail */
+        .pm-md-right { flex:1; overflow-y:auto; min-width:0; display:flex; flex-direction:column; }
+        .pm-detail-empty {
+            flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center;
+            color:#94A3B8; font-size:13px; text-align:center; gap:10px; padding:32px;
+        }
+        .pm-detail-header { padding:16px 20px 14px; border-bottom:2px solid #F1F5F9; flex-shrink:0; }
+        .pm-detail-perm-row {
+            display:flex; align-items:center; gap:12px; padding:13px 20px;
+            border-bottom:1px solid #F8FAFC; transition:background .1s;
+        }
+        .pm-detail-perm-row:last-child { border-bottom:none; }
+        .pm-detail-perm-row.overridden { background:#FFFBEB; }
+        .pm-detail-perm-row:hover { background:#FAFBFE; }
+        .pm-detail-perm-row.overridden:hover { background:#FEF9C3; }
+        .pm-pov-icon { width:30px; height:30px; border-radius:9px; flex-shrink:0; display:flex; align-items:center; justify-content:center; }
+        .pm-pov-info { flex:1; min-width:0; }
+        .pm-pov-name { font-size:12px; font-weight:800; color:#0F172A; }
+        .pm-pov-desc { font-size:10px; color:#94A3B8; margin-top:1px; }
+        /* 3-way segmented control */
+        .pm-seg3 { display:flex; border:1.5px solid #E2E8F0; border-radius:10px; overflow:hidden; flex-shrink:0; }
+        .pm-seg3-btn {
+            border:none; padding:7px 11px; font-family:'Prompt',sans-serif;
+            font-size:11px; font-weight:800; cursor:pointer; color:#94A3B8;
+            background:transparent; transition:all .13s; white-space:nowrap;
+        }
+        .pm-seg3-btn + .pm-seg3-btn { border-left:1.5px solid #E2E8F0; }
+        .pm-seg3-btn.s-role    { background:#F1F5F9; color:#475569; }
+        .pm-seg3-btn.s-include { background:#D1FAE5; color:#047857; }
+        .pm-seg3-btn.s-exclude { background:#FEE2E2; color:#B91C1C; }
+        /* Shared */
+        .pm-avatar { width:36px; height:36px; border-radius:10px; flex-shrink:0; display:flex; align-items:center; justify-content:center; color:white; font-size:12px; font-weight:900; }
+        .pm-user-name { font-size:12px; font-weight:800; color:#0F172A; }
+        .pm-user-meta { font-size:10px; color:#94A3B8; margin-top:1px; }
+        .pm-role-pill { display:inline-block; border-radius:999px; padding:2px 8px; font-size:10px; font-weight:800; }
+        .pm-no-results { padding:28px 12px; text-align:center; color:#94A3B8; font-size:12px; line-height:1.7; }
+
+        /* Foot */
+        .modal-foot {
+            padding:14px 24px; border-top:1px solid #F1F5F9;
+            display:flex; gap:10px; flex-shrink:0;
+        }
+        .modal-foot button { flex:1; justify-content:center; }
+        /* ── WARD & MED CART MODAL ─────────────── */
+        .wm-md-layout { display:flex; height:100%; min-height:0; }
+        .wm-md-left {
+            width:240px; height:100%; flex-shrink:0; display:flex; flex-direction:column;
+            border-right:1.5px solid #F1F5F9; overflow:hidden;
+        }
+        .wm-left-head {
+            padding:12px 14px; border-bottom:1px solid #F1F5F9;
+            display:flex; align-items:center; justify-content:space-between; flex-shrink:0;
+        }
+        .wm-left-title { font-size:11px; font-weight:900; color:#64748B; text-transform:uppercase; letter-spacing:.08em; }
+        .wm-add-btn {
+            width:26px; height:26px; border-radius:8px;
+            background:linear-gradient(135deg,#0D9488,#14B8A6);
+            color:white; border:none; cursor:pointer; font-size:18px; line-height:1;
+            display:flex; align-items:center; justify-content:center;
+            transition:transform .15s, box-shadow .15s;
+        }
+        .wm-add-btn:hover { transform:scale(1.1); box-shadow:0 4px 12px rgba(13,148,136,0.3); }
+        .wm-item-list { flex:1; overflow-y:auto; min-height:0; }
+        .wm-item {
+            display:flex; align-items:center; gap:10px;
+            padding:10px 14px; cursor:pointer; border-bottom:1px solid #F8FAFC;
+            transition:background .1s; position:relative;
+        }
+        .wm-item:hover { background:#F8FAFC; }
+        .wm-item.selected { background:#F0FDF9; border-left:3px solid #0D9488; padding-left:11px; }
+        .wm-item-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+        .wm-item-info { flex:1; min-width:0; }
+        .wm-item-name { font-size:12px; font-weight:800; color:#0F172A; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+        .wm-item-sub  { font-size:10px; color:#94A3B8; margin-top:1px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+        .wm-status-dot { width:7px; height:7px; border-radius:50%; flex-shrink:0; }
+        .wm-status-dot.active      { background:#10B981; }
+        .wm-status-dot.inactive    { background:#CBD5E1; }
+        .wm-status-dot.maintenance { background:#F59E0B; }
+
+        /* Right panel — form */
+        .wm-md-right { flex:1; overflow-y:auto; min-width:0; min-height:0; display:flex; flex-direction:column; }
+        .wm-empty {
+            flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center;
+            color:#94A3B8; font-size:13px; text-align:center; gap:10px; padding:32px;
+        }
+        .wm-form-wrap { padding:20px 24px; display:flex; flex-direction:column; gap:0; }
+        .wm-form-hero {
+            display:flex; align-items:center; gap:14px; margin-bottom:20px;
+            padding-bottom:18px; border-bottom:2px solid #F1F5F9;
+        }
+        .wm-form-avatar {
+            width:50px; height:50px; border-radius:15px; flex-shrink:0;
+            display:flex; align-items:center; justify-content:center;
+            font-size:18px; font-weight:900; color:white;
+        }
+        .wm-form-hero-name { font-size:17px; font-weight:900; color:#0F172A; }
+        .wm-form-hero-sub  { font-size:12px; color:#94A3B8; margin-top:3px; }
+        .wm-section-head { font-size:10px; font-weight:900; color:#94A3B8; text-transform:uppercase; letter-spacing:.1em; margin-bottom:10px; margin-top:18px; }
+        .wm-section-head:first-child { margin-top:0; }
+        .wm-field-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+        .wm-field { display:flex; flex-direction:column; gap:5px; }
+        .wm-field.full { grid-column:1/-1; }
+        .wm-label { font-size:10px; font-weight:800; color:#475569; text-transform:uppercase; letter-spacing:.06em; }
+        .wm-input, .wm-select {
+            border:1.5px solid #E2E8F0; border-radius:10px; padding:9px 12px;
+            font-family:'Prompt',sans-serif; font-size:13px; font-weight:600; color:#0F172A;
+            background:white; outline:none; transition:border-color .15s, box-shadow .15s;
+            width:100%;
+        }
+        .wm-input:focus, .wm-select:focus { border-color:#0D9488; box-shadow:0 0 0 3px rgba(13,148,136,0.1); }
+        .wm-input[readonly] { background:#F8FAFC; color:#64748B; cursor:default; }
+        .wm-select { cursor:pointer; }
+        .wm-status-row { display:flex; gap:8px; }
+        .wm-status-opt {
+            flex:1; display:flex; align-items:center; justify-content:center; gap:6px;
+            border:1.5px solid #E2E8F0; border-radius:10px; padding:9px 8px;
+            cursor:pointer; font-size:11px; font-weight:800; color:#64748B;
+            transition:all .15s;
+        }
+        .wm-status-opt.active   { border-color:#10B981; background:#F0FDF4; color:#047857; }
+        .wm-status-opt.maintenance { border-color:#F59E0B; background:#FFFBEB; color:#92400E; }
+        .wm-status-opt.inactive { border-color:#94A3B8; background:#F8FAFC; color:#475569; }
+        .wm-occ-bar { height:7px; background:#F1F5F9; border-radius:999px; overflow:hidden; margin-top:4px; }
+        .wm-occ-fill { height:100%; border-radius:999px; transition:width .4s; }
+        .wm-color-row { display:flex; gap:8px; flex-wrap:wrap; }
+        .wm-color-swatch {
+            width:28px; height:28px; border-radius:8px; cursor:pointer;
+            border:2px solid transparent; transition:transform .15s, border-color .15s;
+        }
+        .wm-color-swatch:hover { transform:scale(1.15); }
+        .wm-color-swatch.selected { border-color:#0F172A; transform:scale(1.1); }
+        .wm-cart-link {
+            display:flex; align-items:center; gap:10px; padding:10px 12px;
+            background:#F0FDF9; border:1.5px solid #99F6E4; border-radius:12px; margin-top:4px;
+        }
+        .wm-cart-link-icon { width:30px; height:30px; border-radius:8px; background:#0D9488; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+        .wm-divider { height:1px; background:#F1F5F9; margin:18px 0; }
+        .wm-stat-row { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
+        .wm-stat-card { background:#F8FAFC; border:1px solid #F1F5F9; border-radius:10px; padding:10px 12px; }
+        .wm-stat-val { font-size:20px; font-weight:900; color:#0F172A; line-height:1; }
+        .wm-stat-lbl { font-size:10px; color:#94A3B8; font-weight:700; margin-top:4px; }
+        .wm-danger-zone { margin-top:4px; padding:12px; background:#FFF1F2; border:1px solid #FECDD3; border-radius:10px; display:flex; align-items:center; justify-content:space-between; gap:12px; }
+        .wm-danger-text { font-size:11px; color:#BE123C; font-weight:700; }
+        .wm-danger-btn { border:1.5px solid #FECDD3; background:white; color:#BE123C; border-radius:8px; padding:6px 12px; font-size:11px; font-weight:800; cursor:pointer; font-family:'Prompt',sans-serif; transition:all .15s; }
+        .wm-danger-btn:hover { background:#FFF1F2; border-color:#FB7185; }
+
+        @media (max-width: 980px) {
+            .topbar { height:auto; padding:14px 18px; align-items:flex-start; flex-direction:column; }
+            .top-scope { justify-content:flex-start; }
+            .top-actions { width:100%; justify-content:space-between; }
+            .bo-hero, .bo-grid { grid-template-columns:1fr; }
+            .bo-stat-grid { grid-template-columns:repeat(3,minmax(0,1fr)); }
+        }
+        @media (max-width: 640px) {
+            .bo-body { padding:16px; }
+            .bo-stat-grid, .bo-mod-grid { grid-template-columns:1fr; }
+            .bo-title { font-size:24px; }
+            .time-card { display:none; }
+        }
+    </style>
+</head>
+<body>
+    <header class="topbar">
+        <div class="brand">
+            <div class="brand-icon">
+                <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M4 4h16v6H4z"/><path d="M4 14h7v6H4z"/><path d="M15 14h5v6h-5z"/></svg>
+            </div>
+            <div>
+                <div class="brand-title">ระบบหลังบ้าน</div>
+                <div class="brand-sub">Backoffice Control · Med Cart</div>
+            </div>
+        </div>
+        <div class="top-scope">
+            <span class="scope-chip" id="topRole">หัวหน้าเวร</span>
+            <span class="scope-chip" id="topWard">Ward 3A</span>
+            <span class="scope-chip" id="topCart">Med Cart A-1</span>
+        </div>
+        <div class="top-actions">
+            <div class="time-card"><div class="time" id="clock">--:--</div><div class="date" id="dateStr">--</div></div>
+            <button class="btn primary" onclick="goFrontOffice()">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+                กลับหน้าบ้าน
+            </button>
+        </div>
+    </header>
+
+    <main class="bo-body">
+        <div class="bo-inner">
+            <section class="bo-hero">
+                <div style="position:relative;z-index:1;">
+                    <div class="bo-kicker">Backoffice Control</div>
+                    <div class="bo-title">ระบบหลังบ้าน</div>
+                    <div class="bo-sub" id="boHeroSub">จัดการข้อมูลตั้งต้น สิทธิ์การใช้งาน รถเข็นยา และรายงานของ Ward ปัจจุบัน</div>
+                    <div class="chip-row">
+                        <span class="bo-chip" id="boRoleBadge">หัวหน้าเวร</span>
+                        <span class="bo-chip" id="boWardBadge">Ward 3A</span>
+                    </div>
+                </div>
+                <aside class="bo-hero-card">
+                    <div class="label">Current Scope</div>
+                    <div class="value" id="boCartScope">Med Cart A-1</div>
+                    <div class="note" id="boAccessNote">เลือกเมนูเพื่อเข้าสู่ระบบหลังบ้านแบบ Demo</div>
+                </aside>
+            </section>
+
+            <section class="bo-stat-grid" id="boStatGrid"></section>
+
+            <section class="bo-grid">
+                <div class="bo-panel">
+                    <div class="bo-panel-head">
+                        <div>
+                            <div class="bo-panel-title">เมนูระบบหลังบ้าน</div>
+                            <div class="bo-panel-sub">แยกไฟล์จากหน้าบ้านแล้ว เปิดทำงานเป็น Backoffice HTML</div>
+                        </div>
+                        <span class="bo-chip" id="boModeChip">Supervisor mode</span>
+                    </div>
+                    <div class="bo-mod-grid" id="boModuleGrid"></div>
+                </div>
+
+                <aside class="bo-panel">
+                    <div class="bo-panel-head">
+                        <div>
+                            <div class="bo-panel-title">System Activity</div>
+                            <div class="bo-panel-sub">สถานะล่าสุดของ Ward/Cart ปัจจุบัน</div>
+                        </div>
+                    </div>
+                    <div class="bo-timeline" id="boTimeline"></div>
+                </aside>
+            </section>
+        </div>
+    </main>
+
+    <div class="modal-backdrop" id="permModal" onclick="if(event.target===this) closePermModal()">
+        <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="permModalTitle">
+            <div class="modal-head">
+                <div class="modal-head-top">
+                    <div class="modal-head-left">
+                        <div class="modal-head-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/><path d="M9 12l2 2 4-4" stroke-width="2.2"/></svg>
+                        </div>
+                        <div>
+                            <div id="permModalTitle" class="modal-title">ตั้งค่าสิทธิ์การใช้งาน</div>
+                            <div class="modal-sub">กำหนดสิทธิ์ตาม Role แล้วตั้งข้อยกเว้นรายบุคคลเมื่อจำเป็น</div>
+                            <div class="modal-chips" id="pmChips"></div>
+                        </div>
+                    </div>
+                    <button class="modal-close" onclick="closePermModal()" aria-label="ปิด">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    </button>
+                </div>
+                <div class="modal-tabs">
+                    <button class="modal-tab active" data-tab="role" onclick="pmSetTab('role')">สิทธิ์ตาม Role</button>
+                    <button class="modal-tab" data-tab="user" onclick="pmSetTab('user')">สิทธิ์ตามผู้ใช้</button>
+                </div>
+            </div>
+            <div class="modal-body" id="permModalBody"></div>
+            <div class="modal-foot">
+                <button class="btn" onclick="closePermModal()">ยกเลิก</button>
+                <button class="btn primary" onclick="savePermModal()">บันทึกสิทธิ์</button>
+            </div>
+        </div>
+    </div>
+    <!-- Ward & Med Cart Modal -->
+    <div class="modal-backdrop" id="wardModal" onclick="if(event.target===this) closeWardModal()">
+        <div class="modal-card" style="max-width:820px;" role="dialog" aria-modal="true">
+            <div class="modal-head" style="background:linear-gradient(135deg,#065F46 0%,#0D9488 55%,#14B8A6 100%);">
+                <div class="modal-head-top">
+                    <div class="modal-head-left">
+                        <div class="modal-head-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/><path d="M9 9h1"/><path d="M9 13h1"/><path d="M9 17h1"/></svg>
+                        </div>
+                        <div>
+                            <div class="modal-title">Ward & Med Cart</div>
+                            <div class="modal-sub">จัดการข้อมูล Ward แผนก จำนวนเตียง และรถเข็นยาที่เชื่อมต่อ</div>
+                            <div class="modal-chips" id="wmChips"></div>
+                        </div>
+                    </div>
+                    <button class="modal-close" onclick="closeWardModal()" aria-label="ปิด">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    </button>
+                </div>
+                <div class="modal-tabs">
+                    <button class="modal-tab active" data-wm-tab="ward" onclick="wmSetTab('ward')">Ward</button>
+                    <button class="modal-tab" data-wm-tab="cart" onclick="wmSetTab('cart')">Med Cart</button>
+                </div>
+            </div>
+            <div class="modal-body" id="wardModalBody"></div>
+            <div class="modal-foot">
+                <button class="btn" onclick="closeWardModal()">ปิด</button>
+                <button class="btn primary" style="border-color:#99F6E4;color:#0F766E;background:linear-gradient(135deg,#F0FDFA,#ECFDF5);" onclick="saveWardModal()">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+                    บันทึกข้อมูล
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+        const DEFAULT_DEMO_WARD = 'Ward 3A';
+        const STANDARD_CART_DRAWERS = 6;
+        const STANDARD_CART_CASSETTES = 36;
+        const CASSETTE_LOCK_STORE = 'mcCassetteModeLocks';
+        const CASSETTE_COMPLETED_STORE = 'mcCassetteModeCompleted';
+
+        const wardInfo = {
+            'Ward 3A': { desc:'หอผู้ป่วยอายุรกรรม', floor:'ชั้น 3', beds:'24/30 เตียง', patients:'8 ผู้ป่วย', cart:'Med Cart A-1' },
+            'Ward 3B': { desc:'ศัลยกรรมชาย', floor:'ชั้น 3', beds:'28/30 เตียง', patients:'26 ผู้ป่วย', cart:'Med Cart A-2' },
+            'Ward 4A': { desc:'กุมารเวชกรรม', floor:'ชั้น 4', beds:'18/20 เตียง', patients:'15 ผู้ป่วย', cart:'Med Cart B-1' },
+            'Ward 4B': { desc:'สูติ-นรีเวชกรรม', floor:'ชั้น 4', beds:'22/25 เตียง', patients:'20 ผู้ป่วย', cart:'Med Cart B-2' },
+            'Ward 5A': { desc:'ออร์โธปิดิกส์', floor:'ชั้น 5', beds:'24/30 เตียง', patients:'22 ผู้ป่วย', cart:'Med Cart C-1' },
+            'Ward 5B': { desc:'อายุรกรรมชาย', floor:'ชั้น 5', beds:'29/30 เตียง', patients:'29 ผู้ป่วย', cart:'Med Cart C-2' },
+            'Ward 6A': { desc:'จักษุวิทยา', floor:'ชั้น 6', beds:'10/15 เตียง', patients:'8 ผู้ป่วย', cart:'Med Cart D-1' },
+            'Ward 7A': { desc:'โสต ศอ นาสิก', floor:'ชั้น 7', beds:'12/20 เตียง', patients:'10 ผู้ป่วย', cart:'Med Cart D-2' },
+            'ICU': { desc:'ผู้ป่วยวิกฤต', floor:'ชั้น 2', beds:'8/10 เตียง', patients:'8 ผู้ป่วย', cart:'Med Cart ICU-1' },
+            'ER': { desc:'ห้องฉุกเฉิน', floor:'ชั้น 1', beds:'14/20 เตียง', patients:'11 ผู้ป่วย', cart:'Med Cart ER-1' }
+        };
+
+        const wardMetricOverrides = {
+            'Ward 3A': { total:22, done:3, pending:19, highAlert:3, prn:2, drugMaster:17 },
+            'Ward 5A': { total:69, done:8, pending:61, highAlert:12, prn:11, drugMaster:14 }
+        };
+
+        function escHtml(value) {
+            return String(value ?? '').replace(/[&<>"']/g, function(ch) {
+                return ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' })[ch];
+            });
+        }
+
+        function tick() {
+            const now = new Date();
+            document.getElementById('clock').textContent = now.toLocaleTimeString('th-TH', { hour:'2-digit', minute:'2-digit', second:'2-digit' });
+            document.getElementById('dateStr').textContent = now.toLocaleDateString('th-TH', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+        }
+
+        function parseStore(key) {
+            try { return JSON.parse(sessionStorage.getItem(key) || '{}') || {}; } catch (e) { return {}; }
+        }
+
+        function getRole() {
+            return sessionStorage.getItem('mcRole') || 'nurse';
+        }
+
+        function getRoleText() {
+            const saved = sessionStorage.getItem('mcRoleText');
+            const map = { nurse:'พยาบาล', pharma:'เภสัชกร', doctor:'แพทย์', super:'หัวหน้าเวร' };
+            return saved || map[getRole()] || 'ผู้ใช้งาน';
+        }
+
+        function getWardName() {
+            const ward = sessionStorage.getItem('mcWard') || DEFAULT_DEMO_WARD;
+            return wardInfo[ward] ? ward : DEFAULT_DEMO_WARD;
+        }
+
+        function getCurrentWardInfo() {
+            return wardInfo[getWardName()] || wardInfo[DEFAULT_DEMO_WARD];
+        }
+
+        function ptdCassetteKey(drawer, cassette) {
+            return drawer + ':' + cassette;
+        }
+
+        function getCassetteState() {
+            const wardName = getWardName();
+            const locks = Object.values(parseStore(CASSETTE_LOCK_STORE)).filter(function(lock) {
+                return !lock.ward || lock.ward === wardName;
+            });
+            const completed = Object.values(parseStore(CASSETTE_COMPLETED_STORE)).filter(function(lock) {
+                return !lock.ward || lock.ward === wardName;
+            });
+            const unique = {};
+            locks.concat(completed).forEach(function(lock) {
+                const drawer = parseInt(lock.drawer, 10) || 0;
+                const cassette = parseInt(lock.cassette, 10) || 0;
+                if (!drawer || !cassette) return;
+                unique[ptdCassetteKey(drawer, cassette)] = lock;
+            });
+            const usedLocks = Object.values(unique);
+            const usedDrawerMap = {};
+            usedLocks.forEach(function(lock) {
+                if (lock.drawer) usedDrawerMap[lock.drawer] = true;
+            });
+            return {
+                drawers: STANDARD_CART_DRAWERS,
+                total: STANDARD_CART_CASSETTES,
+                perDrawer: STANDARD_CART_CASSETTES / STANDARD_CART_DRAWERS,
+                usedCassettes: usedLocks.length,
+                usedDrawers: Object.keys(usedDrawerMap).length,
+                completed: completed.length,
+                locks: locks,
+                completedLocks: completed
+            };
+        }
+
+        function getDashboardMetrics() {
+            const wardName = getWardName();
+            const info = getCurrentWardInfo();
+            const patients = parseInt(String(info.patients || '').replace(/[^\d]/g, ''), 10) || 0;
+            const fallback = {
+                total: Math.max(patients * 3, 0),
+                done: Math.max(Math.round(patients * 0.35), 0),
+                highAlert: Math.max(Math.round(patients * 0.25), 0),
+                prn: Math.max(Math.round(patients * 0.18), 0),
+                drugMaster: Math.max(12, Math.round(patients * 0.7))
+            };
+            fallback.pending = Math.max(fallback.total - fallback.done, 0);
+            return Object.assign(fallback, wardMetricOverrides[wardName] || {});
+        }
+
+        function backofficeIconSvg(type) {
+            const icons = {
+                users:'<path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/>',
+                wards:'<path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/><path d="M9 9h1"/><path d="M9 13h1"/><path d="M9 17h1"/>',
+                drug:'<path d="M10.5 20.5l10-10a4.95 4.95 0 00-7-7l-10 10a4.95 4.95 0 007 7z"/><path d="M8.5 8.5l7 7"/>',
+                cassette:'<rect x="3" y="4" width="18" height="16" rx="3"/><path d="M7 8h10"/><path d="M7 12h4"/><path d="M13 12h4"/><path d="M7 16h10"/>',
+                reports:'<path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/>',
+                integration:'<path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/>'
+            };
+            return '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">' + (icons[type] || icons.reports) + '</svg>';
+        }
+
+        function renderBackoffice() {
+            const role = getRole();
+            const roleText = getRoleText();
+            const canEdit = role === 'super';
+            const wardName = getWardName();
+            const info = getCurrentWardInfo();
+            const metrics = getDashboardMetrics();
+            const state = getCassetteState();
+            const cartName = info.cart || 'Med Cart A-1';
+            const wardCount = Object.keys(wardInfo).length;
+
+            document.getElementById('topRole').textContent = roleText;
+            document.getElementById('topWard').textContent = wardName;
+            document.getElementById('topCart').textContent = cartName;
+            document.getElementById('boHeroSub').textContent = 'จัดการข้อมูลตั้งต้นของ ' + wardName + ' · ' + info.desc + ' และรถเข็นยาที่กำลังใช้งาน';
+            document.getElementById('boRoleBadge').textContent = roleText + (canEdit ? ' · แก้ไขได้' : ' · ดูอย่างเดียว');
+            document.getElementById('boWardBadge').textContent = wardName;
+            document.getElementById('boCartScope').textContent = cartName + ' · ' + wardName;
+            document.getElementById('boAccessNote').textContent = canEdit
+                ? 'สิทธิ์หัวหน้าเวรสามารถเปิดตั้งค่าสิทธิ์และจำลองการจัดการข้อมูลหลังบ้านได้'
+                : 'Role นี้เข้าดูโครงสร้างระบบหลังบ้านเพื่อ Demo ได้ แต่เมนูตั้งค่าบางส่วนถูกล็อกไว้';
+            document.getElementById('boModeChip').textContent = canEdit ? 'Admin mode' : 'Read-only demo';
+
+            const stats = [
+                { val: wardCount, label:'Ward', sub:'ตั้งค่าพื้นที่ใช้งาน', color:'#0D9488' },
+                { val: wardCount, label:'Med Cart', sub:'รถเข็นในระบบ', color:'#2563EB' },
+                { val: 3, label:'Roles', sub:'Nurse / Pharma / Supervisor', color:'#7C3AED' },
+                { val: state.total, label:'Cassette', sub: state.drawers + ' Drawer · ' + state.perDrawer + ' ช่อง/Drawer', color:'#E11D48' },
+                { val: metrics.drugMaster, label:'Drug Master', sub:'รายการยาที่พบใน Ward', color:'#D97706' },
+                { val: metrics.total, label:'MAR Items', sub: metrics.pending + ' รายการรอจ่าย', color:'#0F766E' }
+            ];
+            document.getElementById('boStatGrid').innerHTML = stats.map(function(item) {
+                return '<div class="bo-stat" style="--bo-accent:' + item.color + ';">'
+                    + '<div class="bo-stat-num">' + escHtml(item.val) + '</div>'
+                    + '<div class="bo-stat-label">' + escHtml(item.label) + '</div>'
+                    + '<div class="bo-stat-sub">' + escHtml(item.sub) + '</div>'
+                    + '</div>';
+            }).join('');
+
+            const modules = [
+                { id:'users', type:'users', title:'ผู้ใช้งานและสิทธิ์', desc:'จัดการ role, permission และสิทธิ์การเข้าถึงเมนู Demo', color:'#7C3AED', color2:'#A78BFA', bg:'#F5F3FF', border:'#DDD6FE', locked:!canEdit },
+                { id:'wards', type:'wards', title:'Ward & Med Cart', desc:'กำหนด Ward, รถเข็น, Drawer และ Cassette ของพื้นที่ใช้งาน', color:'#0D9488', color2:'#14B8A6', bg:'#F0FDFA', border:'#99F6E4', locked:false },
+                { id:'drug-master', type:'drug', title:'Medication Master', desc:'ตั้งค่ารายการยา High Alert และคู่ Drug Interaction', color:'#2563EB', color2:'#60A5FA', bg:'#EFF6FF', border:'#BFDBFE', locked:!canEdit },
+                { id:'cassette', type:'cassette', title:'Cassette Template', desc:'ดูโครงสร้างมาตรฐาน 6 Drawer / 36 Cassette และสถานะใช้งาน', color:'#E11D48', color2:'#FB7185', bg:'#FFF1F2', border:'#FECDD3', locked:false },
+                { id:'reports', type:'reports', title:'รายงานและ Audit Log', desc:'ดู activity, MAR summary และสถานะการจัด/จ่ายยา', color:'#D97706', color2:'#F59E0B', bg:'#FFFBEB', border:'#FDE68A', locked:false },
+                { id:'integration', type:'integration', title:'HIS / MAR Sync', desc:'จำลองการเชื่อมต่อคำสั่งยาและข้อมูลผู้ป่วยจากระบบโรงพยาบาล', color:'#475569', color2:'#94A3B8', bg:'#F8FAFC', border:'#CBD5E1', locked:!canEdit }
+            ];
+            document.getElementById('boModuleGrid').innerHTML = modules.map(function(mod) {
+                return '<button class="bo-module' + (mod.locked ? ' locked' : '') + '" onclick="openBackofficeModule(\'' + escHtml(mod.id) + '\')"'
+                    + ' style="--bo-color:' + mod.color + ';--bo-color2:' + mod.color2 + ';--bo-bg:' + mod.bg + ';--bo-border:' + mod.border + ';">'
+                    + '<div class="bo-module-top"><div class="bo-module-icon">' + backofficeIconSvg(mod.type) + '</div><span class="bo-chip" style="--bo-color:' + mod.color + ';--bo-border:' + mod.border + ';">' + (mod.locked ? 'Locked' : 'Open') + '</span></div>'
+                    + '<div><div class="bo-module-title">' + escHtml(mod.title) + '</div><div class="bo-module-desc">' + escHtml(mod.desc) + '</div></div>'
+                    + '<div class="bo-module-foot"><span style="font-size:10px;color:#94A3B8;font-weight:800;">' + escHtml(canEdit || !mod.locked ? 'พร้อมใช้งาน' : 'ต้องใช้สิทธิ์หัวหน้าเวร') + '</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="' + mod.color + '" stroke-width="2.4"><path d="M5 12h14"/><path d="M13 5l7 7-7 7"/></svg></div>'
+                    + '</button>';
+            }).join('');
+
+            const logs = [
+                { title:'Ward scope', sub: wardName + ' · ' + info.desc, color:'#0D9488', bg:'#F0FDFA' },
+                { title:'Cart profile', sub: cartName + ' · ' + state.drawers + ' Drawer / ' + state.total + ' Cassette', color:'#2563EB', bg:'#EFF6FF' },
+                { title:'Cassette usage', sub: state.usedCassettes + '/' + state.total + ' ช่องใช้งานอยู่ · ' + state.completed + ' ช่องเติมยาเรียบร้อยแล้ว', color:'#E11D48', bg:'#FFF1F2' },
+                { title:'MAR workload', sub: metrics.done + '/' + metrics.total + ' จ่ายแล้ว · ' + metrics.highAlert + ' High Alert · ' + metrics.prn + ' PRN', color:'#D97706', bg:'#FFFBEB' }
+            ];
+            document.getElementById('boTimeline').innerHTML = logs.map(function(log) {
+                return '<div class="bo-log" style="--bo-color:' + log.color + ';--bo-bg:' + log.bg + ';">'
+                    + '<div class="bo-log-dot"></div><div><div class="bo-log-title">' + escHtml(log.title) + '</div><div class="bo-log-sub">' + escHtml(log.sub) + '</div></div>'
+                    + '</div>';
+            }).join('');
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message || '';
+            toast.classList.toggle('show', !!message);
+        }
+
+        function openBackofficeModule(moduleId) {
+            const labels = {
+                users:'ผู้ใช้งานและสิทธิ์',
+                wards:'Ward & Med Cart',
+                'drug-master':'Medication Master',
+                cassette:'Cassette Template',
+                reports:'รายงานและ Audit Log',
+                integration:'HIS / MAR Sync'
+            };
+            const restricted = ['users','drug-master','integration'];
+            if (restricted.includes(moduleId) && getRole() !== 'super') {
+                showToast('Role นี้ดูระบบหลังบ้านได้ แต่ไม่มีสิทธิ์แก้ไขเมนูนี้');
+                setTimeout(function(){ showToast(''); }, 2200);
+                return;
+            }
+            if (moduleId === 'users') {
+                openPermPanel();
+                return;
+            }
+            if (moduleId === 'wards') {
+                openWardModal();
+                return;
+            }
+            showToast('เปิดเมนูระบบหลังบ้าน: ' + (labels[moduleId] || 'Demo'));
+            setTimeout(function(){ showToast(''); }, 1800);
+        }
+
+        /* ── PERMISSION PANEL DATA ─────────────── */
+        var PM_DEFS = [
+            { key:'dashboard', label:'Dashboard',        desc:'ดูภาพรวม Ward และรถเข็น',              bg:'#EDE9FE', stroke:'#7C3AED' },
+            { key:'dispense',  label:'จ่ายยา',           desc:'Routine / STAT / PRN / High Alert',    bg:'#CCFBF1', stroke:'#0D9488' },
+            { key:'prep',      label:'จัดยา',            desc:'จัดตามผู้ป่วย / ตามยา / ตามรอบ',      bg:'#DBEAFE', stroke:'#2563EB' },
+            { key:'assess',    label:'ประเมินหลังให้ยา', desc:'Post-medication assessment',           bg:'#D1FAE5', stroke:'#059669' },
+            { key:'backoffice',label:'หลังบ้าน',         desc:'เข้า Backoffice hub',                  bg:'#EDE9FE', stroke:'#7C3AED' },
+            { key:'userAdmin', label:'ตั้งค่าสิทธิ์',   desc:'จัดการ Role และ User override',        bg:'#FEE2E2', stroke:'#DC2626' },
+            { key:'reports',   label:'รายงาน',           desc:'Audit log และ MAR summary',            bg:'#E0F2FE', stroke:'#0369A1' }
+        ];
+        var PM_ROLES = {
+            nurse: { label:'พยาบาล', en:'Registered Nurse',       color:'#0D9488', bg:'#CCFBF1' },
+            pharma:{ label:'เภสัชกร', en:'Pharmacist',            color:'#2563EB', bg:'#DBEAFE' },
+            super: { label:'หัวหน้าเวร', en:'Charge Nurse / Supervisor', color:'#7C3AED', bg:'#EDE9FE' }
+        };
+        var PM_USERS = [
+            { id:'u1', name:'นส.ปราณี หัวหน้าเวร', role:'super', ward:'Ward 5A', code:'EMP-5012' },
+            { id:'u2', name:'นส.สมใจ ดีมาก',       role:'nurse', ward:'Ward 5A', code:'EMP-1042' },
+            { id:'u3', name:'นส.นรินทร์ เวรดึก',    role:'nurse', ward:'Ward 3A', code:'EMP-1188' },
+            { id:'u4', name:'ภญ.วิภา เจริญยา',      role:'pharma',ward:'Ward 3A', code:'EMP-2201' },
+            { id:'u5', name:'ภก.ถนอม มั่นคง',       role:'pharma',ward:'Ward 5A', code:'EMP-2308' }
+        ];
+        var pmRolePerms = {
+            nurse: { dashboard:true,  dispense:true,  prep:true,  assess:true,  backoffice:false, userAdmin:false, reports:false },
+            pharma:{ dashboard:true,  dispense:false, prep:true,  assess:false, backoffice:false, userAdmin:false, reports:true  },
+            super: { dashboard:true,  dispense:true,  prep:true,  assess:true,  backoffice:true,  userAdmin:true,  reports:true  }
+        };
+        var pmOverrides = {};   /* { userId: { permKey: 'include'|'exclude' } } */
+        var pmTab = 'role';
+        var pmFocusPerm = 'dispense';
+        var pmSearch = '';
+        var pmRoleFilter = '';
+        var pmSelectedUser = null;
+
+        function pmInitials(name) {
+            return String(name||'').replace(/^(นาย|นางสาว|นาง|นส\.|ภญ\.|ภก\.)\s*/,'').replace(/\s+/g,'').slice(0,2)||'US';
+        }
+        function pmEffective(userId, permKey) {
+            var user = PM_USERS.find(function(u){ return u.id===userId; });
+            if (!user) return false;
+            var ov = (pmOverrides[userId]||{})[permKey];
+            if (ov==='include') return true;
+            if (ov==='exclude') return false;
+            return !!(pmRolePerms[user.role]||{})[permKey];
+        }
+        function pmPermIcon(pd) {
+            return '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="'+pd.stroke+'" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'
+                + ({
+                    dashboard: '<rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/>',
+                    dispense:  '<path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2v-4M9 21H5a2 2 0 01-2-2v-4m0 0h18"/>',
+                    prep:      '<path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/>',
+                    assess:    '<path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/>',
+                    backoffice:'<circle cx="12" cy="12" r="3"/><path d="M19.07 4.93A10 10 0 115 5"/>',
+                    userAdmin: '<path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>',
+                    reports:   '<path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>'
+                }[pd.key]||'<circle cx="12" cy="12" r="10"/>')
+                + '</svg>';
+        }
+        function pmRoleIcon(roleKey) {
+            var icons = {
+                nurse:  '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0016.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 002 8.5c0 2.3 1.5 4.05 3 5.5l7 7z"/></svg>',
+                pharma: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>',
+                super:  '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/><path d="M9 12l2 2 4-4"/></svg>'
+            };
+            return icons[roleKey]||'';
+        }
+
+        /* Tab 1 — Permission × Role matrix */
+        function pmRenderRoleTab() {
+            var roleKeys = Object.keys(PM_ROLES);
+            var headCols = roleKeys.map(function(rk) {
+                var meta = PM_ROLES[rk];
+                var count = PM_DEFS.filter(function(pd){ return !!(pmRolePerms[rk]||{})[pd.key]; }).length;
+                return '<th>'
+                    + '<div class="pm-role-col-head">'
+                    + '<div class="pm-role-col-icon" style="background:'+meta.bg+';color:'+meta.color+';">'+pmRoleIcon(rk)+'</div>'
+                    + '<div style="font-size:12px;font-weight:800;color:'+meta.color+';">'+escHtml(meta.label)+'</div>'
+                    + '<span class="pm-role-col-count" style="background:'+meta.bg+';color:'+meta.color+';">'+count+'/'+PM_DEFS.length+'</span>'
+                    + '</div></th>';
+            }).join('');
+            var bodyRows = PM_DEFS.map(function(pd) {
+                var cells = roleKeys.map(function(rk) {
+                    var on = !!(pmRolePerms[rk]||{})[pd.key];
+                    return '<td onclick="pmToggleRole(\''+rk+'\',\''+pd.key+'\')" style="cursor:pointer;">'
+                        + '<div class="pm-toggle '+(on?'on':'')+'">'
+                        + '<div class="pm-toggle-track"></div><div class="pm-toggle-knob"></div>'
+                        + '</div></td>';
+                }).join('');
+                return '<tr>'
+                    + '<td class="pm-col-left">'
+                    + '<div style="display:flex;align-items:center;gap:10px;">'
+                    + '<div class="pm-perm-icon" style="background:'+pd.bg+';">'+pmPermIcon(pd)+'</div>'
+                    + '<div><div class="pm-perm-name">'+escHtml(pd.label)+'</div>'
+                    + '<div class="pm-perm-desc">'+escHtml(pd.desc)+'</div></div>'
+                    + '</div></td>'
+                    + cells + '</tr>';
+            }).join('');
+            return '<div style="overflow-y:auto;height:100%;"><div class="pm-matrix-wrap"><table class="pm-matrix">'
+                + '<thead><tr><th class="pm-col-left">สิทธิ์การใช้งาน</th>'+headCols+'</tr></thead>'
+                + '<tbody>'+bodyRows+'</tbody>'
+                + '</table></div></div>';
+        }
+
+        /* Tab 2 — Master-Detail */
+        function pmSetOv(userId, permKey, mode) {
+            if (!pmOverrides[userId]) pmOverrides[userId]={};
+            if (mode==='inherit') delete pmOverrides[userId][permKey];
+            else pmOverrides[userId][permKey]=mode;
+            if (!Object.keys(pmOverrides[userId]).length) delete pmOverrides[userId];
+            pmRender();
+        }
+        function pmClearUserOv(userId) { delete pmOverrides[userId]; pmRender(); }
+        function pmSetSearch(val) {
+            pmSearch = val; pmRender();
+            var el = document.getElementById('pmMdSearch');
+            if (el) { el.focus(); el.setSelectionRange(val.length, val.length); }
+        }
+        function pmSetRoleFilter(role) { pmRoleFilter = role; pmRender(); }
+        function pmSelectUser(userId) { pmSelectedUser = userId; pmRender(); }
+
+        function pmRenderUserTab() {
+            var q = pmSearch.toLowerCase();
+            var filtered = PM_USERS.filter(function(u) {
+                if (pmRoleFilter && u.role !== pmRoleFilter) return false;
+                if (q && u.name.toLowerCase().indexOf(q) < 0 && u.code.toLowerCase().indexOf(q) < 0) return false;
+                return true;
+            });
+
+            /* ── Left: search + user list ── */
+            var roleChips = [['','ทั้งหมด']].concat(Object.keys(PM_ROLES).map(function(rk){
+                return [rk, PM_ROLES[rk].label];
+            })).map(function(t){
+                return '<button class="pm-rf-chip'+(pmRoleFilter===t[0]?' active':'')+'" onclick="pmSetRoleFilter(\''+t[0]+'\')">'+escHtml(t[1])+'</button>';
+            }).join('');
+
+            var userItems = filtered.length === 0
+                ? '<div class="pm-no-results">ไม่พบผู้ใช้</div>'
+                : filtered.map(function(u) {
+                    var rm = PM_ROLES[u.role]||{color:'#64748B',bg:'#F1F5F9',label:u.role};
+                    var ovCount = Object.keys(pmOverrides[u.id]||{}).length;
+                    var sel = pmSelectedUser === u.id;
+                    return '<div class="pm-user-item'+(sel?' selected':'')+'" onclick="pmSelectUser(\''+u.id+'\')">'
+                        + '<div class="pm-avatar" style="width:34px;height:34px;font-size:11px;border-radius:9px;flex-shrink:0;background:linear-gradient(135deg,'+rm.color+',#A78BFA);">'+escHtml(pmInitials(u.name))+'</div>'
+                        + '<div style="flex:1;min-width:0;">'
+                        + '<div style="font-size:11px;font-weight:800;color:#0F172A;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+escHtml(u.name)+'</div>'
+                        + '<div style="display:flex;gap:4px;align-items:center;margin-top:2px;">'
+                        + '<span class="pm-role-pill" style="background:'+rm.bg+';color:'+rm.color+';">'+escHtml(rm.label)+'</span>'
+                        + (ovCount ? '<span class="pm-ov-count">'+ovCount+'</span>' : '')
+                        + '</div></div>'
+                        + '</div>';
+                }).join('');
+
+            var leftPanel = '<div class="pm-md-left">'
+                + '<div class="pm-md-search"><div class="pm-md-search-wrap">'
+                + '<span class="pm-md-search-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg></span>'
+                + '<input id="pmMdSearch" class="pm-md-search-input" type="text" placeholder="ค้นหา..." value="'+escHtml(pmSearch)+'" oninput="pmSetSearch(this.value)">'
+                + (pmSearch ? '<button class="pm-md-clear" onclick="pmSetSearch(\'\')">×</button>' : '')
+                + '</div></div>'
+                + '<div class="pm-rf-bar">'+roleChips+'</div>'
+                + '<div class="pm-user-list">'+userItems+'</div>'
+                + '</div>';
+
+            /* ── Right: selected user detail ── */
+            var user = pmSelectedUser ? PM_USERS.find(function(u){ return u.id===pmSelectedUser; }) : null;
+            var rightPanel;
+
+            if (!user) {
+                rightPanel = '<div class="pm-md-right"><div class="pm-detail-empty">'
+                    + '<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#E2E8F0" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.58-7 8-7s8 3 8 7"/></svg>'
+                    + '<div style="color:#94A3B8;">เลือกผู้ใช้ทางซ้าย<br><span style="font-size:11px;color:#CBD5E1;">เพื่อจัดการสิทธิ์เฉพาะบุคคล</span></div>'
+                    + '</div></div>';
+            } else {
+                var rm = PM_ROLES[user.role]||{label:user.role,color:'#64748B',bg:'#F1F5F9'};
+                var userOvs = pmOverrides[user.id]||{};
+                var ovTotal = Object.keys(userOvs).length;
+
+                var detailHeader = '<div class="pm-detail-header">'
+                    + '<div style="display:flex;align-items:center;gap:12px;">'
+                    + '<div class="pm-avatar" style="width:46px;height:46px;font-size:15px;border-radius:13px;flex-shrink:0;background:linear-gradient(135deg,'+rm.color+',#A78BFA);">'+escHtml(pmInitials(user.name))+'</div>'
+                    + '<div style="flex:1;min-width:0;">'
+                    + '<div style="font-size:15px;font-weight:900;color:#0F172A;">'+escHtml(user.name)+'</div>'
+                    + '<div style="display:flex;gap:6px;align-items:center;margin-top:5px;flex-wrap:wrap;">'
+                    + '<span class="pm-role-pill" style="background:'+rm.bg+';color:'+rm.color+';font-size:11px;padding:3px 10px;">'+escHtml(rm.label)+'</span>'
+                    + '<span style="font-size:11px;color:#94A3B8;">'+escHtml(user.code)+'</span>'
+                    + '<span style="font-size:11px;color:#94A3B8;">'+escHtml(user.ward)+'</span>'
+                    + (ovTotal ? '<span class="pm-ov-count">'+ovTotal+' override</span>' : '')
+                    + '</div></div>'
+                    + (ovTotal ? '<button onclick="pmClearUserOv(\''+user.id+'\')" style="border:none;background:none;cursor:pointer;font-family:inherit;font-size:11px;font-weight:800;color:#94A3B8;padding:4px 0;white-space:nowrap;display:flex;align-items:center;gap:3px;flex-shrink:0;">ล้างทั้งหมด</button>' : '')
+                    + '</div></div>';
+
+                var permRows = PM_DEFS.map(function(pd) {
+                    var ov = userOvs[pd.key] || 'inherit';
+                    var roleHas = !!(pmRolePerms[user.role]||{})[pd.key];
+                    return '<div class="pm-detail-perm-row'+(ov!=='inherit'?' overridden':'')+'">'
+                        + '<div class="pm-pov-icon" style="background:'+pd.bg+';">'+pmPermIcon(pd)+'</div>'
+                        + '<div class="pm-pov-info">'
+                        + '<div class="pm-pov-name">'+escHtml(pd.label)+'</div>'
+                        + '<div class="pm-pov-desc">'+escHtml(pd.desc)+'</div>'
+                        + '</div>'
+                        + '<div class="pm-seg3">'
+                        + '<button class="pm-seg3-btn'+(ov==='inherit'?' s-role':'')+'" onclick="pmSetOv(\''+user.id+'\',\''+pd.key+'\',\'inherit\')">ตาม Role '+(roleHas?'✓':'✗')+'</button>'
+                        + '<button class="pm-seg3-btn'+(ov==='include'?' s-include':'')+'" onclick="pmSetOv(\''+user.id+'\',\''+pd.key+'\',\'include\')">Include</button>'
+                        + '<button class="pm-seg3-btn'+(ov==='exclude'?' s-exclude':'')+'" onclick="pmSetOv(\''+user.id+'\',\''+pd.key+'\',\'exclude\')">Exclude</button>'
+                        + '</div>'
+                        + '</div>';
+                }).join('');
+
+                rightPanel = '<div class="pm-md-right">'+detailHeader+permRows+'</div>';
+            }
+
+            return '<div class="pm-md-layout">'+leftPanel+rightPanel+'</div>';
+        }
+
+        function pmRender() {
+            var body = document.getElementById('permModalBody');
+            var chips = document.getElementById('pmChips');
+            if (!body) return;
+            var totalOv = Object.keys(pmOverrides).reduce(function(s,uid){ return s+Object.keys(pmOverrides[uid]).length; }, 0);
+            if (chips) {
+                chips.innerHTML = '<span class="modal-chip"><strong>'+Object.keys(PM_ROLES).length+'</strong> Role</span>'
+                    + '<span class="modal-chip"><strong>'+PM_USERS.length+'</strong> User</span>'
+                    + (totalOv?'<span class="modal-chip"><strong>'+totalOv+'</strong> Override</span>':'');
+            }
+            body.innerHTML = pmTab==='role' ? pmRenderRoleTab() : pmRenderUserTab();
+        }
+
+        function pmToggleRole(roleKey, permKey) {
+            if (!pmRolePerms[roleKey]) pmRolePerms[roleKey]={};
+            pmRolePerms[roleKey][permKey] = !pmRolePerms[roleKey][permKey];
+            pmRender();
+        }
+        function pmSetTab(tab) {
+            pmTab=tab; pmSearch=''; pmRoleFilter='';
+            if (tab==='user' && !pmSelectedUser && PM_USERS.length) pmSelectedUser=PM_USERS[0].id;
+            document.querySelectorAll('.modal-tab').forEach(function(el){
+                el.classList.toggle('active', el.dataset.tab===tab);
+            });
+            pmRender();
+        }
+
+        function openPermPanel() {
+            pmTab='role'; pmSearch=''; pmRoleFilter=''; pmSelectedUser=PM_USERS.length?PM_USERS[0].id:null;
+            pmRender();
+            document.getElementById('permModal').style.display = 'flex';
+        }
+        function closePermModal() {
+            document.getElementById('permModal').style.display = 'none';
+        }
+        function savePermModal() {
+            closePermModal();
+            showToast('บันทึกสิทธิ์เรียบร้อยแล้ว');
+            setTimeout(function(){ showToast(''); }, 1800);
+        }
+
+        /* ══════════════════════════════════════════
+           WARD & MED CART MANAGEMENT
+        ══════════════════════════════════════════ */
+        var WM_COLORS = ['#0D9488','#3B82F6','#EC4899','#A855F7','#14B8A6','#F59E0B','#06B6D4','#EF4444','#DC2626','#94A3B8'];
+
+        var WM_WARDS = [
+            { id:'ww1',  name:'Ward 3A',  dept:'หอผู้ป่วยอายุรกรรม',  floor:'3', bedsTotal:30, bedsOcc:24, patients:8,  status:'active',   color:'#0D9488', cartId:'wc1'  },
+            { id:'ww2',  name:'Ward 3B',  dept:'ศัลยกรรมชาย',          floor:'3', bedsTotal:30, bedsOcc:28, patients:26, status:'active',   color:'#3B82F6', cartId:'wc2'  },
+            { id:'ww3',  name:'Ward 4A',  dept:'กุมารเวชกรรม',          floor:'4', bedsTotal:20, bedsOcc:18, patients:15, status:'active',   color:'#EC4899', cartId:'wc3'  },
+            { id:'ww4',  name:'Ward 4B',  dept:'สูติ-นรีเวชกรรม',       floor:'4', bedsTotal:25, bedsOcc:22, patients:20, status:'active',   color:'#A855F7', cartId:'wc4'  },
+            { id:'ww5',  name:'Ward 5A',  dept:'ออร์โธปิดิกส์',          floor:'5', bedsTotal:30, bedsOcc:24, patients:22, status:'active',   color:'#14B8A6', cartId:'wc5'  },
+            { id:'ww6',  name:'Ward 5B',  dept:'อายุรกรรมชาย',          floor:'5', bedsTotal:30, bedsOcc:29, patients:29, status:'active',   color:'#F59E0B', cartId:'wc6'  },
+            { id:'ww7',  name:'Ward 6A',  dept:'จักษุวิทยา',             floor:'6', bedsTotal:15, bedsOcc:10, patients:8,  status:'active',   color:'#06B6D4', cartId:'wc7'  },
+            { id:'ww8',  name:'Ward 7A',  dept:'โสต ศอ นาสิก',           floor:'7', bedsTotal:20, bedsOcc:12, patients:10, status:'active',   color:'#0D9488', cartId:'wc8'  },
+            { id:'ww9',  name:'ICU',      dept:'ผู้ป่วยวิกฤต',           floor:'2', bedsTotal:10, bedsOcc:8,  patients:8,  status:'active',   color:'#EF4444', cartId:'wc9'  },
+            { id:'ww10', name:'ER',       dept:'ห้องฉุกเฉิน',            floor:'1', bedsTotal:20, bedsOcc:14, patients:11, status:'active',   color:'#DC2626', cartId:'wc10' },
+            { id:'ww11', name:'Ward 8A',  dept:'ปิดปรับปรุง',            floor:'8', bedsTotal:30, bedsOcc:0,  patients:0,  status:'inactive', color:'#94A3B8', cartId:null   }
+        ];
+
+        var WM_CARTS = [
+            { id:'wc1',  name:'Med Cart A-1',   code:'A-1',   wardId:'ww1',  drawers:6, cassettes:36, status:'active',      lastSync:'08:45' },
+            { id:'wc2',  name:'Med Cart A-2',   code:'A-2',   wardId:'ww2',  drawers:6, cassettes:36, status:'active',      lastSync:'09:12' },
+            { id:'wc3',  name:'Med Cart B-1',   code:'B-1',   wardId:'ww3',  drawers:6, cassettes:36, status:'active',      lastSync:'09:30' },
+            { id:'wc4',  name:'Med Cart B-2',   code:'B-2',   wardId:'ww4',  drawers:6, cassettes:36, status:'active',      lastSync:'08:55' },
+            { id:'wc5',  name:'Med Cart C-1',   code:'C-1',   wardId:'ww5',  drawers:6, cassettes:36, status:'active',      lastSync:'07:30' },
+            { id:'wc6',  name:'Med Cart C-2',   code:'C-2',   wardId:'ww6',  drawers:6, cassettes:36, status:'maintenance', lastSync:'วานนี้' },
+            { id:'wc7',  name:'Med Cart D-1',   code:'D-1',   wardId:'ww7',  drawers:4, cassettes:24, status:'active',      lastSync:'10:05' },
+            { id:'wc8',  name:'Med Cart D-2',   code:'D-2',   wardId:'ww8',  drawers:4, cassettes:24, status:'active',      lastSync:'09:45' },
+            { id:'wc9',  name:'Med Cart ICU-1', code:'ICU-1', wardId:'ww9',  drawers:6, cassettes:36, status:'active',      lastSync:'10:15' },
+            { id:'wc10', name:'Med Cart ER-1',  code:'ER-1',  wardId:'ww10', drawers:6, cassettes:36, status:'active',      lastSync:'10:20' }
+        ];
+
+        var wmTab = 'ward';
+        var wmSelectedWard = WM_WARDS[0].id;
+        var wmSelectedCart = WM_CARTS[0].id;
+        var wmDirty = {};  /* track edited field values { wardId: {field:val} } */
+
+        function wmGetField(itemId, field, defaultVal) {
+            return wmDirty[itemId] && wmDirty[itemId][field] !== undefined
+                ? wmDirty[itemId][field]
+                : defaultVal;
+        }
+        function wmSetField(itemId, field, val) {
+            if (!wmDirty[itemId]) wmDirty[itemId] = {};
+            wmDirty[itemId][field] = val;
+            wmRender();
+            /* re-focus the changed input */
+            var el = document.querySelector('[data-wm-field="'+field+'"]');
+            if (el && el !== document.activeElement) { /* keep focus */ }
+        }
+        function wmSelectWard(id) { wmSelectedWard = id; wmRender(); }
+        function wmSelectCart(id) { wmSelectedCart = id; wmRender(); }
+        function wmSetTab(tab) {
+            wmTab = tab;
+            document.querySelectorAll('[data-wm-tab]').forEach(function(el){
+                el.classList.toggle('active', el.dataset.wmTab === tab);
+            });
+            wmRender();
+        }
+        function wmSetStatus(itemId, field, val) {
+            if (!wmDirty[itemId]) wmDirty[itemId] = {};
+            wmDirty[itemId][field] = val;
+            wmRender();
+        }
+        function wmSetColor(wardId, color) {
+            if (!wmDirty[wardId]) wmDirty[wardId] = {};
+            wmDirty[wardId].color = color;
+            wmRender();
+        }
+        function wmAddWard() {
+            var nextId = 'ww' + (Math.max(...WM_WARDS.map(function(w){ return parseInt(w.id.slice(2),10)||0; })) + 1);
+            var newWard = {
+                id: nextId,
+                name: 'Ward ใหม่',
+                dept: 'Department',
+                floor: '3',
+                bedsTotal: 20,
+                bedsOcc: 0,
+                patients: 0,
+                status: 'active',
+                color: WM_COLORS[WM_WARDS.length % WM_COLORS.length],
+                cartId: null
+            };
+            WM_WARDS.push(newWard);
+            wmSelectedWard = nextId;
+            wmDirty[nextId] = {};
+            wmRender();
+        }
+        function wmAddCart() {
+            var nextId = 'wc' + (Math.max(...WM_CARTS.map(function(c){ return parseInt(c.id.slice(2),10)||0; })) + 1);
+            var newCart = {
+                id: nextId,
+                name: 'Med Cart ใหม่',
+                code: 'NEW-' + nextId.slice(2),
+                wardId: wmSelectedWard,
+                drawers: 6,
+                cassettes: 36,
+                status: 'active',
+                lastSync: 'เดี๋ยวนี้'
+            };
+            WM_CARTS.push(newCart);
+            wmSelectedCart = nextId;
+            wmDirty[nextId] = {};
+            wmRender();
+        }
+
+        function wmStatusLabel(s) {
+            return { active:'ใช้งาน', inactive:'ปิดใช้งาน', maintenance:'ซ่อมบำรุง' }[s] || s;
+        }
+        function wmStatusDot(s) {
+            return '<span class="wm-status-dot '+(s||'inactive')+'"></span>';
+        }
+
+        /* ── Ward Tab ── */
+        function wmRenderWardTab() {
+            /* Left list */
+            var items = WM_WARDS.map(function(w) {
+                var name  = wmGetField(w.id, 'name',  w.name);
+                var dept  = wmGetField(w.id, 'dept',  w.dept);
+                var floor = wmGetField(w.id, 'floor', w.floor);
+                var color = wmGetField(w.id, 'color', w.color);
+                var status= wmGetField(w.id, 'status',w.status);
+                var sel = wmSelectedWard === w.id;
+                var cart = WM_CARTS.find(function(c){ return c.id === w.cartId; });
+                return '<div class="wm-item'+(sel?' selected':'')+'" onclick="wmSelectWard(\''+w.id+'\')">'
+                    + '<div class="wm-item-dot" style="background:'+escHtml(color)+';"></div>'
+                    + '<div class="wm-item-info">'
+                    + '<div class="wm-item-name">'+escHtml(name)+'</div>'
+                    + '<div class="wm-item-sub">'+escHtml(dept)+' · ชั้น '+escHtml(floor)+(cart?' · '+escHtml(cart.name):'')+'</div>'
+                    + '</div>'
+                    + wmStatusDot(status)
+                    + '</div>';
+            }).join('');
+
+            var left = '<div class="wm-md-left">'
+                + '<div class="wm-left-head"><span class="wm-left-title">'+WM_WARDS.length+' Ward</span>'
+                + '<button class="wm-add-btn" title="เพิ่ม Ward" onclick="wmAddWard()">+</button></div>'
+                + '<div class="wm-item-list">'+items+'</div>'
+                + '</div>';
+
+            /* Right detail */
+            var ward = WM_WARDS.find(function(w){ return w.id === wmSelectedWard; });
+            var right;
+            if (!ward) {
+                right = '<div class="wm-md-right"><div class="wm-empty">'
+                    + '<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#E2E8F0" stroke-width="1.5"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/></svg>'
+                    + '<div>เลือก Ward ทางซ้าย</div></div></div>';
+            } else {
+                var name   = wmGetField(ward.id,'name',   ward.name);
+                var dept   = wmGetField(ward.id,'dept',   ward.dept);
+                var floor  = wmGetField(ward.id,'floor',  ward.floor);
+                var total  = wmGetField(ward.id,'bedsTotal',ward.bedsTotal);
+                var color  = wmGetField(ward.id,'color',  ward.color);
+                var status = wmGetField(ward.id,'status', ward.status);
+                var cart   = WM_CARTS.find(function(c){ return c.id === ward.cartId; });
+                var occPct = ward.bedsTotal > 0 ? Math.round(ward.bedsOcc/ward.bedsTotal*100) : 0;
+                var occColor = occPct >= 95 ? '#EF4444' : occPct >= 80 ? '#F59E0B' : '#10B981';
+
+                /* Color picker */
+                var colorPicker = WM_COLORS.map(function(c) {
+                    return '<div class="wm-color-swatch'+(color===c?' selected':'')+'" style="background:'+c+';" onclick="wmSetColor(\''+ward.id+'\',\''+c+'\')"></div>';
+                }).join('');
+
+                /* Status options */
+                var statusOpts = ['active','maintenance','inactive'].map(function(s) {
+                    var labels = {active:'ใช้งาน',maintenance:'ซ่อมบำรุง',inactive:'ปิดใช้งาน'};
+                    return '<div class="wm-status-opt'+(status===s?' '+s:'')+'" onclick="wmSetStatus(\''+ward.id+'\',\'status\',\''+s+'\')">'
+                        + '<div class="wm-status-dot '+s+'"></div>'+escHtml(labels[s])+'</div>';
+                }).join('');
+
+                /* Cart select */
+                var cartOptions = '<option value="">— ไม่มีรถเข็น —</option>'
+                    + WM_CARTS.map(function(c){
+                        return '<option value="'+c.id+'"'+(ward.cartId===c.id?' selected':'')+'>'+escHtml(c.name)+'</option>';
+                    }).join('');
+
+                right = '<div class="wm-md-right"><div class="wm-form-wrap">'
+                    /* Hero */
+                    + '<div class="wm-form-hero">'
+                    + '<div class="wm-form-avatar" style="background:'+escHtml(color)+';min-width:50px;">'+escHtml(name.slice(0,2))+'</div>'
+                    + '<div><div class="wm-form-hero-name">'+escHtml(name)+'</div>'
+                    + '<div class="wm-form-hero-sub">ชั้น '+escHtml(String(floor))+' · '+escHtml(dept)+'</div></div>'
+                    + '</div>'
+
+                    /* Stats */
+                    + '<div class="wm-stat-row">'
+                    + '<div class="wm-stat-card"><div class="wm-stat-val" style="color:'+escHtml(color)+';">'+ward.bedsOcc+'/'+ward.bedsTotal+'</div><div class="wm-stat-lbl">เตียง (ครอง)</div></div>'
+                    + '<div class="wm-stat-card"><div class="wm-stat-val" style="color:'+escHtml(color)+';">'+ward.patients+'</div><div class="wm-stat-lbl">ผู้ป่วยปัจจุบัน</div></div>'
+                    + '<div class="wm-stat-card"><div class="wm-stat-val" style="color:'+escHtml(occColor)+';">'+occPct+'%</div><div class="wm-stat-lbl">Occupancy</div><div class="wm-occ-bar"><div class="wm-occ-fill" style="width:'+occPct+'%;background:'+escHtml(occColor)+'"></div></div></div>'
+                    + '</div>'
+
+                    + '<div class="wm-divider"></div>'
+
+                    /* Basic info */
+                    + '<div class="wm-section-head">ข้อมูลทั่วไป</div>'
+                    + '<div class="wm-field-grid">'
+                    + '<div class="wm-field full"><div class="wm-label">ชื่อ Ward</div><input class="wm-input" data-wm-field="name" value="'+escHtml(name)+'" oninput="if(!wmDirty[\''+ward.id+'\'])wmDirty[\''+ward.id+'\']={}; wmDirty[\''+ward.id+'\'].name=this.value; document.querySelector(\'.wm-form-hero-name\').textContent=this.value || \'—\'; document.querySelector(\'.wm-form-avatar\').textContent=this.value.slice(0,2)||\'W\';"></div>'
+                    + '<div class="wm-field full"><div class="wm-label">แผนก / Department</div><input class="wm-input" data-wm-field="dept" value="'+escHtml(dept)+'" oninput="if(!wmDirty[\''+ward.id+'\'])wmDirty[\''+ward.id+'\']={}; wmDirty[\''+ward.id+'\'].dept=this.value;"></div>'
+                    + '<div class="wm-field"><div class="wm-label">ชั้น</div><input class="wm-input" type="number" min="1" max="20" value="'+escHtml(String(floor))+'" oninput="if(!wmDirty[\''+ward.id+'\'])wmDirty[\''+ward.id+'\']={}; wmDirty[\''+ward.id+'\'].floor=this.value;"></div>'
+                    + '<div class="wm-field"><div class="wm-label">จำนวนเตียงทั้งหมด</div><input class="wm-input" type="number" min="1" max="100" value="'+escHtml(String(total))+'" oninput="if(!wmDirty[\''+ward.id+'\'])wmDirty[\''+ward.id+'\']={}; wmDirty[\''+ward.id+'\'].bedsTotal=this.value;"></div>'
+                    + '</div>'
+
+                    /* Color */
+                    + '<div class="wm-section-head" style="margin-top:16px;">สีประจำ Ward</div>'
+                    + '<div class="wm-color-row">'+colorPicker+'</div>'
+
+                    /* Status */
+                    + '<div class="wm-section-head" style="margin-top:16px;">สถานะ</div>'
+                    + '<div class="wm-status-row">'+statusOpts+'</div>'
+
+                    /* Linked cart */
+                    + '<div class="wm-section-head" style="margin-top:16px;">รถเข็นยาที่เชื่อมต่อ</div>'
+                    + (cart
+                        ? '<div class="wm-cart-link">'
+                        + '<div class="wm-cart-link-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M7 8h10"/><path d="M7 12h10"/></svg></div>'
+                        + '<div style="flex:1;"><div style="font-size:13px;font-weight:800;color:#0F172A;">'+escHtml(cart.name)+'</div>'
+                        + '<div style="font-size:11px;color:#64748B;margin-top:2px;">'+cart.drawers+' Drawer · '+cart.cassettes+' Cassette · ซิงค์ล่าสุด '+escHtml(cart.lastSync)+'</div></div>'
+                        + '<select class="wm-select" style="width:auto;font-size:11px;padding:6px 8px;">'+cartOptions+'</select>'
+                        + '</div>'
+                        : '<select class="wm-select">'+cartOptions+'</select>'
+                    )
+
+                    /* Danger zone */
+                    + '<div class="wm-divider"></div>'
+                    + '<div class="wm-danger-zone">'
+                    + '<div><div class="wm-danger-text">ลบ Ward นี้ออกจากระบบ</div><div style="font-size:10px;color:#94A3B8;margin-top:2px;">การลบจะยกเลิกการเชื่อมต่อรถเข็นยาและผู้ใช้ที่ผูกกับ Ward นี้</div></div>'
+                    + '<button class="wm-danger-btn">ลบ Ward</button>'
+                    + '</div>'
+                    + '</div></div>';
+            }
+
+            return '<div class="wm-md-layout">'+left+right+'</div>';
+        }
+
+        /* ── Cart Tab ── */
+        function wmRenderCartTab() {
+            /* Left list */
+            var items = WM_CARTS.map(function(c) {
+                var name   = wmGetField(c.id,'name',c.name);
+                var status = wmGetField(c.id,'status',c.status);
+                var ward   = WM_WARDS.find(function(w){ return w.id===c.wardId; });
+                var wardColor = ward ? wmGetField(ward.id,'color',ward.color) : '#94A3B8';
+                var sel = wmSelectedCart === c.id;
+                return '<div class="wm-item'+(sel?' selected':'')+'" onclick="wmSelectCart(\''+c.id+'\')">'
+                    + '<div class="wm-item-dot" style="background:'+escHtml(wardColor)+';"></div>'
+                    + '<div class="wm-item-info">'
+                    + '<div class="wm-item-name">'+escHtml(name)+'</div>'
+                    + '<div class="wm-item-sub">'+(ward?escHtml(ward.name)+' · ':'')+c.drawers+'D / '+c.cassettes+'C</div>'
+                    + '</div>'
+                    + wmStatusDot(status)
+                    + '</div>';
+            }).join('');
+
+            var left = '<div class="wm-md-left">'
+                + '<div class="wm-left-head"><span class="wm-left-title">'+WM_CARTS.length+' Med Cart</span>'
+                + '<button class="wm-add-btn" title="เพิ่ม Med Cart" onclick="wmAddCart()">+</button></div>'
+                + '<div class="wm-item-list">'+items+'</div>'
+                + '</div>';
+
+            /* Right detail */
+            var cart = WM_CARTS.find(function(c){ return c.id === wmSelectedCart; });
+            var right;
+            if (!cart) {
+                right = '<div class="wm-md-right"><div class="wm-empty">'
+                    + '<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#E2E8F0" stroke-width="1.5"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M7 8h10"/><path d="M7 12h10"/></svg>'
+                    + '<div>เลือก Med Cart ทางซ้าย</div></div></div>';
+            } else {
+                var cname   = wmGetField(cart.id,'name',   cart.name);
+                var ccode   = wmGetField(cart.id,'code',   cart.code);
+                var cstatus = wmGetField(cart.id,'status', cart.status);
+                var cdrawers= wmGetField(cart.id,'drawers',cart.drawers);
+                var ward    = WM_WARDS.find(function(w){ return w.id===cart.wardId; });
+                var cartColor = ward ? wmGetField(ward.id,'color',ward.color) : '#0D9488';
+
+                /* Ward select */
+                var wardOptions = '<option value="">— ไม่ผูก Ward —</option>'
+                    + WM_WARDS.map(function(w){
+                        return '<option value="'+w.id+'"'+(cart.wardId===w.id?' selected':'')+'>'+escHtml(wmGetField(w.id,'name',w.name))+'</option>';
+                    }).join('');
+
+                /* Drawer options */
+                var cassettesAuto = cdrawers * 6;
+                var drawerOptions = [4,6,8].map(function(n){
+                    return '<option value="'+n+'"'+(cdrawers==n?' selected':'')+'>'+n+' Drawer ('+n*6+' Cassette)</option>';
+                }).join('');
+
+                /* Status */
+                var statusOpts = ['active','maintenance','inactive'].map(function(s) {
+                    var labels = {active:'ใช้งาน',maintenance:'ซ่อมบำรุง',inactive:'ปิดใช้งาน'};
+                    return '<div class="wm-status-opt'+(cstatus===s?' '+s:'')+'" onclick="wmSetStatus(\''+cart.id+'\',\'status\',\''+s+'\')">'
+                        + '<div class="wm-status-dot '+s+'"></div>'+escHtml(labels[s])+'</div>';
+                }).join('');
+
+                right = '<div class="wm-md-right"><div class="wm-form-wrap">'
+                    /* Hero */
+                    + '<div class="wm-form-hero">'
+                    + '<div class="wm-form-avatar" style="background:'+escHtml(cartColor)+';min-width:50px;font-size:14px;">'
+                    + '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M7 8h10"/><path d="M7 12h10"/></svg>'
+                    + '</div>'
+                    + '<div><div class="wm-form-hero-name">'+escHtml(cname)+'</div>'
+                    + '<div class="wm-form-hero-sub">รหัส: '+escHtml(ccode)+' · '+(ward?escHtml(ward.name)+' · ':'')+'ซิงค์ล่าสุด '+escHtml(cart.lastSync)+'</div></div>'
+                    + '</div>'
+
+                    /* Stats */
+                    + '<div class="wm-stat-row">'
+                    + '<div class="wm-stat-card"><div class="wm-stat-val" style="color:'+escHtml(cartColor)+';">'+cdrawers+'</div><div class="wm-stat-lbl">Drawer</div></div>'
+                    + '<div class="wm-stat-card"><div class="wm-stat-val" style="color:'+escHtml(cartColor)+';">'+cassettesAuto+'</div><div class="wm-stat-lbl">Cassette ทั้งหมด</div></div>'
+                    + '<div class="wm-stat-card"><div class="wm-stat-val" style="color:'+(cstatus==='active'?'#10B981':cstatus==='maintenance'?'#F59E0B':'#94A3B8')+';">'+wmStatusLabel(cstatus)+'</div><div class="wm-stat-lbl">สถานะ</div></div>'
+                    + '</div>'
+
+                    + '<div class="wm-divider"></div>'
+
+                    /* Fields */
+                    + '<div class="wm-section-head">ข้อมูลรถเข็นยา</div>'
+                    + '<div class="wm-field-grid">'
+                    + '<div class="wm-field"><div class="wm-label">ชื่อรถเข็น</div><input class="wm-input" value="'+escHtml(cname)+'" oninput="if(!wmDirty[\''+cart.id+'\'])wmDirty[\''+cart.id+'\']={}; wmDirty[\''+cart.id+'\'].name=this.value; document.querySelector(\'.wm-form-hero-name\').textContent=this.value;"></div>'
+                    + '<div class="wm-field"><div class="wm-label">รหัสรถเข็น</div><input class="wm-input" value="'+escHtml(ccode)+'" oninput="if(!wmDirty[\''+cart.id+'\'])wmDirty[\''+cart.id+'\']={}; wmDirty[\''+cart.id+'\'].code=this.value;"></div>'
+                    + '<div class="wm-field full"><div class="wm-label">Ward ที่เชื่อมต่อ</div><select class="wm-select">'+wardOptions+'</select></div>'
+                    + '<div class="wm-field"><div class="wm-label">จำนวน Drawer</div><select class="wm-select" onchange="if(!wmDirty[\''+cart.id+'\'])wmDirty[\''+cart.id+'\']={}; wmDirty[\''+cart.id+'\'].drawers=+this.value; wmDirty[\''+cart.id+'\'].cassettes=+this.value*6; wmRender();">'+drawerOptions+'</select></div>'
+                    + '<div class="wm-field"><div class="wm-label">Cassette ทั้งหมด</div><input class="wm-input" type="number" value="'+cassettesAuto+'" readonly style="background:#F8FAFC;cursor:default;"></div>'
+                    + '</div>'
+
+                    /* Status */
+                    + '<div class="wm-section-head" style="margin-top:16px;">สถานะ</div>'
+                    + '<div class="wm-status-row">'+statusOpts+'</div>'
+
+                    /* Drawer map */
+                    + '<div class="wm-section-head" style="margin-top:16px;">แผนผัง Drawer</div>'
+                    + wmRenderDrawerMap(cdrawers, cartColor, cassettesAuto)
+
+                    /* Danger zone */
+                    + '<div class="wm-divider"></div>'
+                    + '<div class="wm-danger-zone">'
+                    + '<div><div class="wm-danger-text">ลบรถเข็นออกจากระบบ</div><div style="font-size:10px;color:#94A3B8;margin-top:2px;">การลบจะยกเลิกการผูกกับ Ward และ Cassette ทั้งหมด</div></div>'
+                    + '<button class="wm-danger-btn">ลบรถเข็น</button>'
+                    + '</div>'
+                    + '</div></div>';
+            }
+
+            return '<div class="wm-md-layout">'+left+right+'</div>';
+        }
+
+        function wmRenderDrawerMap(drawerCount, color, totalCassettes) {
+            var cassPerDrawer = totalCassettes ? Math.floor(totalCassettes / drawerCount) : 6;
+            var rows = '';
+            for (var d = 1; d <= drawerCount; d++) {
+                var cassettes = '';
+                for (var c = 1; c <= cassPerDrawer; c++) {
+                    cassettes += '<div style="width:28px;height:28px;border-radius:6px;background:white;border:1.5px solid #E2E8F0;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;color:#94A3B8;">'+c+'</div>';
+                }
+                rows += '<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">'
+                    + '<div style="width:28px;height:28px;border-radius:7px;background:'+escHtml(color)+';display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:900;color:white;flex-shrink:0;">'+d+'</div>'
+                    + '<div style="display:flex;gap:5px;flex-wrap:wrap;">'+cassettes+'</div>'
+                    + '</div>';
+            }
+            return '<div style="background:#F8FAFC;border:1px solid #F1F5F9;border-radius:10px;padding:12px;">'+rows+'</div>';
+        }
+
+        function wmRender() {
+            var body = document.getElementById('wardModalBody');
+            var chips = document.getElementById('wmChips');
+            if (!body) return;
+            if (chips) {
+                var activeWards = WM_WARDS.filter(function(w){ return wmGetField(w.id,'status',w.status)==='active'; }).length;
+                var activeCarts = WM_CARTS.filter(function(c){ return wmGetField(c.id,'status',c.status)==='active'; }).length;
+                chips.innerHTML = '<span class="modal-chip"><strong>'+WM_WARDS.length+'</strong> Ward</span>'
+                    + '<span class="modal-chip"><strong>'+WM_CARTS.length+'</strong> Med Cart</span>'
+                    + '<span class="modal-chip"><strong>'+activeWards+'</strong> ใช้งานอยู่</span>';
+            }
+            body.innerHTML = wmTab === 'ward' ? wmRenderWardTab() : wmRenderCartTab();
+        }
+
+        function openWardModal() {
+            wmTab = 'ward';
+            wmSelectedWard = WM_WARDS[0].id;
+            wmSelectedCart = WM_CARTS[0].id;
+            document.querySelectorAll('[data-wm-tab]').forEach(function(el){
+                el.classList.toggle('active', el.dataset.wmTab === 'ward');
+            });
+            wmRender();
+            document.getElementById('wardModal').style.display = 'flex';
+        }
+        function closeWardModal() {
+            document.getElementById('wardModal').style.display = 'none';
+        }
+        function saveWardModal() {
+            /* Apply dirty values back to WM_WARDS / WM_CARTS */
+            WM_WARDS.forEach(function(w) {
+                if (wmDirty[w.id]) Object.assign(w, wmDirty[w.id]);
+            });
+            WM_CARTS.forEach(function(c) {
+                if (wmDirty[c.id]) Object.assign(c, wmDirty[c.id]);
+            });
+            wmDirty = {};
+            closeWardModal();
+            showToast('บันทึก Ward & Med Cart เรียบร้อยแล้ว');
+            setTimeout(function(){ showToast(''); }, 2000);
+        }
+
+        function goFrontOffice() {
+            let target = sessionStorage.getItem('mcFrontPage') || 'pg-dashboard';
+            if (target === 'pg-backoffice') target = 'pg-dashboard';
+            window.location.href = 'index.html#' + target;
+        }
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closePermModal();
+                closeWardModal();
+            }
+        });
+
+        tick();
+        setInterval(tick, 1000);
+        renderBackoffice();
+    </script>
+</body>
+</html>
