@@ -22277,12 +22277,31 @@
         const latestPanel = document.querySelectorAll('#pg-dashboard .db-panel')[1];
         const logWrap = latestPanel ? latestPanel.querySelector('div[style*="flex-direction:column"]') : null;
         if (logWrap && typeof MedCartStore !== 'undefined' && MedCartStore.orders.length > 0) {
-            // Build activity from store orders sorted by status (dispensed first, then prepped, then scheduled)
+            // Update panel title per role
+            var panelTitle = latestPanel ? latestPanel.querySelector('.db-panel-head') : null;
+            if (panelTitle) {
+                var titleText = panelTitle.querySelector('div > div:last-child') || panelTitle;
+                var r = typeof currentRole !== 'undefined' ? currentRole : 'super';
+                if (r === 'nurse') { if (titleText.childNodes.length > 1) titleText.childNodes[1].textContent = 'การจ่ายยาล่าสุด'; else titleText.textContent = 'การจ่ายยาล่าสุด'; }
+            }
+            // Filter activity by role:
+            // Nurse: dispensed/assessed only (จ่ายยา)
+            // Pharma: prepped only (จัดยา) — but pharma panel is hidden, this is fallback
+            // Super: all statuses
+            var role = typeof currentRole !== 'undefined' ? currentRole : 'super';
             var storeOrders = MedCartStore.orders.slice();
+            if (role === 'nurse') {
+                storeOrders = storeOrders.filter(function(o){ return o.status === 'dispensed' || o.status === 'assessed'; });
+            } else if (role === 'pharma') {
+                storeOrders = storeOrders.filter(function(o){ return o.status === 'prepped' || o.status === 'dispensed'; });
+            }
             var statusOrder = { dispensed:0, assessed:0, prepped:1, scheduled:2, ordered:3 };
             storeOrders.sort(function(a,b){ return (statusOrder[a.status]||9) - (statusOrder[b.status]||9); });
             var activityItems = storeOrders.slice(0, 5);
             var demoTimes = ['08:12','08:08','07:55','07:45','07:30'];
+            if (!activityItems.length) {
+                logWrap.innerHTML = '<div style="padding:18px;text-align:center;color:var(--text-3);font-size:12px;">ยังไม่มีกิจกรรม</div>';
+            } else {
             logWrap.innerHTML = activityItems.map(function(o, idx) {
                 var border = idx === activityItems.length - 1 ? '' : 'border-bottom:1px dashed #f1f5f9;';
                 var isDone = o.status === 'dispensed' || o.status === 'assessed';
@@ -22290,7 +22309,7 @@
                 var isPrep = o.status === 'prepped';
                 var color = isDone ? '#0D9488' : isHA ? '#d97706' : isPrep ? '#3b82f6' : '#64748b';
                 var bg = isDone ? '#f0fdf4' : isHA ? '#fffbeb' : isPrep ? '#eff6ff' : '#f8fafc';
-                var action = isDone ? 'จ่ายยา' : isPrep ? 'จัดยา' : o.status === 'scheduled' ? 'รอจัดยา' : 'รับคำสั่ง';
+                var action = isDone ? 'จ่ายยา' : isPrep ? 'จัดยา' : o.status === 'scheduled' ? 'รอจ่าย' : 'รับคำสั่ง';
                 var icon = isDone
                     ? '<path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>'
                     : isPrep ? '<path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/>'
@@ -22305,6 +22324,7 @@
                     + '<div style="font-size:11px;color:var(--text-3);">' + escHtml(ptName) + ' · ห้อง ' + escHtml(ptBed) + '</div></div>'
                     + '<div class="db-log-time">' + (demoTimes[idx] || o.createdAt || '—') + '</div></div>';
             }).join('');
+            }
         } else if (logWrap) {
             // Fallback to legacy
             var legacyKeys = getDispensePatientKeys().slice(0, 5);
