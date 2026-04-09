@@ -14497,9 +14497,11 @@
             var borderColor = o.priority === 'stat' ? '#EF4444' : o.highAlert ? '#D97706' : '#0D9488';
             var ptName = MedCartStore.getPatientName(o.patient);
             var ptBed = MedCartStore.getPatientBed(o.patient);
-            var needsAction = o.status === 'scheduled' && o.priority === 'stat';
-            var actionHtml = needsAction
-                ? '<button type="button" class="op-btn primary" style="font-size:11px;padding:7px 12px;" onclick="nav(\'pg-routine\')">ดำเนินการ <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg></button>'
+            var isDone = o.status === 'dispensed' || o.status === 'assessed';
+            var isActionable = !isDone;
+            var navTarget = o.priority === 'stat' ? 'pg-stat' : o.priority === 'prn' ? 'pg-prn' : o.priority === 'high-alert' ? 'pg-highalert' : 'pg-routine';
+            var actionHtml = isActionable
+                ? '<button type="button" class="op-btn' + (o.priority === 'stat' ? ' primary' : '') + '" style="font-size:11px;padding:7px 12px;" onclick="nav(\'' + navTarget + '\')">ดำเนินการ <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg></button>'
                 : '<span style="font-size:10px;color:var(--text-3);">' + o.createdAt + '</span>';
             return '<div class="op-order-row" style="border-left-color:' + borderColor + ';">'
                 + '<div class="op-order-main">'
