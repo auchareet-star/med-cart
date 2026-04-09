@@ -14831,53 +14831,57 @@
         const roleEl = document.querySelector('#pg-dashboard .hdr-user-role');
         if (roleEl) roleEl.textContent = roleText;
 
-        // Show/disable action cards based on role
+        // ── Role-based visibility: HIDE elements instead of disabling ──
         const dashEl = document.getElementById('pg-dashboard');
-        const dispenseBtn = dashEl?.querySelector('.db-action[onclick*="pg-routine"]');
-        const prepBtn = dashEl?.querySelector('.db-action[onclick*="goToPrepType"]');
+        const isNurse = role === 'nurse';
+        const isPharma = role === 'pharma';
+        const isSuper = role === 'super';
 
-        if (dispenseBtn) {
-            const noAccess = role === 'pharma';
-            dispenseBtn.style.opacity = noAccess ? '0.45' : '';
-            dispenseBtn.style.pointerEvents = noAccess ? 'none' : '';
-            dispenseBtn.style.filter = noAccess ? 'grayscale(0.6)' : '';
-            // Add/remove lock overlay
-            let lock = dispenseBtn.querySelector('.lock-overlay');
-            if (noAccess && !lock) {
-                lock = document.createElement('div');
-                lock.className = 'lock-overlay';
-                lock.style.cssText = 'position:absolute;inset:0;background:rgba(255,255,255,0.5);backdrop-filter:blur(2px);border-radius:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:2;';
-                lock.innerHTML = '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg><div style="font-size:12px;font-weight:600;color:#94a3b8;margin-top:6px;">ไม่มีสิทธิ์เข้าถึง</div>';
-                dispenseBtn.appendChild(lock);
-            } else if (!noAccess && lock) {
-                lock.remove();
-            }
-        }
+        // Helper: show/hide element
+        function showEl(el, visible) { if (el) el.style.display = visible ? '' : 'none'; }
 
-        if (prepBtn) {
-            const noAccess = role === 'nurse';
-            prepBtn.style.opacity = noAccess ? '0.45' : '';
-            prepBtn.style.pointerEvents = noAccess ? 'none' : '';
-            prepBtn.style.filter = noAccess ? 'grayscale(0.6)' : '';
-            let lock = prepBtn.querySelector('.lock-overlay');
-            if (noAccess && !lock) {
-                lock = document.createElement('div');
-                lock.className = 'lock-overlay';
-                lock.style.cssText = 'position:absolute;inset:0;background:rgba(255,255,255,0.5);backdrop-filter:blur(2px);border-radius:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:2;';
-                lock.innerHTML = '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg><div style="font-size:12px;font-weight:600;color:#94a3b8;margin-top:6px;">ไม่มีสิทธิ์เข้าถึง</div>';
-                prepBtn.appendChild(lock);
-            } else if (!noAccess && lock) {
-                lock.remove();
-            }
-        }
+        // Pipeline step indicator
+        var pipelineBar = dashEl?.querySelector('[style*="align-items:center;gap:0;margin-bottom:22px"]');
+        if (pipelineBar) pipelineBar.style.display = isSuper ? '' : 'none';
 
-        // db-actions is always 2 columns; alerts row is separate
+        // Step 1: Order Plan — nurse + super only
+        showEl(document.getElementById('dashOrderPlanQuickLink'), !isPharma);
+        // Step 2: Nurse Schedule — nurse + super only
+        showEl(document.getElementById('dashNurseScheduleQuickLink'), !isPharma);
+        // Step 3: eMAR — nurse + super only
+        showEl(document.getElementById('dashEmarQuickLink'), !isPharma);
+
+        // Step 4: จัดยา — pharma + super only
+        var prepBtn = dashEl?.querySelector('.db-action[onclick*="goToPrepType"]');
+        showEl(prepBtn, !isNurse);
+
+        // Step 5: จ่ายยา — nurse + super only
+        var dispenseBtn = dashEl?.querySelector('.db-action[onclick*="pg-routine"]');
+        showEl(dispenseBtn, !isPharma);
+
+        // Make db-actions single column when only 1 card visible
+        var actionsGrid = dashEl?.querySelector('.db-actions');
+        if (actionsGrid) actionsGrid.style.gridTemplateColumns = isSuper ? '1fr 1fr' : '1fr';
+
+        // Quick Alerts — nurse + super (dispense alerts)
+        showEl(document.getElementById('dashQuickAlerts'), !isPharma);
+
+        // Step 6: Post Assessment — nurse + super only
+        showEl(document.getElementById('dashAssessQuickLink'), !isPharma);
+
+        // Remove any leftover lock overlays and lock-minis
+        dashEl?.querySelectorAll('.lock-overlay, .lock-mini').forEach(function(el){ el.remove(); });
+        dashEl?.querySelectorAll('[onclick]').forEach(function(card) {
+            card.style.opacity = '';
+            card.style.pointerEvents = '';
+            card.style.filter = '';
+        });
 
         // Inject role-specific section
         const sec = document.getElementById('dashRoleSection');
         if (sec) sec.innerHTML = getRoleSectionHTML(role, name, roleText);
 
-        // Inject bottom section (super: team paired with activity; schedule hidden)
+        // Bottom panels
         const secBottom = document.getElementById('dashRoleBottom');
         if (secBottom) secBottom.innerHTML = '';
 
@@ -14885,102 +14889,22 @@
         const activityPanel = document.getElementById('dashActivityPanel');
         const teamPanelSlot = document.getElementById('dashTeamPanelSlot');
         const bottomGrid = document.getElementById('dashBottomGrid');
-        if (schedulePanel) schedulePanel.style.display = role === 'super' ? 'none' : '';
-        if (activityPanel) activityPanel.style.order = role === 'super' ? '2' : '';
+        // Schedule panel: nurse + super see it
+        if (schedulePanel) schedulePanel.style.display = isPharma ? 'none' : '';
+        if (activityPanel) activityPanel.style.order = isSuper ? '2' : '';
         if (teamPanelSlot) {
-            teamPanelSlot.innerHTML = role === 'super' ? getRoleBottomHTML(role) : '';
-            teamPanelSlot.style.display = role === 'super' ? '' : 'none';
-            teamPanelSlot.style.order = role === 'super' ? '1' : '';
+            teamPanelSlot.innerHTML = isSuper ? getRoleBottomHTML(role) : '';
+            teamPanelSlot.style.display = isSuper ? '' : 'none';
+            teamPanelSlot.style.order = isSuper ? '1' : '';
         }
         if (bottomGrid) {
-            bottomGrid.classList.toggle('super-head', role === 'super');
+            bottomGrid.classList.toggle('super-head', isSuper);
             bottomGrid.style.gridTemplateColumns = '';
         }
 
         // Hide perm panel when switching role
         var permSec = document.getElementById('dashPermSection');
         if (permSec) permSec.style.display = 'none';
-
-        // Show quick alerts for all roles
-        const quickAlerts = document.getElementById('dashQuickAlerts');
-        if (quickAlerts) {
-            quickAlerts.style.display = '';
-        }
-
-        // Disable dispense-related cards for pharma
-        const dispenseKeywords = ['pg-order-plan','pg-nurse-schedule','pg-emar','pg-stat','pg-prn','pg-highalert','pg-routine','pg-omit-flow','pg-overdue'];
-        dashEl?.querySelectorAll('[onclick]').forEach(card => {
-            const onclick = card.getAttribute('onclick') || '';
-            const isDispense = dispenseKeywords.some(k => onclick.includes(k));
-            if (role === 'pharma' && isDispense) {
-                card.style.opacity = '0.4';
-                card.style.pointerEvents = 'none';
-                card.style.filter = 'grayscale(0.5)';
-                card.style.position = 'relative';
-                // Add lock icon if not already there
-                if (!card.querySelector('.lock-mini')) {
-                    const lk = document.createElement('div');
-                    lk.className = 'lock-mini';
-                    lk.style.cssText = 'position:absolute;top:6px;right:6px;width:22px;height:22px;background:rgba(148,163,184,0.7);border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:2;';
-                    lk.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>';
-                    card.appendChild(lk);
-                }
-            } else {
-                card.style.opacity = '';
-                card.style.pointerEvents = '';
-                card.style.filter = '';
-                const lk = card.querySelector('.lock-mini');
-                if (lk) lk.remove();
-            }
-        });
-
-        const assessQuickLink = document.getElementById('dashAssessQuickLink');
-        if (assessQuickLink) {
-            const noAssessmentAccess = role === 'pharma';
-            assessQuickLink.style.opacity = noAssessmentAccess ? '0.45' : '';
-            assessQuickLink.style.pointerEvents = noAssessmentAccess ? 'none' : '';
-            assessQuickLink.style.filter = noAssessmentAccess ? 'grayscale(0.45)' : '';
-            assessQuickLink.setAttribute('aria-disabled', noAssessmentAccess ? 'true' : 'false');
-            const badge = assessQuickLink.querySelector('span');
-            if (badge) {
-                badge.textContent = noAssessmentAccess ? 'ไม่มีสิทธิ์' : 'รอประเมิน 3';
-                badge.style.background = noAssessmentAccess ? '#f8fafc' : '#fef2f2';
-                badge.style.color = noAssessmentAccess ? '#64748b' : '#dc2626';
-                badge.style.borderColor = noAssessmentAccess ? '#cbd5e1' : '#fca5a5';
-            }
-        }
-
-        const orderPlanQuickLink = document.getElementById('dashOrderPlanQuickLink');
-        if (orderPlanQuickLink) {
-            const noOrderPlanAccess = role === 'pharma';
-            orderPlanQuickLink.style.opacity = noOrderPlanAccess ? '0.45' : '';
-            orderPlanQuickLink.style.pointerEvents = noOrderPlanAccess ? 'none' : '';
-            orderPlanQuickLink.style.filter = noOrderPlanAccess ? 'grayscale(0.45)' : '';
-            orderPlanQuickLink.setAttribute('aria-disabled', noOrderPlanAccess ? 'true' : 'false');
-            const badge = document.getElementById('dashOrderPlanCount');
-            if (badge) {
-                badge.textContent = noOrderPlanAccess ? 'ไม่มีสิทธิ์' : badge.textContent;
-                badge.style.background = noOrderPlanAccess ? '#f8fafc' : '#ecfeff';
-                badge.style.color = noOrderPlanAccess ? '#64748b' : '#0e7490';
-                badge.style.borderColor = noOrderPlanAccess ? '#cbd5e1' : '#a5f3fc';
-            }
-        }
-
-        const nurseScheduleQuickLink = document.getElementById('dashNurseScheduleQuickLink');
-        if (nurseScheduleQuickLink) {
-            const noScheduleAccess = role === 'pharma';
-            nurseScheduleQuickLink.style.opacity = noScheduleAccess ? '0.45' : '';
-            nurseScheduleQuickLink.style.pointerEvents = noScheduleAccess ? 'none' : '';
-            nurseScheduleQuickLink.style.filter = noScheduleAccess ? 'grayscale(0.45)' : '';
-            nurseScheduleQuickLink.setAttribute('aria-disabled', noScheduleAccess ? 'true' : 'false');
-            const badge = document.getElementById('dashNurseScheduleCount');
-            if (badge) {
-                badge.textContent = noScheduleAccess ? 'ไม่มีสิทธิ์' : badge.textContent;
-                badge.style.background = noScheduleAccess ? '#f8fafc' : '#eff6ff';
-                badge.style.color = noScheduleAccess ? '#64748b' : '#1D4ED8';
-                badge.style.borderColor = noScheduleAccess ? '#cbd5e1' : '#bfdbfe';
-            }
-        }
 
         const emarQuickLink = document.getElementById('dashEmarQuickLink');
         if (emarQuickLink) {
