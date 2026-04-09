@@ -6887,63 +6887,36 @@
         <div id="dashPermSection" style="display:none;margin-bottom:24px;"></div>
 
         <!-- ════════════════════════════════════════════
-             WORKFLOW PIPELINE — 5 ขั้นตอนตามลำดับ
+             WORKFLOW PIPELINE — 4 ขั้นตอน
              ════════════════════════════════════════════ -->
 
-        <!-- Pipeline step indicator -->
+        <!-- Pipeline step indicator (super only) -->
         <div id="dashPipelineBar" style="display:flex;align-items:center;gap:0;margin-bottom:22px;padding:0 4px;">
             <div style="display:flex;align-items:center;gap:8px;flex:1;">
-                <div style="width:28px;height:28px;background:linear-gradient(135deg,#0D9488,#14B8A6);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:white;flex-shrink:0;">1</div>
-                <span style="font-size:11px;font-weight:700;color:#0F766E;">รับคำสั่งยา</span>
-            </div>
-            <div style="flex:0 0 24px;height:2px;background:linear-gradient(90deg,#99F6E4,#BFDBFE);border-radius:2px;"></div>
-            <div style="display:flex;align-items:center;gap:8px;flex:1;justify-content:center;">
-                <div style="width:28px;height:28px;background:linear-gradient(135deg,#1D4ED8,#3B82F6);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:white;flex-shrink:0;">2</div>
+                <div style="width:28px;height:28px;background:linear-gradient(135deg,#1D4ED8,#3B82F6);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:white;flex-shrink:0;">1</div>
                 <span style="font-size:11px;font-weight:700;color:#1D4ED8;">ตารางรอบยา</span>
             </div>
-            <div style="flex:0 0 24px;height:2px;background:linear-gradient(90deg,#BFDBFE,#C4B5FD);border-radius:2px;"></div>
+            <div style="flex:0 0 32px;height:2px;background:linear-gradient(90deg,#BFDBFE,#C4B5FD);border-radius:2px;"></div>
             <div style="display:flex;align-items:center;gap:8px;flex:1;justify-content:center;">
-                <div style="width:28px;height:28px;background:linear-gradient(135deg,#7C3AED,#8B5CF6);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:white;flex-shrink:0;">3</div>
+                <div style="width:28px;height:28px;background:linear-gradient(135deg,#7C3AED,#8B5CF6);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:white;flex-shrink:0;">2</div>
                 <span style="font-size:11px;font-weight:700;color:#6D28D9;">ตรวจ 5 Rights</span>
             </div>
-            <div style="flex:0 0 24px;height:2px;background:linear-gradient(90deg,#C4B5FD,#FDE68A);border-radius:2px;"></div>
+            <div style="flex:0 0 32px;height:2px;background:linear-gradient(90deg,#C4B5FD,#FDE68A);border-radius:2px;"></div>
             <div style="display:flex;align-items:center;gap:8px;flex:1;justify-content:center;">
-                <div style="width:28px;height:28px;background:linear-gradient(135deg,#D97706,#F59E0B);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:white;flex-shrink:0;">4</div>
+                <div style="width:28px;height:28px;background:linear-gradient(135deg,#D97706,#F59E0B);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:white;flex-shrink:0;">3</div>
                 <span style="font-size:11px;font-weight:700;color:#B45309;">จัดยา</span>
             </div>
-            <div style="flex:0 0 24px;height:2px;background:linear-gradient(90deg,#FDE68A,#FECACA);border-radius:2px;"></div>
+            <div style="flex:0 0 32px;height:2px;background:linear-gradient(90deg,#FDE68A,#FECACA);border-radius:2px;"></div>
             <div style="display:flex;align-items:center;gap:8px;flex:1;justify-content:flex-end;">
-                <div style="width:28px;height:28px;background:linear-gradient(135deg,#DC2626,#EF4444);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:white;flex-shrink:0;">5</div>
+                <div style="width:28px;height:28px;background:linear-gradient(135deg,#DC2626,#EF4444);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:white;flex-shrink:0;">4</div>
                 <span style="font-size:11px;font-weight:700;color:#DC2626;">จ่ายยา</span>
             </div>
         </div>
 
-        <!-- ── Step 1: รับคำสั่งยา (Order Plan) ── -->
-        <div id="dashOrderPlanQuickLink" onclick="nav('pg-order-plan')" style="
-            background:linear-gradient(135deg,#f0fdfa,#ecfeff);
-            border:1.5px solid #99f6e4;border-radius:14px;
-            padding:18px 22px;margin-bottom:12px;cursor:pointer;
-            display:flex;align-items:center;gap:16px;
-            transition:all .18s;box-shadow:0 2px 12px rgba(13,148,136,0.08);"
-            onmouseover="this.style.boxShadow='0 6px 24px rgba(13,148,136,0.16)';this.style.transform='translateY(-2px)'"
-            onmouseout="this.style.boxShadow='0 2px 12px rgba(13,148,136,0.08)';this.style.transform=''">
-            <div style="display:flex;align-items:center;gap:12px;flex-shrink:0;">
-                <div style="width:36px;height:36px;background:linear-gradient(135deg,#0D9488,#14B8A6);border-radius:10px;display:flex;align-items:center;justify-content:center;">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.4"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
-                </div>
-                <div style="width:24px;height:24px;background:#0D9488;color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;">1</div>
-            </div>
-            <div style="flex:1;min-width:0;">
-                <div style="font-size:15px;font-weight:800;color:#0F766E;margin-bottom:2px;">รับคำสั่งยา — Order Plan</div>
-                <div style="font-size:12px;color:#0D9488;">คำสั่งยาจากแพทย์ (HIS Sync) + Verbal / Telephone Order</div>
-            </div>
-            <div style="display:flex;align-items:center;gap:8px;">
-                <span id="dashOrderPlanCount" style="background:#ecfeff;color:#0e7490;font-size:11px;font-weight:800;padding:3px 10px;border-radius:8px;border:1px solid #a5f3fc;">0 รายการ</span>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0D9488" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-            </div>
-        </div>
+        <!-- Hidden refs for JS compatibility -->
+        <div id="dashOrderPlanQuickLink" style="display:none;"><span id="dashOrderPlanCount">0</span></div>
 
-        <!-- ── Step 2: ตารางรอบยา (Nurse Schedule) ── -->
+        <!-- ── Step 1: ตารางรอบยา (Nurse Schedule) ── -->
         <div id="dashNurseScheduleQuickLink" onclick="nav('pg-nurse-schedule')" style="
             background:linear-gradient(135deg,#eff6ff,#ecfeff);
             border:1.5px solid #bfdbfe;border-radius:14px;
@@ -6956,11 +6929,11 @@
                 <div style="width:36px;height:36px;background:linear-gradient(135deg,#1D4ED8,#3B82F6);border-radius:10px;display:flex;align-items:center;justify-content:center;">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.4"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
                 </div>
-                <div style="width:24px;height:24px;background:#1D4ED8;color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;">2</div>
+                <div style="width:24px;height:24px;background:#1D4ED8;color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;">1</div>
             </div>
             <div style="flex:1;min-width:0;">
                 <div style="font-size:15px;font-weight:800;color:#1D4ED8;margin-bottom:2px;">ตารางรอบยา — Nurse Schedule</div>
-                <div style="font-size:12px;color:#2563EB;">จัดกลุ่มตามรอบเวลา เช้า/เที่ยง/เย็น/ก่อนนอน พร้อมสถานะจัดยา</div>
+                <div style="font-size:12px;color:#2563EB;">รายการยาจากแพทย์ จัดตามรอบเวลา + เพิ่ม Verbal/Tel Order</div>
             </div>
             <div style="display:flex;align-items:center;gap:8px;">
                 <span id="dashNurseScheduleCount" style="background:#eff6ff;color:#1D4ED8;font-size:11px;font-weight:800;padding:3px 10px;border-radius:8px;border:1px solid #bfdbfe;">0 รอจัด</span>
@@ -6968,7 +6941,7 @@
             </div>
         </div>
 
-        <!-- ── Step 3: ตรวจสอบ 5 Rights (eMAR) ── -->
+        <!-- ── Step 2: ตรวจสอบ 5 Rights (eMAR) ── -->
         <div id="dashEmarQuickLink" onclick="nav('pg-emar')" style="
             background:linear-gradient(135deg,#faf5ff,#f5f3ff);
             border:1.5px solid #ddd6fe;border-radius:14px;
@@ -6981,7 +6954,7 @@
                 <div style="width:36px;height:36px;background:linear-gradient(135deg,#7C3AED,#8B5CF6);border-radius:10px;display:flex;align-items:center;justify-content:center;">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.4"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/><path d="M9 12l2 2 4-4"/></svg>
                 </div>
-                <div style="width:24px;height:24px;background:#7C3AED;color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;">3</div>
+                <div style="width:24px;height:24px;background:#7C3AED;color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;">2</div>
             </div>
             <div style="flex:1;min-width:0;">
                 <div style="font-size:15px;font-weight:800;color:#6D28D9;margin-bottom:2px;">ตรวจสอบ 5 Rights — eMAR</div>
@@ -6993,16 +6966,16 @@
             </div>
         </div>
 
-        <!-- ── Step 4 & 5: จัดยา + จ่ายยา (Main Actions) ── -->
+        <!-- ── Step 3 & 4: จัดยา + จ่ายยา (Main Actions) ── -->
         <div class="db-actions">
-            <!-- Step 4: จัดยา -->
+            <!-- Step 3: จัดยา -->
             <div class="db-action secondary" onclick="goToPrepType()">
                 <span class="db-action-badge" style="background:#D97706;">5 รอจัด</span>
                 <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
                     <div class="db-action-icon" style="background:linear-gradient(135deg,#D97706,#F59E0B);box-shadow:0 4px 12px rgba(217,119,6,0.2);margin-bottom:0;">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
                     </div>
-                    <div style="width:28px;height:28px;background:#D97706;color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;">4</div>
+                    <div style="width:28px;height:28px;background:#D97706;color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;">3</div>
                 </div>
                 <div class="db-action-title" style="color:#B45309;">จัดยาเข้ารถเข็น</div>
                 <div class="db-action-sub">Medication Preparation</div>
@@ -7019,7 +6992,7 @@
                     <div class="db-action-icon" style="background:linear-gradient(135deg,#DC2626,#EF4444);box-shadow:0 4px 12px rgba(220,38,38,0.2);margin-bottom:0;">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0016.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 002 8.5c0 2.3 1.5 4.05 3 5.5l7 7z"/></svg>
                     </div>
-                    <div style="width:28px;height:28px;background:#DC2626;color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;">5</div>
+                    <div style="width:28px;height:28px;background:#DC2626;color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;">4</div>
                 </div>
                 <div class="db-action-title" style="color:#B91C1C;">จ่ายยาให้ผู้ป่วย</div>
                 <div class="db-action-sub">Medication Administration</div>
@@ -14353,7 +14326,9 @@
                     // ผู้ป่วย 01 — ภูริทัต (Post TKR day 2)
                     { id:'5A-001', source:'HIS', ward:'Ward 5A', patient:'01', drug:'Cefazolin 1 g', dose:'1 vial', route:'IV', priority:'routine', schedule:'รอบเช้า', time:'08:00', doctor:'นพ.ธีรวัฒน์ กระดูกดี', status:'dispensed', createdAt:'06:00', highAlert:false },
                     { id:'5A-002', source:'HIS', ward:'Ward 5A', patient:'01', drug:'Paracetamol 500 mg', dose:'2 เม็ด', route:'PO', priority:'routine', schedule:'รอบเช้า', time:'08:00', doctor:'นพ.ธีรวัฒน์ กระดูกดี', status:'dispensed', createdAt:'06:00', highAlert:false },
-                    { id:'5A-003', source:'HIS', ward:'Ward 5A', patient:'01', drug:'Enoxaparin 40 mg', dose:'1 syringe', route:'SC', priority:'high-alert', schedule:'รอบเช้า', time:'08:00', doctor:'นพ.ธีรวัฒน์ กระดูกดี', status:'prepped', createdAt:'06:00', highAlert:true },
+                    { id:'5A-027', source:'HIS', ward:'Ward 5A', patient:'01', drug:'Cefazolin 1 g', dose:'1 vial', route:'IV', priority:'routine', schedule:'รอบเย็น', time:'16:00', doctor:'นพ.ธีรวัฒน์ กระดูกดี', status:'ordered', createdAt:'06:00', highAlert:false },
+                    { id:'5A-028', source:'HIS', ward:'Ward 5A', patient:'01', drug:'Cefazolin 1 g', dose:'1 vial', route:'IV', priority:'routine', schedule:'กลางคืน', time:'00:00', doctor:'นพ.ธีรวัฒน์ กระดูกดี', status:'ordered', createdAt:'06:00', highAlert:false },
+                    { id:'5A-003', source:'HIS', ward:'Ward 5A', patient:'01', drug:'Enoxaparin 40 mg', dose:'1 syringe', route:'SC', priority:'high-alert', schedule:'OD เช้า', time:'08:00', doctor:'นพ.ธีรวัฒน์ กระดูกดี', status:'prepped', createdAt:'06:00', highAlert:true },
                     // ผู้ป่วย 02 — ชนากานต์ (Post ORIF ankle)
                     { id:'5A-004', source:'HIS', ward:'Ward 5A', patient:'02', drug:'Celecoxib 200 mg', dose:'1 แคปซูล', route:'PO', priority:'routine', schedule:'รอบเช้า', time:'08:00', doctor:'พญ.สุภาวดี ข้อต่อ', status:'prepped', createdAt:'06:15', highAlert:false },
                     { id:'5A-005', source:'HIS', ward:'Ward 5A', patient:'02', drug:'Omeprazole 20 mg', dose:'1 แคปซูล', route:'PO', priority:'routine', schedule:'รอบเช้า', time:'08:00', doctor:'พญ.สุภาวดี ข้อต่อ', status:'prepped', createdAt:'06:15', highAlert:false },
@@ -14364,7 +14339,9 @@
                     { id:'5A-009', source:'HIS', ward:'Ward 5A', patient:'03', drug:'Calcium Carbonate 600 mg', dose:'1 เม็ด', route:'PO', priority:'routine', schedule:'รอบเช้า', time:'08:00', doctor:'นพ.ธีรวัฒน์ กระดูกดี', status:'dispensed', createdAt:'06:30', highAlert:false },
                     { id:'5A-010', source:'HIS', ward:'Ward 5A', patient:'03', drug:'Vitamin D3 1000 IU', dose:'1 เม็ด', route:'PO', priority:'routine', schedule:'รอบเช้า', time:'08:00', doctor:'นพ.ธีรวัฒน์ กระดูกดี', status:'dispensed', createdAt:'06:30', highAlert:false },
                     // ผู้ป่วย 04 — วรวุฒิ (Post spine surgery)
-                    { id:'5A-011', source:'HIS', ward:'Ward 5A', patient:'04', drug:'Cefazolin 1 g', dose:'1 vial', route:'IV', priority:'routine', schedule:'รอบเที่ยง', time:'12:00', doctor:'นพ.ธีรวัฒน์ กระดูกดี', status:'ordered', createdAt:'06:45', highAlert:false },
+                    { id:'5A-029', source:'HIS', ward:'Ward 5A', patient:'04', drug:'Cefazolin 1 g', dose:'1 vial', route:'IV', priority:'routine', schedule:'รอบเช้า', time:'08:00', doctor:'นพ.ธีรวัฒน์ กระดูกดี', status:'dispensed', createdAt:'06:45', highAlert:false },
+                    { id:'5A-011', source:'HIS', ward:'Ward 5A', patient:'04', drug:'Cefazolin 1 g', dose:'1 vial', route:'IV', priority:'routine', schedule:'รอบเที่ยง', time:'16:00', doctor:'นพ.ธีรวัฒน์ กระดูกดี', status:'ordered', createdAt:'06:45', highAlert:false },
+                    { id:'5A-030', source:'HIS', ward:'Ward 5A', patient:'04', drug:'Cefazolin 1 g', dose:'1 vial', route:'IV', priority:'routine', schedule:'กลางคืน', time:'00:00', doctor:'นพ.ธีรวัฒน์ กระดูกดี', status:'ordered', createdAt:'06:45', highAlert:false },
                     { id:'5A-012', source:'HIS', ward:'Ward 5A', patient:'04', drug:'Morphine 5 mg', dose:'5 mg', route:'IV', priority:'high-alert', schedule:'PRN', time:'PRN', doctor:'นพ.ธีรวัฒน์ กระดูกดี', status:'scheduled', createdAt:'06:45', highAlert:true },
                     { id:'5A-013', source:'HIS', ward:'Ward 5A', patient:'04', drug:'Paracetamol 500 mg', dose:'2 เม็ด', route:'PO', priority:'routine', schedule:'รอบเที่ยง', time:'12:00', doctor:'นพ.ธีรวัฒน์ กระดูกดี', status:'dispensed', createdAt:'06:45', highAlert:false },
                     // ผู้ป่วย 05 — จิตรา (Knee arthroscopy)
@@ -14372,11 +14349,13 @@
                     { id:'5A-015', source:'HIS', ward:'Ward 5A', patient:'05', drug:'Celecoxib 200 mg', dose:'1 แคปซูล', route:'PO', priority:'routine', schedule:'รอบเย็น', time:'16:00', doctor:'พญ.สุภาวดี ข้อต่อ', status:'ordered', createdAt:'07:00', highAlert:false },
                     { id:'5A-016', source:'HIS', ward:'Ward 5A', patient:'05', drug:'Omeprazole 20 mg', dose:'1 แคปซูล', route:'PO', priority:'routine', schedule:'รอบเย็น', time:'16:00', doctor:'พญ.สุภาวดี ข้อต่อ', status:'dispensed', createdAt:'07:00', highAlert:false },
                     // ผู้ป่วย 06 — ธวัชชัย (Fracture fixation)
-                    { id:'5A-017', source:'HIS', ward:'Ward 5A', patient:'06', drug:'Enoxaparin 40 mg', dose:'1 syringe', route:'SC', priority:'high-alert', schedule:'รอบเย็น', time:'16:00', doctor:'นพ.ธีรวัฒน์ กระดูกดี', status:'scheduled', createdAt:'07:10', highAlert:true },
+                    { id:'5A-017', source:'HIS', ward:'Ward 5A', patient:'06', drug:'Enoxaparin 40 mg', dose:'1 syringe', route:'SC', priority:'high-alert', schedule:'OD เช้า', time:'08:00', doctor:'นพ.ธีรวัฒน์ กระดูกดี', status:'scheduled', createdAt:'07:10', highAlert:true },
                     { id:'5A-018', source:'HIS', ward:'Ward 5A', patient:'06', drug:'Paracetamol 500 mg', dose:'2 เม็ด', route:'PO', priority:'prn', schedule:'PRN', time:'PRN', doctor:'นพ.ธีรวัฒน์ กระดูกดี', status:'scheduled', createdAt:'07:10', highAlert:false },
                     { id:'5A-019', source:'HIS', ward:'Ward 5A', patient:'06', drug:'Docusate 100 mg', dose:'1 แคปซูล', route:'PO', priority:'routine', schedule:'ก่อนนอน', time:'20:00', doctor:'นพ.ธีรวัฒน์ กระดูกดี', status:'ordered', createdAt:'07:10', highAlert:false },
                     // ผู้ป่วย 07 — นลินี (Post rotator cuff repair)
                     { id:'5A-020', source:'HIS', ward:'Ward 5A', patient:'07', drug:'Cefazolin 1 g', dose:'1 vial', route:'IV', priority:'routine', schedule:'รอบเช้า', time:'08:00', doctor:'พญ.สุภาวดี ข้อต่อ', status:'dispensed', createdAt:'06:30', highAlert:false },
+                    { id:'5A-031', source:'HIS', ward:'Ward 5A', patient:'07', drug:'Cefazolin 1 g', dose:'1 vial', route:'IV', priority:'routine', schedule:'รอบเย็น', time:'16:00', doctor:'พญ.สุภาวดี ข้อต่อ', status:'ordered', createdAt:'06:30', highAlert:false },
+                    { id:'5A-032', source:'HIS', ward:'Ward 5A', patient:'07', drug:'Cefazolin 1 g', dose:'1 vial', route:'IV', priority:'routine', schedule:'กลางคืน', time:'00:00', doctor:'พญ.สุภาวดี ข้อต่อ', status:'ordered', createdAt:'06:30', highAlert:false },
                     { id:'5A-021', source:'HIS', ward:'Ward 5A', patient:'07', drug:'Tramadol 50 mg', dose:'1 เม็ด', route:'PO', priority:'prn', schedule:'PRN', time:'PRN', doctor:'พญ.สุภาวดี ข้อต่อ', status:'scheduled', createdAt:'06:30', highAlert:false },
                     { id:'5A-022', source:'HIS', ward:'Ward 5A', patient:'07', drug:'Gabapentin 300 mg', dose:'1 แคปซูล', route:'PO', priority:'routine', schedule:'ก่อนนอน', time:'20:00', doctor:'พญ.สุภาวดี ข้อต่อ', status:'ordered', createdAt:'06:30', highAlert:false },
                     // ผู้ป่วย 08 — เอกชัย (Multiple fractures)
@@ -14402,6 +14381,7 @@
                     { id:'HIS-007', source:'HIS', ward:'Ward 3A', patient:'03', drug:'Metformin 500 mg', dose:'1 เม็ด', route:'PO', priority:'routine', schedule:'รอบเช้า', time:'08:00', doctor:'พญ.วรรณา คำดี', status:'dispensed', createdAt:'06:15', highAlert:false },
                     { id:'HIS-008', source:'HIS', ward:'Ward 3A', patient:'03', drug:'Enalapril 5 mg', dose:'1 เม็ด', route:'PO', priority:'routine', schedule:'รอบเช้า', time:'08:00', doctor:'พญ.วรรณา คำดี', status:'prepped', createdAt:'06:15', highAlert:false },
                     { id:'HIS-009', source:'HIS', ward:'Ward 3A', patient:'03', drug:'Furosemide 40 mg', dose:'1 เม็ด', route:'PO', priority:'routine', schedule:'รอบเช้า', time:'08:00', doctor:'พญ.วรรณา คำดี', status:'scheduled', createdAt:'06:15', highAlert:false },
+                    { id:'HIS-024', source:'HIS', ward:'Ward 3A', patient:'03', drug:'Metformin 500 mg', dose:'1 เม็ด', route:'PO', priority:'routine', schedule:'รอบเย็น', time:'16:00', doctor:'พญ.วรรณา คำดี', status:'ordered', createdAt:'06:15', highAlert:false },
 
                     { id:'HIS-010', source:'HIS', ward:'Ward 3A', patient:'05', drug:'Warfarin 3 mg', dose:'1 เม็ด', route:'PO', priority:'high-alert', schedule:'ก่อนนอน', time:'20:00', doctor:'นพ.สุรศักดิ์ วงศ์แพทย์', status:'ordered', createdAt:'07:00', highAlert:true },
                     { id:'HIS-011', source:'HIS', ward:'Ward 3A', patient:'05', drug:'Paracetamol 500 mg', dose:'2 เม็ด', route:'PO', priority:'prn', schedule:'PRN', time:'PRN', doctor:'นพ.สุรศักดิ์ วงศ์แพทย์', status:'scheduled', createdAt:'07:00', highAlert:false },
@@ -15030,25 +15010,9 @@
         // Pipeline step indicator
         showEl(document.getElementById('dashPipelineBar'), isSuper);
 
-        // Step 1: Order Plan — ALL roles can see (pharma sees Dr→Ph view)
-        showEl(document.getElementById('dashOrderPlanQuickLink'), true);
-        // Update Order Plan text per role
-        var opLink = document.getElementById('dashOrderPlanQuickLink');
-        if (opLink) {
-            var opTitle = opLink.querySelector('div[style*="font-size:15px"]');
-            var opDesc = opLink.querySelector('div[style*="font-size:12px"]');
-            if (isPharma) {
-                if (opTitle) opTitle.textContent = 'คำสั่งยาจากแพทย์ — Order Plan';
-                if (opDesc) opDesc.textContent = 'ตรวจสอบ 5 Rights แล้วจัดยาเข้า Cassette ตามใบสั่ง';
-            } else {
-                if (opTitle) opTitle.textContent = 'รับคำสั่งยา — Order Plan';
-                if (opDesc) opDesc.textContent = 'คำสั่งยาจากแพทย์ (HIS Sync) + Verbal / Telephone Order';
-            }
-        }
-
-        // Step 2: Nurse Schedule — nurse + super only
+        // Step 1: Nurse Schedule — nurse + super only
         showEl(document.getElementById('dashNurseScheduleQuickLink'), !isPharma);
-        // Step 3: eMAR — nurse + super only
+        // Step 2: eMAR — nurse + super only
         showEl(document.getElementById('dashEmarQuickLink'), !isPharma);
 
         // Step 4: จัดยา — pharma + super only
@@ -16182,7 +16146,8 @@
             drugs: [
                 { name: 'Metformin 500 mg', desc: '1 เม็ด · PO · BID', color: '#0D9488', colorLight: ['#F0FDFA','#CCFBF1'], status: 'ยังไม่จัด', done: false },
                 { name: 'Glipizide 5 mg', desc: '1 เม็ด · PO · OD เช้า', color: '#3B82F6', colorLight: ['#EFF6FF','#DBEAFE'], status: 'ยังไม่จัด', done: false },
-                { name: 'Atorvastatin 20 mg', desc: '1 เม็ด · PO · OD ก่อนนอน', color: '#8B5CF6', colorLight: ['#F5F3FF','#EDE9FE'], status: 'ยังไม่จัด', done: false }
+                { name: 'Atorvastatin 20 mg', desc: '1 เม็ด · PO · OD ก่อนนอน', color: '#8B5CF6', colorLight: ['#F5F3FF','#EDE9FE'], status: 'ยังไม่จัด', done: false },
+                { name: 'Ceftriaxone 1 g', desc: '1 vial · IV · STAT', color: '#EF4444', colorLight: ['#FEF2F2','#FEE2E2'], status: 'ยังไม่จัด', done: false }
             ]
         },
         '10': {
@@ -16262,7 +16227,7 @@
             { name:'Furosemide 40 mg', desc:'1 เม็ด · PO · OD เช้า', color:'#0D9488', colorLight:['#F0FDFA','#CCFBF1'], status:'ยังไม่จัด', done:false }
         ],
         [
-            { name:'Warfarin 3 mg', desc:'1 เม็ด · PO · OD เย็น', color:'#EF4444', colorLight:['#FEF2F2','#FEE2E2'], status:'ยังไม่จัด', done:false, highAlert:true },
+            { name:'Warfarin 3 mg', desc:'1 เม็ด · PO · OD ก่อนนอน', color:'#EF4444', colorLight:['#FEF2F2','#FEE2E2'], status:'ยังไม่จัด', done:false, highAlert:true },
             { name:'Omeprazole 20 mg', desc:'1 แคปซูล · PO · OD', color:'#8B5CF6', colorLight:['#F5F3FF','#EDE9FE'], status:'ยังไม่จัด', done:false }
         ],
         [
@@ -16289,7 +16254,7 @@
         [
             { name:'Cefazolin 1 g', desc:'1 vial · IV · รอบเช้า', color:'#0D9488', colorLight:['#F0FDF4','#DCFCE7'], status:'ยังไม่จัด', done:false },
             { name:'Paracetamol 500 mg', desc:'2 เม็ด · PO · รอบเช้า', color:'#0D9488', colorLight:['#F0FDF4','#DCFCE7'], status:'ยังไม่จัด', done:false },
-            { name:'Enoxaparin 40 mg', desc:'1 syringe · SC · รอบเช้า', color:'#EF4444', colorLight:['#FEF2F2','#FEE2E2'], status:'ยังไม่จัด', done:false, highAlert:true }
+            { name:'Enoxaparin 40 mg', desc:'1 syringe · SC · OD เช้า', color:'#EF4444', colorLight:['#FEF2F2','#FEE2E2'], status:'ยังไม่จัด', done:false, highAlert:true }
         ],
         [
             { name:'Celecoxib 200 mg', desc:'1 แคปซูล · PO · รอบเช้า', color:'#3B82F6', colorLight:['#EFF6FF','#DBEAFE'], status:'ยังไม่จัด', done:false },
@@ -16313,7 +16278,7 @@
             { name:'Omeprazole 20 mg', desc:'1 แคปซูล · PO · รอบเย็น', color:'#8B5CF6', colorLight:['#F5F3FF','#EDE9FE'], status:'จัดแล้ว ✓', done:true }
         ],
         [
-            { name:'Enoxaparin 40 mg', desc:'1 syringe · SC · รอบเย็น', color:'#EF4444', colorLight:['#FEF2F2','#FEE2E2'], status:'ยังไม่จัด', done:false, highAlert:true },
+            { name:'Enoxaparin 40 mg', desc:'1 syringe · SC · OD เช้า', color:'#EF4444', colorLight:['#FEF2F2','#FEE2E2'], status:'ยังไม่จัด', done:false, highAlert:true },
             { name:'Paracetamol 500 mg', desc:'2 เม็ด · PO · PRN pain/fever', color:'#0D9488', colorLight:['#F0FDF4','#DCFCE7'], status:'ยังไม่จัด', done:false },
             { name:'Docusate 100 mg', desc:'1 แคปซูล · PO · ก่อนนอน', color:'#14B8A6', colorLight:['#F0FDFA','#CCFBF1'], status:'ยังไม่จัด', done:false }
         ],
@@ -19814,7 +19779,7 @@
             avatar:'วด', name:'นายวิชัย ดีงาม', hn:'6402890', bed:'3A-05', age:'ชาย, 72 ปี',
             allergy:'แพ้ยา: NSAIDs', tags:['Fall Risk','Drug Allergy'],
             round:'รอบเช้า', drugs:[
-                { name:'Warfarin 3 mg', dose:'3 mg x 1 เม็ด', route:'PO (รับประทาน)', time:'06:00–08:00 น.', freq:'OD เย็น' },
+                { name:'Warfarin 3 mg', dose:'3 mg x 1 เม็ด', route:'PO (รับประทาน)', time:'06:00–08:00 น.', freq:'OD ก่อนนอน' },
                 { name:'Omeprazole 20 mg', dose:'20 mg x 1 แคปซูล', route:'PO (รับประทาน)', time:'06:00–08:00 น.', freq:'OD' }
             ]
         },
