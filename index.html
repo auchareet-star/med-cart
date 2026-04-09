@@ -6864,26 +6864,21 @@
              WORKFLOW PIPELINE — 4 ขั้นตอน
              ════════════════════════════════════════════ -->
 
-        <!-- Pipeline step indicator (super only) — 4 steps -->
+        <!-- Pipeline step indicator (super only) — 3 steps -->
         <div id="dashPipelineBar" style="display:none;align-items:center;gap:0;margin-bottom:16px;padding:0 4px;">
             <div style="display:flex;align-items:center;gap:6px;flex:1;">
-                <div style="width:24px;height:24px;background:linear-gradient(135deg,#1D4ED8,#3B82F6);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:white;flex-shrink:0;">1</div>
-                <span style="font-size:10px;font-weight:700;color:#1D4ED8;">ตารางยา</span>
+                <div style="width:26px;height:26px;background:linear-gradient(135deg,#1D4ED8,#3B82F6);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:white;flex-shrink:0;">1</div>
+                <span style="font-size:11px;font-weight:700;color:#1D4ED8;">ตารางยา</span>
             </div>
-            <div style="flex:0 0 20px;height:2px;background:linear-gradient(90deg,#BFDBFE,#C4B5FD);border-radius:2px;"></div>
+            <div style="flex:0 0 40px;height:2px;background:linear-gradient(90deg,#BFDBFE,#FDE68A);border-radius:2px;"></div>
             <div style="display:flex;align-items:center;gap:6px;flex:1;justify-content:center;">
-                <div style="width:24px;height:24px;background:linear-gradient(135deg,#7C3AED,#8B5CF6);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:white;flex-shrink:0;">2</div>
-                <span style="font-size:10px;font-weight:700;color:#6D28D9;">eMAR</span>
+                <div style="width:26px;height:26px;background:linear-gradient(135deg,#D97706,#F59E0B);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:white;flex-shrink:0;">2</div>
+                <span style="font-size:11px;font-weight:700;color:#B45309;">จัดยา</span>
             </div>
-            <div style="flex:0 0 20px;height:2px;background:linear-gradient(90deg,#C4B5FD,#FDE68A);border-radius:2px;"></div>
-            <div style="display:flex;align-items:center;gap:6px;flex:1;justify-content:center;">
-                <div style="width:24px;height:24px;background:linear-gradient(135deg,#D97706,#F59E0B);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:white;flex-shrink:0;">3</div>
-                <span style="font-size:10px;font-weight:700;color:#B45309;">จัดยา</span>
-            </div>
-            <div style="flex:0 0 20px;height:2px;background:linear-gradient(90deg,#FDE68A,#FECACA);border-radius:2px;"></div>
+            <div style="flex:0 0 40px;height:2px;background:linear-gradient(90deg,#FDE68A,#FECACA);border-radius:2px;"></div>
             <div style="display:flex;align-items:center;gap:6px;flex:1;justify-content:flex-end;">
-                <div style="width:24px;height:24px;background:linear-gradient(135deg,#DC2626,#EF4444);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:white;flex-shrink:0;">4</div>
-                <span style="font-size:10px;font-weight:700;color:#DC2626;">จ่ายยา</span>
+                <div style="width:26px;height:26px;background:linear-gradient(135deg,#DC2626,#EF4444);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:white;flex-shrink:0;">3</div>
+                <span style="font-size:11px;font-weight:700;color:#DC2626;">จ่ายยา</span>
             </div>
         </div>
 
@@ -6909,22 +6904,22 @@
                 <span id="dashNurseScheduleCount" style="background:#DBEAFE;color:#1D4ED8;font-size:10px;font-weight:800;padding:2px 8px;border-radius:6px;">0</span>
             </div>
 
-            <!-- ── eMAR ── -->
+            <!-- ── ประวัติการให้ยา (eMAR log) ── -->
             <div id="dashEmarQuickLink" onclick="nav('pg-emar')" style="
-                background:linear-gradient(135deg,#faf5ff,#f5f3ff);
-                border:1.5px solid #ddd6fe;border-radius:12px;
+                background:linear-gradient(135deg,#f8fafc,#f1f5f9);
+                border:1.5px solid #e2e8f0;border-radius:12px;
                 padding:14px 16px;cursor:pointer;display:flex;align-items:center;gap:12px;
-                transition:all .18s;box-shadow:0 2px 10px rgba(124,58,237,0.06);"
+                transition:all .18s;box-shadow:0 2px 10px rgba(100,116,139,0.06);"
                 onmouseover="this.style.transform='translateY(-2px)'"
                 onmouseout="this.style.transform=''">
-                <div style="width:34px;height:34px;background:linear-gradient(135deg,#7C3AED,#8B5CF6);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.4"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/><path d="M9 12l2 2 4-4"/></svg>
+                <div style="width:34px;height:34px;background:linear-gradient(135deg,#475569,#64748B);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.4"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
                 </div>
                 <div style="flex:1;min-width:0;">
-                    <div style="font-size:13px;font-weight:800;color:#6D28D9;">บันทึกการให้ยา</div>
-                    <div style="font-size:10px;color:#7C3AED;margin-top:1px;">eMAR + Off-cart</div>
+                    <div style="font-size:13px;font-weight:800;color:#334155;">ประวัติการให้ยา</div>
+                    <div style="font-size:10px;color:#64748B;margin-top:1px;">eMAR Log + Off-cart</div>
                 </div>
-                <span id="dashEmarCount" style="background:#EDE9FE;color:#6D28D9;font-size:10px;font-weight:800;padding:2px 8px;border-radius:6px;">0</span>
+                <span id="dashEmarCount" style="background:#F1F5F9;color:#475569;font-size:10px;font-weight:800;padding:2px 8px;border-radius:6px;">0</span>
             </div>
         </div>
 
@@ -6937,7 +6932,7 @@
                     <div class="db-action-icon" style="background:linear-gradient(135deg,#D97706,#F59E0B);box-shadow:0 4px 12px rgba(217,119,6,0.2);margin-bottom:0;">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
                     </div>
-                    <div style="width:28px;height:28px;background:#D97706;color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;">3</div>
+                    <div style="width:28px;height:28px;background:#D97706;color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;">2</div>
                 </div>
                 <div class="db-action-title" style="color:#B45309;">จัดยาเข้ารถเข็น</div>
                 <div class="db-action-sub">Medication Preparation</div>
@@ -6954,7 +6949,7 @@
                     <div class="db-action-icon" style="background:linear-gradient(135deg,#DC2626,#EF4444);box-shadow:0 4px 12px rgba(220,38,38,0.2);margin-bottom:0;">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0016.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 002 8.5c0 2.3 1.5 4.05 3 5.5l7 7z"/></svg>
                     </div>
-                    <div style="width:28px;height:28px;background:#DC2626;color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;">4</div>
+                    <div style="width:28px;height:28px;background:#DC2626;color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;">3</div>
                 </div>
                 <div class="db-action-title" style="color:#B91C1C;">จ่ายยาให้ผู้ป่วย</div>
                 <div class="db-action-sub">Medication Administration</div>
@@ -7436,11 +7431,11 @@
         <div class="op-shell">
             <div class="op-topbar">
                 <div>
-                    <div class="op-kicker">Electronic MAR</div>
-                    <div class="op-title">บันทึกการให้ยา (eMAR)</div>
+                    <div class="op-kicker">eMAR — Electronic Medication Administration Record</div>
+                    <div class="op-title">ประวัติการให้ยา</div>
                     <div class="op-sub">
                         <span id="emarWardLabel">Ward 3A</span> · <span id="emarCartLabel">Med Cart A-1</span>
-                        · ดูสถานะรายการยา · บันทึกยานอกรถเข็น (Off-cart)
+                        · ดูประวัติการจ่ายยา/จัดยา/Off-cart ทั้งหมด · ติดตามสถานะรายการยา
                     </div>
                 </div>
                 <div class="op-actions">
@@ -7475,7 +7470,7 @@
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0D9488" stroke-width="2.5" style="vertical-align:-2px;margin-right:6px;"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
                             รายการให้ยาใน Ward
                         </div>
-                        <div class="op-panel-sub">ดูสถานะยาทั้งหมด · กดที่รายการเพื่อเข้า flow จ่ายยา (5 Rights Scan)</div>
+                        <div class="op-panel-sub">ประวัติคำสั่งยาทั้งหมด พร้อมสถานะ (สั่ง → จัด → จ่าย) และ verification trail</div>
                     </div>
                     <span class="op-badge" id="emarListBadge">0 active</span>
                 </div>
@@ -14928,12 +14923,17 @@
         var pipeBar = document.getElementById('dashPipelineBar');
         if (pipeBar) pipeBar.style.display = isSuper ? 'flex' : 'none';
 
-        // Quick links: nurse + super see both; pharma sees neither
+        // Quick links visibility
+        // Nurse Schedule: nurse + super only
         showEl(document.getElementById('dashNurseScheduleQuickLink'), !isPharma);
-        showEl(document.getElementById('dashEmarQuickLink'), !isPharma);
-        // Hide entire 2-col container for pharma
+        // ประวัติการให้ยา (eMAR log): all roles can see
+        showEl(document.getElementById('dashEmarQuickLink'), true);
+        // Container: always visible (eMAR log for all), adjust grid
         var qlGrid = document.getElementById('dashEmarQuickLink');
-        if (qlGrid && qlGrid.parentElement) qlGrid.parentElement.style.display = isPharma ? 'none' : '';
+        if (qlGrid && qlGrid.parentElement) {
+            qlGrid.parentElement.style.display = '';
+            qlGrid.parentElement.style.gridTemplateColumns = isPharma ? '1fr' : '1fr 1fr';
+        }
 
         // Step 4: จัดยา — pharma + super only
         var prepBtn = dashEl?.querySelector('.db-action[onclick*="goToPrepType"]');
