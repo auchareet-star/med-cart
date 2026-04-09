@@ -1972,7 +1972,7 @@
         ══════════════════════════════════════════════ */
         /* ── DASHBOARD ────────────────────────────── */
         .db-body { flex:1; width:100%; overflow-y:auto; }
-        .db-inner { max-width:1080px; margin:0 auto; padding:28px 32px 48px; }
+        .db-inner { max-width:1080px; margin:0 auto; padding:18px 28px 36px; }
 
         /* Banner — refined premium */
         .db-banner {
@@ -6801,88 +6801,62 @@
     <div class="db-body">
     <div class="db-inner">
 
-        <!-- Banner -->
-        <div class="db-banner" id="dashBanner" style="background:linear-gradient(135deg,#0a5c55 0%,#0F766E 30%,#0D9488 65%,#0ea59a 100%);padding:0;display:flex;align-items:stretch;min-height:148px;">
-            <!-- Left: greeting -->
-            <div style="flex:1;padding:26px 32px;display:flex;flex-direction:column;justify-content:center;position:relative;z-index:1;">
-                <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
-                    <div style="width:8px;height:8px;background:#4ade80;border-radius:50%;box-shadow:0 0 0 3px rgba(74,222,128,0.3);animation:dashPulse 2s infinite;flex-shrink:0;"></div>
-                    <span style="font-size:12px;opacity:.8;letter-spacing:.3px;">Ward 3A · หอผู้ป่วยอายุรกรรม · รอบเช้า 08:00 น.</span>
+        <!-- ── Compact Banner ── -->
+        <div class="db-banner" id="dashBanner" style="background:linear-gradient(135deg,#0a5c55 0%,#0F766E 30%,#0D9488 65%,#0ea59a 100%);padding:16px 24px;display:flex;align-items:center;gap:20px;min-height:0;border-radius:16px;margin-bottom:16px;">
+            <div style="flex:1;min-width:0;position:relative;z-index:1;">
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+                    <div style="width:7px;height:7px;background:#4ade80;border-radius:50%;flex-shrink:0;"></div>
+                    <span style="font-size:11px;opacity:.75;">Ward 3A · หอผู้ป่วยอายุรกรรม</span>
                 </div>
-                <h1 style="font-size:26px;font-weight:700;letter-spacing:-.4px;margin-bottom:8px;line-height:1.2;color:white;text-shadow:none;">สวัสดี, <span id="dashWelcomeName">คุณปราณี</span> 👋</h1>
-                <div class="db-banner-sub" style="font-size:13px;opacity:.75;">มีรายการยา <strong style="opacity:1;color:#a7f3d0;">8 รายการ</strong> รอดำเนินการ · จ่ายแล้ว <strong style="opacity:1;color:#a7f3d0;">16 จาก 24</strong> รายการ</div>
+                <h1 style="font-size:20px;font-weight:700;letter-spacing:-.3px;color:white;margin-bottom:4px;">สวัสดี, <span id="dashWelcomeName">คุณปราณี</span></h1>
+                <div class="db-banner-sub" style="font-size:12px;opacity:.75;">รอดำเนินการ <strong style="color:#a7f3d0;">8</strong> · จ่ายแล้ว <strong style="color:#a7f3d0;">16/24</strong></div>
             </div>
-            <!-- Center: progress donut -->
-            <div style="display:flex;align-items:center;justify-content:center;padding:0 32px;position:relative;z-index:1;border-left:1px solid rgba(255,255,255,0.1);border-right:1px solid rgba(255,255,255,0.1);">
-                <div class="db-progress">
-                    <svg width="96" height="96" viewBox="0 0 96 96" style="transform:rotate(-90deg);">
-                        <circle cx="48" cy="48" r="40" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="8"/>
-                        <circle cx="48" cy="48" r="40" fill="none" stroke="white" stroke-width="8" stroke-dasharray="251" stroke-dashoffset="83" stroke-linecap="round"/>
+            <div style="display:flex;align-items:center;gap:14px;position:relative;z-index:1;flex-shrink:0;">
+                <div class="db-progress" style="width:64px;height:64px;flex:0 0 64px;">
+                    <svg width="64" height="64" viewBox="0 0 64 64" style="transform:rotate(-90deg);">
+                        <circle cx="32" cy="32" r="26" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="5"/>
+                        <circle cx="32" cy="32" r="26" fill="none" stroke="white" stroke-width="5" stroke-dasharray="163" stroke-dashoffset="54" stroke-linecap="round"/>
                     </svg>
                     <div class="db-progress-text">
-                        <div class="db-progress-num" style="font-size:22px;">67%</div>
-                        <div class="db-progress-label">เสร็จแล้ว</div>
+                        <div class="db-progress-num" style="font-size:15px;">67%</div>
                     </div>
                 </div>
-            </div>
-            <!-- Right: cart info + shift -->
-            <div style="display:flex;flex-direction:column;justify-content:center;gap:10px;padding:20px 28px;position:relative;z-index:1;min-width:220px;">
-                <div class="db-cart-chip">
-                    <div style="display:flex;align-items:center;gap:9px;margin-bottom:8px;">
-                        <div class="db-cart-chip-id">A-1</div>
-                        <div style="font-size:13px;font-weight:600;" id="dashCartName">Med Cart A-1</div>
-                    </div>
-                    <div id="dashCartStatus" style="display:flex;align-items:center;gap:6px;font-size:11px;opacity:.7;">
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="6" width="18" height="12" rx="2"/><line x1="23" y1="13" x2="23" y2="11"/></svg>
-                        85% · Online
-                    </div>
-                </div>
-                <div style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);border-radius:10px;padding:8px 14px;font-size:11px;opacity:.8;display:flex;align-items:center;gap:6px;color:white;">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                    กะเช้า · 07:00 – 15:00 น.
+                <div style="text-align:right;">
+                    <div style="font-size:12px;font-weight:600;color:white;" id="dashCartName">Med Cart A-1</div>
+                    <div id="dashCartStatus" style="font-size:10px;opacity:.65;margin-top:2px;">85% · Online</div>
                 </div>
             </div>
         </div>
-        <style>@keyframes dashPulse{0%,100%{box-shadow:0 0 0 3px rgba(74,222,128,0.3)}50%{box-shadow:0 0 0 6px rgba(74,222,128,0.1)}}</style>
 
-        <!-- Stats -->
-        <div class="db-stats">
-            <!-- ผู้ป่วย — Indigo -->
-            <div class="db-stat" style="border-color:#e0e7ff;--db-stat-accent-bg:rgba(99,102,241,0.06);--db-stat-icon-bg:linear-gradient(135deg,#4F46E5,#6366F1);--db-stat-shadow:rgba(79,70,229,0.25);--db-stat-num-color:#1e1b4b;--db-stat-color:#6366F1;">
-                <div class="db-stat-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/></svg></div>
-                <div class="db-stat-num" id="dashStatPatients">8</div>
-                <div class="db-stat-label">ผู้ป่วยใน Ward</div>
-                <div class="db-stat-sublabel" id="dashStatPatientsSub">Ward 3A ทั้งหมด</div>
+        <!-- ── Stats (4 compact) ── -->
+        <div class="db-stats" style="grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px;">
+            <div class="db-stat" style="padding:14px;border-color:#e0e7ff;--db-stat-accent-bg:rgba(99,102,241,0.06);--db-stat-icon-bg:linear-gradient(135deg,#4F46E5,#6366F1);--db-stat-shadow:rgba(79,70,229,0.2);--db-stat-color:#6366F1;">
+                <div class="db-stat-icon" style="width:30px;height:30px;margin-bottom:8px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
+                <div class="db-stat-num" id="dashStatPatients" style="font-size:24px;">8</div>
+                <div class="db-stat-label">ผู้ป่วย</div>
+                <div class="db-stat-sublabel" id="dashStatPatientsSub">Ward 3A</div>
             </div>
-            <!-- รายการยา — Teal -->
-            <div class="db-stat" style="border-color:#ccfbf1;--db-stat-accent-bg:rgba(20,184,166,0.07);--db-stat-icon-bg:linear-gradient(135deg,#0D9488,#14B8A6);--db-stat-shadow:rgba(13,148,136,0.25);--db-stat-num-color:#042f2e;--db-stat-color:#0D9488;">
-                <div class="db-stat-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></div>
-                <div class="db-stat-num" id="dashStatMeds">24</div>
-                <div class="db-stat-label">รายการยาวันนี้</div>
-                <div class="db-stat-sublabel" id="dashStatMedsSub">รอบเช้า–กลางคืน</div>
+            <div class="db-stat" style="padding:14px;border-color:#ccfbf1;--db-stat-accent-bg:rgba(20,184,166,0.07);--db-stat-icon-bg:linear-gradient(135deg,#0D9488,#14B8A6);--db-stat-shadow:rgba(13,148,136,0.2);--db-stat-color:#0D9488;">
+                <div class="db-stat-icon" style="width:30px;height:30px;margin-bottom:8px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/></svg></div>
+                <div class="db-stat-num" id="dashStatMeds" style="font-size:24px;">24</div>
+                <div class="db-stat-label">รายการยา</div>
+                <div class="db-stat-sublabel" id="dashStatMedsSub">วันนี้</div>
             </div>
-            <!-- จ่ายแล้ว — Sky -->
-            <div class="db-stat" style="border-color:#bae6fd;--db-stat-accent-bg:rgba(14,165,233,0.07);--db-stat-icon-bg:linear-gradient(135deg,#0284C7,#0EA5E9);--db-stat-shadow:rgba(2,132,199,0.25);--db-stat-num-color:#0c1a29;--db-stat-color:#0284C7;--db-stat-bar-bg:#e0f2fe;--db-stat-bar-fill:linear-gradient(90deg,#0284C7,#38bdf8);">
-                <div class="db-stat-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
-                <div class="db-stat-num" id="dashStatDone">16</div>
+            <div class="db-stat" style="padding:14px;border-color:#bae6fd;--db-stat-accent-bg:rgba(14,165,233,0.07);--db-stat-icon-bg:linear-gradient(135deg,#0284C7,#0EA5E9);--db-stat-shadow:rgba(2,132,199,0.2);--db-stat-color:#0284C7;--db-stat-bar-bg:#e0f2fe;--db-stat-bar-fill:linear-gradient(90deg,#0284C7,#38bdf8);">
+                <div class="db-stat-icon" style="width:30px;height:30px;margin-bottom:8px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+                <div class="db-stat-num" id="dashStatDone" style="font-size:24px;">16</div>
                 <div class="db-stat-label">จ่ายแล้ว</div>
                 <div class="db-stat-bar"><div class="db-stat-bar-fill" id="dashStatDoneBar" style="width:67%;"></div></div>
             </div>
-            <!-- รอจ่าย — Amber -->
-            <div class="db-stat" style="border-color:#fde68a;--db-stat-accent-bg:rgba(245,158,11,0.07);--db-stat-icon-bg:linear-gradient(135deg,#D97706,#F59E0B);--db-stat-shadow:rgba(217,119,6,0.25);--db-stat-num-color:#1c0a00;--db-stat-color:#D97706;--db-stat-bar-bg:#fef3c7;--db-stat-bar-fill:linear-gradient(90deg,#D97706,#fbbf24);">
-                <div class="db-stat-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
-                <div class="db-stat-num" id="dashStatPending">8</div>
+            <div class="db-stat" style="padding:14px;border-color:#fde68a;--db-stat-accent-bg:rgba(245,158,11,0.07);--db-stat-icon-bg:linear-gradient(135deg,#D97706,#F59E0B);--db-stat-shadow:rgba(217,119,6,0.2);--db-stat-color:#D97706;--db-stat-bar-bg:#fef3c7;--db-stat-bar-fill:linear-gradient(90deg,#D97706,#fbbf24);">
+                <div class="db-stat-icon" style="width:30px;height:30px;margin-bottom:8px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+                <div class="db-stat-num" id="dashStatPending" style="font-size:24px;">8</div>
                 <div class="db-stat-label">รอจ่าย</div>
                 <div class="db-stat-bar"><div class="db-stat-bar-fill" id="dashStatPendingBar" style="width:33%;"></div></div>
             </div>
-            <!-- Drawer — Rose -->
-            <div class="db-stat" style="border-color:#fecdd3;--db-stat-accent-bg:rgba(251,113,133,0.07);--db-stat-icon-bg:linear-gradient(135deg,#E11D48,#FB7185);--db-stat-shadow:rgba(225,29,72,0.25);--db-stat-num-color:#1a0008;--db-stat-color:#E11D48;">
-                <div class="db-stat-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="2" y="3" width="20" height="18" rx="2"/><line x1="2" y1="9" x2="22" y2="9"/></svg></div>
-                <div class="db-stat-num" id="dashStatCassette">0<span style="font-size:15px;color:#94a3b8;font-weight:500;">/6</span></div>
-                <div class="db-stat-label">Drawer / Cassette</div>
-                <div class="db-stat-sublabel" id="dashStatCassetteSub">Cassette 0/36 ใช้งานอยู่</div>
-            </div>
         </div>
+        <!-- Hidden stat refs for JS -->
+        <div style="display:none;"><span id="dashStatCassette">0</span><span id="dashStatCassetteSub"></span></div>
 
         <div id="dashPermSection" style="display:none;margin-bottom:24px;"></div>
 
@@ -6916,53 +6890,43 @@
         <!-- Hidden refs for JS compatibility -->
         <div id="dashOrderPlanQuickLink" style="display:none;"><span id="dashOrderPlanCount">0</span></div>
 
-        <!-- ── Step 1: ตารางรอบยา (Nurse Schedule) ── -->
-        <div id="dashNurseScheduleQuickLink" onclick="nav('pg-nurse-schedule')" style="
-            background:linear-gradient(135deg,#eff6ff,#ecfeff);
-            border:1.5px solid #bfdbfe;border-radius:14px;
-            padding:18px 22px;margin-bottom:12px;cursor:pointer;
-            display:flex;align-items:center;gap:16px;
-            transition:all .18s;box-shadow:0 2px 12px rgba(37,99,235,0.08);"
-            onmouseover="this.style.boxShadow='0 6px 24px rgba(37,99,235,0.16)';this.style.transform='translateY(-2px)'"
-            onmouseout="this.style.boxShadow='0 2px 12px rgba(37,99,235,0.08)';this.style.transform=''">
-            <div style="display:flex;align-items:center;gap:12px;flex-shrink:0;">
-                <div style="width:36px;height:36px;background:linear-gradient(135deg,#1D4ED8,#3B82F6);border-radius:10px;display:flex;align-items:center;justify-content:center;">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.4"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        <!-- ── Quick Links (compact 2-col) ── -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;">
+            <!-- Nurse Schedule -->
+            <div id="dashNurseScheduleQuickLink" onclick="nav('pg-nurse-schedule')" style="
+                background:linear-gradient(135deg,#eff6ff,#ecfeff);
+                border:1.5px solid #bfdbfe;border-radius:12px;
+                padding:14px 16px;cursor:pointer;
+                display:flex;align-items:center;gap:12px;
+                transition:all .18s;box-shadow:0 2px 10px rgba(37,99,235,0.06);"
+                onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 20px rgba(37,99,235,0.14)'"
+                onmouseout="this.style.transform='';this.style.boxShadow='0 2px 10px rgba(37,99,235,0.06)'">
+                <div style="width:34px;height:34px;background:linear-gradient(135deg,#1D4ED8,#3B82F6);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.4"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
                 </div>
-                <div style="width:24px;height:24px;background:#1D4ED8;color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;">1</div>
-            </div>
-            <div style="flex:1;min-width:0;">
-                <div style="font-size:15px;font-weight:800;color:#1D4ED8;margin-bottom:2px;">ตารางรอบยา — Nurse Schedule</div>
-                <div style="font-size:12px;color:#2563EB;">รายการยาจากแพทย์ จัดตามรอบเวลา + เพิ่ม Verbal/Tel Order</div>
-            </div>
-            <div style="display:flex;align-items:center;gap:8px;">
-                <span id="dashNurseScheduleCount" style="background:#eff6ff;color:#1D4ED8;font-size:11px;font-weight:800;padding:3px 10px;border-radius:8px;border:1px solid #bfdbfe;">0 รอจัด</span>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-            </div>
-        </div>
-
-        <!-- ── Step 2: ตรวจสอบ 5 Rights (eMAR) ── -->
-        <div id="dashEmarQuickLink" onclick="nav('pg-emar')" style="
-            background:linear-gradient(135deg,#faf5ff,#f5f3ff);
-            border:1.5px solid #ddd6fe;border-radius:14px;
-            padding:18px 22px;margin-bottom:12px;cursor:pointer;
-            display:flex;align-items:center;gap:16px;
-            transition:all .18s;box-shadow:0 2px 12px rgba(124,58,237,0.08);"
-            onmouseover="this.style.boxShadow='0 6px 24px rgba(124,58,237,0.16)';this.style.transform='translateY(-2px)'"
-            onmouseout="this.style.boxShadow='0 2px 12px rgba(124,58,237,0.08)';this.style.transform=''">
-            <div style="display:flex;align-items:center;gap:12px;flex-shrink:0;">
-                <div style="width:36px;height:36px;background:linear-gradient(135deg,#7C3AED,#8B5CF6);border-radius:10px;display:flex;align-items:center;justify-content:center;">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.4"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/><path d="M9 12l2 2 4-4"/></svg>
+                <div style="flex:1;min-width:0;">
+                    <div style="font-size:13px;font-weight:800;color:#1D4ED8;">ตารางรอบยา</div>
+                    <div style="font-size:10px;color:#3B82F6;margin-top:1px;">Nurse Schedule</div>
                 </div>
-                <div style="width:24px;height:24px;background:#7C3AED;color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;">2</div>
+                <span id="dashNurseScheduleCount" style="background:#DBEAFE;color:#1D4ED8;font-size:10px;font-weight:800;padding:2px 8px;border-radius:6px;">0</span>
             </div>
-            <div style="flex:1;min-width:0;">
-                <div style="font-size:15px;font-weight:800;color:#6D28D9;margin-bottom:2px;">ตรวจสอบ 5 Rights — eMAR</div>
-                <div style="font-size:12px;color:#7C3AED;">ตรวจ Right Patient/Drug/Dose/Route/Time + บันทึก Off-cart</div>
-            </div>
-            <div style="display:flex;align-items:center;gap:8px;">
-                <span id="dashEmarCount" style="background:#f5f3ff;color:#6D28D9;font-size:11px;font-weight:800;padding:3px 10px;border-radius:8px;border:1px solid #ddd6fe;">0 รอให้ยา</span>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+            <!-- eMAR -->
+            <div id="dashEmarQuickLink" onclick="nav('pg-emar')" style="
+                background:linear-gradient(135deg,#faf5ff,#f5f3ff);
+                border:1.5px solid #ddd6fe;border-radius:12px;
+                padding:14px 16px;cursor:pointer;
+                display:flex;align-items:center;gap:12px;
+                transition:all .18s;box-shadow:0 2px 10px rgba(124,58,237,0.06);"
+                onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 20px rgba(124,58,237,0.14)'"
+                onmouseout="this.style.transform='';this.style.boxShadow='0 2px 10px rgba(124,58,237,0.06)'">
+                <div style="width:34px;height:34px;background:linear-gradient(135deg,#7C3AED,#8B5CF6);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.4"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/><path d="M9 12l2 2 4-4"/></svg>
+                </div>
+                <div style="flex:1;min-width:0;">
+                    <div style="font-size:13px;font-weight:800;color:#6D28D9;">ตรวจ 5 Rights</div>
+                    <div style="font-size:10px;color:#7C3AED;margin-top:1px;">eMAR + Off-cart</div>
+                </div>
+                <span id="dashEmarCount" style="background:#EDE9FE;color:#6D28D9;font-size:10px;font-weight:800;padding:2px 8px;border-radius:6px;">0</span>
             </div>
         </div>
 
@@ -7004,47 +6968,41 @@
             </div>
         </div>
 
-        <!-- ── STAT Alert (ยาด่วนเท่านั้น) ── -->
-        <div id="dashQuickAlerts" onclick="startStatTimer();nav('pg-stat');" style="
-            background:linear-gradient(135deg,#FEF2F2,#FEE2E2);
-            border:1.5px solid #FECACA;border-left:4px solid #EF4444;border-radius:14px;
-            padding:16px 22px;margin-bottom:12px;cursor:pointer;
-            display:flex;align-items:center;gap:16px;
-            transition:all .18s;box-shadow:0 2px 12px rgba(239,68,68,0.08);"
-            onmouseover="this.style.boxShadow='0 6px 24px rgba(239,68,68,0.16)';this.style.transform='translateY(-2px)'"
-            onmouseout="this.style.boxShadow='0 2px 12px rgba(239,68,68,0.08)';this.style.transform=''">
-            <div style="width:42px;height:42px;background:linear-gradient(135deg,#DC2626,#EF4444);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 3px 10px rgba(239,68,68,0.25);">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <!-- ── STAT + Assessment (compact 2-col) ── -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;">
+            <!-- STAT -->
+            <div id="dashQuickAlerts" onclick="startStatTimer();nav('pg-stat');" style="
+                background:linear-gradient(135deg,#FEF2F2,#FEE2E2);
+                border:1.5px solid #FECACA;border-left:3px solid #EF4444;border-radius:12px;
+                padding:14px 16px;cursor:pointer;display:flex;align-items:center;gap:12px;
+                transition:all .18s;"
+                onmouseover="this.style.transform='translateY(-2px)'"
+                onmouseout="this.style.transform=''">
+                <div style="width:34px;height:34px;background:linear-gradient(135deg,#DC2626,#EF4444);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                </div>
+                <div style="flex:1;min-width:0;">
+                    <div style="font-size:13px;font-weight:800;color:#B91C1C;">STAT ยาด่วน</div>
+                    <div style="font-size:10px;color:#DC2626;margin-top:1px;">ต้องจ่ายทันที</div>
+                </div>
+                <span class="db-alert-num" style="font-size:20px;font-weight:800;color:#DC2626;">1</span>
             </div>
-            <div style="flex:1;">
-                <div style="font-size:15px;font-weight:800;color:#B91C1C;">STAT — ยาด่วนรอจ่าย</div>
-                <div style="font-size:12px;color:#DC2626;">คำสั่งด่วนจากแพทย์ ต้องจ่ายทันที</div>
-            </div>
-            <div style="display:flex;align-items:center;gap:8px;">
-                <span class="db-alert-num" style="font-size:22px;font-weight:800;color:#DC2626;">1</span>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-            </div>
-        </div>
-
-        <!-- ── ประเมินหลังให้ยา ── -->
-        <div id="dashAssessQuickLink" onclick="nav('pg-assess-list')" style="
-            background:linear-gradient(135deg,#ecfdf5,#d1fae5);
-            border:1.5px solid #6ee7b7;border-radius:14px;
-            padding:16px 22px;margin-bottom:20px;cursor:pointer;
-            display:flex;align-items:center;gap:16px;
-            transition:all .18s;box-shadow:0 2px 12px rgba(5,150,105,0.08);"
-            onmouseover="this.style.boxShadow='0 6px 24px rgba(5,150,105,0.16)';this.style.transform='translateY(-2px)'"
-            onmouseout="this.style.boxShadow='0 2px 12px rgba(5,150,105,0.08)';this.style.transform=''">
-            <div style="width:42px;height:42px;background:linear-gradient(135deg,#059669,#10b981);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 3px 10px rgba(5,150,105,0.25);">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.4"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-            </div>
-            <div style="flex:1;">
-                <div style="font-size:15px;font-weight:800;color:#065f46;">ประเมินหลังให้ยา — Post Assessment</div>
-                <div style="font-size:12px;color:#059669;">ติดตามผลการตอบสนองของผู้ป่วยหลังได้รับยา</div>
-            </div>
-            <div style="display:flex;align-items:center;gap:8px;">
-                <span style="background:#fef2f2;color:#dc2626;font-size:11px;font-weight:700;padding:3px 10px;border-radius:8px;border:1px solid #fca5a5;">รอประเมิน 3</span>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+            <!-- Assessment -->
+            <div id="dashAssessQuickLink" onclick="nav('pg-assess-list')" style="
+                background:linear-gradient(135deg,#ecfdf5,#d1fae5);
+                border:1.5px solid #6ee7b7;border-left:3px solid #10B981;border-radius:12px;
+                padding:14px 16px;cursor:pointer;display:flex;align-items:center;gap:12px;
+                transition:all .18s;"
+                onmouseover="this.style.transform='translateY(-2px)'"
+                onmouseout="this.style.transform=''">
+                <div style="width:34px;height:34px;background:linear-gradient(135deg,#059669,#10b981);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.4"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                </div>
+                <div style="flex:1;min-width:0;">
+                    <div style="font-size:13px;font-weight:800;color:#065f46;">ประเมินหลังให้ยา</div>
+                    <div style="font-size:10px;color:#059669;margin-top:1px;">Post Assessment</div>
+                </div>
+                <span style="background:#FEF2F2;color:#DC2626;font-size:10px;font-weight:700;padding:2px 8px;border-radius:6px;border:1px solid #FECACA;">รอ 3</span>
             </div>
         </div>
 
