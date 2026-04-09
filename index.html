@@ -14084,8 +14084,8 @@
 
     // Pages that require nurse/head-nurse permission.
     const assessmentPages = ['pg-post-assess','pg-assess-list'];
-    const dispensePages = ['pg-nurse-schedule','pg-emar','pg-routine','pg-stat','pg-prn','pg-highalert','pg-omit-flow','pg-overdue','pg-scan-pt','pg-admin-med','pg-witness','pg-omit','pg-record','pg-hardstop','pg-dispense','pg-pt-detail'];
-    // Note: pg-order-plan removed — pharma needs access to see Dr→Ph orders
+    const dispensePages = ['pg-routine','pg-stat','pg-prn','pg-highalert','pg-omit-flow','pg-overdue','pg-scan-pt','pg-admin-med','pg-witness','pg-omit','pg-record','pg-hardstop','pg-dispense','pg-pt-detail'];
+    // Note: pg-order-plan, pg-nurse-schedule, pg-emar removed — all roles need access
     const landingPages = ['pg-cart-list','pg-cart','pg-confirm','pg-ward-select','pg-login','pg-role'];
     const prepHardwarePages = ['pg-prep-pt-drugs','pg-prep-med-detail','pg-sched-detail'];
     let prepHardwareReady = false;
