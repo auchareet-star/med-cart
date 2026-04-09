@@ -7004,51 +7004,42 @@
             </div>
         </div>
 
-        <!-- ── Quick Alerts (ยาด่วน/พิเศษ) ── -->
-        <div class="db-alerts" id="dashQuickAlerts">
-            <div class="db-alert" style="border-color:#fee2e2;border-left:3px solid #ef4444;" onclick="startStatTimer();nav('pg-stat');">
-                <div class="db-alert-icon" style="background:linear-gradient(135deg,#ef4444,#f87171);box-shadow:0 3px 8px rgba(239,68,68,0.25);">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                </div>
-                <div><div class="db-alert-num" style="color:#ef4444;">2</div><div class="db-alert-label">STAT รอจ่าย</div></div>
+        <!-- ── STAT Alert (ยาด่วนเท่านั้น) ── -->
+        <div id="dashQuickAlerts" onclick="startStatTimer();nav('pg-stat');" style="
+            background:linear-gradient(135deg,#FEF2F2,#FEE2E2);
+            border:1.5px solid #FECACA;border-left:4px solid #EF4444;border-radius:14px;
+            padding:16px 22px;margin-bottom:12px;cursor:pointer;
+            display:flex;align-items:center;gap:16px;
+            transition:all .18s;box-shadow:0 2px 12px rgba(239,68,68,0.08);"
+            onmouseover="this.style.boxShadow='0 6px 24px rgba(239,68,68,0.16)';this.style.transform='translateY(-2px)'"
+            onmouseout="this.style.boxShadow='0 2px 12px rgba(239,68,68,0.08)';this.style.transform=''">
+            <div style="width:42px;height:42px;background:linear-gradient(135deg,#DC2626,#EF4444);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 3px 10px rgba(239,68,68,0.25);">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
             </div>
-            <div class="db-alert" style="border-color:#ede9fe;border-left:3px solid #7c3aed;" onclick="nav('pg-prn')">
-                <div class="db-alert-icon" style="background:linear-gradient(135deg,#7c3aed,#8b5cf6);box-shadow:0 3px 8px rgba(124,58,237,0.25);">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0016.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 002 8.5c0 2.3 1.5 4.05 3 5.5l7 7z"/></svg>
-                </div>
-                <div><div class="db-alert-num" style="color:#7c3aed;">3</div><div class="db-alert-label">PRN รอจ่าย</div></div>
+            <div style="flex:1;">
+                <div style="font-size:15px;font-weight:800;color:#B91C1C;">STAT — ยาด่วนรอจ่าย</div>
+                <div style="font-size:12px;color:#DC2626;">คำสั่งด่วนจากแพทย์ ต้องจ่ายทันที</div>
             </div>
-            <div class="db-alert" style="border-color:#fde68a;border-left:3px solid #d97706;" onclick="nav('pg-highalert')">
-                <div class="db-alert-icon" style="background:linear-gradient(135deg,#d97706,#f59e0b);box-shadow:0 3px 8px rgba(217,119,6,0.25);">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-                </div>
-                <div><div class="db-alert-num" style="color:#d97706;">2</div><div class="db-alert-label">High Alert</div></div>
-            </div>
-            <div class="db-alert" style="border-color:#e2e8f0;border-left:3px solid #64748b;" onclick="nav('pg-omit-flow')">
-                <div class="db-alert-icon" style="background:linear-gradient(135deg,#475569,#64748b);box-shadow:0 3px 8px rgba(100,116,139,0.25);">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
-                </div>
-                <div><div class="db-alert-num" style="color:#475569;">2</div><div class="db-alert-label">งดยาวันนี้</div></div>
+            <div style="display:flex;align-items:center;gap:8px;">
+                <span class="db-alert-num" style="font-size:22px;font-weight:800;color:#DC2626;">1</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
             </div>
         </div>
 
-        <!-- ── Step 6: ประเมินหลังให้ยา ── -->
+        <!-- ── ประเมินหลังให้ยา ── -->
         <div id="dashAssessQuickLink" onclick="nav('pg-assess-list')" style="
             background:linear-gradient(135deg,#ecfdf5,#d1fae5);
             border:1.5px solid #6ee7b7;border-radius:14px;
-            padding:18px 22px;margin-bottom:20px;cursor:pointer;
+            padding:16px 22px;margin-bottom:20px;cursor:pointer;
             display:flex;align-items:center;gap:16px;
             transition:all .18s;box-shadow:0 2px 12px rgba(5,150,105,0.08);"
             onmouseover="this.style.boxShadow='0 6px 24px rgba(5,150,105,0.16)';this.style.transform='translateY(-2px)'"
             onmouseout="this.style.boxShadow='0 2px 12px rgba(5,150,105,0.08)';this.style.transform=''">
-            <div style="display:flex;align-items:center;gap:12px;flex-shrink:0;">
-                <div style="width:36px;height:36px;background:linear-gradient(135deg,#059669,#10b981);border-radius:10px;display:flex;align-items:center;justify-content:center;">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.4"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                </div>
-                <div style="width:24px;height:24px;background:#059669;color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;">6</div>
+            <div style="width:42px;height:42px;background:linear-gradient(135deg,#059669,#10b981);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 3px 10px rgba(5,150,105,0.25);">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.4"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
             </div>
             <div style="flex:1;">
-                <div style="font-size:15px;font-weight:800;color:#065f46;margin-bottom:2px;">ประเมินหลังให้ยา — Post Assessment</div>
+                <div style="font-size:15px;font-weight:800;color:#065f46;">ประเมินหลังให้ยา — Post Assessment</div>
                 <div style="font-size:12px;color:#059669;">ติดตามผลการตอบสนองของผู้ป่วยหลังได้รับยา</div>
             </div>
             <div style="display:flex;align-items:center;gap:8px;">
@@ -14556,11 +14547,9 @@
         if (el) el.textContent = MedCartStore.countByStatus('ordered') + ' รอจัด';
         el = document.getElementById('dashEmarCount');
         if (el) el.textContent = (s.totalMeds - s.done) + ' รอให้ยา';
-        // Alert badges
-        var statBadge = document.querySelector('#dashQuickAlerts .db-alert:nth-child(1) .db-alert-num');
+        // STAT alert badge
+        var statBadge = document.querySelector('#dashQuickAlerts .db-alert-num');
         if (statBadge) statBadge.textContent = s.stat;
-        var haBadge = document.querySelector('#dashQuickAlerts .db-alert:nth-child(3) .db-alert-num');
-        if (haBadge) haBadge.textContent = s.highAlert;
         // eMAR 5 Rights counters
         el = document.getElementById('emar7rPending'); if (el) el.textContent = s.pending;
         el = document.getElementById('emar7rPassed'); if (el) el.textContent = s.done;
@@ -22280,11 +22269,9 @@
         const actionBadges = document.querySelectorAll('#pg-dashboard .db-action-badge');
         if (actionBadges[0]) actionBadges[0].textContent = storePrepPending + ' รอจัด';
         if (actionBadges[1]) actionBadges[1].textContent = storeDispPending + ' รอจ่าย';
-        const alertNums = document.querySelectorAll('#dashQuickAlerts .db-alert-num');
-        if (alertNums[0]) alertNums[0].textContent = storeStats ? storeStats.stat : (typeof stPatients !== 'undefined' ? stPatients.length : 0);
-        if (alertNums[1]) alertNums[1].textContent = storeStats ? storeStats.prn : (metrics.prn || 0);
-        if (alertNums[2]) alertNums[2].textContent = storeStats ? storeStats.highAlert : metrics.highAlert;
-        if (alertNums[3]) alertNums[3].textContent = (typeof ovPatients !== 'undefined' ? ovPatients.length : 0);
+        // STAT alert only
+        var statAlertNum = document.querySelector('#dashQuickAlerts .db-alert-num');
+        if (statAlertNum) statAlertNum.textContent = storeStats ? storeStats.stat : (typeof stPatients !== 'undefined' ? stPatients.length : 0);
 
         // ── Activity log — render from MedCartStore ──
         const latestPanel = document.querySelectorAll('#pg-dashboard .db-panel')[1];
