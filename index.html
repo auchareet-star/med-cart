@@ -14923,91 +14923,83 @@
         var pipeBar = document.getElementById('dashPipelineBar');
         if (pipeBar) pipeBar.style.display = isSuper ? 'flex' : 'none';
 
-        // Quick links visibility
-        // Nurse Schedule: nurse + super only
-        showEl(document.getElementById('dashNurseScheduleQuickLink'), !isPharma);
-        // ประวัติการให้ยา (eMAR log): all roles can see
-        showEl(document.getElementById('dashEmarQuickLink'), true);
-        // Container: always visible (eMAR log for all), adjust grid
-        var qlGrid = document.getElementById('dashEmarQuickLink');
-        if (qlGrid && qlGrid.parentElement) {
-            qlGrid.parentElement.style.display = '';
-            qlGrid.parentElement.style.gridTemplateColumns = isPharma ? '1fr' : '1fr 1fr';
+        /* ══════════════════════════════════════
+           ROLE-BASED DASHBOARD LAYOUT
+           ══════════════════════════════════════ */
+
+        // Remove leftover locks
+        dashEl?.querySelectorAll('.lock-overlay, .lock-mini').forEach(function(el){ el.remove(); });
+        dashEl?.querySelectorAll('[onclick]').forEach(function(c){ c.style.opacity=''; c.style.pointerEvents=''; c.style.filter=''; });
+
+        // ── Banner sub text per role ──
+        var bannerSub = dashEl?.querySelector('.db-banner-sub');
+        if (bannerSub && typeof MedCartStore !== 'undefined' && MedCartStore.orders.length) {
+            var ss = MedCartStore.getDashStats();
+            if (isNurse) bannerSub.innerHTML = 'รอจ่าย <strong style="color:#a7f3d0;">' + ss.pending + ' รายการ</strong> · STAT <strong style="color:#fca5a5;">' + ss.stat + '</strong> · จ่ายแล้ว <strong style="color:#a7f3d0;">' + ss.done + '/' + ss.totalMeds + '</strong>';
+            else if (isPharma) bannerSub.innerHTML = 'รอจัด <strong style="color:#a7f3d0;">' + (MedCartStore.countByStatus('scheduled')+MedCartStore.countByStatus('ordered')) + ' รายการ</strong> · จัดแล้ว <strong style="color:#a7f3d0;">' + MedCartStore.countByStatus('prepped') + '</strong> · Cassette ใช้งาน <strong style="color:#a7f3d0;">' + MedCartStore.countByStatus('prepped') + '/36</strong>';
+            else bannerSub.innerHTML = 'ยา <strong style="color:#a7f3d0;">' + ss.totalMeds + ' รายการ</strong> · จ่ายแล้ว <strong style="color:#a7f3d0;">' + ss.pctDone + '%</strong> · HA <strong style="color:#fca5a5;">' + ss.highAlert + '</strong>';
         }
 
-        // Step 4: จัดยา — pharma + super only
+        // ── Stats labels per role ──
+        var statDoneEl = dashEl?.querySelector('#dashStatDone')?.parentElement;
+        var statPendEl = dashEl?.querySelector('#dashStatPending')?.parentElement;
+        if (isPharma) {
+            var lbl3 = statDoneEl?.querySelector('.db-stat-label'); if (lbl3) lbl3.textContent = 'จัดแล้ว';
+            var lbl4 = statPendEl?.querySelector('.db-stat-label'); if (lbl4) lbl4.textContent = 'รอจัด';
+        } else {
+            var lbl3 = statDoneEl?.querySelector('.db-stat-label'); if (lbl3) lbl3.textContent = 'จ่ายแล้ว';
+            var lbl4 = statPendEl?.querySelector('.db-stat-label'); if (lbl4) lbl4.textContent = 'รอจ่าย';
+        }
+
+        // ── Quick links ──
+        var qlContainer = document.getElementById('dashEmarQuickLink')?.parentElement;
+        showEl(document.getElementById('dashNurseScheduleQuickLink'), !isPharma);
+        showEl(document.getElementById('dashEmarQuickLink'), true);
+        if (qlContainer) { qlContainer.style.display = ''; qlContainer.style.gridTemplateColumns = isPharma ? '1fr' : '1fr 1fr'; }
+
+        // ── Action cards ──
         var prepBtn = dashEl?.querySelector('.db-action[onclick*="goToPrepType"]');
-        showEl(prepBtn, !isNurse);
-
-        // Step 5: จ่ายยา — nurse + super only
         var dispenseBtn = dashEl?.querySelector('.db-action[onclick*="pg-routine"]');
+        showEl(prepBtn, !isNurse);
         showEl(dispenseBtn, !isPharma);
-
-        // Make db-actions single column when only 1 card visible
         var actionsGrid = dashEl?.querySelector('.db-actions');
         if (actionsGrid) actionsGrid.style.gridTemplateColumns = isSuper ? '1fr 1fr' : '1fr';
 
-        // Quick Alerts — nurse + super (dispense alerts)
+        // ── STAT + Assessment ── nurse + super only
+        var statAssessGrid = document.getElementById('dashQuickAlerts')?.parentElement;
         showEl(document.getElementById('dashQuickAlerts'), !isPharma);
-
-        // Step 6: Post Assessment — nurse + super only
         showEl(document.getElementById('dashAssessQuickLink'), !isPharma);
+        if (statAssessGrid && statAssessGrid.style) statAssessGrid.style.display = isPharma ? 'none' : '';
 
-        // Remove any leftover lock overlays and lock-minis
-        dashEl?.querySelectorAll('.lock-overlay, .lock-mini').forEach(function(el){ el.remove(); });
-        dashEl?.querySelectorAll('[onclick]').forEach(function(card) {
-            card.style.opacity = '';
-            card.style.pointerEvents = '';
-            card.style.filter = '';
-        });
-
-        // Inject role-specific section
-        const sec = document.getElementById('dashRoleSection');
+        // ── Role-specific section ──
+        var sec = document.getElementById('dashRoleSection');
         if (sec) sec.innerHTML = getRoleSectionHTML(role, name, roleText);
 
-        // Bottom panels
-        const secBottom = document.getElementById('dashRoleBottom');
-        if (secBottom) secBottom.innerHTML = '';
-
-        const schedulePanel = document.getElementById('dashSchedulePanel');
-        const activityPanel = document.getElementById('dashActivityPanel');
-        const teamPanelSlot = document.getElementById('dashTeamPanelSlot');
-        const bottomGrid = document.getElementById('dashBottomGrid');
-        // Schedule panel: nurse + super see it
-        if (schedulePanel) schedulePanel.style.display = isPharma ? 'none' : '';
-        // Activity panel: nurse + super see it (pharma has own report)
-        if (activityPanel) { activityPanel.style.display = isPharma ? 'none' : ''; activityPanel.style.order = isSuper ? '2' : ''; }
-        // Bottom grid: hide entirely for pharma
-        if (bottomGrid) bottomGrid.style.display = isPharma ? 'none' : '';
+        // ── Bottom panels ──
+        var schedulePanel = document.getElementById('dashSchedulePanel');
+        var activityPanel = document.getElementById('dashActivityPanel');
+        var teamPanelSlot = document.getElementById('dashTeamPanelSlot');
+        var bottomGrid = document.getElementById('dashBottomGrid');
+        // Nurse: activity only (schedule is in Nurse Schedule page)
+        // Pharma: hidden (has own report section above)
+        // Super: activity + team
+        showEl(schedulePanel, false); // removed — duplicate of Nurse Schedule Calendar
+        showEl(activityPanel, !isPharma);
+        showEl(bottomGrid, !isPharma);
+        if (activityPanel) activityPanel.style.order = isSuper ? '2' : '';
         if (teamPanelSlot) {
             teamPanelSlot.innerHTML = isSuper ? getRoleBottomHTML(role) : '';
             teamPanelSlot.style.display = isSuper ? '' : 'none';
             teamPanelSlot.style.order = isSuper ? '1' : '';
         }
-        if (bottomGrid) {
-            bottomGrid.classList.toggle('super-head', isSuper);
-            bottomGrid.style.gridTemplateColumns = '';
-        }
+        if (bottomGrid) bottomGrid.classList.toggle('super-head', isSuper);
 
-        // Hide perm panel when switching role
-        var permSec = document.getElementById('dashPermSection');
-        if (permSec) permSec.style.display = 'none';
+        // ── Cassette Monitor ── pharma + super only
+        showEl(document.getElementById('dashCassettePanel'), !isNurse);
 
-        const emarQuickLink = document.getElementById('dashEmarQuickLink');
-        if (emarQuickLink) {
-            const noEmarAccess = role === 'pharma';
-            emarQuickLink.style.opacity = noEmarAccess ? '0.45' : '';
-            emarQuickLink.style.pointerEvents = noEmarAccess ? 'none' : '';
-            emarQuickLink.style.filter = noEmarAccess ? 'grayscale(0.45)' : '';
-            emarQuickLink.setAttribute('aria-disabled', noEmarAccess ? 'true' : 'false');
-            const badge = document.getElementById('dashEmarCount');
-            if (badge) {
-                badge.textContent = noEmarAccess ? 'ไม่มีสิทธิ์' : badge.textContent;
-                badge.style.background = noEmarAccess ? '#f8fafc' : '#f0fdfa';
-                badge.style.color = noEmarAccess ? '#64748b' : '#0F766E';
-                badge.style.borderColor = noEmarAccess ? '#cbd5e1' : '#99f6e4';
-            }
-        }
+        // ── Perm panel ──
+        showEl(document.getElementById('dashPermSection'), false);
+        showEl(document.getElementById('dashRoleBottom'), false);
 
         // Show user section in header
         document.body.classList.add('logged-in');
