@@ -14890,7 +14890,10 @@
         const bottomGrid = document.getElementById('dashBottomGrid');
         // Schedule panel: nurse + super see it
         if (schedulePanel) schedulePanel.style.display = isPharma ? 'none' : '';
-        if (activityPanel) activityPanel.style.order = isSuper ? '2' : '';
+        // Activity panel: nurse + super see it (pharma has own report)
+        if (activityPanel) { activityPanel.style.display = isPharma ? 'none' : ''; activityPanel.style.order = isSuper ? '2' : ''; }
+        // Bottom grid: hide entirely for pharma
+        if (bottomGrid) bottomGrid.style.display = isPharma ? 'none' : '';
         if (teamPanelSlot) {
             teamPanelSlot.innerHTML = isSuper ? getRoleBottomHTML(role) : '';
             teamPanelSlot.style.display = isSuper ? '' : 'none';
