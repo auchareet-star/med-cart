@@ -2348,7 +2348,6 @@
            Banner → Stats → QuickNav(4 chips) →
            จ่ายยา(hero) → RoleSection → Activity
            ──────────────────────────────────────── */
-        #pg-dashboard[data-role="nurse"] #dashCassettePanel,
         #pg-dashboard[data-role="nurse"] #dashPipelineBar,
         #pg-dashboard[data-role="nurse"] #dashSchedulePanel,
         #pg-dashboard[data-role="nurse"] #dashTeamPanelSlot,
@@ -15334,6 +15333,9 @@
                     nursePrepBtn.style.background = '#F8FAFC';
                     if (npSub) npSub.textContent = 'ยังไม่มีรายการอนุมัติ';
                 }
+                // Cassette panel visibility for nurse
+                var cassettePanel = document.getElementById('dashCassettePanel');
+                if (cassettePanel) cassettePanel.style.display = approved > 0 ? '' : 'none';
             }
         }
     });
@@ -15678,6 +15680,17 @@
         // Show/hide the whole nurse order actions section
         var nurseActions = document.getElementById('dashNurseOrderActions');
         if (nurseActions) nurseActions.style.display = isNurse ? 'grid' : 'none';
+
+        // Nurse: show Cassette panel only when approved orders exist (จัดยาเข้า cassette เอง)
+        if (isNurse) {
+            var cassettePanel = document.getElementById('dashCassettePanel');
+            if (cassettePanel) {
+                var hasApproved = (typeof MedCartStore !== 'undefined') && MedCartStore.orders.some(function(o){
+                    return o.source === 'Manual' && o.status !== 'pending_verify' && o.status !== 'rejected';
+                });
+                cassettePanel.style.display = hasApproved ? '' : 'none';
+            }
+        }
 
         // Super: render team panel
         var teamPanelSlot = document.getElementById('dashTeamPanelSlot');
