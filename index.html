@@ -8309,6 +8309,46 @@
     </script>
 </div>
 
+<!-- ══════════════════════════════════════════════════════════
+     NURSE PREP PAGE — จัดยาที่เภสัชอนุมัติแล้ว
+═══════════════════════════════════════════════════════════ -->
+<div id="pg-nurse-prep" class="page">
+    <div class="op-body">
+        <div class="op-shell">
+            <div class="op-topbar">
+                <div>
+                    <div class="op-kicker">Nurse Medication Prep — Approved Orders</div>
+                    <div class="op-title">จัดยาที่เภสัชอนุมัติแล้ว</div>
+                    <div class="op-sub">
+                        <span id="npWardLabel">Ward 3A</span> · <span id="npCartLabel">Med Cart A-1</span>
+                        · เลือกรายการยา → เลือก Cassette → จัดยาเข้ารถเข็น
+                    </div>
+                </div>
+            </div>
+
+            <div class="op-summary-grid" id="npStats">
+                <div class="op-stat"><strong id="npTotalCount">0</strong><span>รายการอนุมัติ</span></div>
+                <div class="op-stat"><strong id="npPatientCount">0</strong><span>ผู้ป่วย</span></div>
+                <div class="op-stat"><strong id="npDoneCount">0</strong><span>จัดแล้ว</span></div>
+                <div class="op-stat"><strong id="npPendingCount">0</strong><span>รอจัด</span></div>
+            </div>
+
+            <section class="op-panel">
+                <div class="op-panel-head">
+                    <div>
+                        <div class="op-panel-title">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5" style="vertical-align:-2px;margin-right:6px;"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                            รายการยาที่พร้อมจัด
+                        </div>
+                        <div class="op-panel-sub">เลือกรายการยาเพื่อจัดเข้า Cassette ในรถเข็น</div>
+                    </div>
+                </div>
+                <div id="npDrugList" class="op-queue-list"></div>
+            </section>
+        </div>
+    </div>
+</div>
+
 <div id="pg-prep-type" class="page">
 
     <header class="header">
@@ -14485,7 +14525,7 @@
         }
         // Reset nurse approved-only mode when leaving prep pages
         if (typeof nurseApprovedOnlyMode !== 'undefined' && nurseApprovedOnlyMode) {
-            var prepPages = ['pg-prep-type','pg-prep-patient','pg-prep-pt-drugs','pg-prep-med','pg-prep-med-detail','pg-prep-sched','pg-sched-detail','pg-hw','pg-fill','pg-summary','pg-ibf','pg-trf'];
+            var prepPages = ['pg-nurse-prep','pg-prep-type','pg-prep-patient','pg-prep-pt-drugs','pg-prep-med','pg-prep-med-detail','pg-prep-sched','pg-sched-detail','pg-hw','pg-fill','pg-summary','pg-ibf','pg-trf'];
             if (prepPages.indexOf(targetId) < 0) nurseApprovedOnlyMode = false;
         }
 
@@ -14497,6 +14537,7 @@
         if (wardDataReady && targetId === 'pg-order-plan' && typeof renderOrderPlanPage === 'function') renderOrderPlanPage();
         if (wardDataReady && targetId === 'pg-nurse-schedule' && typeof renderNurseSchedulePage === 'function') renderNurseSchedulePage();
         if (wardDataReady && targetId === 'pg-emar' && typeof renderEmarPage === 'function') renderEmarPage();
+        if (targetId === 'pg-nurse-prep' && typeof renderNursePrepPage === 'function') renderNursePrepPage();
         if (targetId === 'pg-pharma-report' && typeof renderPharmaReportPage === 'function') renderPharmaReportPage();
         if (targetId === 'pg-pharma-verify' && typeof renderPharmaVerifyPage === 'function') renderPharmaVerifyPage();
         if (wardDataReady && targetId === 'pg-prep-patient' && typeof renderPrepPatientPage === 'function') renderPrepPatientPage();
@@ -15213,6 +15254,8 @@
     // Re-render active pages when MedCartStore changes (verbal order / approve / reject)
     MedCartStore.onChange(function() {
         var activePage = getActivePageId();
+        // Nurse prep page
+        if (activePage === 'pg-nurse-prep' && typeof renderNursePrepPage === 'function') renderNursePrepPage();
         // Pharma verify page
         if (activePage === 'pg-pharma-verify' && typeof renderPharmaVerifyPage === 'function') renderPharmaVerifyPage();
         // Order plan page (queue list + banner)
@@ -16005,8 +16048,96 @@
     var nurseApprovedOnlyMode = false;
 
     function goToNursePrepApproved() {
+        nav('pg-nurse-prep');
+    }
+
+    function renderNursePrepPage() {
+        var wl = document.getElementById('npWardLabel'); if (wl) wl.textContent = currentWardName || 'Ward 3A';
+        var cl = document.getElementById('npCartLabel'); if (cl) cl.textContent = 'Med Cart A-1';
+
+        var approved = (typeof MedCartStore !== 'undefined') ? MedCartStore.orders.filter(function(o){
+            return o.source === 'Manual' && o.status !== 'pending_verify' && o.status !== 'rejected';
+        }) : [];
+
+        // Group by patient
+        var byPatient = {};
+        approved.forEach(function(o) {
+            if (!byPatient[o.patient]) byPatient[o.patient] = [];
+            byPatient[o.patient].push(o);
+        });
+        var ptKeys = Object.keys(byPatient);
+
+        // Check which drugs have been prepped already
+        var preppedIds = {};
+        approved.forEach(function(o) {
+            if (o.status === 'prepped' || o.status === 'dispensed' || o.status === 'assessed') preppedIds[o.id] = true;
+            // Also check patientData
+            if (typeof patientData !== 'undefined' && patientData[o.patient]) {
+                (patientData[o.patient].drugs || []).forEach(function(d) {
+                    if (d.manualOrderId === o.id && (d.done || d.prepared)) preppedIds[o.id] = true;
+                });
+            }
+        });
+        var doneCount = Object.keys(preppedIds).length;
+        var pendingCount = approved.length - doneCount;
+
+        // Stats
+        var te = document.getElementById('npTotalCount'); if (te) te.textContent = approved.length;
+        var pe = document.getElementById('npPatientCount'); if (pe) pe.textContent = ptKeys.length;
+        var de = document.getElementById('npDoneCount'); if (de) de.textContent = doneCount;
+        var pde = document.getElementById('npPendingCount'); if (pde) pde.textContent = pendingCount;
+
+        // Drug list
+        var list = document.getElementById('npDrugList');
+        if (!list) return;
+        if (!approved.length) {
+            list.innerHTML = '<div class="op-empty">ยังไม่มีรายการที่เภสัชอนุมัติ</div>';
+            return;
+        }
+
+        list.innerHTML = ptKeys.map(function(key) {
+            var pt = (typeof patientData !== 'undefined' && patientData[key]) ? patientData[key] : {};
+            var ptName = (typeof MedCartStore !== 'undefined' && MedCartStore.getPatientName) ? MedCartStore.getPatientName(key) : (pt.name || key);
+            var ptBed = (typeof MedCartStore !== 'undefined' && MedCartStore.getPatientBed) ? MedCartStore.getPatientBed(key) : (pt.bed || '');
+            var drugs = byPatient[key];
+            var shortName = ptName.replace(/^(นาย|นางสาว|นาง|นส\.)\s*/, '');
+
+            var header = '<div style="display:flex;align-items:center;gap:10px;padding:12px 16px;background:var(--bg);border-radius:10px;margin:8px 0 6px;">'
+                + '<div style="width:36px;height:36px;background:linear-gradient(135deg,#059669,#10B981);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:white;flex-shrink:0;">' + escHtml(shortName.slice(0,2)) + '</div>'
+                + '<div style="flex:1;"><div style="font-size:14px;font-weight:700;color:var(--text-1);">' + escHtml(ptName) + '</div>'
+                + '<div style="font-size:11px;color:var(--text-3);">เตียง ' + escHtml(ptBed) + ' · ' + drugs.length + ' รายการ</div></div></div>';
+
+            var rows = drugs.map(function(o) {
+                var isDone = !!preppedIds[o.id];
+                var borderColor = isDone ? '#10B981' : '#D97706';
+                var statusTag = isDone
+                    ? '<span style="background:#DCFCE7;color:#059669;font-size:10px;font-weight:700;padding:4px 10px;border-radius:8px;">จัดแล้ว</span>'
+                    : '<span style="background:#FEF3C7;color:#92400E;font-size:10px;font-weight:700;padding:4px 10px;border-radius:8px;">รอจัด</span>';
+                var actionBtn = isDone ? ''
+                    : '<button type="button" class="op-btn primary" style="font-size:11px;padding:8px 14px;" onclick="npStartPrep(\'' + escHtml(o.id) + '\',\'' + escHtml(key) + '\')">เลือก Cassette → จัดยา</button>';
+                var priTag = o.priority === 'stat' ? '<span class="op-tag stat">STAT</span>'
+                    : o.priority === 'high-alert' ? '<span class="op-tag ha">High Alert</span>'
+                    : o.priority === 'prn' ? '<span class="op-tag prn">PRN</span>' : '';
+
+                return '<div style="display:flex;align-items:center;gap:14px;padding:14px 16px;border-bottom:1px solid var(--border);border-left:3px solid ' + borderColor + ';">'
+                    + '<div style="flex:1;min-width:0;">'
+                    + '<div style="font-size:14px;font-weight:700;color:var(--text-1);display:flex;align-items:center;gap:6px;">' + escHtml(o.drug) + ' ' + priTag + '</div>'
+                    + '<div style="font-size:12px;color:var(--text-2);margin-top:3px;">' + escHtml(o.dose||'') + ' · ' + escHtml(o.route||'') + ' · ' + escHtml(o.schedule||'') + '</div>'
+                    + '<div style="font-size:11px;color:var(--text-3);margin-top:2px;">แพทย์: ' + escHtml(o.doctor||'-') + ' · ' + escHtml(o.orderSource||'Verbal order') + '</div>'
+                    + '</div>'
+                    + '<div style="display:flex;align-items:center;gap:8px;flex-shrink:0;">' + statusTag + actionBtn + '</div>'
+                    + '</div>';
+            }).join('');
+
+            return header + rows;
+        }).join('');
+    }
+
+    function npStartPrep(orderId, patientKey) {
+        // Navigate to prep-patient flow for this specific patient
+        currentLegacyDispenseBed = patientKey;
         nurseApprovedOnlyMode = true;
-        goToPrepType();
+        goToPrepFlow('patient');
     }
 
     function goToPrepType() {
