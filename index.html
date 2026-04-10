@@ -15271,7 +15271,7 @@
     })();
 
     // Initialize central data store
-    MedCartStore.init();
+    try { MedCartStore.init(); } catch(e) { console.error('MedCartStore.init error:', e); }
 
     /* ── Keep same ward → go to Login ── */
     function keepWard() {
@@ -24459,7 +24459,7 @@
         replaceSharedPatientData(resolvedWard);
         syncWardFlowDatasets();
         // Re-init central store for the new ward
-        if (typeof MedCartStore !== 'undefined') MedCartStore.init(resolvedWard);
+        try { if (typeof MedCartStore !== 'undefined') MedCartStore.init(resolvedWard); } catch(e) { console.error('MedCartStore.init error:', e); }
         // Re-sync after init — approved manual drugs now in patientData
         try { syncWardFlowDatasets(); } catch(e) {}
         if (!options.silent) {
