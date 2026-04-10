@@ -2372,6 +2372,7 @@
         #pg-dashboard[data-role="pharma"] #dashQuickAlerts,
         #pg-dashboard[data-role="pharma"] #dashAssessQuickLink,
         #pg-dashboard[data-role="pharma"] #dashManualOrderLink,
+        #pg-dashboard[data-role="pharma"] #dashNursePrepLink,
         #pg-dashboard[data-role="pharma"] .db-action[onclick*="pg-routine"],
         #pg-dashboard[data-role="pharma"] #dashPipelineBar,
         #pg-dashboard[data-role="pharma"] #dashBottomGrid {
@@ -7382,6 +7383,15 @@
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
                 </div>
                 <span class="db-qnav-label">บันทึกคำสั่งยา</span>
+            </div>
+
+            <div id="dashNursePrepLink" onclick="goToNursePrepApproved()" class="db-qnav"
+                style="--qn-bg:#F0FDF4;--qn-border:#86EFAC;--qn-icon-bg:linear-gradient(135deg,#059669,#10B981);--qn-color:#065F46;--qn-badge-bg:#DCFCE7;display:none;">
+                <div class="db-qnav-icon">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4z"/></svg>
+                </div>
+                <span class="db-qnav-label">จัดยาที่อนุมัติแล้ว</span>
+                <span class="db-qnav-badge" id="dashNursePrepCount" style="color:#059669;font-weight:800;">0</span>
             </div>
 
             <div id="dashPharmaReportLink" onclick="nav('pg-pharma-report')" class="db-qnav"
@@ -15284,16 +15294,13 @@
             if (sec && typeof getRoleSectionHTML === 'function') sec.innerHTML = getRoleSectionHTML(currentRole);
             var pvBadge = document.getElementById('dashPendingVerifyCount');
             if (pvBadge) pvBadge.textContent = MedCartStore.countPendingVerify();
-            // Nurse prep card visibility
-            var prepCard = document.getElementById('pg-dashboard')?.querySelector('.db-action.secondary');
-            if (prepCard && currentRole === 'nurse') {
+            // Nurse prep chip visibility
+            var nursePrepChip = document.getElementById('dashNursePrepLink');
+            if (nursePrepChip && currentRole === 'nurse') {
                 var approved = MedCartStore.orders.filter(function(o){ return o.source === 'Manual' && o.status !== 'pending_verify' && o.status !== 'rejected'; }).length;
-                prepCard.style.display = approved > 0 ? '' : 'none';
-                if (approved > 0) prepCard.setAttribute('onclick', 'goToNursePrepApproved()');
-                var badgeEl = prepCard.querySelector('.db-action-badge');
-                if (badgeEl) badgeEl.textContent = approved + ' พร้อมจัด';
-                var descEl = prepCard.querySelector('.db-action-desc');
-                if (descEl) descEl.textContent = 'เภสัชอนุมัติ ' + approved + ' รายการ — พร้อมจัดยาเข้า Cassette';
+                nursePrepChip.style.display = approved > 0 ? '' : 'none';
+                var npBadge = document.getElementById('dashNursePrepCount');
+                if (npBadge) npBadge.textContent = approved;
             }
         }
     });
@@ -15606,26 +15613,23 @@
             }
         }
 
-        // Nurse: show/hide จัดยา card based on approved manual orders
-        if (isNurse && typeof MedCartStore !== 'undefined') {
-            var approvedManualOrders = MedCartStore.orders.filter(function(o){
-                return o.source === 'Manual' && o.status !== 'pending_verify' && o.status !== 'rejected';
-            });
-            var approvedManual = approvedManualOrders.length;
+        // Nurse: hide action card จัดยา, use quick nav chip instead
+        if (isNurse) {
             var prepCard = dashEl.querySelector('.db-action.secondary');
-            if (prepCard) {
-                if (approvedManual > 0) {
-                    prepCard.style.display = '';
-                    prepCard.setAttribute('onclick', 'goToNursePrepApproved()');
-                    var titleEl = prepCard.querySelector('.db-action-title');
-                    if (titleEl) titleEl.textContent = 'จัดยาที่อนุมัติแล้ว';
-                    var descEl = prepCard.querySelector('.db-action-desc');
-                    if (descEl) descEl.textContent = 'เภสัชอนุมัติ ' + approvedManual + ' รายการ — พร้อมจัดยาเข้า Cassette';
-                    var badgeEl = prepCard.querySelector('.db-action-badge');
-                    if (badgeEl) badgeEl.textContent = approvedManual + ' พร้อมจัด';
-                } else {
-                    prepCard.style.display = 'none';
-                }
+            if (prepCard) prepCard.style.display = 'none';
+        }
+        // Nurse prep chip — show/hide based on approved orders
+        var nursePrepChip = document.getElementById('dashNursePrepLink');
+        if (nursePrepChip) {
+            if (isNurse && typeof MedCartStore !== 'undefined') {
+                var approvedManual = MedCartStore.orders.filter(function(o){
+                    return o.source === 'Manual' && o.status !== 'pending_verify' && o.status !== 'rejected';
+                }).length;
+                nursePrepChip.style.display = approvedManual > 0 ? '' : 'none';
+                var npBadge = document.getElementById('dashNursePrepCount');
+                if (npBadge) npBadge.textContent = approvedManual;
+            } else {
+                nursePrepChip.style.display = 'none';
             }
         }
 
