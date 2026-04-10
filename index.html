@@ -7425,10 +7425,10 @@
             </div>
 
             <div id="dashNursePrepLink" onclick="goToNursePrepApproved()" style="
-                background:linear-gradient(135deg,#F0FDF4,#DCFCE7);
-                border:2px solid #86EFAC;border-radius:14px;
+                background:#F8FAFC;
+                border:2px solid #E2E8F0;border-radius:14px;
                 padding:16px 18px;cursor:pointer;display:flex;align-items:center;gap:12px;
-                transition:all .18s;display:none;"
+                transition:all .18s;opacity:0.5;pointer-events:none;"
                 onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 20px rgba(5,150,105,0.12)'"
                 onmouseout="this.style.transform='';this.style.boxShadow=''">
                 <div style="width:40px;height:40px;background:linear-gradient(135deg,#059669,#10B981);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
@@ -15314,15 +15314,26 @@
             if (sec && typeof getRoleSectionHTML === 'function') sec.innerHTML = getRoleSectionHTML(currentRole);
             var pvBadge = document.getElementById('dashPendingVerifyCount');
             if (pvBadge) pvBadge.textContent = MedCartStore.countPendingVerify();
-            // Nurse prep button visibility
+            // Nurse prep button — update state
             var nursePrepBtn = document.getElementById('dashNursePrepLink');
             if (nursePrepBtn && currentRole === 'nurse') {
                 var approved = MedCartStore.orders.filter(function(o){ return o.source === 'Manual' && o.status !== 'pending_verify' && o.status !== 'rejected'; }).length;
-                nursePrepBtn.style.display = approved > 0 ? 'flex' : 'none';
                 var npBadge = document.getElementById('dashNursePrepCount');
                 if (npBadge) npBadge.textContent = approved;
                 var npSub = document.getElementById('dashNursePrepSub');
-                if (npSub) npSub.textContent = approved + ' รายการพร้อมจัด';
+                if (approved > 0) {
+                    nursePrepBtn.style.opacity = '';
+                    nursePrepBtn.style.pointerEvents = '';
+                    nursePrepBtn.style.borderColor = '#86EFAC';
+                    nursePrepBtn.style.background = 'linear-gradient(135deg,#F0FDF4,#DCFCE7)';
+                    if (npSub) npSub.textContent = approved + ' รายการพร้อมจัด';
+                } else {
+                    nursePrepBtn.style.opacity = '0.5';
+                    nursePrepBtn.style.pointerEvents = 'none';
+                    nursePrepBtn.style.borderColor = '#E2E8F0';
+                    nursePrepBtn.style.background = '#F8FAFC';
+                    if (npSub) npSub.textContent = 'ยังไม่มีรายการอนุมัติ';
+                }
             }
         }
     });
@@ -15640,20 +15651,28 @@
             var prepCard = dashEl.querySelector('.db-action.secondary');
             if (prepCard) prepCard.style.display = 'none';
         }
-        // Nurse prep button — show/hide based on approved orders
+        // Nurse prep button — always show, disable when 0 approved
         var nursePrepBtn = document.getElementById('dashNursePrepLink');
-        if (nursePrepBtn) {
-            if (isNurse && typeof MedCartStore !== 'undefined') {
-                var approvedManual = MedCartStore.orders.filter(function(o){
-                    return o.source === 'Manual' && o.status !== 'pending_verify' && o.status !== 'rejected';
-                }).length;
-                nursePrepBtn.style.display = approvedManual > 0 ? 'flex' : 'none';
-                var npBadge = document.getElementById('dashNursePrepCount');
-                if (npBadge) npBadge.textContent = approvedManual;
-                var npSub = document.getElementById('dashNursePrepSub');
+        if (nursePrepBtn && isNurse) {
+            var approvedManual = (typeof MedCartStore !== 'undefined') ? MedCartStore.orders.filter(function(o){
+                return o.source === 'Manual' && o.status !== 'pending_verify' && o.status !== 'rejected';
+            }).length : 0;
+            nursePrepBtn.style.display = 'flex';
+            var npBadge = document.getElementById('dashNursePrepCount');
+            if (npBadge) npBadge.textContent = approvedManual;
+            var npSub = document.getElementById('dashNursePrepSub');
+            if (approvedManual > 0) {
+                nursePrepBtn.style.opacity = '';
+                nursePrepBtn.style.pointerEvents = '';
+                nursePrepBtn.style.borderColor = '#86EFAC';
+                nursePrepBtn.style.background = 'linear-gradient(135deg,#F0FDF4,#DCFCE7)';
                 if (npSub) npSub.textContent = approvedManual + ' รายการพร้อมจัด';
             } else {
-                nursePrepBtn.style.display = 'none';
+                nursePrepBtn.style.opacity = '0.5';
+                nursePrepBtn.style.pointerEvents = 'none';
+                nursePrepBtn.style.borderColor = '#E2E8F0';
+                nursePrepBtn.style.background = '#F8FAFC';
+                if (npSub) npSub.textContent = 'ยังไม่มีรายการอนุมัติ';
             }
         }
         // Show/hide the whole nurse order actions section
