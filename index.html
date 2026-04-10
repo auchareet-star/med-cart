@@ -15217,9 +15217,6 @@
     }
 
     // Register listeners
-    // Sync approved manual drugs to patientData (patientData is now available)
-    try { syncApprovedDrugsToPatientData(); } catch(e) {}
-
     MedCartStore.onChange(syncDashboardFromStore);
     MedCartStore.onChange(function() { opApplyRoleDefaults(); renderPhysicianOrders(); renderPharmaToNurseOrders(); });
     MedCartStore.onChange(syncOrderPlanStats);
@@ -16248,9 +16245,7 @@
 
     function npGoPrep(mode) {
         nurseApprovedOnlyMode = true;
-        console.log('[npGoPrep] mode=', mode, 'nurseApprovedOnlyMode=', nurseApprovedOnlyMode);
-        // Ensure approved drugs are in patientData before entering prep
-        try { syncApprovedDrugsToPatientData(); } catch(e) { console.error('[npGoPrep] sync error:', e); }
+        try { syncApprovedDrugsToPatientData(); } catch(e) {}
         var ward = currentWardName || DEFAULT_DEMO_WARD;
         try {
             document.getElementById('prepWardHeader').textContent = ward;
@@ -16402,13 +16397,10 @@
 
     function filterDrugsIfApprovedMode(drugs) {
         var ids = getApprovedManualDrugIds();
-        console.log('[filterDrugs] nurseApprovedOnlyMode=', nurseApprovedOnlyMode, 'ids=', ids, 'drugs with manualOrderId=', drugs.filter(function(d){return d.manualOrderId;}).length);
-        if (!ids) return drugs; // not in approved mode — show all
-        var filtered = drugs.filter(function(d) {
+        if (!ids) return drugs;
+        return drugs.filter(function(d) {
             return d.manualOrderId && ids.indexOf(d.manualOrderId) >= 0;
         });
-        console.log('[filterDrugs] filtered:', filtered.length, 'of', drugs.length);
-        return filtered;
     }
 
     function prepPatientRows() {
@@ -17142,6 +17134,9 @@
             ]
         }
     };
+
+    // Now patientData exists — sync approved manual drugs into it
+    try { syncApprovedDrugsToPatientData(); } catch(e) {}
 
     function cloneWardData(obj) {
         return JSON.parse(JSON.stringify(obj));
