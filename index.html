@@ -16172,11 +16172,22 @@
     function npStartPrep(orderId, patientKey) {
         currentLegacyDispenseBed = patientKey;
         nurseApprovedOnlyMode = true;
+        var ward = currentWardName || DEFAULT_DEMO_WARD;
+        try {
+            document.getElementById('prepWardHeader').textContent = ward;
+            document.getElementById('prepWardCtx').textContent = ward;
+        } catch(e) {}
         goToPrepFlow('patient');
     }
 
     function npGoPrep(mode) {
         nurseApprovedOnlyMode = true;
+        // Ensure prep context is set (normally done by goToPrepType)
+        var ward = currentWardName || DEFAULT_DEMO_WARD;
+        try {
+            document.getElementById('prepWardHeader').textContent = ward;
+            document.getElementById('prepWardCtx').textContent = ward;
+        } catch(e) {}
         goToPrepFlow(mode);
     }
 
