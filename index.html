@@ -588,6 +588,11 @@
             gap: 12px;
             align-items: center;
         }
+        .ns-item.ns-readonly, .ns-item.ns-readonly * {
+            pointer-events: none !important;
+            cursor: default !important;
+        }
+        .ns-item.ns-readonly { opacity: 0.75; user-select: none; }
         .ns-item-main { min-width: 0; }
         .ns-patient { font-size: 13px; font-weight: 850; color: var(--text-1); display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
         .ns-med { font-size: 12px; color: var(--text-2); margin-top: 4px; line-height: 1.5; }
@@ -2104,6 +2109,28 @@
             font-size:12px; font-weight:600;
         }
 
+        /* Quick-nav strip (compact link chips) */
+        .db-qnav {
+            display:inline-flex; align-items:center; gap:8px;
+            background:var(--qn-bg,#f8fafc);
+            border:1.5px solid var(--qn-border,#e2e8f0);
+            border-radius:10px; padding:8px 14px;
+            cursor:pointer; transition:all .18s;
+            white-space:nowrap;
+        }
+        .db-qnav:hover { transform:translateY(-2px); box-shadow:0 4px 12px rgba(0,0,0,0.08); }
+        @keyframes pulse-border { 0%,100%{box-shadow:0 0 0 0 rgba(245,158,11,0.3);} 50%{box-shadow:0 0 0 6px rgba(245,158,11,0);} }
+        .db-qnav-icon {
+            width:28px; height:28px; border-radius:8px;
+            display:flex; align-items:center; justify-content:center;
+            background:var(--qn-icon-bg,#64748b); flex-shrink:0;
+        }
+        .db-qnav-label { font-size:12px; font-weight:700; color:var(--qn-color,#334155); }
+        .db-qnav-badge {
+            font-size:10px; font-weight:800; padding:2px 7px; border-radius:6px;
+            background:var(--qn-badge-bg,#f1f5f9); color:var(--qn-color,#334155);
+        }
+
         /* Role section */
         .db-role-section { margin-bottom:24px; }
 
@@ -2317,77 +2344,64 @@
 
         /* ────────────────────────────────────────
            NURSE — จ่ายยา focus
-           Banner → Stats → QuickLinks(2col) →
-           STAT+Assess(2col) → จ่ายยา(hero) →
-           RoleSection(urgent+summary) → Activity(full)
+           Banner → Stats → QuickNav(4 chips) →
+           จ่ายยา(hero) → RoleSection → Activity
            ──────────────────────────────────────── */
-        #pg-dashboard[data-role="nurse"] .db-action[onclick*="goToPrepType"],
         #pg-dashboard[data-role="nurse"] #dashCassettePanel,
         #pg-dashboard[data-role="nurse"] #dashPipelineBar,
         #pg-dashboard[data-role="nurse"] #dashSchedulePanel,
-        #pg-dashboard[data-role="nurse"] #dashTeamPanelSlot {
+        #pg-dashboard[data-role="nurse"] #dashTeamPanelSlot,
+        #pg-dashboard[data-role="nurse"] #dashPharmaReportLink,
+        #pg-dashboard[data-role="nurse"] #dashPharmaVerifyLink {
             display:none !important;
         }
-        /* Reorder: alerts before action hero */
-        #pg-dashboard[data-role="nurse"] #dashQuickLinks   { order:5; }
-        #pg-dashboard[data-role="nurse"] #dashStatAssess    { order:6; }
-        #pg-dashboard[data-role="nurse"] .db-actions        { order:7; }
+        #pg-dashboard[data-role="nurse"] .db-actions        { order:6; grid-template-columns:1fr; }
         #pg-dashboard[data-role="nurse"] #dashRoleSection   { order:8; }
         #pg-dashboard[data-role="nurse"] #dashBottomGrid    { order:10; grid-template-columns:1fr; }
-
-        /* Single action card → full-width hero CTA */
-        #pg-dashboard[data-role="nurse"] .db-actions {
-            grid-template-columns:1fr;
-        }
         #pg-dashboard[data-role="nurse"] .db-actions .db-action.primary {
             background:linear-gradient(135deg,#FEF2F2 0%,#FEE2E2 50%,#FECDD3 100%);
-            border-color:#FECACA;
-            border-width:2px;
+            border-color:#FECACA; border-width:2px;
         }
 
         /* ────────────────────────────────────────
            PHARMA — จัดยา + inventory focus
-           Banner → Stats → eMAR(1col) →
-           จัดยา(hero) → Cassette → RoleSection(report)
+           Banner → Stats → QuickNav(eMAR only) →
+           จัดยา(hero) → Cassette → RoleSection
            ──────────────────────────────────────── */
         #pg-dashboard[data-role="pharma"] #dashNurseScheduleQuickLink,
+        #pg-dashboard[data-role="pharma"] #dashQuickAlerts,
+        #pg-dashboard[data-role="pharma"] #dashAssessQuickLink,
+        #pg-dashboard[data-role="pharma"] #dashManualOrderLink,
         #pg-dashboard[data-role="pharma"] .db-action[onclick*="pg-routine"],
-        #pg-dashboard[data-role="pharma"] #dashStatAssess,
         #pg-dashboard[data-role="pharma"] #dashPipelineBar,
         #pg-dashboard[data-role="pharma"] #dashBottomGrid {
             display:none !important;
         }
-        #pg-dashboard[data-role="pharma"] #dashQuickLinks {
-            grid-template-columns:1fr;
-        }
-        /* Single action card → full-width hero CTA */
-        #pg-dashboard[data-role="pharma"] .db-actions {
-            grid-template-columns:1fr;
-        }
+        #pg-dashboard[data-role="pharma"] #dashPharmaVerifyLink { order:-2; }
+        #pg-dashboard[data-role="pharma"] #dashPharmaReportLink { order:-1; }
+        #pg-dashboard[data-role="pharma"] .db-actions { grid-template-columns:1fr; }
         #pg-dashboard[data-role="pharma"] .db-actions .db-action.secondary {
             background:linear-gradient(135deg,#FFFBEB 0%,#FEF3C7 50%,#FDE68A 100%);
-            border-color:#FDE68A;
-            border-width:2px;
+            border-color:#FDE68A; border-width:2px;
         }
 
         /* ────────────────────────────────────────
            SUPER — oversight + full pipeline
-           Banner → Pipeline → Stats → QuickLinks(2col) →
-           Actions(2col) → STAT+Assess → Cassette →
+           Banner → Pipeline → Stats → QuickNav(all 4) →
+           Actions(2col) → Cassette →
            Bottom(Team+Activity 2col)
            ──────────────────────────────────────── */
         #pg-dashboard[data-role="super"] #dashPipelineBar {
             display:flex !important;
         }
-        #pg-dashboard[data-role="super"] #dashSchedulePanel {
+        #pg-dashboard[data-role="super"] #dashSchedulePanel,
+        #pg-dashboard[data-role="super"] #dashPharmaReportLink {
             display:none !important;
         }
-        /* Pipeline promoted right after banner */
         #pg-dashboard[data-role="super"] #dashPipelineBar  { order:2; }
         #pg-dashboard[data-role="super"] .db-stats          { order:3; }
         #pg-dashboard[data-role="super"] #dashQuickLinks    { order:4; }
         #pg-dashboard[data-role="super"] .db-actions        { order:5; grid-template-columns:1fr 1fr; }
-        #pg-dashboard[data-role="super"] #dashStatAssess    { order:6; }
         #pg-dashboard[data-role="super"] #dashCassettePanel { order:7; }
         #pg-dashboard[data-role="super"] #dashRoleSection   { order:8; }
         #pg-dashboard[data-role="super"] #dashBottomGrid    { order:9; grid-template-columns:1fr 1fr; }
@@ -3744,7 +3758,7 @@
         }
         .am-warn-box svg { flex-shrink: 0; margin-top: 2px; }
 
-        /* 5 Rights */
+        /* 7 Rights */
         .am-rights {
             background: var(--white);
             border: 1px solid var(--border);
@@ -4607,18 +4621,28 @@
             animation:scan-pulse 2.5s ease-in-out infinite;
         }
 
-        /* 5 Rights compact */
+        /* 7 Rights compact */
         .rt-rights {
-            display:grid; grid-template-columns:repeat(5,1fr); gap:6px;
-            margin:18px 0;
+            display:grid; grid-template-columns:repeat(5,1fr); gap:5px;
+            margin:14px 0 6px;
         }
+        .rt-rights.full { grid-template-columns:repeat(7,1fr); }
         .rt-r {
-            padding:8px 4px; border-radius:10px;
-            text-align:center; font-size:10px; font-weight:700;
-            transition:all .3s;
+            padding:7px 4px; border-radius:10px;
+            text-align:center; font-size:10px; font-weight:800;
+            transition:all .3s; position:relative;
+            border:1.5px solid transparent;
         }
-        .rt-r.pass { background:linear-gradient(135deg,#DCFCE7,#BBF7D0); color:#059669; box-shadow:0 1px 4px rgba(5,150,105,0.1); }
-        .rt-r.pend { background:#F1F5F9; color:var(--text-3); }
+        .rt-r.pass {
+            background:linear-gradient(135deg,#DCFCE7,#BBF7D0); color:#059669;
+            border-color:#86EFAC; box-shadow:0 2px 8px rgba(5,150,105,0.15);
+        }
+        .rt-r.pass::before {
+            content:'✓ '; font-size:9px;
+        }
+        .rt-r.pend { background:#F1F5F9; color:var(--text-3); border-color:#E2E8F0; }
+        .rt-r.fail { background:#FEE2E2; color:#DC2626; border-color:#FECACA; box-shadow:0 2px 8px rgba(220,38,38,0.12); }
+        .rt-r.fail::before { content:'✕ '; font-size:9px; }
 
         /* Step bottom actions */
         .rt-bottom {
@@ -7126,7 +7150,7 @@
                         <span class="role-perm green">สแกนผู้ป่วย</span>
                         <span class="role-perm gray">ดูรายงาน</span>
                     </div>
-                    <div style="font-size:12px;color:var(--text-2);line-height:1.5;margin-bottom:16px;">บริหารยาให้ผู้ป่วยตามคำสั่งแพทย์<br>พร้อมระบบตรวจสอบ 5 Rights</div>
+                    <div style="font-size:12px;color:var(--text-2);line-height:1.5;margin-bottom:16px;">บริหารยาให้ผู้ป่วยตามคำสั่งแพทย์<br>พร้อมระบบตรวจสอบ 7 Rights</div>
                     <button class="role-btn nurse">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                         เข้าใช้งาน
@@ -7323,47 +7347,77 @@
         <!-- Hidden refs for JS compatibility -->
         <div id="dashOrderPlanQuickLink" style="display:none;"><span id="dashOrderPlanCount">0</span></div>
 
-        <!-- ── Quick Links (2-col: Nurse Schedule + eMAR) ── -->
-        <div id="dashQuickLinks" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;">
-            <div id="dashNurseScheduleQuickLink" onclick="nav('pg-nurse-schedule')" style="
-                background:linear-gradient(135deg,#eff6ff,#ecfeff);
-                border:1.5px solid #bfdbfe;border-radius:12px;
-                padding:14px 16px;cursor:pointer;display:flex;align-items:center;gap:12px;
-                transition:all .18s;box-shadow:0 2px 10px rgba(37,99,235,0.06);"
-                onmouseover="this.style.transform='translateY(-2px)'"
-                onmouseout="this.style.transform=''">
-                <div style="width:34px;height:34px;background:linear-gradient(135deg,#1D4ED8,#3B82F6);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.4"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        <!-- ── Quick Nav — compact 4-col strip ── -->
+        <div id="dashQuickLinks" style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;">
+            <div id="dashQuickAlerts" onclick="startStatTimer();nav('pg-stat');" class="db-qnav"
+                style="--qn-bg:#FEF2F2;--qn-border:#FECACA;--qn-icon-bg:linear-gradient(135deg,#DC2626,#EF4444);--qn-color:#B91C1C;--qn-badge-bg:#FEE2E2;">
+                <div class="db-qnav-icon">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
                 </div>
-                <div style="flex:1;min-width:0;">
-                    <div style="font-size:13px;font-weight:800;color:#1D4ED8;">ตารางรอบยา</div>
-                    <div style="font-size:10px;color:#3B82F6;margin-top:1px;">Calendar View</div>
-                </div>
-                <span id="dashNurseScheduleCount" style="background:#DBEAFE;color:#1D4ED8;font-size:10px;font-weight:800;padding:2px 8px;border-radius:6px;">0</span>
+                <span class="db-qnav-label">STAT ยาด่วน</span>
+                <span class="db-qnav-badge db-alert-num" style="color:#DC2626;font-weight:800;">1</span>
             </div>
 
-            <!-- ── ประวัติการให้ยา (eMAR log) ── -->
-            <div id="dashEmarQuickLink" onclick="nav('pg-emar')" style="
-                background:linear-gradient(135deg,#f8fafc,#f1f5f9);
-                border:1.5px solid #e2e8f0;border-radius:12px;
-                padding:14px 16px;cursor:pointer;display:flex;align-items:center;gap:12px;
-                transition:all .18s;box-shadow:0 2px 10px rgba(100,116,139,0.06);"
-                onmouseover="this.style.transform='translateY(-2px)'"
-                onmouseout="this.style.transform=''">
-                <div style="width:34px;height:34px;background:linear-gradient(135deg,#475569,#64748B);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.4"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+            <div id="dashNurseScheduleQuickLink" onclick="nav('pg-nurse-schedule')" class="db-qnav"
+                style="--qn-bg:#eff6ff;--qn-border:#bfdbfe;--qn-icon-bg:linear-gradient(135deg,#1D4ED8,#3B82F6);--qn-color:#1D4ED8;--qn-badge-bg:#DBEAFE;">
+                <div class="db-qnav-icon">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
                 </div>
-                <div style="flex:1;min-width:0;">
-                    <div style="font-size:13px;font-weight:800;color:#334155;">ประวัติการให้ยา</div>
-                    <div style="font-size:10px;color:#64748B;margin-top:1px;">eMAR Log + Off-cart</div>
+                <span class="db-qnav-label">ตารางรอบยา</span>
+                <span class="db-qnav-badge" id="dashNurseScheduleCount">0</span>
+            </div>
+
+            <div id="dashAssessQuickLink" onclick="nav('pg-assess-list')" class="db-qnav"
+                style="--qn-bg:#ecfdf5;--qn-border:#6ee7b7;--qn-icon-bg:linear-gradient(135deg,#059669,#10b981);--qn-color:#065f46;--qn-badge-bg:#D1FAE5;">
+                <div class="db-qnav-icon">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
                 </div>
-                <span id="dashEmarCount" style="background:#F1F5F9;color:#475569;font-size:10px;font-weight:800;padding:2px 8px;border-radius:6px;">0</span>
+                <span class="db-qnav-label">ประเมินหลังให้ยา</span>
+                <span class="db-qnav-badge" style="color:#DC2626;border:1px solid #FECACA;background:#FEF2F2;">รอ 3</span>
+            </div>
+
+            <div id="dashManualOrderLink" onclick="nav('pg-order-plan')" class="db-qnav"
+                style="--qn-bg:#F5F3FF;--qn-border:#DDD6FE;--qn-icon-bg:linear-gradient(135deg,#7C3AED,#A78BFA);--qn-color:#5B21B6;--qn-badge-bg:#EDE9FE;">
+                <div class="db-qnav-icon">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                </div>
+                <span class="db-qnav-label">บันทึกคำสั่งยา</span>
+            </div>
+
+            <div id="dashPharmaReportLink" onclick="nav('pg-pharma-report')" class="db-qnav"
+                style="--qn-bg:#FEF2F2;--qn-border:#FECACA;--qn-icon-bg:linear-gradient(135deg,#DC2626,#B91C1C);--qn-color:#991B1B;--qn-badge-bg:#FEE2E2;">
+                <div class="db-qnav-icon">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="12" y1="9" x2="12.01" y2="9"/></svg>
+                </div>
+                <span class="db-qnav-label">รายงานยาที่ต้องตรวจสอบ</span>
+                <span class="db-qnav-badge" id="dashPharmaReportCount" style="color:#DC2626;font-weight:800;">0</span>
+            </div>
+
+            <div id="dashPharmaVerifyLink" onclick="nav('pg-pharma-verify')" class="db-qnav"
+                style="--qn-bg:#FFFBEB;--qn-border:#FDE68A;--qn-icon-bg:linear-gradient(135deg,#D97706,#F59E0B);--qn-color:#92400E;--qn-badge-bg:#FEF3C7;">
+                <div class="db-qnav-icon">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/><path d="M9 12l2 2 4-4"/></svg>
+                </div>
+                <span class="db-qnav-label">ตรวจสอบคำสั่งยา</span>
+                <span class="db-qnav-badge" id="dashPendingVerifyCount" style="color:#D97706;font-weight:800;">0</span>
+            </div>
+
+            <div id="dashEmarQuickLink" onclick="nav('pg-emar')" class="db-qnav"
+                style="--qn-bg:#f8fafc;--qn-border:#e2e8f0;--qn-icon-bg:linear-gradient(135deg,#475569,#64748B);--qn-color:#334155;--qn-badge-bg:#F1F5F9;">
+                <div class="db-qnav-icon">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                </div>
+                <span class="db-qnav-label">ประวัติการให้ยา</span>
+                <span class="db-qnav-badge" id="dashEmarCount">0</span>
             </div>
         </div>
 
-        <!-- ── Step 3 & 4: จัดยา + จ่ายยา (Main Actions) ── -->
+        <!-- dashStatAssess kept as empty ref for CSS rules -->
+        <div id="dashStatAssess" style="display:none;"></div>
+
+        <!-- ── Step 2 & 3: จัดยา + จ่ายยา (Main Actions) ── -->
         <div class="db-actions">
-            <!-- Step 3: จัดยา -->
+            <!-- จัดยา -->
             <div class="db-action secondary" onclick="goToPrepType()">
                 <span class="db-action-badge" style="background:#D97706;">5 รอจัด</span>
                 <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
@@ -7380,7 +7434,7 @@
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
                 </div>
             </div>
-            <!-- Step 5: จ่ายยา -->
+            <!-- จ่ายยา -->
             <div class="db-action primary" onclick="nav('pg-routine')">
                 <span class="db-action-badge" style="background:#EF4444;">3 รอจ่าย</span>
                 <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
@@ -7396,44 +7450,6 @@
                     เริ่มจ่ายยา
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
                 </div>
-            </div>
-        </div>
-
-        <!-- ── STAT + Assessment (compact 2-col) ── -->
-        <div id="dashStatAssess" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;">
-            <!-- STAT -->
-            <div id="dashQuickAlerts" onclick="startStatTimer();nav('pg-stat');" style="
-                background:linear-gradient(135deg,#FEF2F2,#FEE2E2);
-                border:1.5px solid #FECACA;border-left:3px solid #EF4444;border-radius:12px;
-                padding:14px 16px;cursor:pointer;display:flex;align-items:center;gap:12px;
-                transition:all .18s;"
-                onmouseover="this.style.transform='translateY(-2px)'"
-                onmouseout="this.style.transform=''">
-                <div style="width:34px;height:34px;background:linear-gradient(135deg,#DC2626,#EF4444);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                </div>
-                <div style="flex:1;min-width:0;">
-                    <div style="font-size:13px;font-weight:800;color:#B91C1C;">STAT ยาด่วน</div>
-                    <div style="font-size:10px;color:#DC2626;margin-top:1px;">ต้องจ่ายทันที</div>
-                </div>
-                <span class="db-alert-num" style="font-size:20px;font-weight:800;color:#DC2626;">1</span>
-            </div>
-            <!-- Assessment -->
-            <div id="dashAssessQuickLink" onclick="nav('pg-assess-list')" style="
-                background:linear-gradient(135deg,#ecfdf5,#d1fae5);
-                border:1.5px solid #6ee7b7;border-left:3px solid #10B981;border-radius:12px;
-                padding:14px 16px;cursor:pointer;display:flex;align-items:center;gap:12px;
-                transition:all .18s;"
-                onmouseover="this.style.transform='translateY(-2px)'"
-                onmouseout="this.style.transform=''">
-                <div style="width:34px;height:34px;background:linear-gradient(135deg,#059669,#10b981);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.4"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                </div>
-                <div style="flex:1;min-width:0;">
-                    <div style="font-size:13px;font-weight:800;color:#065f46;">ประเมินหลังให้ยา</div>
-                    <div style="font-size:10px;color:#059669;margin-top:1px;">Post Assessment</div>
-                </div>
-                <span style="background:#FEF2F2;color:#DC2626;font-size:10px;font-weight:700;padding:2px 8px;border-radius:6px;border:1px solid #FECACA;">รอ 3</span>
             </div>
         </div>
 
@@ -7566,92 +7582,42 @@
         <div class="op-shell">
             <div class="op-topbar">
                 <div>
-                    <div class="op-kicker">รายการสั่งยา</div>
-                    <div class="op-title">รายการสั่งยา</div>
+                    <div class="op-kicker">Manual Order Entry</div>
+                    <div class="op-title">บันทึกคำสั่งยา</div>
                     <div class="op-sub">
                         <span id="opWardLabel">Ward 3A</span> · <span id="opCartLabel">Med Cart A-1</span>
-                        · รายการจากแพทย์ (HIS) และรายการเพิ่มเอง (Verbal/Telephone Order)
+                        · Verbal/Telephone Order และยานอก Med Cart
                     </div>
-                </div>
-                <div class="op-actions">
-                    <button type="button" class="op-btn" onclick="nav('pg-dashboard')">
-                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
-                        Dashboard
-                    </button>
-                    <button type="button" class="op-btn" onclick="nav('pg-nurse-schedule')">
-                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-                        Nurse Schedule
-                    </button>
-                    <button type="button" class="op-btn primary" onclick="goToPrepType()">
-                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4z"/></svg>
-                        ไปจัดยา
-                    </button>
                 </div>
             </div>
 
-            <div class="op-summary-grid">
-                <div class="op-stat"><strong id="opTotalOrders">0</strong><span>คำสั่งยาวันนี้</span></div>
-                <div class="op-stat"><strong id="opPendingOrders">0</strong><span>รอจัดยา</span></div>
-                <div class="op-stat"><strong id="opHighAlertOrders">0</strong><span>High Alert</span></div>
-                <div class="op-stat"><strong id="opPrnOrders">0</strong><span>PRN / STAT</span></div>
+            <!-- ── Tab switcher ── -->
+            <div id="opTabRow" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;">
+                <button type="button" class="op-tab-btn active" id="opTabBtnVerbal" onclick="opSwitchTab('verbal',this)" style="display:flex;align-items:center;gap:10px;padding:14px 18px;border-radius:14px;border:2px solid #DDD6FE;background:linear-gradient(135deg,#F5F3FF,#EDE9FE);cursor:pointer;font-family:Prompt,sans-serif;text-align:left;transition:all .15s;">
+                    <div style="width:36px;height:36px;background:linear-gradient(135deg,#7C3AED,#A78BFA);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    </div>
+                    <div>
+                        <div style="font-size:13px;font-weight:800;color:#5B21B6;">Verbal / Telephone Order</div>
+                        <div style="font-size:10px;color:#7C3AED;margin-top:1px;">สั่งยาใหม่ → รอเภสัชอนุมัติ → เข้า pipeline</div>
+                    </div>
+                </button>
+                <button type="button" class="op-tab-btn" id="opTabBtnOffcart" onclick="opSwitchTab('offcart',this)" style="display:flex;align-items:center;gap:10px;padding:14px 18px;border-radius:14px;border:2px solid #E2E8F0;background:#F8FAFC;cursor:pointer;font-family:Prompt,sans-serif;text-align:left;transition:all .15s;">
+                    <div style="width:36px;height:36px;background:linear-gradient(135deg,#D97706,#F59E0B);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4z"/><line x1="2" y1="2" x2="22" y2="22" stroke-width="2"/></svg>
+                    </div>
+                    <div>
+                        <div style="font-size:13px;font-weight:800;color:#92400E;">ยานอก Med Cart (Off-cart)</div>
+                        <div style="font-size:10px;color:#B45309;margin-top:1px;">ให้ยาไปแล้ว → บันทึกย้อนหลังเป็น audit</div>
+                    </div>
+                </button>
             </div>
 
-            <!-- ════════════════════════════════════════
-                 Section 1: แพทย์ → เภสัชกร (คำสั่งยาจากแพทย์)
-                 ════════════════════════════════════════ -->
-            <section class="op-panel" style="margin-bottom:18px;">
-                <div class="op-panel-head">
-                    <div>
-                        <div class="op-panel-title">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1D4ED8" stroke-width="2.5" style="vertical-align:-2px;margin-right:6px;"><path d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.66 0 3-4.03 3-9s-1.34-9-3-9m0 18c-1.66 0-3-4.03-3-9s1.34-9 3-9"/></svg>
-                            แพทย์ → เภสัชกร
-                        </div>
-                        <div class="op-panel-sub">คำสั่งยาจาก HIS — เภสัชกรตรวจสอบ 5 Rights ก่อนจัดยาเข้า Cassette</div>
-                    </div>
-                    <div style="display:flex;align-items:center;gap:6px;">
-                        <span class="op-badge" style="background:#F0FDFA;color:#0F766E;border-color:#99F6E4;">
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="vertical-align:-1px;margin-right:3px;"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg>
-                            HIS Sync
-                        </span>
-                        <!-- View toggle -->
-                        <div id="opDrPhViewToggle" style="display:flex;border:1.5px solid var(--border);border-radius:8px;overflow:hidden;">
-                            <button type="button" class="op-view-btn" id="opDrPhViewDrug" onclick="opSetDrPhView('drug')" style="padding:5px 10px;font-size:10px;font-weight:800;font-family:Prompt,sans-serif;border:none;cursor:pointer;background:#0D9488;color:white;">ตามยา</button>
-                            <button type="button" class="op-view-btn" id="opDrPhViewPatient" onclick="opSetDrPhView('patient')" style="padding:5px 10px;font-size:10px;font-weight:800;font-family:Prompt,sans-serif;border:none;cursor:pointer;background:white;color:var(--text-2);">ตามผู้ป่วย</button>
-                        </div>
-                    </div>
-                </div>
-                <div id="opPhysicianOrders" class="op-queue-list">
-                    <!-- Rendered dynamically from MedCartStore -->
-                </div>
-            </section>
+            <!-- ── Status banner: pending verification ── -->
+            <div id="opPendingBanner" style="display:none;"></div>
 
-            <!-- ════════════════════════════════════════
-                 Section 2: เภสัชกร → พยาบาล (ยาที่ตรวจแล้ว/จัดแล้ว)
-                 ════════════════════════════════════════ -->
-            <section class="op-panel" style="margin-bottom:18px;">
-                <div class="op-panel-head">
-                    <div>
-                        <div class="op-panel-title">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" stroke-width="2.5" style="vertical-align:-2px;margin-right:6px;"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/><path d="M9 12l2 2 4-4"/></svg>
-                            เภสัชกร → พยาบาล
-                        </div>
-                        <div class="op-panel-sub">ยาที่เภสัชตรวจ 5 Rights แล้ว — พร้อมส่งต่อพยาบาลจ่ายยาให้ผู้ป่วย</div>
-                    </div>
-                    <div style="display:flex;align-items:center;gap:6px;">
-                        <span id="opPhRnCount" class="op-badge" style="background:#F5F3FF;color:#6D28D9;border-color:#DDD6FE;">0 พร้อมจ่าย</span>
-                        <!-- View toggle -->
-                        <div id="opPhRnViewToggle" style="display:flex;border:1.5px solid var(--border);border-radius:8px;overflow:hidden;">
-                            <button type="button" class="op-view-btn" id="opPhRnViewPatient" onclick="opSetPhRnView('patient')" style="padding:5px 10px;font-size:10px;font-weight:800;font-family:Prompt,sans-serif;border:none;cursor:pointer;background:#7C3AED;color:white;">ตามผู้ป่วย</button>
-                            <button type="button" class="op-view-btn" id="opPhRnViewDrug" onclick="opSetPhRnView('drug')" style="padding:5px 10px;font-size:10px;font-weight:800;font-family:Prompt,sans-serif;border:none;cursor:pointer;background:white;color:var(--text-2);">ตามยา</button>
-                        </div>
-                    </div>
-                </div>
-                <div id="opPharmaToNurseOrders" class="op-queue-list">
-                    <!-- Rendered dynamically -->
-                </div>
-            </section>
-
-            <!-- ── Section 2: Verbal / Telephone Order (Manual Entry) ── -->
+            <!-- ══ TAB 1: Verbal / Telephone Order ══ -->
+            <div id="opTabVerbal">
             <div class="op-grid">
                 <section class="op-panel">
                     <div class="op-panel-head">
@@ -7739,10 +7705,10 @@
                         </div>
 
                         <div class="op-form-footer">
-                            <div class="op-note">ระบบจะตรวจ Allergy, duplicate order, High Alert และ drug interaction ก่อนเพิ่มเข้าคิวจัดยา</div>
+                            <div class="op-note">ระบบจะตรวจ Allergy, duplicate order, High Alert และ drug interaction รายการจะถูกส่งให้เภสัชกรตรวจสอบก่อนเข้า pipeline จัดยา</div>
                             <button id="opSubmitBtn" type="submit" class="op-btn primary">
                                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                                เพิ่มคำสั่งยา
+                                ส่งรอเภสัชอนุมัติ
                             </button>
                         </div>
                     </form>
@@ -7759,9 +7725,9 @@
                     <div id="opPatientSummary" class="op-patient-box"></div>
                     <div id="opSafetyChecks" class="op-safety-list"></div>
                     <div class="op-flow">
-                        <div class="op-flow-step"><i>1</i><span>เพิ่ม order พร้อม source และแพทย์ผู้สั่ง</span></div>
-                        <div class="op-flow-step"><i>2</i><span>ระบบแปลงเป็นรายการยาใน MAR ของ Ward ปัจจุบัน</span></div>
-                        <div class="op-flow-step"><i>3</i><span>เภสัชกร/พยาบาลจัดยาเข้าช่อง Cassette ตาม template ที่เปิดใช้</span></div>
+                        <div class="op-flow-step"><i>1</i><span>พยาบาลบันทึก Verbal/Telephone Order</span></div>
+                        <div class="op-flow-step"><i>2</i><span>เภสัชกรตรวจสอบและอนุมัติคำสั่งยา</span></div>
+                        <div class="op-flow-step"><i>3</i><span>เข้า pipeline ปกติ: จัดยา → จ่ายยา</span></div>
                     </div>
                 </aside>
             </div>
@@ -7771,14 +7737,103 @@
                     <div>
                         <div class="op-panel-title">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="2.5" style="vertical-align:-2px;margin-right:6px;"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-                            รายการที่เพิ่มเอง (Verbal / Telephone Order)
+                            รายการที่บันทึกแล้ว — รอเภสัชอนุมัติ
                         </div>
-                        <div class="op-panel-sub">รายการที่พยาบาลเพิ่มเข้าระบบ — จะเข้า flow จัดยาและจ่ายยาอัตโนมัติ</div>
+                        <div class="op-panel-sub">Verbal/Telephone Order ที่ส่งเภสัชกรตรวจสอบแล้ว รอการอนุมัติก่อนเข้า pipeline จัดยา</div>
                     </div>
-                    <span class="op-badge" id="opQueueBadge">0 active</span>
+                    <span class="op-badge" id="opQueueBadge" style="background:#FEF3C7;color:#92400E;border-color:#FDE68A;">0 รอ</span>
                 </div>
                 <div id="opQueueList" class="op-queue-list"></div>
             </section>
+            </div><!-- /opTabVerbal -->
+
+            <!-- ══ TAB 2: Off-cart ══ -->
+            <div id="opTabOffcart" style="display:none;">
+                <div class="op-summary-grid" style="margin-bottom:16px;">
+                    <div class="op-stat"><strong id="ocTodayCount">0</strong><span>Off-cart วันนี้</span></div>
+                    <div class="op-stat"><strong id="ocWardStockCount">0</strong><span>Ward stock</span></div>
+                    <div class="op-stat"><strong id="ocEmergencyCount">0</strong><span>Emergency</span></div>
+                    <div class="op-stat"><strong id="ocOtherCount">0</strong><span>อื่นๆ</span></div>
+                </div>
+
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start;margin-bottom:18px;">
+                    <section class="op-panel">
+                        <div class="op-panel-head">
+                            <div>
+                                <div class="op-panel-title">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D97706" stroke-width="2.5" style="vertical-align:-2px;margin-right:6px;"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><line x1="2" y1="2" x2="22" y2="22" stroke-width="2"/></svg>
+                                    บันทึกการให้ยา Off-cart
+                                </div>
+                                <div class="op-panel-sub">ยาที่ให้นอกรถเข็น บันทึกทันทีเป็น audit record</div>
+                            </div>
+                            <span class="op-badge" style="background:#FFFBEB;color:#92400E;border-color:#FDE68A;">Off-cart</span>
+                        </div>
+                        <form id="emarOffCartForm" onsubmit="emarRecordOffCart(event)">
+                            <div class="op-form-grid">
+                                <div class="op-field full">
+                                    <label class="op-label" for="emarOffPatient">ผู้ป่วย</label>
+                                    <select id="emarOffPatient" class="op-select"></select>
+                                </div>
+                                <div class="op-field full">
+                                    <label class="op-label" for="emarOffDrug">ชื่อยา</label>
+                                    <input id="emarOffDrug" class="op-input" placeholder="เช่น Salbutamol Neb หรือ Adrenaline 1 mg">
+                                </div>
+                                <div class="op-field">
+                                    <label class="op-label" for="emarOffDose">Dose / จำนวน</label>
+                                    <input id="emarOffDose" class="op-input" placeholder="เช่น 1 neb หรือ 1 amp">
+                                </div>
+                                <div class="op-field">
+                                    <label class="op-label" for="emarOffRoute">Route</label>
+                                    <select id="emarOffRoute" class="op-select">
+                                        <option value="PO">PO</option><option value="IV">IV</option><option value="SC">SC</option><option value="IM">IM</option><option value="Neb">Neb</option><option value="Topical">Topical</option>
+                                    </select>
+                                </div>
+                                <div class="op-field">
+                                    <label class="op-label" for="emarOffSource">แหล่งที่มา</label>
+                                    <select id="emarOffSource" class="op-select">
+                                        <option value="Ward stock">Ward stock</option><option value="Emergency kit">Emergency kit</option><option value="Bedside supply">Bedside supply</option><option value="Patient own medication">Patient own medication</option><option value="Pharmacy direct supply">Pharmacy direct supply</option>
+                                    </select>
+                                </div>
+                                <div class="op-field">
+                                    <label class="op-label" for="emarOffReason">เหตุผล / Indication</label>
+                                    <input id="emarOffReason" class="op-input" placeholder="เช่น หอบเหนื่อย, rescue dose">
+                                </div>
+                            </div>
+                            <label class="emar-right" style="margin-top:12px;">
+                                <input id="emarOffRightConfirm" type="checkbox" checked>
+                                <div><strong>ยืนยันตรวจ 7 Rights แล้ว</strong><span>ตรวจ Right Patient/Drug/Dose/Route/Time ครบก่อนบันทึก</span></div>
+                            </label>
+                            <div style="margin-top:12px;">
+                                <button type="submit" class="op-btn primary" style="width:100%;justify-content:center;">
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/></svg>
+                                    บันทึก Off-cart
+                                </button>
+                            </div>
+                            <div class="op-note" style="margin-top:8px;text-align:center;">Off-cart จะเก็บเป็น audit record · ไม่ถูกส่งกลับเข้ารถเข็น</div>
+                        </form>
+                    </section>
+
+                    <section class="op-panel">
+                        <div class="op-panel-head"><div><div class="op-panel-title">ตัวอย่างกรณีใช้ Off-cart</div></div></div>
+                        <div style="display:flex;flex-direction:column;gap:8px;">
+                            <div style="display:flex;align-items:flex-start;gap:10px;background:#FFFBEB;border:1px solid #FDE68A;border-radius:10px;padding:10px 12px;"><div style="width:28px;height:28px;background:#FEF3C7;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D97706" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/></svg></div><div><div style="font-size:11px;font-weight:800;color:#92400E;">Emergency / Rescue Dose</div><div style="font-size:10px;color:#B45309;margin-top:2px;">ยาฉุกเฉินจาก Emergency kit เช่น Adrenaline, Atropine</div></div></div>
+                            <div style="display:flex;align-items:flex-start;gap:10px;background:#EFF6FF;border:1px solid #BFDBFE;border-radius:10px;padding:10px 12px;"><div style="width:28px;height:28px;background:#DBEAFE;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2.5"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4z"/></svg></div><div><div style="font-size:11px;font-weight:800;color:#1E40AF;">Ward Stock / Pharmacy Direct</div><div style="font-size:10px;color:#2563EB;margin-top:2px;">ยาสำรองประจำ Ward หรือเภสัชจ่ายตรงถึง bedside</div></div></div>
+                            <div style="display:flex;align-items:flex-start;gap:10px;background:#F5F3FF;border:1px solid #DDD6FE;border-radius:10px;padding:10px 12px;"><div style="width:28px;height:28px;background:#EDE9FE;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" stroke-width="2.5"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><div><div style="font-size:11px;font-weight:800;color:#5B21B6;">Patient Own Medication</div><div style="font-size:10px;color:#7C3AED;margin-top:2px;">ยาที่ผู้ป่วยนำมาเอง เช่น ยาเดิมจากบ้าน</div></div></div>
+                        </div>
+                    </section>
+                </div>
+
+                <section class="op-panel">
+                    <div class="op-panel-head">
+                        <div>
+                            <div class="op-panel-title"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="2.5" style="vertical-align:-2px;margin-right:6px;"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>ประวัติ Off-cart วันนี้</div>
+                        </div>
+                        <span class="op-badge" id="ocLogBadge">0 records</span>
+                    </div>
+                    <div id="ocLogList" class="emar-log-list"></div>
+                </section>
+            </div><!-- /opTabOffcart -->
+
         </div>
     </div>
 </div>
@@ -7797,16 +7852,6 @@
                         <span id="nsWardLabel">Ward 3A</span> · <span id="nsCartLabel">Med Cart A-1</span>
                         · คำสั่งยาจากแพทย์ (HIS) จัดตามรอบเวลา
                     </div>
-                </div>
-                <div class="op-actions">
-                    <button type="button" class="op-btn" onclick="nav('pg-dashboard')">
-                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
-                        Dashboard
-                    </button>
-                    <button type="button" class="op-btn primary" onclick="nav('pg-emar')">
-                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-                        eMAR
-                    </button>
                 </div>
             </div>
 
@@ -7864,6 +7909,93 @@
 <!-- ══════════════════════════════════════════════════════════
      eMAR PAGE
 ═══════════════════════════════════════════════════════════ -->
+<!-- ══════════════════════════════════════════════════════════
+     PHARMA VERIFY PAGE — ตรวจสอบคำสั่งยา (Verbal/Telephone)
+═══════════════════════════════════════════════════════════ -->
+<div id="pg-pharma-verify" class="page">
+    <div class="op-body">
+        <div class="op-shell">
+            <div class="op-topbar">
+                <div>
+                    <div class="op-kicker">Pharmacist Order Verification</div>
+                    <div class="op-title">ตรวจสอบคำสั่งยา</div>
+                    <div class="op-sub">
+                        <span id="pvWardLabel">Ward 3A</span> · <span id="pvCartLabel">Med Cart A-1</span>
+                        · ตรวจสอบ Verbal/Telephone Order จากพยาบาล → อนุมัติหรือปฏิเสธ
+                    </div>
+                </div>
+                <div class="op-actions">
+                    <button type="button" class="op-btn" onclick="nav('pg-dashboard')">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+                        กลับ Dashboard
+                    </button>
+                </div>
+            </div>
+
+            <div class="op-summary-grid">
+                <div class="op-stat"><strong id="pvPendingCount">0</strong><span>รออนุมัติ</span></div>
+                <div class="op-stat"><strong id="pvApprovedCount">0</strong><span>อนุมัติแล้ว</span></div>
+                <div class="op-stat"><strong id="pvRejectedCount">0</strong><span>ปฏิเสธ</span></div>
+                <div class="op-stat"><strong id="pvTotalCount">0</strong><span>ทั้งหมดวันนี้</span></div>
+            </div>
+
+            <section class="op-panel" style="margin-bottom:18px;">
+                <div class="op-panel-head">
+                    <div>
+                        <div class="op-panel-title">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D97706" stroke-width="2.5" style="vertical-align:-2px;margin-right:6px;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                            รอเภสัชกรอนุมัติ
+                        </div>
+                        <div class="op-panel-sub">Verbal/Telephone Order ที่พยาบาลบันทึก — กดอนุมัติเพื่อให้เข้า pipeline จัดยา</div>
+                    </div>
+                    <span class="op-badge" id="pvPendingBadge" style="background:#FEF3C7;color:#92400E;border-color:#FDE68A;">0 รายการ</span>
+                </div>
+                <div id="pvPendingList" class="op-queue-list"></div>
+            </section>
+
+            <section class="op-panel">
+                <div class="op-panel-head">
+                    <div>
+                        <div class="op-panel-title">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="2.5" style="vertical-align:-2px;margin-right:6px;"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                            ประวัติการตรวจสอบ
+                        </div>
+                        <div class="op-panel-sub">รายการที่อนุมัติ/ปฏิเสธแล้ว</div>
+                    </div>
+                </div>
+                <div id="pvHistoryList" class="op-queue-list"></div>
+            </section>
+        </div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     PHARMA REPORT PAGE — รายงานยาที่ต้องตรวจสอบ
+═══════════════════════════════════════════════════════════ -->
+<div id="pg-pharma-report" class="page">
+    <div class="op-body">
+        <div class="op-shell">
+            <div class="op-topbar">
+                <div>
+                    <div class="op-kicker">Pharmacist Verification Report</div>
+                    <div class="op-title">รายงานยาที่ต้องตรวจสอบ</div>
+                    <div class="op-sub">
+                        <span id="prptWardLabel">Ward 3A</span> · <span id="prptCartLabel">Med Cart A-1</span>
+                        · ยาค้างใน Cassette, Hold/Omit, Off-cart, 7 Rights Fail
+                    </div>
+                </div>
+                <div class="op-actions">
+                    <button type="button" class="op-btn" onclick="nav('pg-dashboard')">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+                        กลับ Dashboard
+                    </button>
+                </div>
+            </div>
+            <div id="pharmaReportContent" style="padding:0 4px 32px;"></div>
+        </div>
+    </div>
+</div>
+
 <div id="pg-emar" class="page">
     <div class="op-body">
         <div class="op-shell">
@@ -7877,10 +8009,6 @@
                     </div>
                 </div>
                 <div class="op-actions">
-                    <button type="button" class="op-btn" onclick="nav('pg-dashboard')">
-                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
-                        Dashboard
-                    </button>
                     <button type="button" class="op-btn" onclick="nav('pg-nurse-schedule')">
                         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
                         Nurse Schedule
@@ -7896,7 +8024,7 @@
                 <div class="op-stat"><strong id="emarOffCartItems">0</strong><span>Off-cart วันนี้</span></div>
             </div>
 
-            <!-- ── 5 Rights Banner ── -->
+            <!-- ── 7 Rights Banner ── -->
             <!-- Hidden refs for JS -->
             <div style="display:none;"><span id="emar7rPending">0</span><span id="emar7rPassed">0</span><span id="emarRightBadge"></span><div id="emar7RightsChecklist"></div><button id="emarConfirmBtn"></button></div>
 
@@ -7923,119 +8051,11 @@
                 <div id="emarSelectedCard" style="display:none;"></div>
             </section>
 
-            <!-- ── Section: Off-cart (ยานอกรถเข็น) ── -->
-            <section class="op-panel" style="margin-top:18px;">
-                <div class="op-panel-head">
-                    <div>
-                        <div class="op-panel-title">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D97706" stroke-width="2.5" style="vertical-align:-2px;margin-right:6px;"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><line x1="2" y1="2" x2="22" y2="22" stroke-width="2"/></svg>
-                            บันทึกยานอก Med Cart (Off-cart)
-                        </div>
-                        <div class="op-panel-sub">สำหรับยาที่ไม่ได้จัดอยู่ในรถเข็น เช่น ยาจาก Ward stock, Emergency kit, Bedside supply หรือ Pharmacy direct</div>
-                    </div>
-                    <span class="op-badge" style="background:#FFFBEB;color:#92400E;border-color:#FDE68A;">Off-cart</span>
-                </div>
-
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start;">
-                    <form id="emarOffCartForm" onsubmit="emarRecordOffCart(event)">
-                        <div class="op-form-grid">
-                            <div class="op-field full">
-                                <label class="op-label" for="emarOffPatient">ผู้ป่วย</label>
-                                <select id="emarOffPatient" class="op-select"></select>
-                            </div>
-                            <div class="op-field full">
-                                <label class="op-label" for="emarOffDrug">ชื่อยา</label>
-                                <input id="emarOffDrug" class="op-input" placeholder="เช่น Salbutamol Neb หรือ Adrenaline 1 mg">
-                            </div>
-                            <div class="op-field">
-                                <label class="op-label" for="emarOffDose">Dose / จำนวน</label>
-                                <input id="emarOffDose" class="op-input" placeholder="เช่น 1 neb หรือ 1 amp">
-                            </div>
-                            <div class="op-field">
-                                <label class="op-label" for="emarOffRoute">Route</label>
-                                <select id="emarOffRoute" class="op-select">
-                                    <option value="PO">PO</option>
-                                    <option value="IV">IV</option>
-                                    <option value="SC">SC</option>
-                                    <option value="IM">IM</option>
-                                    <option value="Neb">Neb</option>
-                                    <option value="Topical">Topical</option>
-                                </select>
-                            </div>
-                            <div class="op-field">
-                                <label class="op-label" for="emarOffSource">แหล่งที่มา</label>
-                                <select id="emarOffSource" class="op-select">
-                                    <option value="Ward stock">Ward stock</option>
-                                    <option value="Emergency kit">Emergency kit</option>
-                                    <option value="Bedside supply">Bedside supply</option>
-                                    <option value="Patient own medication">Patient own medication</option>
-                                    <option value="Pharmacy direct supply">Pharmacy direct supply</option>
-                                </select>
-                            </div>
-                            <div class="op-field">
-                                <label class="op-label" for="emarOffReason">เหตุผล / Indication</label>
-                                <input id="emarOffReason" class="op-input" placeholder="เช่น หอบเหนื่อย, rescue dose">
-                            </div>
-                        </div>
-                        <label class="emar-right" style="margin-top:12px;">
-                            <input id="emarOffRightConfirm" type="checkbox" checked>
-                            <div>
-                                <strong>ยืนยันตรวจ 5 Rights แล้ว</strong>
-                                <span>ตรวจ Right Patient/Drug/Dose/Route/Time ครบก่อนบันทึก</span>
-                            </div>
-                        </label>
-                        <div style="margin-top:12px;">
-                            <button type="submit" class="op-btn primary" style="width:100%;justify-content:center;">
-                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/></svg>
-                                บันทึก Off-cart
-                            </button>
-                        </div>
-                        <div class="op-note" style="margin-top:8px;text-align:center;">Off-cart จะเก็บเป็น audit record · ไม่ถูกส่งกลับเข้ารถเข็น</div>
-                    </form>
-
-                    <div>
-                        <div style="font-size:12px;font-weight:800;color:var(--text-1);margin-bottom:10px;">ตัวอย่างกรณีใช้ Off-cart</div>
-                        <div style="display:flex;flex-direction:column;gap:8px;">
-                            <div style="display:flex;align-items:flex-start;gap:10px;background:#FFFBEB;border:1px solid #FDE68A;border-radius:10px;padding:10px 12px;">
-                                <div style="width:28px;height:28px;background:#FEF3C7;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D97706" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/></svg>
-                                </div>
-                                <div><div style="font-size:11px;font-weight:800;color:#92400E;">Emergency / Rescue Dose</div><div style="font-size:10px;color:#B45309;margin-top:2px;">ยาฉุกเฉินจาก Emergency kit เช่น Adrenaline, Atropine</div></div>
-                            </div>
-                            <div style="display:flex;align-items:flex-start;gap:10px;background:#EFF6FF;border:1px solid #BFDBFE;border-radius:10px;padding:10px 12px;">
-                                <div style="width:28px;height:28px;background:#DBEAFE;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2.5"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4z"/></svg>
-                                </div>
-                                <div><div style="font-size:11px;font-weight:800;color:#1E40AF;">Ward Stock / Pharmacy Direct</div><div style="font-size:10px;color:#2563EB;margin-top:2px;">ยาสำรองประจำ Ward หรือเภสัชจ่ายตรงถึง bedside</div></div>
-                            </div>
-                            <div style="display:flex;align-items:flex-start;gap:10px;background:#F5F3FF;border:1px solid #DDD6FE;border-radius:10px;padding:10px 12px;">
-                                <div style="width:28px;height:28px;background:#EDE9FE;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" stroke-width="2.5"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                                </div>
-                                <div><div style="font-size:11px;font-weight:800;color:#5B21B6;">Patient Own Medication</div><div style="font-size:10px;color:#7C3AED;margin-top:2px;">ยาที่ผู้ป่วยนำมาเอง เช่น ยาเดิมจากบ้าน, ยาเฉพาะทาง</div></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- ── Audit Log ── -->
-            <section class="op-panel" style="margin-top:18px;">
-                <div class="op-panel-head">
-                    <div>
-                        <div class="op-panel-title">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="2.5" style="vertical-align:-2px;margin-right:6px;"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-                            eMAR Audit Log
-                        </div>
-                        <div class="op-panel-sub">บันทึกทั้งหมด — ให้ยาจากรถเข็น, Verbal/Tel Order, Off-cart และงดยา</div>
-                    </div>
-                    <span class="op-badge" id="emarLogBadge">0 records</span>
-                </div>
-                <div id="emarLogList" class="emar-log-list"></div>
-            </section>
         </div>
     </div>
 </div>
+
+<!-- ══════════════════════════════════════════════════════════
 
 <!-- ══════════════════════════════════════════════════════════
      POST-ASSESSMENT LIST PAGE
@@ -9755,7 +9775,7 @@
                 </div>
             </div>
 
-            <!-- CENTER: Detail + 5 Rights -->
+            <!-- CENTER: Detail + 7 Rights -->
             <div class="am-center">
                 <div class="am-detail">
                     <div class="am-detail-name">
@@ -9780,9 +9800,9 @@
                     </div>
                 </div>
 
-                <!-- 5 Rights -->
+                <!-- 7 Rights -->
                 <div class="am-rights">
-                    <div class="am-rights-title">5 Rights Validation</div>
+                    <div class="am-rights-title">7 Rights Validation</div>
                     <div class="am-rights-grid">
                         <div class="am-r pass"><div class="am-r-dot"></div>Right Patient</div>
                         <div class="am-r pend" id="rDrug"><div class="am-r-dot"></div>Right Drug</div>
@@ -10115,7 +10135,7 @@
             </div>
             <div>
                 <div class="rec-st-title">ให้ยาแล้ว</div>
-                <div class="rec-st-sub">ยาผ่านการตรวจสอบ 5 Rights ครบถ้วน</div>
+                <div class="rec-st-sub">ยาผ่านการตรวจสอบ 7 Rights ครบถ้วน</div>
             </div>
         </div>
 
@@ -10330,10 +10350,7 @@
 
         <!-- ══ Flow Header ══ -->
         <div style="background:white;border-bottom:1px solid rgba(13,148,136,0.12);padding:0 28px;display:flex;align-items:center;gap:0;height:56px;position:sticky;top:0;z-index:50;box-shadow:0 1px 12px rgba(13,148,136,0.06);">
-            <button onclick="nav('pg-dashboard')" style="display:flex;align-items:center;gap:6px;background:none;border:none;font-size:13px;font-weight:600;color:var(--text-2);cursor:pointer;padding:8px 12px 8px 0;border-right:1px solid var(--border);margin-right:16px;font-family:'Prompt',sans-serif;">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
-                Dashboard
-            </button>
+            <!-- Dashboard button removed -->
             <div style="width:32px;height:32px;background:linear-gradient(135deg,#0D9488,#14B8A6);border-radius:10px;display:flex;align-items:center;justify-content:center;margin-right:10px;">
                 <svg width="17" height="17" viewBox="0 0 24 24" fill="white"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0016.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 002 8.5c0 2.3 1.5 4.05 3 5.5l7 7z"/></svg>
             </div>
@@ -10529,93 +10546,12 @@
                     </div>
                     <div style="flex:1;">
                         <div style="font-size:14px;font-weight:800;color:var(--text-1);">สแกนยาทุกรายการ</div>
-                        <div style="font-size:11px;color:var(--text-3);margin-top:1px;">สแกนไม่ครบสามารถยืนยันต่อได้ · <strong style="color:#DC2626;">ยกเว้น</strong> กรณี 5 Rights ไม่ผ่าน</div>
+                        <div style="font-size:11px;color:var(--text-3);margin-top:1px;">ตรวจ 5 ใน 7 Rights อัตโนมัติ · <strong style="color:#DC2626;">ยกเว้น</strong> กรณี Rights ไม่ผ่าน</div>
                     </div>
                 </div>
 
-                <!-- Drug cards -->
-                <div class="mdc" id="rdrug_0" data-flow="r" data-done="false" style="margin-bottom:12px;">
-                    <div class="mdc-bar" style="background:linear-gradient(180deg,#059669,#0D9488);"></div>
-                    <div class="mdc-body">
-                        <div class="mdc-header">
-                            <div class="mdc-info">
-                                <div class="mdc-name" style="font-size:15px;">Amlodipine 5 mg</div>
-                                <div class="mdc-sub">PO · 5 mg × 1 เม็ด · รอบเช้า</div>
-                            </div>
-                            <button class="mdc-btn" id="rdrug_0_btn" style="background:linear-gradient(135deg,#0d9488,#14b8a6);border-radius:12px;padding:10px 18px;font-weight:700;" onclick="scanMultiDrug('r',0)">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" style="vertical-align:middle;margin-right:4px;"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg>สแกน
-                            </button>
-                        </div>
-                        <div class="mdc-done-row" id="rdrug_0_done" style="display:none;">
-                            <div class="mdc-rights">
-                                <div class="rt-r pass" style="font-size:9px;padding:3px 6px;">Patient</div>
-                                <div class="rt-r pass" style="font-size:9px;padding:3px 6px;">Drug</div>
-                                <div class="rt-r pass" style="font-size:9px;padding:3px 6px;">Dose</div>
-                                <div class="rt-r pass" style="font-size:9px;padding:3px 6px;">Route</div>
-                                <div class="rt-r pass" style="font-size:9px;padding:3px 6px;">Time</div>
-                            </div>
-                            <span class="mdc-result-tag"><svg width="12" height="12" viewBox="0 0 24 24" fill="#166534"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg><span id="rdrug_0_resname">—</span></span>
-                            <span style="font-size:11px;color:var(--text-2);" id="rdrug_0_lot">—</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="mdc" id="rdrug_1" data-flow="r" data-done="false" style="margin-bottom:12px;">
-                    <div class="mdc-bar" style="background:linear-gradient(180deg,#059669,#0D9488);"></div>
-                    <div class="mdc-body">
-                        <div class="mdc-header">
-                            <div class="mdc-info">
-                                <div class="mdc-name" style="font-size:15px;">Metformin 500 mg</div>
-                                <div class="mdc-sub">PO · 500 mg × 1 เม็ด · รอบเช้า</div>
-                            </div>
-                            <button class="mdc-btn" id="rdrug_1_btn" style="background:linear-gradient(135deg,#0d9488,#14b8a6);border-radius:12px;padding:10px 18px;font-weight:700;" onclick="scanMultiDrug('r',1)">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" style="vertical-align:middle;margin-right:4px;"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg>สแกน
-                            </button>
-                        </div>
-                        <div class="mdc-done-row" id="rdrug_1_done" style="display:none;">
-                            <div class="mdc-rights">
-                                <div class="rt-r pass" style="font-size:9px;padding:3px 6px;">Patient</div>
-                                <div class="rt-r pass" style="font-size:9px;padding:3px 6px;">Drug</div>
-                                <div class="rt-r pass" style="font-size:9px;padding:3px 6px;">Dose</div>
-                                <div class="rt-r pass" style="font-size:9px;padding:3px 6px;">Route</div>
-                                <div class="rt-r pass" style="font-size:9px;padding:3px 6px;">Time</div>
-                            </div>
-                            <span class="mdc-result-tag"><svg width="12" height="12" viewBox="0 0 24 24" fill="#166534"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg><span id="rdrug_1_resname">—</span></span>
-                            <span style="font-size:11px;color:var(--text-2);" id="rdrug_1_lot">—</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="mdc" id="rdrug_2" data-flow="r" data-done="false" style="margin-bottom:12px;">
-                    <div class="mdc-bar" style="background:linear-gradient(180deg,#059669,#0D9488);"></div>
-                    <div class="mdc-body">
-                        <div class="mdc-header">
-                            <div class="mdc-info">
-                                <div class="mdc-name" style="font-size:15px;">Omeprazole 20 mg</div>
-                                <div class="mdc-sub">PO · 20 mg × 1 แคปซูล · รอบเช้า</div>
-                            </div>
-                            <div style="display:flex;gap:6px;">
-                                <button class="mdc-btn" id="rdrug_2_btn" style="background:linear-gradient(135deg,#0d9488,#14b8a6);border-radius:12px;padding:10px 18px;font-weight:700;" onclick="scanMultiDrug('r',2)">
-                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" style="vertical-align:middle;margin-right:4px;"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg>สแกน
-                                </button>
-                                <button class="mdc-btn" style="background:linear-gradient(135deg,#DC2626,#EF4444);border-radius:12px;padding:10px 12px;font-weight:700;font-size:10px;" onclick="scanMultiDrug('r',2,true)">
-                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" style="vertical-align:middle;margin-right:3px;"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>Demo: ยาผิด
-                                </button>
-                            </div>
-                        </div>
-                        <div class="mdc-done-row" id="rdrug_2_done" style="display:none;">
-                            <div class="mdc-rights">
-                                <div class="rt-r pass" style="font-size:9px;padding:3px 6px;">Patient</div>
-                                <div class="rt-r pass" style="font-size:9px;padding:3px 6px;">Drug</div>
-                                <div class="rt-r pass" style="font-size:9px;padding:3px 6px;">Dose</div>
-                                <div class="rt-r pass" style="font-size:9px;padding:3px 6px;">Route</div>
-                                <div class="rt-r pass" style="font-size:9px;padding:3px 6px;">Time</div>
-                            </div>
-                            <span class="mdc-result-tag"><svg width="12" height="12" viewBox="0 0 24 24" fill="#166534"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg><span id="rdrug_2_resname">—</span></span>
-                            <span style="font-size:11px;color:var(--text-2);" id="rdrug_2_lot">—</span>
-                        </div>
-                    </div>
-                </div>
+                <!-- Drug cards (dynamically generated) -->
+                <div id="rtDrugCardsContainer"></div>
             </div>
             <div class="rt-bottom wide" style="background:white;border-top:1px solid var(--border);">
                 <button class="btn-secondary" onclick="rtGoStep(3)"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>ย้อนกลับ</button>
@@ -10630,16 +10566,69 @@
         <div class="rt-panel" id="rtStep5">
             <div class="rt-inner" style="max-width:640px;">
 
-                <!-- Status banner -->
-                <div style="background:linear-gradient(135deg,#059669,#0D9488);border-radius:20px;padding:20px 24px;margin-bottom:18px;display:flex;align-items:center;gap:16px;box-shadow:0 6px 24px rgba(13,148,136,0.2);">
-                    <div style="width:52px;height:52px;background:rgba(255,255,255,0.15);border-radius:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0;backdrop-filter:blur(8px);">
-                        <svg width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                <!-- 7 Rights verification panel -->
+                <div style="background:white;border:2px solid #059669;border-radius:20px;padding:20px 24px;margin-bottom:18px;box-shadow:0 6px 24px rgba(13,148,136,0.1);">
+                    <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+                        <div style="width:44px;height:44px;background:linear-gradient(135deg,#059669,#0D9488);border-radius:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
+                        </div>
+                        <div>
+                            <div style="font-size:17px;font-weight:800;color:#065f46;letter-spacing:-0.2px;">7 Rights Verification</div>
+                            <div style="font-size:11px;color:#0D9488;margin-top:2px;">ยืนยัน 7 Rights จากการสแกน + 2 Rights ด้วยตนเอง</div>
+                        </div>
                     </div>
-                    <div>
-                        <div style="font-size:19px;font-weight:800;color:white;letter-spacing:-0.2px;">ให้ยาแล้ว — พร้อมบันทึก</div>
-                        <div style="font-size:12px;color:rgba(255,255,255,0.8);margin-top:3px;display:flex;align-items:center;gap:6px;">
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
-                            5 Rights ผ่านครบถ้วน
+                    <!-- 7 Rights grid -->
+                    <div class="rt-rights full" style="margin:0 0 16px;">
+                        <div class="rt-r pass">Patient</div>
+                        <div class="rt-r pass">Drug</div>
+                        <div class="rt-r pass">Dose</div>
+                        <div class="rt-r pass">Route</div>
+                        <div class="rt-r pass">Time</div>
+                        <div class="rt-r pend" id="rtR6Doc">Document</div>
+                        <div class="rt-r pend" id="rtR7Reason">Reason</div>
+                    </div>
+                    <!-- Right 6: Documentation -->
+                    <div id="rtR6Wrap" style="padding:12px 14px;background:#F8FAFC;border:1.5px solid #E2E8F0;border-radius:12px;margin-bottom:8px;transition:all .15s;">
+                        <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+                            <div style="flex:1;">
+                                <div style="font-size:13px;font-weight:700;color:var(--text-1);">Right Documentation</div>
+                                <div style="font-size:11px;color:var(--text-2);margin-top:2px;">บันทึกข้อมูลการให้ยาครบถ้วน (เวลาจริง, ผู้ให้, dose, route)</div>
+                            </div>
+                        </div>
+                        <div style="display:flex;gap:8px;">
+                            <button type="button" onclick="rtSetRight(6,'pass')" id="rtR6PassBtn" style="flex:1;padding:8px;border-radius:10px;border:1.5px solid #BBF7D0;background:#F0FDF4;color:#059669;font-size:12px;font-weight:700;cursor:pointer;font-family:Prompt,sans-serif;display:flex;align-items:center;justify-content:center;gap:4px;">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                                ผ่าน
+                            </button>
+                            <button type="button" onclick="rtSetRight(6,'fail')" id="rtR6FailBtn" style="flex:1;padding:8px;border-radius:10px;border:1.5px solid #FECACA;background:#FEF2F2;color:#DC2626;font-size:12px;font-weight:700;cursor:pointer;font-family:Prompt,sans-serif;display:flex;align-items:center;justify-content:center;gap:4px;">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+                                ไม่ผ่าน
+                            </button>
+                        </div>
+                        <div id="rtR6ReasonWrap" style="display:none;margin-top:8px;">
+                            <input id="rtR6Reason" class="rec-doc-input" placeholder="ระบุเหตุผลที่ไม่ผ่าน..." style="font-size:12px;padding:8px 12px;border-color:#FECACA;">
+                        </div>
+                    </div>
+                    <!-- Right 7: Reason -->
+                    <div id="rtR7Wrap" style="padding:12px 14px;background:#F8FAFC;border:1.5px solid #E2E8F0;border-radius:12px;transition:all .15s;">
+                        <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+                            <div style="flex:1;">
+                                <div style="font-size:13px;font-weight:700;color:var(--text-1);">Right Reason</div>
+                                <div style="font-size:11px;color:var(--text-2);margin-top:2px;">ข้อบ่งชี้ตรงกับคำสั่งแพทย์ ยาเหมาะสมกับ diagnosis ของผู้ป่วย</div>
+                            </div>
+                        </div>
+                        <div style="display:flex;gap:8px;">
+                            <button type="button" onclick="rtSetRight(7,'pass')" id="rtR7PassBtn" style="flex:1;padding:8px;border-radius:10px;border:1.5px solid #BBF7D0;background:#F0FDF4;color:#059669;font-size:12px;font-weight:700;cursor:pointer;font-family:Prompt,sans-serif;display:flex;align-items:center;justify-content:center;gap:4px;">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                                ผ่าน
+                            </button>
+                            <button type="button" onclick="rtSetRight(7,'fail')" id="rtR7FailBtn" style="flex:1;padding:8px;border-radius:10px;border:1.5px solid #FECACA;background:#FEF2F2;color:#DC2626;font-size:12px;font-weight:700;cursor:pointer;font-family:Prompt,sans-serif;display:flex;align-items:center;justify-content:center;gap:4px;">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+                                ไม่ผ่าน
+                            </button>
+                        </div>
+                        <div id="rtR7ReasonWrap" style="display:none;margin-top:8px;">
+                            <input id="rtR7Reason" class="rec-doc-input" placeholder="ระบุเหตุผลที่ไม่ผ่าน..." style="font-size:12px;padding:8px 12px;border-color:#FECACA;">
                         </div>
                     </div>
                 </div>
@@ -10668,9 +10657,9 @@
             </div>
             <div class="rt-bottom" style="background:white;border-top:1px solid var(--border);">
                 <button class="btn-secondary" onclick="rtGoStep(4)"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>กลับแก้ไข</button>
-                <button class="btn-primary" onclick="rtGoStep(6)" style="background:linear-gradient(135deg,#059669,#0D9488);">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
-                    บันทึกผล
+                <button class="btn-primary" id="rtBtnSaveRecord" onclick="rtGoStep(6)" disabled style="background:#94a3b8;cursor:not-allowed;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
+                    ยืนยัน 7 Rights · บันทึกผล
                 </button>
             </div>
         </div>
@@ -10689,7 +10678,10 @@
                 </div>
 
                 <div style="font-size:28px;font-weight:800;color:#0F766E;margin-bottom:6px;letter-spacing:-0.4px;text-align:center;">บันทึกการให้ยาสำเร็จ</div>
-                <div class="ok-sub" style="margin-bottom:28px;text-align:center;font-size:14px;color:var(--text-2);" id="rtS6Sub">Amlodipine 5 mg — นายสมชาย มานะ (3A-01)</div>
+                <div class="ok-sub" style="margin-bottom:20px;text-align:center;font-size:14px;color:var(--text-2);" id="rtS6Sub">Amlodipine 5 mg — นายสมชาย มานะ (3A-01)</div>
+
+                <!-- 7 Rights result badge -->
+                <div style="max-width:420px;width:100%;margin:0 auto 20px;" id="rtS6RightsBanner"></div>
 
                 <!-- Summary card -->
                 <div style="background:white;border:1px solid rgba(13,148,136,0.12);border-radius:20px;padding:20px 24px;max-width:420px;width:100%;margin-bottom:24px;box-shadow:0 4px 20px rgba(13,148,136,0.06);">
@@ -11303,7 +11295,7 @@
             <div class="rt-bottom" id="haStep3Bot" style="display:none;"><button class="btn-secondary" onclick="haResetScan3()">สแกนใหม่</button><button class="btn-ha" style="flex:2;" onclick="haGoStep(4)">ดำเนินการต่อ</button></div>
         </div>
 
-        <!-- ══ STEP 4: สแกนยา + 5 Rights ══ -->
+        <!-- ══ STEP 4: สแกนยา + 7 Rights ══ -->
         <div class="rt-panel" id="haStep4">
             <div class="rt-inner" style="max-width:600px;">
                 <div class="ha-banner" style="margin-bottom:16px;"><div class="ha-banner-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg></div><div><div class="ha-banner-text">สแกนยา High Alert — สแกนพร้อมกันได้</div><div class="ha-banner-sub">สแกนยาครบทุกรายการเพื่อไปขั้นตอนพยาน</div></div></div>
@@ -11384,7 +11376,7 @@
         <!-- ══ STEP 6: ยืนยันบันทึก ══ -->
         <div class="rt-panel" id="haStep6">
             <div class="rt-inner" style="max-width:600px;">
-                <div class="rec-status-banner success" style="margin-bottom:18px;border-color:#d97706;background:#fffbeb;"><div class="rec-st-icon" style="background:#d97706;"><svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg></div><div><div class="rec-st-title" style="color:#92400e;">พร้อมบันทึก — ตรวจสอบครบแล้ว</div><div class="rec-st-sub" style="color:#b45309;">5 Rights ผ่าน + พยานยืนยันแล้ว</div></div></div>
+                <div class="rec-status-banner success" style="margin-bottom:18px;border-color:#d97706;background:#fffbeb;"><div class="rec-st-icon" style="background:#d97706;"><svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg></div><div><div class="rec-st-title" style="color:#92400e;">พร้อมบันทึก — ตรวจสอบครบแล้ว</div><div class="rec-st-sub" style="color:#b45309;">7 Rights ผ่าน + พยานยืนยันแล้ว</div></div></div>
 
                 <div class="rec-card"><div class="rec-card-title"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>ข้อมูลการให้ยา High Alert</div><div class="rec-grid">
                     <div><div class="wit-ml">ผู้ป่วย</div><div class="wit-mv">นายสมชาย มานะ</div></div>
@@ -14505,6 +14497,8 @@
         if (wardDataReady && targetId === 'pg-order-plan' && typeof renderOrderPlanPage === 'function') renderOrderPlanPage();
         if (wardDataReady && targetId === 'pg-nurse-schedule' && typeof renderNurseSchedulePage === 'function') renderNurseSchedulePage();
         if (wardDataReady && targetId === 'pg-emar' && typeof renderEmarPage === 'function') renderEmarPage();
+        if (targetId === 'pg-pharma-report' && typeof renderPharmaReportPage === 'function') renderPharmaReportPage();
+        if (targetId === 'pg-pharma-verify' && typeof renderPharmaVerifyPage === 'function') renderPharmaVerifyPage();
         if (wardDataReady && targetId === 'pg-prep-patient' && typeof renderPrepPatientPage === 'function') renderPrepPatientPage();
         if (wardDataReady && targetId === 'pg-prep-med' && typeof renderPrepMedicationPage === 'function') renderPrepMedicationPage();
         if (wardDataReady && targetId === 'pg-prep-sched' && typeof renderPrepSchedulePage === 'function') renderPrepSchedulePage();
@@ -14694,7 +14688,7 @@
             this._notify();
         },
 
-        /* ── 5 Rights verification per role ──
+        /* ── 7 Rights verification per role ──
            Each order tracks who verified what:
            - doctor:  verified at prescribing (HIS orders always verified)
            - pharma:  verified before prep/dispense
@@ -14756,11 +14750,12 @@
 
         // All stats for dashboard
         getDashStats: function() {
-            var total = this.orders.length;
+            var pipeline = this.orders.filter(function(o){ return o.status !== 'pending_verify' && o.status !== 'rejected'; });
+            var total = pipeline.length;
             var dispensed = this.countByStatus('dispensed') + this.countByStatus('assessed');
             var pending = total - dispensed;
             var patients = [];
-            this.orders.forEach(function(o) { if (patients.indexOf(o.patient) === -1) patients.push(o.patient); });
+            pipeline.forEach(function(o) { if (patients.indexOf(o.patient) === -1) patients.push(o.patient); });
             return {
                 patients: patients.length,
                 totalMeds: total,
@@ -14788,11 +14783,61 @@
         addManualOrder: function(order) {
             order.id = 'MAN-' + Date.now();
             order.source = 'Manual';
-            order.status = 'ordered';
+            order.status = 'pending_verify';
             order.createdAt = new Date().toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit'});
             this.orders.push(order);
             this._notify();
             return order;
+        },
+
+        // Pharmacist approves a pending order → enters normal pipeline
+        approveOrder: function(orderId, pharmacistName) {
+            var order = this.orders.find(function(o){ return o.id === orderId; });
+            if (order && order.status === 'pending_verify') {
+                order.status = 'ordered';
+                order.verified = order.verified || {};
+                order.verified.pharma = { done:true, by:pharmacistName || 'ภญ.วิภา เจริญยา', at:new Date().toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit'}) };
+                // Add approved drug to patientData so prep flow can see it
+                if (typeof patientData !== 'undefined' && order.patient && patientData[order.patient]) {
+                    var pt = patientData[order.patient];
+                    pt.drugs = pt.drugs || [];
+                    var exists = pt.drugs.some(function(d){ return d.manualOrderId === order.id; });
+                    if (!exists) {
+                        var scheduleMap = {'รอบเช้า':'OD เช้า','รอบเที่ยง':'OD เที่ยง','รอบเย็น':'OD เย็น','ก่อนนอน':'OD ก่อนนอน','STAT now':'STAT','PRN':'PRN'};
+                        pt.drugs.push({
+                            name: order.drug,
+                            dose: order.dose || order.drug,
+                            route: order.route || 'PO',
+                            freq: scheduleMap[order.schedule] || order.schedule || '',
+                            schedule: order.schedule || '',
+                            time: order.time || '',
+                            color: order.priority === 'stat' ? '#EF4444' : order.priority === 'high-alert' ? '#D97706' : '#7C3AED',
+                            highAlert: order.priority === 'high-alert',
+                            manualOrderId: order.id,
+                            source: 'Manual',
+                            doctor: order.doctor || ''
+                        });
+                    }
+                }
+                this._notify();
+            }
+        },
+
+        // Pharmacist rejects a pending order
+        rejectOrder: function(orderId, pharmacistName, reason) {
+            var order = this.orders.find(function(o){ return o.id === orderId; });
+            if (order && order.status === 'pending_verify') {
+                order.status = 'rejected';
+                order.rejectedBy = pharmacistName || 'ภญ.วิภา เจริญยา';
+                order.rejectedAt = new Date().toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit'});
+                order.rejectReason = reason || '';
+                this._notify();
+            }
+        },
+
+        // Count pending verification orders
+        countPendingVerify: function() {
+            return this.orders.filter(function(o){ return o.status === 'pending_verify'; }).length;
         },
 
         // Update order status
@@ -14847,15 +14892,15 @@
         // STAT alert badge
         var statBadge = document.querySelector('#dashQuickAlerts .db-alert-num');
         if (statBadge) statBadge.textContent = s.stat;
-        // eMAR 5 Rights counters
+        // eMAR 7 Rights counters
         el = document.getElementById('emar7rPending'); if (el) el.textContent = s.pending;
         el = document.getElementById('emar7rPassed'); if (el) el.textContent = s.done;
     }
 
     // ── Render physician orders in Order Plan ──
     // ── View state ──
-    var opDrPhView = 'drug'; // default for pharma section
-    var opPhRnView = 'patient'; // default for nurse section
+    var opDrPhView = 'patient'; // default: ตามผู้ป่วย
+    var opPhRnView = 'patient'; // default: ตามผู้ป่วย
 
     function opSetDrPhView(view) {
         opDrPhView = view;
@@ -14877,9 +14922,8 @@
     // Auto-set default view based on role
     function opApplyRoleDefaults() {
         if (typeof currentRole !== 'undefined') {
-            if (currentRole === 'pharma') { opDrPhView = 'drug'; opPhRnView = 'drug'; }
-            else if (currentRole === 'nurse') { opDrPhView = 'patient'; opPhRnView = 'patient'; }
-            else { opDrPhView = 'drug'; opPhRnView = 'patient'; }
+            opDrPhView = 'patient';
+            opPhRnView = 'patient';
         }
     }
 
@@ -15094,7 +15138,10 @@
             var color = isDone ? '#15803D' : isPrepped ? '#1D4ED8' : isHA ? '#DC2626' : '#475569';
             var border = isDone ? '#BBF7D0' : isPrepped ? '#93C5FD' : isHA ? '#FECACA' : '#E2E8F0';
             var icon = isDone ? '✓ ' : isHA ? '⚠ ' : '';
-            return '<div style="background:'+bg+';color:'+color+';border:1px solid '+border+';border-radius:6px;padding:3px 7px;font-size:9px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer;" title="'+escHtml(o.drug)+' · '+escHtml(o.dose)+' · '+o.route+'" onclick="nav(\'pg-emar\')">'
+            var isPh = (typeof currentRole !== 'undefined' && currentRole === 'pharma');
+            var clickAttr = isPh ? '' : ' onclick="nav(\'pg-emar\')"';
+            var cursorStyle = isPh ? 'cursor:default;' : 'cursor:pointer;';
+            return '<div style="background:'+bg+';color:'+color+';border:1px solid '+border+';border-radius:6px;padding:3px 7px;font-size:9px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;'+cursorStyle+'" title="'+escHtml(o.drug)+' · '+escHtml(o.dose)+' · '+o.route+'"'+clickAttr+'>'
                 + icon + escHtml(o.drug.split(' ')[0]) + '</div>';
         }
 
@@ -15397,9 +15444,50 @@
             var lbl4 = statPendEl?.querySelector('.db-stat-label'); if (lbl4) lbl4.textContent = 'รอจ่าย';
         }
 
+        // ── eMAR label per role ──
+        var emarLabel = dashEl.querySelector('#dashEmarQuickLink .db-qnav-label');
+        if (emarLabel) emarLabel.textContent = isPharma ? 'ประวัติการจัดยา' : 'ประวัติการให้ยา';
+
         // ── Role-specific dynamic sections ──
         var sec = document.getElementById('dashRoleSection');
         if (sec) sec.innerHTML = getRoleSectionHTML(role, name, roleText);
+
+        // Update pending verify badge count + visual alert
+        if (typeof MedCartStore !== 'undefined') {
+            var pvCount = MedCartStore.countPendingVerify();
+            var pvBadge = document.getElementById('dashPendingVerifyCount');
+            if (pvBadge) pvBadge.textContent = pvCount;
+            var pvLink = document.getElementById('dashPharmaVerifyLink');
+            if (pvLink && pvCount > 0 && isPharma) {
+                pvLink.style.setProperty('--qn-bg', '#FEF3C7');
+                pvLink.style.setProperty('--qn-border', '#F59E0B');
+                pvLink.style.animation = 'pulse-border 2s ease-in-out infinite';
+            } else if (pvLink) {
+                pvLink.style.animation = '';
+            }
+        }
+
+        // Nurse: show/hide จัดยา card based on approved manual orders
+        if (isNurse && typeof MedCartStore !== 'undefined') {
+            var approvedManual = MedCartStore.orders.filter(function(o){
+                return o.source === 'Manual' && o.status !== 'pending_verify' && o.status !== 'rejected';
+            }).length;
+            var prepCard = dashEl.querySelector('.db-action[onclick*="goToPrepType"]');
+            if (prepCard) {
+                if (approvedManual > 0) {
+                    prepCard.style.display = '';
+                    // Change label to indicate nurse prep
+                    var titleEl = prepCard.querySelector('.db-action-title');
+                    if (titleEl) titleEl.textContent = 'จัดยาที่อนุมัติแล้ว';
+                    var descEl = prepCard.querySelector('.db-action-desc');
+                    if (descEl) descEl.textContent = 'เภสัชอนุมัติ ' + approvedManual + ' รายการ — พร้อมจัดยาเข้า Cassette';
+                    var badgeEl = prepCard.querySelector('.db-action-badge');
+                    if (badgeEl) badgeEl.textContent = approvedManual + ' พร้อมจัด';
+                } else {
+                    prepCard.style.display = 'none';
+                }
+            }
+        }
 
         // Super: render team panel
         var teamPanelSlot = document.getElementById('dashTeamPanelSlot');
@@ -15457,24 +15545,49 @@
         })();
 
         if (role === 'nurse') {
+            // Build urgent list from MedCartStore (STAT + pending orders sorted by priority)
+            var urgentItems = [];
+            if (typeof MedCartStore !== 'undefined' && MedCartStore.orders.length) {
+                var pending = MedCartStore.orders.filter(function(o){
+                    return o.status !== 'dispensed' && o.status !== 'assessed' && o.status !== 'pending_verify' && o.status !== 'rejected';
+                });
+                // STAT first
+                pending.filter(function(o){ return o.priority === 'stat'; }).forEach(function(o){
+                    urgentItems.push({ name: MedCartStore.getPatientName(o.patient), bed: MedCartStore.getPatientBed(o.patient),
+                        drug: o.drug, desc: 'STAT · ' + o.drug, color: '#ef4444', bg: '#fef2f2', nav: 'pg-stat' });
+                });
+                // High Alert
+                pending.filter(function(o){ return o.highAlert && o.priority !== 'stat'; }).slice(0,2).forEach(function(o){
+                    urgentItems.push({ name: MedCartStore.getPatientName(o.patient), bed: MedCartStore.getPatientBed(o.patient),
+                        drug: o.drug, desc: 'High Alert · ' + o.drug + ' · ' + (o.schedule||''), color: '#d97706', bg: '#fff7ed', nav: 'pg-highalert' });
+                });
+                // PRN
+                pending.filter(function(o){ return o.priority === 'prn'; }).slice(0,2).forEach(function(o){
+                    urgentItems.push({ name: MedCartStore.getPatientName(o.patient), bed: MedCartStore.getPatientBed(o.patient),
+                        drug: o.drug, desc: 'PRN · ' + o.drug, color: '#7c3aed', bg: '#f5f3ff', nav: 'pg-prn' });
+                });
+                // Fill remaining with routine pending
+                if (urgentItems.length < 3) {
+                    pending.filter(function(o){ return o.priority === 'routine' && !o.highAlert; }).slice(0, 3 - urgentItems.length).forEach(function(o){
+                        urgentItems.push({ name: MedCartStore.getPatientName(o.patient), bed: MedCartStore.getPatientBed(o.patient),
+                            drug: o.drug, desc: 'รอจ่าย · ' + o.drug + ' · ' + (o.schedule||''), color: '#0D9488', bg: '#f0fdf4', nav: 'pg-routine' });
+                    });
+                }
+            }
+            var urgentHtml = urgentItems.length ? urgentItems.slice(0,4).map(function(u){
+                return '<div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:'+u.bg+';border-radius:10px;border-left:3px solid '+u.color+';cursor:pointer;" onclick="nav(\''+u.nav+'\')">'
+                    +'<div><div style="font-size:13px;font-weight:600;color:var(--text-1);">'+u.name+' · '+u.bed+'</div><div style="font-size:11px;color:'+u.color+';">'+u.desc+'</div></div>'
+                    +'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" stroke-width="2" style="margin-left:auto;flex-shrink:0;"><polyline points="9 18 15 12 9 6"/></svg></div>';
+            }).join('') : '<div style="padding:12px;text-align:center;color:var(--text-3);font-size:12px;">ไม่มีรายการเร่งด่วน</div>';
+
             return '<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">'
                 // Urgent patients
                 +'<div style="'+glass+'padding:18px 20px;">'
                 +'<div style="font-size:14px;font-weight:600;color:var(--text-1);margin-bottom:14px;display:flex;align-items:center;gap:6px;">'
                 +'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>'
                 +'<span>ผู้ป่วยที่ต้องจ่ายยาเร่งด่วน</span>'
-                +'<span style="margin-left:auto;background:#fef2f2;color:#ef4444;font-size:11px;font-weight:700;padding:2px 8px;border-radius:10px;">3 ราย</span></div>'
-                +'<div style="display:flex;flex-direction:column;gap:8px;">'
-                +'<div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:#fef2f2;border-radius:10px;border-left:3px solid #ef4444;cursor:pointer;" onclick="nav(\'pg-routine\')">'
-                +'<div><div style="font-size:13px;font-weight:600;color:var(--text-1);">ธนกร วิเศษสิทธิ์ · 3A-10</div><div style="font-size:11px;color:#ef4444;">STAT · Heparin 5000u · เลยเวลา 48 นาที</div></div>'
-                +'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" stroke-width="2" style="margin-left:auto;flex-shrink:0;"><polyline points="9 18 15 12 9 6"/></svg></div>'
-                +'<div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:#fff7ed;border-radius:10px;border-left:3px solid #f59e0b;cursor:pointer;" onclick="nav(\'pg-routine\')">'
-                +'<div><div style="font-size:13px;font-weight:600;color:var(--text-1);">มาลี สุขใจ · 3A-03</div><div style="font-size:11px;color:#d97706;">ใกล้ถึงเวลา · 4 รายการยา · อีก 15 นาที</div></div>'
-                +'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" stroke-width="2" style="margin-left:auto;flex-shrink:0;"><polyline points="9 18 15 12 9 6"/></svg></div>'
-                +'<div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:#f5f3ff;border-radius:10px;border-left:3px solid #7c3aed;cursor:pointer;" onclick="nav(\'pg-prn\')">'
-                +'<div><div style="font-size:13px;font-weight:600;color:var(--text-1);">สมชาย มานะ · 3A-01</div><div style="font-size:11px;color:#7c3aed;">PRN · Morphine 5mg · Pain score 7/10</div></div>'
-                +'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" stroke-width="2" style="margin-left:auto;flex-shrink:0;"><polyline points="9 18 15 12 9 6"/></svg></div>'
-                +'</div></div>'
+                +'<span style="margin-left:auto;background:#fef2f2;color:#ef4444;font-size:11px;font-weight:700;padding:2px 8px;border-radius:10px;">'+urgentItems.length+' ราย</span></div>'
+                +'<div style="display:flex;flex-direction:column;gap:8px;">'+urgentHtml+'</div></div>'
                 // My shift summary
                 +'<div style="'+glass+'padding:18px 20px;">'
                 +'<div style="font-size:14px;font-weight:600;color:var(--text-1);margin-bottom:14px;display:flex;align-items:center;gap:6px;">'
@@ -15490,121 +15603,66 @@
         }
 
         if (role === 'pharma') {
-            // Build dynamic report from MedCartStore
-            var storeData = (typeof MedCartStore !== 'undefined' && MedCartStore.orders.length > 0) ? MedCartStore : null;
-            var holdCount = 0, failCount = 0, offcartCount = 0, cassetteRemain = 0;
-            var holdItems = [], failItems = [], offcartItems = [], cassetteItems = [];
-            if (storeData) {
-                // ยาค้างใน cassette = prepped but not dispensed
-                storeData.orders.forEach(function(o) {
-                    if (o.status === 'prepped') {
-                        cassetteItems.push(o);
-                    }
-                });
-                cassetteRemain = cassetteItems.length;
-                // ยาที่ hold/omit = จำลองจากข้อมูล overdue
-                holdCount = typeof ovPatients !== 'undefined' ? ovPatients.length : 0;
-                // Off-cart
-                offcartCount = storeData.offcart.length;
-            }
-
-            var reportRow = function(icon, iconBg, title, detail, borderColor) {
-                return '<div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:white;border-radius:10px;border-left:3px solid '+borderColor+';box-shadow:0 1px 3px rgba(0,0,0,0.04);">'
-                    +'<div style="width:32px;height:32px;background:'+iconBg+';border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">'+icon+'</div>'
-                    +'<div style="flex:1;min-width:0;"><div style="font-size:12px;font-weight:700;color:var(--text-1);">'+title+'</div><div style="font-size:10px;color:var(--text-2);margin-top:1px;">'+detail+'</div></div>'
+            var pvCount = (typeof MedCartStore !== 'undefined') ? MedCartStore.countPendingVerify() : 0;
+            var notifHtml = '';
+            if (pvCount > 0) {
+                notifHtml = '<div onclick="nav(\'pg-pharma-verify\')" style="background:linear-gradient(135deg,#FEF3C7,#FDE68A);border:2px solid #F59E0B;border-radius:16px;padding:16px 20px;margin-bottom:16px;display:flex;align-items:center;gap:14px;cursor:pointer;transition:transform .15s;box-shadow:0 4px 16px rgba(245,158,11,0.15);" onmouseover="this.style.transform=\'translateY(-2px)\'" onmouseout="this.style.transform=\'\'">'
+                    +'<div style="width:44px;height:44px;background:linear-gradient(135deg,#D97706,#F59E0B);border-radius:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;position:relative;">'
+                    +'<svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>'
+                    +'<div style="position:absolute;top:-4px;right:-4px;width:20px;height:20px;background:#DC2626;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:white;border:2px solid #FDE68A;">'+pvCount+'</div>'
+                    +'</div>'
+                    +'<div style="flex:1;"><div style="font-size:15px;font-weight:800;color:#78350F;">พยาบาลขออนุมัติคำสั่งยา '+pvCount+' รายการ</div>'
+                    +'<div style="font-size:11px;color:#92400E;margin-top:2px;">กดเพื่อตรวจสอบและอนุมัติ Verbal/Telephone Order</div></div>'
+                    +'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#92400E" stroke-width="2.5" style="flex-shrink:0;"><polyline points="9 18 15 12 9 6"/></svg>'
                     +'</div>';
-            };
+            }
+            // Build stock alerts from MedCartStore — drugs with highAlert or limited supply
+            var stockItems = [];
+            if (typeof MedCartStore !== 'undefined' && MedCartStore.orders.length) {
+                var drugCounts = {};
+                MedCartStore.orders.forEach(function(o) {
+                    if (!drugCounts[o.drug]) drugCounts[o.drug] = { drug: o.drug, total: 0, pending: 0, ha: o.highAlert };
+                    drugCounts[o.drug].total++;
+                    if (o.status !== 'dispensed' && o.status !== 'assessed') drugCounts[o.drug].pending++;
+                });
+                Object.keys(drugCounts).forEach(function(k) {
+                    var d = drugCounts[k];
+                    if (d.ha || d.pending >= 3) stockItems.push(d);
+                });
+            }
+            var stockHtml = stockItems.length ? stockItems.slice(0,4).map(function(d) {
+                var critical = d.ha;
+                return '<div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:'+(critical?'#fef2f2':'#fff7ed')+';border-radius:10px;border-left:3px solid '+(critical?'#ef4444':'#f59e0b')+'">'
+                    +'<div style="flex:1;"><div style="font-size:13px;font-weight:600;color:var(--text-1);">'+d.drug+'</div><div style="font-size:11px;color:'+(critical?'#ef4444':'#d97706')+';">'+(critical?'High Alert · ':'')+'รอจัด '+d.pending+' / ทั้งหมด '+d.total+'</div></div>'
+                    +'<div style="font-size:16px;font-weight:700;color:'+(critical?'#ef4444':'#f59e0b')+';">'+d.pending+'</div></div>';
+            }).join('') : '<div style="padding:12px;text-align:center;color:var(--text-3);font-size:12px;">ไม่มียาที่ต้องเตือน</div>';
 
-            return ''
-                // ── รายงานยาที่ต้องตรวจสอบ ──
-                +'<div style="'+glass+'padding:18px 20px;margin-bottom:14px;">'
-                +'<div style="font-size:15px;font-weight:700;color:var(--text-1);margin-bottom:6px;display:flex;align-items:center;gap:8px;">'
-                +'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2.2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="12" y1="9" x2="12.01" y2="9"/></svg>'
-                +'รายงานยาที่ต้องตรวจสอบ'
-                +'</div>'
-                +'<div style="font-size:11px;color:var(--text-3);margin-bottom:16px;">ยาค้างใน Cassette, ยา Hold/Omit, Off-cart และ 5 Rights Fail — ต้องติดตามแก้ไข</div>'
+            // Build prep activity from MedCartStore — recently prepped orders
+            var preppedOrders = (typeof MedCartStore !== 'undefined') ? MedCartStore.orders.filter(function(o){ return o.status === 'prepped' || o.status === 'dispensed'; }).slice(0,4) : [];
+            var activityHtml = preppedOrders.length ? preppedOrders.map(function(o) {
+                var done = o.status === 'dispensed' || o.status === 'assessed';
+                return '<div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:'+(done?'#f0fdf4':'#fff7ed')+';border-radius:10px;border-left:3px solid '+(done?'#0D9488':'#f59e0b')+'">'
+                    +'<div style="flex:1;"><div style="font-size:12px;font-weight:600;color:var(--text-1);">'+o.drug+' · '+MedCartStore.getPatientName(o.patient)+'</div><div style="font-size:11px;color:'+(done?'#0D9488':'#d97706')+';">'+(o.schedule||'')+' · '+(o.createdAt||'')+'</div></div>'
+                    +'<div style="font-size:10px;font-weight:700;color:'+(done?'#0D9488':'#d97706')+';background:'+(done?'#dcfce7':'#fef3c7')+';padding:2px 8px;border-radius:8px;">'+(done?'จ่ายแล้ว':'จัดแล้ว')+'</div></div>';
+            }).join('') : '<div style="padding:12px;text-align:center;color:var(--text-3);font-size:12px;">ยังไม่มีกิจกรรมจัดยา</div>';
 
-                // Stats row
-                +'<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px;">'
-                +'<div style="background:#FEF2F2;border-radius:12px;padding:12px;text-align:center;border:1px solid #FECACA;"><div style="font-size:22px;font-weight:800;color:#DC2626;">'+cassetteRemain+'</div><div style="font-size:9px;color:#991B1B;font-weight:700;margin-top:2px;">ค้าง Cassette</div></div>'
-                +'<div style="background:#FFFBEB;border-radius:12px;padding:12px;text-align:center;border:1px solid #FDE68A;"><div style="font-size:22px;font-weight:800;color:#D97706;">'+holdCount+'</div><div style="font-size:9px;color:#92400E;font-weight:700;margin-top:2px;">Hold / Omit</div></div>'
-                +'<div style="background:#FFF7ED;border-radius:12px;padding:12px;text-align:center;border:1px solid #FED7AA;"><div style="font-size:22px;font-weight:800;color:#EA580C;">'+offcartCount+'</div><div style="font-size:9px;color:#9A3412;font-weight:700;margin-top:2px;">Off-cart</div></div>'
-                +'<div style="background:#FEF2F2;border-radius:12px;padding:12px;text-align:center;border:1px solid #FECACA;"><div style="font-size:22px;font-weight:800;color:#DC2626;">0</div><div style="font-size:9px;color:#991B1B;font-weight:700;margin-top:2px;">5 Rights Fail</div></div>'
-                +'</div>'
-
-                // Detail list
-                +'<div style="display:flex;flex-direction:column;gap:8px;">'
-                // ยาค้าง cassette
-                + (cassetteItems.length > 0 ? cassetteItems.slice(0,3).map(function(o) {
-                    return reportRow(
-                        '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/></svg>',
-                        '#FEF2F2', 'ค้าง Cassette — ' + o.drug,
-                        MedCartStore.getPatientName(o.patient) + ' · จัดแล้วแต่ยังไม่จ่าย · ' + (o.schedule||'') + ' ' + (o.time||''),
-                        '#DC2626'
-                    );
-                }).join('') : reportRow(
-                    '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>',
-                    '#F0FDF4', 'ไม่มียาค้างใน Cassette', 'ยาที่จัดแล้วถูกจ่ายครบ', '#10B981'
-                ))
-                // Hold/Omit
-                + reportRow(
-                    '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D97706" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="8" y1="12" x2="16" y2="12"/></svg>',
-                    '#FFFBEB', 'Hold / Omit — ' + holdCount + ' รายการ',
-                    holdCount > 0 ? 'ยาที่ถูกงดให้ ต้องตรวจสอบว่าต้องคืน stock หรือทำลาย' : 'ไม่มียาที่ถูก hold หรืองด',
-                    '#D97706'
-                )
-                // Off-cart
-                + reportRow(
-                    '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#EA580C" stroke-width="2.5"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4z"/><line x1="2" y1="2" x2="22" y2="22"/></svg>',
-                    '#FFF7ED', 'Off-cart — ' + offcartCount + ' รายการ',
-                    offcartCount > 0 ? 'ยาที่ให้นอก Med Cart ต้องตรวจ stock reconciliation' : 'ไม่มีการให้ยานอกรถเข็นวันนี้',
-                    '#EA580C'
-                )
-                // 5 Rights Fail
-                + reportRow(
-                    '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2.5"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>',
-                    '#FEF2F2', '5 Rights Fail — 0 รายการ',
-                    'ยาที่สแกนแล้วไม่ผ่านการตรวจ 5 Rights ต้องตรวจสอบ root cause',
-                    '#DC2626'
-                )
-                +'</div></div>'
-
+            return notifHtml
                 // ── Stock + Prep Activity (2 cols) ──
                 +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">'
                 // Stock alert
                 +'<div style="'+glass+'padding:18px 20px;">'
                 +'<div style="font-size:14px;font-weight:600;color:var(--text-1);margin-bottom:14px;display:flex;align-items:center;gap:6px;">'
                 +'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>'
-                +'<span>Stock ยาใกล้หมด</span>'
-                +'<span style="margin-left:auto;background:#fff7ed;color:#d97706;font-size:11px;font-weight:700;padding:2px 8px;border-radius:10px;">3 รายการ</span></div>'
-                +'<div style="display:flex;flex-direction:column;gap:8px;">'
-                +'<div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:#fef2f2;border-radius:10px;border-left:3px solid #ef4444;">'
-                +'<div style="flex:1;"><div style="font-size:13px;font-weight:600;color:var(--text-1);">Heparin 5000u Inj</div><div style="font-size:11px;color:#ef4444;">เหลือ 3 vials · ต่ำกว่า safety stock</div></div>'
-                +'<div style="font-size:16px;font-weight:700;color:#ef4444;">3</div></div>'
-                +'<div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:#fff7ed;border-radius:10px;border-left:3px solid #f59e0b;">'
-                +'<div style="flex:1;"><div style="font-size:13px;font-weight:600;color:var(--text-1);">Omeprazole 20mg Cap</div><div style="font-size:11px;color:#d97706;">เหลือ 12 แคปซูล</div></div>'
-                +'<div style="font-size:16px;font-weight:700;color:#f59e0b;">12</div></div>'
-                +'<div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:#fff7ed;border-radius:10px;border-left:3px solid #f59e0b;">'
-                +'<div style="flex:1;"><div style="font-size:13px;font-weight:600;color:var(--text-1);">Morphine 5mg/mL Inj</div><div style="font-size:11px;color:#d97706;">เหลือ 5 vials · ยาเสพติด</div></div>'
-                +'<div style="font-size:16px;font-weight:700;color:#f59e0b;">5</div></div>'
-                +'</div></div>'
+                +'<span>Stock ยาที่ต้องเตือน</span>'
+                +'<span style="margin-left:auto;background:#fff7ed;color:#d97706;font-size:11px;font-weight:700;padding:2px 8px;border-radius:10px;">'+stockItems.length+' รายการ</span></div>'
+                +'<div style="display:flex;flex-direction:column;gap:8px;">'+stockHtml+'</div></div>'
                 // Prep activity log
                 +'<div style="'+glass+'padding:18px 20px;">'
                 +'<div style="font-size:14px;font-weight:600;color:var(--text-1);margin-bottom:14px;display:flex;align-items:center;gap:6px;">'
                 +'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0D9488" stroke-width="2.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>'
                 +'<span>กิจกรรมจัดยาวันนี้</span>'
-                +'<span style="margin-left:auto;background:#f0fdf4;color:#0D9488;font-size:11px;font-weight:700;padding:2px 8px;border-radius:10px;">3 รายการ</span></div>'
-                +'<div style="display:flex;flex-direction:column;gap:7px;">'
-                +'<div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:#f0fdf4;border-radius:10px;border-left:3px solid #0D9488;">'
-                +'<div style="flex:1;"><div style="font-size:12px;font-weight:600;color:var(--text-1);">จัดยาตามผู้ป่วย · D2 Cassette 3</div><div style="font-size:11px;color:#0D9488;">ภญ.วิภา เจริญยา · 07:45</div></div>'
-                +'<div style="font-size:10px;font-weight:700;color:#0D9488;background:#dcfce7;padding:2px 8px;border-radius:8px;">เสร็จแล้ว</div></div>'
-                +'<div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:#f0fdf4;border-radius:10px;border-left:3px solid #0D9488;">'
-                +'<div style="flex:1;"><div style="font-size:12px;font-weight:600;color:var(--text-1);">จัดยาตามรายการยา · D1 Cassette 1</div><div style="font-size:11px;color:#0D9488;">ภญ.วิภา เจริญยา · 08:10</div></div>'
-                +'<div style="font-size:10px;font-weight:700;color:#0D9488;background:#dcfce7;padding:2px 8px;border-radius:8px;">เสร็จแล้ว</div></div>'
-                +'<div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:#fff7ed;border-radius:10px;border-left:3px solid #f59e0b;">'
-                +'<div style="flex:1;"><div style="font-size:12px;font-weight:600;color:var(--text-1);">จัดยาตามรอบเวลา · D3 Cassette 2</div><div style="font-size:11px;color:#d97706;">ภญ.วิภา เจริญยา · 08:30</div></div>'
-                +'<div style="font-size:10px;font-weight:700;color:#d97706;background:#fef3c7;padding:2px 8px;border-radius:8px;">กำลังดำเนินการ</div></div>'
-                +'</div></div>'
+                +'<span style="margin-left:auto;background:#f0fdf4;color:#0D9488;font-size:11px;font-weight:700;padding:2px 8px;border-radius:10px;">'+preppedOrders.length+' รายการ</span></div>'
+                +'<div style="display:flex;flex-direction:column;gap:7px;">'+activityHtml+'</div></div>'
                 +'</div>';
         }
 
@@ -16269,6 +16327,196 @@
         return rows;
     }
 
+    function renderPharmaVerifyPage() {
+        var wl = document.getElementById('pvWardLabel'); if (wl) wl.textContent = currentWardName || 'Ward 3A';
+        var cl = document.getElementById('pvCartLabel'); if (cl) cl.textContent = 'Med Cart A-1';
+
+        var pending = MedCartStore.orders.filter(function(o){ return o.status === 'pending_verify'; });
+        var approved = MedCartStore.orders.filter(function(o){ return o.source === 'Manual' && o.status !== 'pending_verify' && o.status !== 'rejected'; });
+        var rejected = MedCartStore.orders.filter(function(o){ return o.status === 'rejected'; });
+
+        // Stats
+        var pe = document.getElementById('pvPendingCount'); if (pe) pe.textContent = pending.length;
+        var ae = document.getElementById('pvApprovedCount'); if (ae) ae.textContent = approved.length;
+        var re = document.getElementById('pvRejectedCount'); if (re) re.textContent = rejected.length;
+        var te = document.getElementById('pvTotalCount'); if (te) te.textContent = pending.length + approved.length + rejected.length;
+        var pb = document.getElementById('pvPendingBadge'); if (pb) pb.textContent = pending.length + ' รายการ';
+
+        // Pending list
+        var pl = document.getElementById('pvPendingList');
+        if (pl) {
+            if (pending.length === 0) {
+                pl.innerHTML = '<div style="padding:24px;text-align:center;color:var(--text-3);font-size:13px;">ไม่มีรายการรออนุมัติ</div>';
+            } else {
+                pl.innerHTML = pending.map(function(o) {
+                    var ptName = MedCartStore.getPatientName ? MedCartStore.getPatientName(o.patient) : o.patient;
+                    var priBadge = o.priority === 'stat' ? '<span style="background:#FEF2F2;color:#DC2626;font-size:9px;font-weight:800;padding:2px 6px;border-radius:4px;border:1px solid #FECACA;">STAT</span>'
+                        : o.priority === 'high-alert' ? '<span style="background:#FEF2F2;color:#DC2626;font-size:9px;font-weight:800;padding:2px 6px;border-radius:4px;border:1px solid #FECACA;">High Alert</span>'
+                        : o.priority === 'prn' ? '<span style="background:#F5F3FF;color:#7C3AED;font-size:9px;font-weight:800;padding:2px 6px;border-radius:4px;border:1px solid #DDD6FE;">PRN</span>'
+                        : '';
+                    return '<div style="display:flex;align-items:center;gap:14px;padding:16px;border-bottom:1px solid var(--border);flex-wrap:wrap;">'
+                        +'<div style="flex:1;min-width:200px;">'
+                        +'<div style="font-size:14px;font-weight:700;color:var(--text-1);display:flex;align-items:center;gap:6px;">' + o.drug + ' ' + priBadge + '</div>'
+                        +'<div style="font-size:12px;color:var(--text-2);margin-top:3px;">' + ptName + ' · ' + (o.dose||'') + ' · ' + (o.route||'') + ' · ' + (o.schedule||'') + '</div>'
+                        +'<div style="font-size:11px;color:var(--text-3);margin-top:2px;">แพทย์: ' + (o.doctor||'-') + ' · ' + (o.orderSource||o.source||'Manual') + ' · ' + (o.createdAt||'') + '</div>'
+                        + (o.note ? '<div style="font-size:11px;color:#6D28D9;margin-top:2px;">หมายเหตุ: ' + o.note + '</div>' : '')
+                        +'</div>'
+                        +'<div style="display:flex;gap:8px;flex-shrink:0;">'
+                        +'<button type="button" onclick="pvApprove(\''+o.id+'\')" style="padding:8px 18px;border-radius:10px;border:none;background:linear-gradient(135deg,#059669,#10B981);color:white;font-size:12px;font-weight:700;cursor:pointer;font-family:Prompt,sans-serif;">อนุมัติ</button>'
+                        +'<button type="button" onclick="pvReject(\''+o.id+'\')" style="padding:8px 18px;border-radius:10px;border:1.5px solid #FECACA;background:#FEF2F2;color:#DC2626;font-size:12px;font-weight:700;cursor:pointer;font-family:Prompt,sans-serif;">ปฏิเสธ</button>'
+                        +'</div></div>';
+                }).join('');
+            }
+        }
+
+        // History list
+        var hl = document.getElementById('pvHistoryList');
+        if (hl) {
+            var history = approved.concat(rejected).sort(function(a,b){ return (b.createdAt||'').localeCompare(a.createdAt||''); });
+            if (history.length === 0) {
+                hl.innerHTML = '<div style="padding:24px;text-align:center;color:var(--text-3);font-size:13px;">ยังไม่มีประวัติ</div>';
+            } else {
+                hl.innerHTML = history.map(function(o) {
+                    var ptName = MedCartStore.getPatientName ? MedCartStore.getPatientName(o.patient) : o.patient;
+                    var isRejected = o.status === 'rejected';
+                    var statusBadge = isRejected
+                        ? '<span style="background:#FEF2F2;color:#DC2626;font-size:10px;font-weight:700;padding:3px 10px;border-radius:8px;border:1px solid #FECACA;">ปฏิเสธ</span>'
+                        : '<span style="background:#F0FDF4;color:#059669;font-size:10px;font-weight:700;padding:3px 10px;border-radius:8px;border:1px solid #BBF7D0;">อนุมัติแล้ว</span>';
+                    return '<div style="display:flex;align-items:center;gap:14px;padding:12px 16px;border-bottom:1px solid var(--border);opacity:' + (isRejected ? '0.6' : '1') + ';">'
+                        +'<div style="flex:1;min-width:0;">'
+                        +'<div style="font-size:13px;font-weight:600;color:var(--text-1);">' + o.drug + '</div>'
+                        +'<div style="font-size:11px;color:var(--text-2);margin-top:2px;">' + ptName + ' · ' + (o.dose||'') + ' · ' + (o.route||'') + '</div>'
+                        + (isRejected && o.rejectReason ? '<div style="font-size:11px;color:#DC2626;margin-top:2px;">เหตุผล: ' + o.rejectReason + '</div>' : '')
+                        +'</div>'
+                        + statusBadge
+                        +'</div>';
+                }).join('');
+            }
+        }
+    }
+
+    function pvApprove(orderId) {
+        MedCartStore.approveOrder(orderId);
+        renderPharmaVerifyPage();
+        showToast('อนุมัติคำสั่งยาแล้ว — เข้า pipeline จัดยา');
+        setTimeout(function(){ showToast(''); }, 2500);
+    }
+
+    function pvReject(orderId) {
+        var reason = prompt('เหตุผลที่ปฏิเสธ:');
+        if (reason === null) return;
+        MedCartStore.rejectOrder(orderId, null, reason);
+        renderPharmaVerifyPage();
+        showToast('ปฏิเสธคำสั่งยาแล้ว');
+        setTimeout(function(){ showToast(''); }, 2500);
+    }
+
+    function opSwitchTab(tab, btn) {
+        var verbal = document.getElementById('opTabVerbal');
+        var offcart = document.getElementById('opTabOffcart');
+        var banner = document.getElementById('opPendingBanner');
+        if (verbal) verbal.style.display = tab === 'verbal' ? '' : 'none';
+        if (offcart) offcart.style.display = tab === 'offcart' ? '' : 'none';
+        if (banner) banner.style.display = tab === 'verbal' && banner.innerHTML ? '' : 'none';
+        // Update active tab styling
+        var vBtn = document.getElementById('opTabBtnVerbal');
+        var oBtn = document.getElementById('opTabBtnOffcart');
+        if (vBtn) { vBtn.style.borderColor = tab === 'verbal' ? '#DDD6FE' : '#E2E8F0'; vBtn.style.background = tab === 'verbal' ? 'linear-gradient(135deg,#F5F3FF,#EDE9FE)' : '#F8FAFC'; }
+        if (oBtn) { oBtn.style.borderColor = tab === 'offcart' ? '#FDE68A' : '#E2E8F0'; oBtn.style.background = tab === 'offcart' ? 'linear-gradient(135deg,#FFFBEB,#FEF3C7)' : '#F8FAFC'; }
+        if (tab === 'offcart') renderOffcartTab();
+    }
+
+    function renderOffcartTab() {
+        // Populate patient select
+        var ps = document.getElementById('emarOffPatient');
+        if (ps && typeof orderPlanPatientOptionsHtml === 'function') {
+            var prev = ps.value;
+            ps.innerHTML = orderPlanPatientOptionsHtml(prev);
+            if (prev) ps.value = prev;
+        }
+        // Stats
+        var offcarts = (typeof MedCartStore !== 'undefined') ? MedCartStore.offcart : [];
+        var todayEl = document.getElementById('ocTodayCount'); if (todayEl) todayEl.textContent = offcarts.length;
+        var wsCount = offcarts.filter(function(r){ return r.source === 'Ward stock'; }).length;
+        var emCount = offcarts.filter(function(r){ return r.source === 'Emergency kit'; }).length;
+        var otCount = offcarts.length - wsCount - emCount;
+        var wsEl = document.getElementById('ocWardStockCount'); if (wsEl) wsEl.textContent = wsCount;
+        var emEl = document.getElementById('ocEmergencyCount'); if (emEl) emEl.textContent = emCount;
+        var otEl = document.getElementById('ocOtherCount'); if (otEl) otEl.textContent = otCount;
+        // Log
+        var logBadge = document.getElementById('ocLogBadge');
+        var logList = document.getElementById('ocLogList');
+        if (logList && typeof getWardEmarRecords === 'function' && typeof emarLogRowHtml === 'function') {
+            var records = getWardEmarRecords(currentWardName || 'Ward 3A').filter(function(r){ return r.offCart; });
+            logList.innerHTML = records.length ? records.map(emarLogRowHtml).join('') : '<div class="op-empty">ยังไม่มีบันทึก Off-cart วันนี้</div>';
+            if (logBadge) logBadge.textContent = records.length + ' records';
+        }
+    }
+
+    function renderPharmaReportPage() {
+        var storeData = (typeof MedCartStore !== 'undefined' && MedCartStore.orders.length > 0) ? MedCartStore : null;
+        var holdCount = 0, offcartCount = 0, cassetteRemain = 0;
+        var cassetteItems = [];
+        if (storeData) {
+            storeData.orders.forEach(function(o) { if (o.status === 'prepped') cassetteItems.push(o); });
+            cassetteRemain = cassetteItems.length;
+            holdCount = typeof ovPatients !== 'undefined' ? ovPatients.length : 0;
+            offcartCount = storeData.offcart.length;
+        }
+        var reportRow = function(icon, iconBg, title, detail, borderColor) {
+            return '<div style="display:flex;align-items:center;gap:12px;padding:14px 16px;background:white;border-radius:12px;border-left:3px solid '+borderColor+';box-shadow:0 1px 3px rgba(0,0,0,0.04);">'
+                +'<div style="width:36px;height:36px;background:'+iconBg+';border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">'+icon+'</div>'
+                +'<div style="flex:1;min-width:0;"><div style="font-size:13px;font-weight:700;color:var(--text-1);">'+title+'</div><div style="font-size:11px;color:var(--text-2);margin-top:2px;">'+detail+'</div></div>'
+                +'</div>';
+        };
+        var el = document.getElementById('pharmaReportContent');
+        if (!el) return;
+        // Ward/cart labels
+        var wl = document.getElementById('prptWardLabel'); if (wl) wl.textContent = currentWardName || 'Ward 3A';
+        var cl = document.getElementById('prptCartLabel'); if (cl) cl.textContent = 'Med Cart A-1';
+
+        el.innerHTML = ''
+            // Stats row
+            +'<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px;">'
+            +'<div style="background:#FEF2F2;border-radius:14px;padding:18px;text-align:center;border:1px solid #FECACA;"><div style="font-size:28px;font-weight:800;color:#DC2626;">'+cassetteRemain+'</div><div style="font-size:11px;color:#991B1B;font-weight:700;margin-top:4px;">ค้าง Cassette</div></div>'
+            +'<div style="background:#FFFBEB;border-radius:14px;padding:18px;text-align:center;border:1px solid #FDE68A;"><div style="font-size:28px;font-weight:800;color:#D97706;">'+holdCount+'</div><div style="font-size:11px;color:#92400E;font-weight:700;margin-top:4px;">Hold / Omit</div></div>'
+            +'<div style="background:#FFF7ED;border-radius:14px;padding:18px;text-align:center;border:1px solid #FED7AA;"><div style="font-size:28px;font-weight:800;color:#EA580C;">'+offcartCount+'</div><div style="font-size:11px;color:#9A3412;font-weight:700;margin-top:4px;">Off-cart</div></div>'
+            +'<div style="background:#FEF2F2;border-radius:14px;padding:18px;text-align:center;border:1px solid #FECACA;"><div style="font-size:28px;font-weight:800;color:#DC2626;">0</div><div style="font-size:11px;color:#991B1B;font-weight:700;margin-top:4px;">7 Rights Fail</div></div>'
+            +'</div>'
+            // Detail list
+            +'<div style="display:flex;flex-direction:column;gap:10px;">'
+            + (cassetteItems.length > 0 ? cassetteItems.map(function(o) {
+                return reportRow(
+                    '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/></svg>',
+                    '#FEF2F2', 'ค้าง Cassette — ' + o.drug,
+                    MedCartStore.getPatientName(o.patient) + ' · จัดแล้วแต่ยังไม่จ่าย · ' + (o.schedule||'') + ' ' + (o.time||''),
+                    '#DC2626'
+                );
+            }).join('') : reportRow(
+                '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>',
+                '#F0FDF4', 'ไม่มียาค้างใน Cassette', 'ยาที่จัดแล้วถูกจ่ายครบ', '#10B981'
+            ))
+            + reportRow(
+                '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D97706" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="8" y1="12" x2="16" y2="12"/></svg>',
+                '#FFFBEB', 'Hold / Omit — ' + holdCount + ' รายการ',
+                holdCount > 0 ? 'ยาที่ถูกงดให้ ต้องตรวจสอบว่าต้องคืน stock หรือทำลาย' : 'ไม่มียาที่ถูก hold หรืองด',
+                '#D97706'
+            )
+            + reportRow(
+                '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#EA580C" stroke-width="2.5"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4z"/><line x1="2" y1="2" x2="22" y2="22"/></svg>',
+                '#FFF7ED', 'Off-cart — ' + offcartCount + ' รายการ',
+                offcartCount > 0 ? 'ยาที่ให้นอก Med Cart ต้องตรวจ stock reconciliation' : 'ไม่มีการให้ยานอกรถเข็นวันนี้',
+                '#EA580C'
+            )
+            + reportRow(
+                '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2.5"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>',
+                '#FEF2F2', '7 Rights Fail — 0 รายการ',
+                'ยาที่สแกนแล้วไม่ผ่านการตรวจ 7 Rights ต้องตรวจสอบ root cause',
+                '#DC2626'
+            )
+            +'</div>';
+    }
+
     function renderPrepTypePage() {
         const summary = prepSummary();
         const rounds = ['รอบเช้า','รอบเที่ยง','รอบเย็น','ก่อนนอน'].filter(function(round) {
@@ -16836,12 +17084,13 @@
 
     function cassetteItemUniqueKey(item) {
         if (!item) return '';
-        return item.sourceKey || [
-            normalizeIbfDrugName(item.drugName || item.name || ''),
-            item.patientHn || '',
-            item.patientBed || item.bed || '',
-            Number.isInteger(item.drugIdx) ? item.drugIdx : ''
-        ].join('|');
+        if (item.sourceKey) return item.sourceKey;
+        var name = normalizeIbfDrugName(item.drugName || item.name || '');
+        if (!name) return '';
+        // Use drugName + patientBed as key — same drug for same bed = same item in a cassette
+        var bed = item.patientBed || item.bed || '';
+        var slot = item.slot || '';
+        return name + '|' + bed + '|' + slot;
     }
 
     function normalizeCassetteItem(item) {
@@ -17031,7 +17280,8 @@
         const lock = cassetteModeLocks[key] || {};
         const mode = lock.mode || ptdSelectedMode || 'patient';
         const latestMeta = buildCassetteLockMetaForMode(mode) || {};
-        const cassetteItems = mergeCassetteItems(lock.cassetteItems, latestMeta.cassetteItems);
+        // Use latest data as source of truth — don't merge with stale lock data
+        const cassetteItems = (latestMeta.cassetteItems || lock.cassetteItems || []).map(normalizeCassetteItem).filter(Boolean);
         const latestDrugNames = cassetteDrugNamesFromItems(cassetteItems);
         cassetteModeCompleted[key] = Object.assign({}, lock, latestMeta, {
             mode: mode,
@@ -18811,6 +19061,17 @@
             activeSlot.querySelector('.cm-cell-lbl').textContent = 'จัดครบ';
             activeSlot.removeAttribute('onclick');
         }
+        // Rebuild cassette items from current source of truth (not merge/accumulate)
+        var key = ptdCurrentCassetteKey ? ptdCurrentCassetteKey() : null;
+        if (key && cassetteModeLocks[key]) {
+            var meta = buildCassetteLockMetaForMode(cassetteModeLocks[key].mode) || {};
+            // Replace items entirely — don't merge with old data
+            cassetteModeLocks[key].cassetteItems = (meta.cassetteItems || []).map(normalizeCassetteItem).filter(Boolean);
+            var names = cassetteDrugNamesFromItems(cassetteModeLocks[key].cassetteItems);
+            if (names.length) cassetteModeLocks[key].drugNames = names;
+            persistCassetteModeState();
+            if (typeof renderDashboardCassettePanel === 'function') renderDashboardCassettePanel();
+        }
         clearScan();
         showToast('ใส่ยาเข้าช่องสำเร็จ');
         setTimeout(() => showToast(''), 2000);
@@ -18974,7 +19235,7 @@
         document.getElementById('ovDrugResult').classList.add('show');
         ['ovRD','ovRDs','ovRR'].forEach(id=>{ const el = document.getElementById(id); if (el) el.className='rt-r pass'; });
         document.getElementById('ovBtnConfirm').disabled=false;
-        showToast('สแกนยาสำเร็จ — 5 Rights ผ่าน (Time เป็น Overdue)');setTimeout(()=>showToast(''),2000);
+        showToast('สแกนยาสำเร็จ — 7 Rights ผ่าน (Time เป็น Overdue)');setTimeout(()=>showToast(''),2000);
     }
 
     /* ── Omit flow (Page 23) ── */
@@ -19303,7 +19564,7 @@
         document.getElementById('haDrugResult').classList.add('show');
         ['haRD','haRDs','haRR'].forEach(id=>{ const el = document.getElementById(id); if (el) el.className='rt-r pass'; });
         document.getElementById('haBtnWit').disabled=false;
-        showToast('สแกนยาสำเร็จ — 5 Rights ผ่าน · ไปขั้นตอนพยาน');setTimeout(()=>showToast(''),2000);
+        showToast('สแกนยาสำเร็จ — 7 Rights ผ่าน · ไปขั้นตอนพยาน');setTimeout(()=>showToast(''),2000);
     }
 
     function haWitness(){
@@ -19620,7 +19881,7 @@
         document.getElementById('prnDrugResult').classList.add('show');
         ['prnRD','prnRDs','prnRR'].forEach(id => { const el = document.getElementById(id); if (el) el.className='rt-r pass'; });
         document.getElementById('btnPrnConfirm').disabled=false;
-        showToast('สแกนยา PRN สำเร็จ — 5 Rights ผ่าน'); setTimeout(()=>showToast(''),1500);
+        showToast('สแกนยา PRN สำเร็จ — 7 Rights ผ่าน'); setTimeout(()=>showToast(''),1500);
     }
 
     /* ── Post-medication assessment (Step 7) ── */
@@ -19897,7 +20158,7 @@
             if (el) el.className = 'rt-r pass';
         });
         document.getElementById('stBtnConfirm').disabled = false;
-        showToast('สแกนยา STAT สำเร็จ — 5 Rights ผ่าน');
+        showToast('สแกนยา STAT สำเร็จ — 7 Rights ผ่าน');
         setTimeout(function(){ showToast(''); }, 1500);
     }
 
@@ -19925,6 +20186,82 @@
     /* ── Routine flow (Page 19) ── */
     let rtCurrentStep = 1;
 
+    var rtRight6State = null; // null = pending, 'pass', 'fail'
+    var rtRight7State = null;
+
+    function rtSetRight(num, state) {
+        if (num === 6) rtRight6State = state;
+        if (num === 7) rtRight7State = state;
+
+        // Update badge
+        var badge = document.getElementById(num === 6 ? 'rtR6Doc' : 'rtR7Reason');
+        if (badge) badge.className = 'rt-r ' + state;
+
+        // Update wrap styling
+        var wrap = document.getElementById(num === 6 ? 'rtR6Wrap' : 'rtR7Wrap');
+        if (wrap) {
+            wrap.style.borderColor = state === 'pass' ? '#86EFAC' : state === 'fail' ? '#FECACA' : '#E2E8F0';
+            wrap.style.background = state === 'pass' ? '#F0FDF4' : state === 'fail' ? '#FEF2F2' : '#F8FAFC';
+        }
+
+        // Update button active states
+        var passBtn = document.getElementById('rtR' + num + 'PassBtn');
+        var failBtn = document.getElementById('rtR' + num + 'FailBtn');
+        if (passBtn) {
+            passBtn.style.background = state === 'pass' ? '#059669' : '#F0FDF4';
+            passBtn.style.color = state === 'pass' ? 'white' : '#059669';
+            passBtn.style.borderColor = state === 'pass' ? '#059669' : '#BBF7D0';
+        }
+        if (failBtn) {
+            failBtn.style.background = state === 'fail' ? '#DC2626' : '#FEF2F2';
+            failBtn.style.color = state === 'fail' ? 'white' : '#DC2626';
+            failBtn.style.borderColor = state === 'fail' ? '#DC2626' : '#FECACA';
+        }
+
+        // Show/hide reason input for fail
+        var reasonWrap = document.getElementById('rtR' + num + 'ReasonWrap');
+        if (reasonWrap) reasonWrap.style.display = state === 'fail' ? '' : 'none';
+
+        // Update save button
+        rtUpdateSaveBtn();
+    }
+
+    function rtUpdateSaveBtn() {
+        var btn = document.getElementById('rtBtnSaveRecord');
+        if (!btn) return;
+        var bothDecided = rtRight6State !== null && rtRight7State !== null;
+        var anyFail = rtRight6State === 'fail' || rtRight7State === 'fail';
+
+        btn.disabled = !bothDecided;
+        if (!bothDecided) {
+            btn.style.background = '#94a3b8';
+            btn.style.cursor = 'not-allowed';
+            btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg> ยืนยัน 7 Rights · บันทึกผล';
+        } else if (anyFail) {
+            btn.style.background = 'linear-gradient(135deg,#D97706,#F59E0B)';
+            btn.style.cursor = 'pointer';
+            btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13" stroke="white" stroke-width="2"/><line x1="12" y1="17" x2="12.01" y2="17" stroke="white" stroke-width="2"/></svg> บันทึกพร้อมข้อยกเว้น';
+        } else {
+            btn.style.background = 'linear-gradient(135deg,#059669,#0D9488)';
+            btn.style.cursor = 'pointer';
+            btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg> ยืนยัน 7 Rights · บันทึกผล';
+        }
+    }
+
+    function rtResetRight67() {
+        rtRight6State = null;
+        rtRight7State = null;
+        ['rtR6Doc','rtR7Reason'].forEach(function(id){ var b = document.getElementById(id); if (b) b.className = 'rt-r pend'; });
+        ['rtR6Wrap','rtR7Wrap'].forEach(function(id){ var w = document.getElementById(id); if (w) { w.style.borderColor = '#E2E8F0'; w.style.background = '#F8FAFC'; } });
+        [6,7].forEach(function(n){
+            var pb = document.getElementById('rtR'+n+'PassBtn'); if (pb) { pb.style.background = '#F0FDF4'; pb.style.color = '#059669'; pb.style.borderColor = '#BBF7D0'; }
+            var fb = document.getElementById('rtR'+n+'FailBtn'); if (fb) { fb.style.background = '#FEF2F2'; fb.style.color = '#DC2626'; fb.style.borderColor = '#FECACA'; }
+            var rw = document.getElementById('rtR'+n+'ReasonWrap'); if (rw) rw.style.display = 'none';
+            var ri = document.getElementById('rtR'+n+'Reason'); if (ri) ri.value = '';
+        });
+        rtUpdateSaveBtn();
+    }
+
     function rtGoStep(n) {
         // Partial scan warning — show modal before going to step 5
         if (n === 5) {
@@ -19940,7 +20277,12 @@
                 return;
             }
             rtGoStep._partialConfirmed = false;
+            // Reset Right 6-7 state
+            rtResetRight67();
         }
+
+        // Build drug cards dynamically when entering Step 4
+        if (n === 4 && typeof rtBuildDrugCards === 'function') rtBuildDrugCards();
 
         rtCurrentStep = n;
         // Update panels
@@ -20008,6 +20350,32 @@
                         + '<div><div class="wit-ml">Route</div><div class="wit-mv">' + routeText + '</div></div>'
                         + '<div><div class="wit-ml">สถานะ</div><div class="wit-mv" style="color:var(--green);">ให้ยาแล้ว</div></div>'
                         + '<div><div class="wit-ml">ผู้บันทึก</div><div class="wit-mv">นส.สมใจ ดีมาก</div></div>';
+                }
+                // Render 7 Rights banner
+                var banner6 = document.getElementById('rtS6RightsBanner');
+                if (banner6) {
+                    var anyFail = rtRight6State === 'fail' || rtRight7State === 'fail';
+                    if (anyFail) {
+                        var failDetails = [];
+                        if (rtRight6State === 'fail') failDetails.push('Documentation: ' + (document.getElementById('rtR6Reason')?.value || 'ไม่ระบุ'));
+                        if (rtRight7State === 'fail') failDetails.push('Reason: ' + (document.getElementById('rtR7Reason')?.value || 'ไม่ระบุ'));
+                        banner6.innerHTML = '<div style="background:linear-gradient(135deg,#D97706,#F59E0B);border-radius:16px;padding:14px 20px;display:flex;align-items:center;gap:12px;box-shadow:0 4px 16px rgba(217,119,6,0.2);">'
+                            +'<svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13" stroke="white" stroke-width="2"/><line x1="12" y1="17" x2="12.01" y2="17" stroke="white" stroke-width="2"/></svg>'
+                            +'<div style="flex:1;">'
+                            +'<div style="font-size:15px;font-weight:800;color:white;">บันทึกพร้อมข้อยกเว้น</div>'
+                            +'<div style="font-size:10px;color:rgba(255,255,255,0.85);margin-top:2px;">' + failDetails.join(' · ') + '</div>'
+                            +'</div></div>';
+                    } else {
+                        banner6.innerHTML = '<div style="background:linear-gradient(135deg,#059669,#0D9488);border-radius:16px;padding:14px 20px;display:flex;align-items:center;gap:12px;box-shadow:0 4px 16px rgba(5,150,105,0.2);">'
+                            +'<svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>'
+                            +'<div style="flex:1;">'
+                            +'<div style="font-size:15px;font-weight:800;color:white;">7 Rights ผ่านครบถ้วน</div>'
+                            +'<div style="font-size:10px;color:rgba(255,255,255,0.75);margin-top:2px;">Patient · Drug · Dose · Route · Time · Documentation · Reason</div>'
+                            +'</div>'
+                            +'<div style="width:32px;height:32px;background:rgba(255,255,255,0.2);border-radius:10px;display:flex;align-items:center;justify-content:center;">'
+                            +'<svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>'
+                            +'</div></div>';
+                    }
                 }
             }
         }
@@ -20328,11 +20696,48 @@
         if (navigateToStep) rtGoStep(2);
     }
 
-    var rtDrugs = [
-        { name:'Amlodipine 5 mg', dose:'5 mg x 1 เม็ด', route:'PO (รับประทาน)', time:'06:00–08:00 น.', freq:'OD เช้า' },
-        { name:'Metformin 500 mg', dose:'500 mg x 1 เม็ด', route:'PO (รับประทาน)', time:'06:00–08:00 น.', freq:'BID' },
-        { name:'Omeprazole 20 mg', dose:'20 mg x 1 แคปซูล', route:'PO (รับประทาน)', time:'06:00–08:00 น.', freq:'OD ก่อนอาหาร' }
-    ];
+    var rtDrugs = [];
+
+    function rtBuildDrugCards() {
+        var drugs = getLegacyDrugs();
+        rtDrugs = drugs.map(function(d) {
+            var routeMap = {PO:'PO (รับประทาน)',IV:'IV (หลอดเลือดดำ)',SC:'SC (ใต้ผิวหนัง)',IM:'IM (เข้ากล้ามเนื้อ)'};
+            return { name: d.name||'', dose: (d.dose||d.name||''), route: routeMap[d.route]||d.route||'PO', time: d.time||'', freq: d.freq||d.schedule||'' };
+        });
+        var container = document.getElementById('rtDrugCardsContainer');
+        if (!container) return;
+        container.innerHTML = rtDrugs.map(function(d, i) {
+            var isLast = i === rtDrugs.length - 1;
+            var scanBtns = '<button class="mdc-btn" id="rdrug_'+i+'_btn" style="background:linear-gradient(135deg,#0d9488,#14b8a6);border-radius:12px;padding:10px 18px;font-weight:700;" onclick="scanMultiDrug(\'r\','+i+')">'
+                +'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" style="vertical-align:middle;margin-right:4px;"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg>สแกน</button>';
+            // Add demo fail button on last drug
+            if (isLast) {
+                scanBtns = '<div style="display:flex;gap:6px;">' + scanBtns
+                    + '<button class="mdc-btn" style="background:linear-gradient(135deg,#DC2626,#EF4444);border-radius:12px;padding:10px 12px;font-weight:700;font-size:10px;" onclick="scanMultiDrug(\'r\','+i+',true)">'
+                    + '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" style="vertical-align:middle;margin-right:3px;"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>Demo: ยาผิด</button></div>';
+            }
+            return '<div class="mdc" id="rdrug_'+i+'" data-flow="r" data-done="false" style="margin-bottom:12px;">'
+                +'<div class="mdc-bar" style="background:linear-gradient(180deg,#059669,#0D9488);"></div>'
+                +'<div class="mdc-body"><div class="mdc-header"><div class="mdc-info">'
+                +'<div class="mdc-name" style="font-size:15px;">'+d.name+'</div>'
+                +'<div class="mdc-sub">'+(d.route.split(' ')[0]||'PO')+' · '+d.dose+' · '+d.freq+'</div>'
+                +'</div>'+scanBtns+'</div>'
+                +'<div class="mdc-done-row" id="rdrug_'+i+'_done" style="display:none;">'
+                +'<div class="mdc-rights">'
+                +'<div class="rt-r pass" style="font-size:9px;padding:3px 6px;">Patient</div>'
+                +'<div class="rt-r pass" style="font-size:9px;padding:3px 6px;">Drug</div>'
+                +'<div class="rt-r pass" style="font-size:9px;padding:3px 6px;">Dose</div>'
+                +'<div class="rt-r pass" style="font-size:9px;padding:3px 6px;">Route</div>'
+                +'<div class="rt-r pass" style="font-size:9px;padding:3px 6px;">Time</div>'
+                +'</div>'
+                +'<span class="mdc-result-tag"><svg width="12" height="12" viewBox="0 0 24 24" fill="#166534"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg><span id="rdrug_'+i+'_resname">—</span></span>'
+                +'<span style="font-size:11px;color:var(--text-2);" id="rdrug_'+i+'_lot">—</span>'
+                +'</div></div></div>';
+        }).join('');
+        // Update confirm button text
+        var btn = document.getElementById('rtBtnConfirmDrug');
+        if (btn) { btn.disabled = true; btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> ยืนยันให้ยา (0/'+rtDrugs.length+')'; }
+    }
     let rtActiveDrugIdx = 0;
 
     function rtPickDrug(el) {
@@ -20410,7 +20815,7 @@
             + '<div><div class="am-sr-l">Route</div><div class="am-sr-v">' + d.route + '</div></div>'
             + '</div>';
         resultEl.classList.add('show');
-        // Mark 5 Rights pass
+        // Mark 7 Rights pass
         ['rtRD','rtRDs','rtRR'].forEach(id => {
             const el = document.getElementById(id);
             if (el) el.className = 'rt-r pass';
@@ -20426,7 +20831,7 @@
             drugEl.style.pointerEvents = 'none';
         }
         document.getElementById('rtBtnConfirmDrug').disabled = false;
-        showToast('สแกน ' + d.name + ' สำเร็จ — 5 Rights ผ่าน');
+        showToast('สแกน ' + d.name + ' สำเร็จ — 7 Rights ผ่าน');
         setTimeout(() => showToast(''), 1500);
     }
 
@@ -20742,7 +21147,7 @@
         checks.push({
             type: highAlert ? 'danger' : 'ok',
             title: highAlert ? 'High Alert Drug' : 'ไม่ใช่ High Alert จากรายการที่รู้จัก',
-            sub: highAlert ? 'ต้องตรวจสอบพยาน/IDC ในขั้นตอนจัดหรือให้ยา' : 'ระบบจะยังให้พยาบาลตรวจ 5 Rights ตามปกติ'
+            sub: highAlert ? 'ต้องตรวจสอบพยาน/IDC ในขั้นตอนจัดหรือให้ยา' : 'ระบบจะยังให้พยาบาลตรวจ 7 Rights ตามปกติ'
         });
         checks.push({
             type: interaction.found ? (interaction.severity === 'major' ? 'danger' : 'warn') : 'ok',
@@ -20836,33 +21241,83 @@
         if (statEls.pending) statEls.pending.textContent = pendingOrders.length;
         if (statEls.ha) statEls.ha.textContent = highAlertOrders.length;
         if (statEls.prn) statEls.prn.textContent = prnStatOrders.length;
-        const queueBadge = document.getElementById('opQueueBadge');
-        if (queueBadge) queueBadge.textContent = activeOrders.length + ' active';
+        // ── MedCartStore manual orders: pending / approved / rejected ──
+        var manualOrders = (typeof MedCartStore !== 'undefined') ? MedCartStore.orders.filter(function(o){ return o.source === 'Manual'; }) : [];
+        var pendingCount = manualOrders.filter(function(o){ return o.status === 'pending_verify'; }).length;
+        var approvedCount = manualOrders.filter(function(o){ return o.status !== 'pending_verify' && o.status !== 'rejected'; }).length;
+        var rejectedCount = manualOrders.filter(function(o){ return o.status === 'rejected'; }).length;
 
+        // Pending banner
+        var banner = document.getElementById('opPendingBanner');
+        if (banner) {
+            if (pendingCount > 0) {
+                banner.style.display = '';
+                banner.innerHTML = '<div style="background:linear-gradient(135deg,#FFFBEB,#FEF3C7);border:2px solid #FDE68A;border-radius:14px;padding:14px 20px;margin-bottom:16px;display:flex;align-items:center;gap:14px;">'
+                    +'<div style="width:40px;height:40px;background:linear-gradient(135deg,#D97706,#F59E0B);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">'
+                    +'<svg width="20" height="20" viewBox="0 0 24 24" fill="white"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14" stroke="white" stroke-width="2" fill="none"/></svg></div>'
+                    +'<div style="flex:1;"><div style="font-size:14px;font-weight:800;color:#92400E;">รอเภสัชกรอนุมัติ ' + pendingCount + ' รายการ</div>'
+                    +'<div style="font-size:11px;color:#B45309;margin-top:2px;">ยังจัดยาไม่ได้จนกว่าเภสัชจะอนุมัติคำสั่งยา</div></div></div>';
+            } else if (approvedCount > 0) {
+                banner.style.display = '';
+                banner.innerHTML = '<div style="background:linear-gradient(135deg,#F0FDF4,#DCFCE7);border:2px solid #86EFAC;border-radius:14px;padding:14px 20px;margin-bottom:16px;display:flex;align-items:center;gap:14px;">'
+                    +'<div style="width:40px;height:40px;background:linear-gradient(135deg,#059669,#10B981);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">'
+                    +'<svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>'
+                    +'<div style="flex:1;"><div style="font-size:14px;font-weight:800;color:#065F46;">เภสัชอนุมัติแล้ว ' + approvedCount + ' รายการ</div>'
+                    +'<div style="font-size:11px;color:#059669;margin-top:2px;">พร้อมจัดยาเข้า Cassette ได้เลย</div></div></div>';
+            } else {
+                banner.style.display = 'none';
+            }
+        }
+
+        // Disable/enable ไปจัดยา button
+        var prepBtn = document.getElementById('opGoPrepBtn');
+        if (prepBtn) {
+            if (pendingCount > 0 && currentRole === 'nurse') {
+                prepBtn.disabled = true;
+                prepBtn.style.opacity = '0.4';
+                prepBtn.style.cursor = 'not-allowed';
+                prepBtn.onclick = function(){ showToast('รอเภสัชกรอนุมัติก่อนจึงจัดยาได้'); setTimeout(function(){ showToast(''); },2000); };
+            } else {
+                prepBtn.disabled = false;
+                prepBtn.style.opacity = '';
+                prepBtn.style.cursor = '';
+                prepBtn.onclick = function(){ goToPrepType(); };
+            }
+        }
+
+        // Queue badge
+        const queueBadge = document.getElementById('opQueueBadge');
+        if (queueBadge) {
+            if (pendingCount > 0) { queueBadge.textContent = pendingCount + ' รออนุมัติ'; queueBadge.style.background = '#FEF3C7'; queueBadge.style.color = '#92400E'; }
+            else if (manualOrders.length > 0) { queueBadge.textContent = approvedCount + ' อนุมัติแล้ว'; queueBadge.style.background = '#DCFCE7'; queueBadge.style.color = '#065F46'; }
+            else { queueBadge.textContent = '0 รายการ'; queueBadge.style.background = ''; queueBadge.style.color = ''; }
+        }
+
+        // Queue list — show MedCartStore manual orders with status
         const queue = document.getElementById('opQueueList');
         if (queue) {
-            queue.innerHTML = activeOrders.length ? activeOrders.map(function(order) {
-                const pt = patientData[order.patientKey] || {};
-                const drug = findOrderPlanDrug(order.id);
-                const done = !!(drug && drug.done);
-                const palette = orderPlanDrugPalette(order);
-                const priority = order.priority || 'routine';
-                const priorityClass = priority === 'stat' ? ' stat' : priority === 'prn' ? ' prn' : (priority === 'high-alert' || isHighAlertDrug(order.drugName || '')) ? ' ha' : '';
-                const prepared = !!(drug && drug.prepared) || !!order.prepared;
-                const statusTag = done ? '<span class="op-tag done">ให้ยาแล้ว</span>' : prepared ? '<span class="op-tag done">จัดแล้ว</span>' : '<span class="op-tag">รอจัดยา</span>';
-                const haTag = (priority === 'high-alert' || isHighAlertDrug(order.drugName || '')) ? '<span class="op-tag ha">High Alert</span>' : '';
-                return '<div class="op-order-row" style="border-left-color:' + palette.color + ';">'
-                    + '<div class="op-order-main">'
-                    + '<div class="op-order-name">' + escHtml(order.drugName) + haBadge(order.drugName) + '</div>'
-                    + '<div class="op-order-meta">' + escHtml(order.dose) + ' · ' + escHtml(order.route) + ' · ' + escHtml(orderPlanScheduleText(order)) + '<br>' + escHtml(pt.bed || order.bed || '') + ' · ' + escHtml(pt.name || order.patientName || '') + ' · ' + escHtml(order.source || 'Order Plan') + (order.doctor ? ' · ' + escHtml(order.doctor) : '') + '</div>'
-                    + '<div class="op-order-tags"><span class="op-tag' + priorityClass + '">' + escHtml(orderPlanPriorityLabel(priority)) + '</span>' + statusTag + haTag + (order.note ? '<span class="op-tag">มี note</span>' : '') + '</div>'
-                    + '</div>'
-                    + '<div class="op-row-actions">'
-                    + '<button type="button" class="op-btn" onclick="opOpenPatientPrep(\'' + escHtml(order.id) + '\')">จัดยา</button>'
-                    + '<button type="button" class="op-btn danger" onclick="opCancelOrder(\'' + escHtml(order.id) + '\')">ยกเลิก</button>'
-                    + '</div>'
-                    + '</div>';
-            }).join('') : '<div class="op-empty">ยังไม่มีรายการ Order Plan ใน ' + escHtml(orderPlanWardName()) + '</div>';
+            if (manualOrders.length === 0) {
+                queue.innerHTML = '<div class="op-empty">ยังไม่มีรายการที่บันทึก</div>';
+            } else {
+                queue.innerHTML = manualOrders.map(function(o) {
+                    var ptName = MedCartStore.getPatientName ? MedCartStore.getPatientName(o.patient) : o.patient;
+                    var isPending = o.status === 'pending_verify';
+                    var isRejected = o.status === 'rejected';
+                    var borderColor = isPending ? '#F59E0B' : isRejected ? '#EF4444' : '#10B981';
+                    var statusTag = isPending ? '<span class="op-tag" style="background:#FEF3C7;color:#92400E;border-color:#FDE68A;">รอเภสัชอนุมัติ</span>'
+                        : isRejected ? '<span class="op-tag" style="background:#FEE2E2;color:#DC2626;border-color:#FECACA;">ปฏิเสธ</span>'
+                        : '<span class="op-tag done">อนุมัติแล้ว</span>';
+                    var priTag = o.priority === 'stat' ? '<span class="op-tag stat">STAT</span>'
+                        : o.priority === 'high-alert' ? '<span class="op-tag ha">High Alert</span>'
+                        : o.priority === 'prn' ? '<span class="op-tag prn">PRN</span>' : '';
+                    return '<div class="op-order-row" style="border-left-color:' + borderColor + ';' + (isRejected ? 'opacity:0.5;' : '') + '">'
+                        + '<div class="op-order-main">'
+                        + '<div class="op-order-name">' + escHtml(o.drug) + ' ' + priTag + '</div>'
+                        + '<div class="op-order-meta">' + escHtml(ptName) + ' · ' + escHtml(o.dose||'') + ' · ' + escHtml(o.route||'') + ' · ' + escHtml(o.schedule||'') + '<br>แพทย์: ' + escHtml(o.doctor||'-') + ' · ' + escHtml(o.orderSource||o.source||'') + ' · ' + escHtml(o.createdAt||'') + '</div>'
+                        + '<div class="op-order-tags">' + statusTag + (isRejected && o.rejectReason ? '<span class="op-tag">เหตุผล: '+escHtml(o.rejectReason)+'</span>' : '') + '</div>'
+                        + '</div></div>';
+                }).join('');
+            }
         }
         opUpdateSafetyPreview();
         renderOrderPlanDashboardHint();
@@ -21046,7 +21501,10 @@
             return '<span class="ns-step' + (step <= progress ? ' on' : '') + '"></span>';
         }).join('');
         const actionLabel = row.status.key === 'pending' ? 'จัดยา' : 'ดูรายการยา';
-        return '<div class="ns-item" style="border-left-color:' + palette.color + ';">'
+        const isPharmaRole = (typeof currentRole !== 'undefined' && currentRole === 'pharma');
+        const actionBtnHtml = isPharmaRole ? '' : '<div class="ns-action-row"><button type="button" class="op-btn" onclick="nsOpenScheduleOrder(\'' + escHtml(order.id) + '\')">' + actionLabel + '</button></div>';
+        const pharmaClass = isPharmaRole ? ' ns-readonly' : '';
+        return '<div class="ns-item' + pharmaClass + '" style="border-left-color:' + palette.color + ';">'
             + '<div class="ns-item-main">'
             + '<div class="ns-patient"><span>' + escHtml(pt.bed || order.bed || '-') + '</span><span>' + escHtml(pt.name || order.patientName || '-') + '</span>' + (row.highAlert ? '<span class="op-tag ha">High Alert</span>' : '') + '</div>'
             + '<div class="ns-med">' + escHtml(order.drugName) + haBadge(order.drugName) + ' · ' + escHtml(order.dose) + ' · ' + escHtml(order.route) + '<br>' + escHtml(order.source || 'Order Plan') + (order.doctor ? ' · ' + escHtml(order.doctor) : '') + (order.note ? ' · ' + escHtml(order.note) : '') + '</div>'
@@ -21055,7 +21513,7 @@
             + '<div class="ns-progress">'
             + '<div class="ns-step-track">' + stepHtml + '</div>'
             + '<div style="font-size:10px;color:var(--text-3);font-weight:800;">Order → Prep → Admin</div>'
-            + '<div class="ns-action-row"><button type="button" class="op-btn" onclick="nsOpenScheduleOrder(\'' + escHtml(order.id) + '\')">' + actionLabel + '</button></div>'
+            + actionBtnHtml
             + '</div>'
             + '</div>';
     }
@@ -21326,22 +21784,29 @@
 
     function emarSelectedPanelHtml(row) {
         if (!row) {
-            return '<div class="op-empty">ยังไม่มีรายการยาใน Ward นี้</div>';
+            return '<div class="op-empty">เลือกรายการยาเพื่อดูรายละเอียด</div>';
         }
         const done = row.done;
         const status = done ? 'ให้ยาแล้ว ' + (row.drug.givenTime || row.view.time || '') : 'รอให้ยา';
         const source = row.orderPlan ? 'Order Plan' : 'MAR';
         const highAlert = row.highAlert ? '<span class="op-tag ha">High Alert</span>' : '';
         const prn = row.prn ? '<span class="op-tag prn">PRN</span>' : '';
+        var statusBadge = done
+            ? '<span style="display:inline-flex;align-items:center;gap:4px;background:#DCFCE7;color:#059669;font-size:11px;font-weight:700;padding:4px 10px;border-radius:8px;border:1px solid #BBF7D0;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>ให้ยาแล้ว</span>'
+            : '<span style="display:inline-flex;align-items:center;gap:4px;background:#FEF3C7;color:#92400E;font-size:11px;font-weight:700;padding:4px 10px;border-radius:8px;border:1px solid #FDE68A;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>รอให้ยา</span>';
         return '<div class="emar-selected-head">'
             + '<div class="emar-selected-name">' + escHtml(row.view.name) + haBadge(row.view.name) + highAlert + prn + '</div>'
-            + '<div class="emar-selected-meta">' + escHtml(row.pt.name) + ' · HN ' + escHtml(row.pt.hn) + ' · เตียง ' + escHtml(row.pt.bed) + '<br>' + escHtml(row.view.dose) + ' · ' + escHtml(row.view.routeFull) + ' · ' + escHtml(row.view.time) + ' · ' + escHtml(source) + '</div>'
+            + '<div class="emar-selected-meta">' + escHtml(row.pt.name) + ' · HN ' + escHtml(row.pt.hn) + ' · เตียง ' + escHtml(row.pt.bed) + '</div>'
             + '</div>'
-            + emarRightsHtml(row)
-            + '<div class="emar-note"><label class="op-label" for="emarAdminNote">หมายเหตุการให้ยา</label><textarea id="emarAdminNote" class="op-textarea" placeholder="เช่น ผู้ป่วยรับประทานต่อหน้า, ไม่มีอาการผิดปกติ, มีพยานตรวจ High Alert"></textarea></div>'
-            + '<div class="op-form-footer">'
-            + '<div class="op-note">' + escHtml(status) + (row.highAlert ? ' · ต้องมีพยาน/IDC ตามนโยบาย High Alert' : '') + '</div>'
-            + '<button type="button" class="op-btn primary" onclick="emarRecordSelected()" ' + (done ? 'disabled style="opacity:.55;cursor:not-allowed;"' : '') + '>บันทึกให้ยา</button>'
+            + '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:14px 0;">'
+            + '<div style="background:#F8FAFC;border-radius:10px;padding:10px 12px;"><div style="font-size:10px;color:var(--text-3);font-weight:600;">Dose</div><div style="font-size:13px;font-weight:700;color:var(--text-1);margin-top:2px;">' + escHtml(row.view.dose) + '</div></div>'
+            + '<div style="background:#F8FAFC;border-radius:10px;padding:10px 12px;"><div style="font-size:10px;color:var(--text-3);font-weight:600;">Route</div><div style="font-size:13px;font-weight:700;color:var(--text-1);margin-top:2px;">' + escHtml(row.view.routeFull) + '</div></div>'
+            + '<div style="background:#F8FAFC;border-radius:10px;padding:10px 12px;"><div style="font-size:10px;color:var(--text-3);font-weight:600;">เวลา / รอบ</div><div style="font-size:13px;font-weight:700;color:var(--text-1);margin-top:2px;">' + escHtml(row.view.time) + ' · ' + escHtml(row.view.freq) + '</div></div>'
+            + '<div style="background:#F8FAFC;border-radius:10px;padding:10px 12px;"><div style="font-size:10px;color:var(--text-3);font-weight:600;">ที่มา</div><div style="font-size:13px;font-weight:700;color:var(--text-1);margin-top:2px;">' + escHtml(source) + '</div></div>'
+            + '</div>'
+            + '<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-top:1px solid var(--border);">'
+            + '<div style="font-size:12px;color:var(--text-2);">' + escHtml(status) + (row.highAlert ? ' · ต้องมีพยาน' : '') + '</div>'
+            + statusBadge
             + '</div>';
     }
 
@@ -21361,7 +21826,6 @@
             + '</div>'
             + '<div class="emar-row-side">'
             + '<span class="emar-status ' + statusClass + '">' + escHtml(statusText) + '</span>'
-            + '<button type="button" class="op-btn" onclick="event.stopPropagation();emarSelect(' + jsArg(row.ref) + ')">' + (row.done ? 'ดูบันทึก' : 'ดูรายละเอียด') + '</button>'
             + '</div>'
             + '</div>';
     }
@@ -21410,7 +21874,7 @@
             return;
         }
         if (!emarRightsComplete()) {
-            showToast('กรุณายืนยัน 5 Rights ให้ครบก่อนบันทึก');
+            showToast('กรุณายืนยัน 7 Rights ให้ครบก่อนบันทึก');
             setTimeout(function(){ showToast(''); }, 2200);
             return;
         }
@@ -21453,7 +21917,7 @@
             return false;
         }
         if (!rightConfirmed) {
-            showToast('กรุณายืนยัน 5 Rights ก่อนบันทึก Off-cart');
+            showToast('กรุณายืนยัน 7 Rights ก่อนบันทึก Off-cart');
             setTimeout(function(){ showToast(''); }, 2200);
             return false;
         }
@@ -21551,7 +22015,7 @@
         if (selectedCard) selectedCard.innerHTML = emarSelectedPanelHtml(selected);
         const rightBadge = document.getElementById('emarRightBadge');
         if (rightBadge) {
-            rightBadge.textContent = selected && selected.done ? 'บันทึกแล้ว' : selected && selected.highAlert ? 'ต้องมีพยาน' : '5 Rights';
+            rightBadge.textContent = selected && selected.done ? 'บันทึกแล้ว' : selected && selected.highAlert ? 'ต้องมีพยาน' : '7 Rights';
             rightBadge.style.background = selected && selected.highAlert ? '#FEF2F2' : '#F0FDFA';
             rightBadge.style.color = selected && selected.highAlert ? '#DC2626' : '#0F766E';
             rightBadge.style.borderColor = selected && selected.highAlert ? '#FECACA' : '#99F6E4';
@@ -21872,7 +22336,7 @@
         setTimeout(function() {
             document.getElementById('btnConfirmAdmin').disabled = false;
         }, rights.length * 80);
-        showToast('สแกน ' + d.name + ' สำเร็จ — 5 Rights ผ่านทั้งหมด');
+        showToast('สแกน ' + d.name + ' สำเร็จ — 7 Rights ผ่านทั้งหมด');
         setTimeout(function(){ showToast(''); }, 2000);
     }
 
@@ -22058,6 +22522,12 @@
         validLocks.forEach(function(lock) {
             if (byMode[lock.mode] !== undefined) byMode[lock.mode]++;
         });
+        // Only count completed (actually prepped) cassettes — not just locked/selected
+        var preppedFromStore = 0;
+        if (typeof MedCartStore !== 'undefined') {
+            preppedFromStore = MedCartStore.orders.filter(function(o){ return o.status === 'prepped'; }).length;
+        }
+        var actualCompleted = completedLocks.length + preppedFromStore;
         return {
             cart: cart,
             drawers: drawers,
@@ -22065,12 +22535,12 @@
             readyBase: readyBase,
             perDrawer: perDrawer,
             maintenance: Math.max(total - readyBase, 0),
-            inUse: validLocks.length,
+            inUse: actualCompleted,
             usedDrawers: usedDrawers,
-            usedCassettes: usedCassettes,
+            usedCassettes: Math.min(completedLocks.length + preppedFromStore, total),
             usedLocks: usedLocks,
-            completed: completedLocks.length,
-            available: Math.max(readyBase - usedCassettes, 0),
+            completed: actualCompleted,
+            available: Math.max(readyBase - actualCompleted, 0),
             locks: validLocks,
             completedLocks: completedLocks,
             byMode: byMode
@@ -22129,11 +22599,12 @@
             pill.innerHTML = '<span style="width:7px;height:7px;background:' + (state.inUse ? '#3b82f6' : '#22c55e') + ';border-radius:50%;box-shadow:0 0 0 3px ' + (state.inUse ? 'rgba(59,130,246,.16)' : 'rgba(34,197,94,.16)') + ';"></span>' + modeText;
         }
 
+        var inProgressCount = state.locks.length;
         const statData = [
             { val: state.total, label: 'Cassette ทั้งหมด', note: state.drawers + ' Drawer', color: '#0f172a', accent: '#64748b', bg: '#f8fafc' },
-            { val: state.available, label: 'พร้อมใช้', note: 'เปิดให้เลือกได้', color: '#15803d', accent: '#22c55e', bg: '#f0fdf4' },
-            { val: state.completed, label: 'เติมยาเรียบร้อยแล้ว', note: 'จัดยาครบแล้ว', color: '#1d4ed8', accent: '#3b82f6', bg: '#eff6ff' },
-            { val: state.maintenance, label: 'ไม่พร้อมใช้', note: cart.connection === 'Offline' ? 'รถเข็น Offline' : 'งดใช้งานชั่วคราว', color: '#b91c1c', accent: '#ef4444', bg: '#fef2f2' }
+            { val: state.completed, label: 'เติมยาแล้ว', note: 'จัดยาครบแล้ว', color: '#1d4ed8', accent: '#3b82f6', bg: '#eff6ff' },
+            { val: inProgressCount, label: 'กำลังจัด', note: 'เลือกแล้ว · รอจัดยา', color: '#b45309', accent: '#f59e0b', bg: '#fffbeb' },
+            { val: state.available, label: 'ว่าง', note: 'รอจัดยา', color: '#15803d', accent: '#22c55e', bg: '#f0fdf4' }
         ];
         const summary = document.getElementById('dashCassetteSummary');
         if (summary) {
@@ -22146,13 +22617,13 @@
             }).join('');
         }
 
+        // Show both in-progress (locked) and completed cassettes — visually distinct
         const lockByKey = {};
+        state.locks.forEach(function(lock) {
+            lockByKey[ptdCassetteKey(lock.drawer, lock.cassette)] = Object.assign({}, lock, { __completed: false });
+        });
         state.completedLocks.forEach(function(lock) {
             lockByKey[ptdCassetteKey(lock.drawer, lock.cassette)] = Object.assign({}, lock, { __completed: true });
-        });
-        state.locks.forEach(function(lock) {
-            const key = ptdCassetteKey(lock.drawer, lock.cassette);
-            lockByKey[key] = Object.assign({}, lock, { __completed: !!lockByKey[key] });
         });
         const map = document.getElementById('dashCassetteMap');
         if (map) {
@@ -22165,8 +22636,8 @@
                     const lock = lockByKey[ptdCassetteKey(d, c)];
                     const cfg = lock ? cassetteModeConfig[lock.mode] : null;
                     const isMaintenance = !lock && globalIndex > state.readyBase;
-                    const cls = lock ? lock.mode : isMaintenance ? 'maintenance' : 'ready';
-                    const statusText = lock && lock.__completed ? 'เติมยาเรียบร้อยแล้ว' : lock && cfg ? cfg.dashboardLabel + ' (' + cfg.label + ')' : isMaintenance ? 'ไม่พร้อมใช้' : 'พร้อมใช้';
+                    const cls = lock ? lock.mode : isMaintenance ? 'maintenance' : '';
+                    const statusText = lock && lock.__completed ? 'เติมยาเรียบร้อยแล้ว' : lock ? 'กำลังจัดยา (' + (cfg ? cfg.label : lock.mode) + ')' : isMaintenance ? 'ไม่พร้อมใช้' : 'ว่าง · รอจัดยา';
                     const title = 'Drawer ' + d + ' · Cassette ' + c + ' · ' + statusText;
                     cells += '<button type="button" class="db-cassette-cell ' + cls + (lock && lock.__completed ? ' completed' : '') + '" title="' + escHtml(title) + '" aria-label="' + escHtml(title) + '" onclick="event.stopPropagation();showCassetteDetailModal(' + d + ',' + c + ')"></button>';
                 }
@@ -22218,6 +22689,21 @@
 
     function getDashboardCassetteItems(detail) {
         if (!detail) return [];
+        // Not completed — show items with actual status from patientData (prepared or not)
+        if (!detail.isCompleted) {
+            if (detail.isActive) {
+                var fromLockPending = detail.lock && Array.isArray(detail.lock.cassetteItems)
+                    ? detail.lock.cassetteItems.map(normalizeCassetteItem).filter(Boolean)
+                    : [];
+                var fromDataPending = getPreparedCassetteItemsFromPatientData(detail.drawer, detail.cassette);
+                var mergedPending = mergeCassetteItems(fromLockPending, fromDataPending);
+                if (mergedPending.length) return mergedPending;
+                return getLockDrugNames(detail.lock).map(function(name) {
+                    return normalizeCassetteItem({ drugName: name, status: 'รอจัด', done: false });
+                }).filter(Boolean);
+            }
+            return [];
+        }
         const fromLock = detail.lock && Array.isArray(detail.lock.cassetteItems)
             ? detail.lock.cassetteItems.map(normalizeCassetteItem).filter(Boolean)
             : [];
@@ -22225,7 +22711,7 @@
         const merged = mergeCassetteItems(fromLock, fromData);
         if (merged.length) return merged;
         return getLockDrugNames(detail.lock).map(function(name) {
-            return normalizeCassetteItem({ drugName: name, status: detail.isCompleted ? 'จัดแล้ว' : 'รอจัด', done: detail.isCompleted });
+            return normalizeCassetteItem({ drugName: name, status: 'จัดแล้ว', done: true });
         }).filter(Boolean);
     }
 
@@ -22299,25 +22785,28 @@
             : detail.isCompleted
                 ? 'เติมยาเรียบร้อยแล้ว'
                 : detail.lock
-                    ? 'กำลังใช้งาน'
-                    : 'พร้อมใช้';
+                    ? 'รอจัดยา'
+                    : 'ว่าง';
         const modeLabel = cfg ? (cfg.dashboardLabel + ' · ' + cfg.label) : (detail.isMaintenance ? 'งดใช้งานชั่วคราว' : 'ยังไม่ถูกจอง');
+        const isMedMode = modeKey === 'medication';
         const drugList = detail.items.length
             ? detail.items.map(function(item, index) {
                 const statusColor = item.done ? '#15803D' : '#D97706';
                 const statusBg = item.done ? '#DCFCE7' : '#FEF3C7';
-                const metaParts = [
-                    item.patientName ? item.patientName + (item.patientBed ? ' · ' + item.patientBed : '') : '',
-                    item.dose || '',
-                    item.round || '',
-                    item.slot || ''
-                ].filter(Boolean);
-                const lotText = [item.lot && item.lot !== 'N/A' ? 'Lot ' + item.lot : '', item.exp && item.exp !== 'N/A' ? 'Exp ' + item.exp : ''].filter(Boolean).join(' · ');
+                // medication mode: ชื่อผู้ป่วยขึ้นเป็นหัว, ยาลง meta
+                // patient mode: ชื่อยาขึ้นเป็นหัว, ผู้ป่วยลง meta
+                var titleText = isMedMode
+                    ? (item.patientName || 'ไม่ระบุผู้ป่วย') + (item.patientBed ? ' · ' + item.patientBed : '')
+                    : item.drugName;
+                var metaParts = isMedMode
+                    ? [item.drugName, item.dose || '', item.round || '', item.slot || ''].filter(Boolean)
+                    : [item.patientName ? item.patientName + (item.patientBed ? ' · ' + item.patientBed : '') : '', item.dose || '', item.round || '', item.slot || ''].filter(Boolean);
+                const lotText = [item.lot && item.lot !== 'N/A' && item.lot !== '' ? 'Lot ' + item.lot : '', item.exp && item.exp !== 'N/A' && item.exp !== '' ? 'Exp ' + item.exp : ''].filter(Boolean).join(' · ');
                 return '<div style="display:flex;align-items:flex-start;gap:10px;padding:12px;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:14px;">'
                     + '<div style="width:28px;height:28px;border-radius:10px;background:' + th.bg + ';border:1px solid ' + th.border + ';display:flex;align-items:center;justify-content:center;color:' + th.color + ';font-size:11px;font-weight:900;flex-shrink:0;">' + (index + 1) + '</div>'
                     + '<div style="flex:1;min-width:0;">'
                         + '<div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">'
-                            + '<span style="font-size:13px;font-weight:850;color:#0f172a;line-height:1.25;">' + escHtml(item.drugName) + '</span>'
+                            + '<span style="font-size:13px;font-weight:850;color:#0f172a;line-height:1.25;">' + escHtml(titleText) + '</span>'
                             + (item.highAlert ? '<span style="background:#FEE2E2;color:#B91C1C;border:1px solid #FECACA;font-size:9px;font-weight:900;padding:2px 6px;border-radius:999px;">HA</span>' : '')
                             + (item.interactionSeverity ? '<span style="background:#FFF7ED;color:#C2410C;border:1px solid #FDBA74;font-size:9px;font-weight:900;padding:2px 6px;border-radius:999px;">Interaction</span>' : '')
                         + '</div>'
@@ -22351,9 +22840,8 @@
         modal.onclick = function(e) { if (e.target === modal) modal.style.display = 'none'; };
         modal.innerHTML =
             '<div style="width:100%;max-width:760px;max-height:90vh;background:white;border-radius:28px;box-shadow:0 28px 82px rgba(15,23,42,0.32);overflow:hidden;animation:fadeInUp .22s ease;display:flex;flex-direction:column;">'
-                + '<div style="padding:22px 24px;background:linear-gradient(135deg,' + th.bg + ',#fff);border-bottom:1px solid #E2E8F0;position:relative;overflow:hidden;flex-shrink:0;">'
-                    + '<div style="position:absolute;width:190px;height:190px;border-radius:50%;background:rgba(255,255,255,0.58);right:-70px;top:-90px;"></div>'
-                    + '<button type="button" id="cassetteDetailCloseBtn" aria-label="ปิดรายละเอียด Cassette" style="position:absolute;top:14px;right:14px;width:34px;height:34px;border:none;border-radius:50%;background:rgba(255,255,255,0.8);box-shadow:0 4px 14px rgba(15,23,42,0.08);display:flex;align-items:center;justify-content:center;cursor:pointer;color:#334155;">'
+                + '<div style="padding:22px 24px;background:linear-gradient(135deg,' + th.bg + ',#fff);border-bottom:1px solid #E2E8F0;position:relative;flex-shrink:0;">'
+                    + '<button type="button" id="cassetteDetailCloseBtn" aria-label="ปิดรายละเอียด Cassette" style="position:absolute;top:14px;right:14px;z-index:10;width:34px;height:34px;border:none;border-radius:50%;background:rgba(255,255,255,0.8);box-shadow:0 4px 14px rgba(15,23,42,0.08);display:flex;align-items:center;justify-content:center;cursor:pointer;color:#334155;">'
                         + '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.7"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>'
                     + '</button>'
                     + '<div style="display:flex;gap:16px;align-items:center;position:relative;z-index:1;padding-right:34px;">'
@@ -22498,8 +22986,7 @@
         modal.onclick = function(e) { if (e.target === modal) modal.style.display = 'none'; };
         modal.innerHTML =
         '<div style="background:#F8FAFC;border-radius:30px;width:100%;max-width:920px;max-height:90vh;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 30px 90px rgba(15,23,42,0.34);animation:fadeInUp .22s cubic-bezier(0.22,1,0.36,1);">'
-            + '<div style="background:linear-gradient(135deg,#FFFFFF 0%,#F0FDFA 52%,#EFF6FF 100%);border-bottom:1px solid #E2E8F0;padding:22px 24px 20px;position:relative;overflow:hidden;flex-shrink:0;">'
-                + '<div style="position:absolute;width:220px;height:220px;border-radius:50%;background:rgba(13,148,136,0.08);top:-120px;right:-70px;"></div>'
+            + '<div style="background:linear-gradient(135deg,#FFFFFF 0%,#F0FDFA 52%,#EFF6FF 100%);border-bottom:1px solid #E2E8F0;padding:22px 24px 20px;position:relative;flex-shrink:0;">'
                 + '<div style="display:flex;align-items:flex-start;gap:16px;position:relative;z-index:1;">'
                     + '<div style="width:58px;height:58px;background:linear-gradient(135deg,#0D9488,#14B8A6);border-radius:20px;display:flex;align-items:center;justify-content:center;box-shadow:0 14px 30px rgba(13,148,136,0.24);flex-shrink:0;">'
                         + '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>'
@@ -22815,7 +23302,7 @@
         if (el.classList.contains('done') || el.style.opacity === '0.6') return;
         document.querySelectorAll('.am-drug').forEach(d => d.classList.remove('active'));
         el.classList.add('active');
-        // Reset 5 Rights และ scan result ทุกครั้งที่เปลี่ยนยา
+        // Reset 7 Rights และ scan result ทุกครั้งที่เปลี่ยนยา
         ['rDrug','rDose','rRoute'].forEach(id => {
             const r = document.getElementById(id);
             if (r) r.className = 'am-r pend';
@@ -23444,7 +23931,7 @@
         const btn = document.getElementById(`${flow}drug_${idx}_btn`);
         if (!btn) return;
 
-        // ── 5 Rights FAIL demo ──
+        // ── 7 Rights FAIL demo ──
         if (simulateFail) {
             btn.disabled = true;
             btn.innerHTML = '...กำลังสแกน...';
@@ -23474,7 +23961,7 @@
                 // Hide both buttons in the container
                 var btnContainer = btn.parentElement;
                 if (btnContainer) btnContainer.style.display = 'none';
-                showToast('5 Rights ไม่ผ่าน — ยาไม่ตรงกับคำสั่งแพทย์');
+                showToast('7 Rights ไม่ผ่าน — ยาไม่ตรงกับคำสั่งแพทย์');
                 checkMultiDrugDone(flow);
             }, 1200);
             return;
@@ -23535,10 +24022,10 @@
         const btn = document.getElementById(confirmId);
         if (!btn) return;
 
-        // If any drug failed 5 Rights → block completely
+        // If any drug failed 7 Rights → block completely
         if (failedCount > 0) {
             btn.disabled = true;
-            btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg> 5 Rights ไม่ผ่าน — ห้ามให้ยา';
+            btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg> 7 Rights ไม่ผ่าน — ห้ามให้ยา';
             btn.style.background = 'linear-gradient(135deg,#DC2626,#EF4444)';
             return;
         }
