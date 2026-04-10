@@ -7924,12 +7924,6 @@
                         · ตรวจสอบ Verbal/Telephone Order จากพยาบาล → อนุมัติหรือปฏิเสธ
                     </div>
                 </div>
-                <div class="op-actions">
-                    <button type="button" class="op-btn" onclick="nav('pg-dashboard')">
-                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
-                        กลับ Dashboard
-                    </button>
-                </div>
             </div>
 
             <div class="op-summary-grid">
@@ -14458,6 +14452,7 @@
     }
 
     function nav(targetId, skipHistory, options) {
+      try {
         options = options || {};
         if (!canAccessAssessment() && assessmentPages.includes(targetId)) {
             showAssessmentAccessDenied();
@@ -14489,6 +14484,12 @@
                 history.pushState(state, '', '#' + targetId);
             }
         }
+        // Reset nurse approved-only mode when leaving prep pages
+        if (typeof nurseApprovedOnlyMode !== 'undefined' && nurseApprovedOnlyMode) {
+            var prepPages = ['pg-prep-type','pg-prep-patient','pg-prep-pt-drugs','pg-prep-med','pg-prep-med-detail','pg-prep-sched','pg-sched-detail','pg-hw','pg-fill','pg-summary','pg-ibf','pg-trf'];
+            if (prepPages.indexOf(targetId) < 0) nurseApprovedOnlyMode = false;
+        }
+
         // Update global header page name
         const ghName = document.getElementById('ghPageName');
         if (ghName) ghName.textContent = pageNames[targetId] || '';
@@ -14531,6 +14532,15 @@
             renderPrepHardwareFromDashboard(targetId);
         }
         return true;
+      } catch(e) {
+        // Fallback: at least show the target page
+        try {
+            document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
+            var el = document.getElementById(targetId);
+            if (el) el.classList.add('active');
+        } catch(e2) {}
+        return false;
+      }
     }
 
     function openBackofficePage() {
@@ -14600,6 +14610,8 @@
         init: function(wardName) {
             wardName = wardName || currentWardName || DEFAULT_DEMO_WARD;
             this.currentWard = wardName;
+            // Preserve manual orders across role switches / ward re-init
+            var savedManual = this.orders ? this.orders.filter(function(o){ return o.source === 'Manual'; }) : [];
             this.offcart = [];
 
             if (wardName === 'Ward 5A') {
@@ -14681,9 +14693,43 @@
                     { id:'HIS-018', source:'HIS', ward:'Ward 3A', patient:'15', drug:'Amlodipine 5 mg', dose:'1 เม็ด', route:'PO', priority:'routine', schedule:'รอบเช้า', time:'08:00', doctor:'พญ.นภา เจริญสุข', status:'ordered', createdAt:'07:15', highAlert:false },
                     { id:'HIS-019', source:'HIS', ward:'Ward 3A', patient:'15', drug:'Hydrochlorothiazide 25 mg', dose:'1 เม็ด', route:'PO', priority:'routine', schedule:'รอบเช้า', time:'08:00', doctor:'พญ.นภา เจริญสุข', status:'scheduled', createdAt:'07:15', highAlert:false },
 
-                    { id:'HIS-020', source:'HIS', ward:'Ward 3A', patient:'08', drug:'Ceftriaxone 1 g', dose:'1 vial', route:'IV', priority:'stat', schedule:'STAT now', time:'STAT', doctor:'พญ.นภา เจริญสุข', status:'scheduled', createdAt:'07:45', highAlert:false }
+                    { id:'HIS-020', source:'HIS', ward:'Ward 3A', patient:'08', drug:'Ceftriaxone 1 g', dose:'1 vial', route:'IV', priority:'stat', schedule:'STAT now', time:'STAT', doctor:'พญ.นภา เจริญสุข', status:'scheduled', createdAt:'07:45', highAlert:false },
+
+                    // ── Demo: Verbal/Telephone Orders ──
+                    // 1 pending + 1 already approved for demo
+                    { id:'MAN-DEMO-001', source:'Manual', ward:'Ward 3A', patient:'03', drug:'Diazepam 5 mg', dose:'1 เม็ด', route:'PO', priority:'routine', schedule:'ก่อนนอน', time:'20:00', doctor:'นพ.วิชัย สั่งยา', status:'pending_verify', createdAt:'09:15', highAlert:false, orderSource:'Verbal order', note:'ผู้ป่วยนอนไม่หลับ' },
+                    { id:'MAN-DEMO-002', source:'Manual', ward:'Ward 3A', patient:'01', drug:'Tramadol 50 mg', dose:'1 เม็ด', route:'PO', priority:'prn', schedule:'PRN', time:'PRN', doctor:'นพ.วิชัย สั่งยา', status:'ordered', createdAt:'09:20', highAlert:false, orderSource:'Telephone order', note:'Pain score 6/10', verified:{ pharma:{ done:true, by:'ภญ.วิภา เจริญยา', at:'09:25' } } }
                 ];
             }
+            // Restore manual orders — overwrite hardcoded demo with saved state
+            var self = this;
+            try {
+                savedManual.forEach(function(o) {
+                    var idx = self.orders.findIndex(function(e){ return e.id === o.id; });
+                    if (idx >= 0) {
+                        self.orders[idx] = o;
+                    } else {
+                        self.orders.push(o);
+                    }
+                });
+                // Re-add approved manual drugs to patientData
+                self.orders.forEach(function(o) {
+                    if (o.source !== 'Manual' || o.status === 'pending_verify' || o.status === 'rejected') return;
+                    if (typeof patientData === 'undefined' || !o.patient || !patientData[o.patient]) return;
+                    var pt = patientData[o.patient];
+                    pt.drugs = pt.drugs || [];
+                    var exists = pt.drugs.some(function(d){ return d.manualOrderId === o.id; });
+                    if (!exists) {
+                        var scheduleMap = {'รอบเช้า':'OD เช้า','รอบเที่ยง':'OD เที่ยง','รอบเย็น':'OD เย็น','ก่อนนอน':'OD ก่อนนอน','STAT now':'STAT','PRN':'PRN'};
+                        pt.drugs.push({
+                            name: o.drug, dose: o.dose || o.drug, route: o.route || 'PO',
+                            freq: scheduleMap[o.schedule] || o.schedule || '', schedule: o.schedule || '', time: o.time || '',
+                            color: o.priority === 'stat' ? '#EF4444' : o.priority === 'high-alert' ? '#D97706' : '#7C3AED',
+                            highAlert: o.priority === 'high-alert', manualOrderId: o.id, source: 'Manual', doctor: o.doctor || ''
+                        });
+                    }
+                });
+            } catch(e) {}
             this._autoVerifyDoctor();
             this._notify();
         },
@@ -15174,6 +15220,37 @@
     }
     MedCartStore.onChange(renderNsCalendar);
 
+    // Re-render active pages when MedCartStore changes (verbal order / approve / reject)
+    MedCartStore.onChange(function() {
+        var activePage = getActivePageId();
+        // Pharma verify page
+        if (activePage === 'pg-pharma-verify' && typeof renderPharmaVerifyPage === 'function') renderPharmaVerifyPage();
+        // Order plan page (queue list + banner)
+        if (activePage === 'pg-order-plan' && typeof renderOrderPlanPage === 'function') renderOrderPlanPage();
+        // Pharma report page
+        if (activePage === 'pg-pharma-report' && typeof renderPharmaReportPage === 'function') renderPharmaReportPage();
+        // eMAR page
+        if (activePage === 'pg-emar' && typeof renderEmarPage === 'function') renderEmarPage();
+        // Dashboard — update role section + badges
+        if (activePage === 'pg-dashboard') {
+            var sec = document.getElementById('dashRoleSection');
+            if (sec && typeof getRoleSectionHTML === 'function') sec.innerHTML = getRoleSectionHTML(currentRole);
+            var pvBadge = document.getElementById('dashPendingVerifyCount');
+            if (pvBadge) pvBadge.textContent = MedCartStore.countPendingVerify();
+            // Nurse prep card visibility
+            var prepCard = document.getElementById('pg-dashboard')?.querySelector('.db-action.secondary');
+            if (prepCard && currentRole === 'nurse') {
+                var approved = MedCartStore.orders.filter(function(o){ return o.source === 'Manual' && o.status !== 'pending_verify' && o.status !== 'rejected'; }).length;
+                prepCard.style.display = approved > 0 ? '' : 'none';
+                if (approved > 0) prepCard.setAttribute('onclick', 'goToNursePrepApproved()');
+                var badgeEl = prepCard.querySelector('.db-action-badge');
+                if (badgeEl) badgeEl.textContent = approved + ' พร้อมจัด';
+                var descEl = prepCard.querySelector('.db-action-desc');
+                if (descEl) descEl.textContent = 'เภสัชอนุมัติ ' + approved + ' รายการ — พร้อมจัดยาเข้า Cassette';
+            }
+        }
+    });
+
     // On load: restore page + login state from URL hash (survive refresh)
     (function() {
         const hash = window.location.hash.replace('#','');
@@ -15211,7 +15288,7 @@
         const ward = currentWardName || sessionStorage.getItem('mcWard') || DEFAULT_DEMO_WARD;
         const label = document.getElementById('loginWardLabel');
         if (label) label.textContent = ward;
-        if (wardDataReady) applyWardSelection(ward, { silent: true });
+        try { if (wardDataReady) applyWardSelection(ward, { silent: true }); } catch(e) {}
         nav('pg-login');
     }
 
@@ -15266,13 +15343,15 @@
         if (!ward) return;
         const label = document.getElementById('loginWardLabel');
         if (label) label.textContent = ward;
-        if (wardDataReady) {
-            applyWardSelection(ward);
-        } else {
-            currentWardName = ward;
-            selectedWardName = ward;
-            sessionStorage.setItem('mcWard', ward);
-        }
+        try {
+            if (wardDataReady) {
+                applyWardSelection(ward);
+            } else {
+                currentWardName = ward;
+                selectedWardName = ward;
+                sessionStorage.setItem('mcWard', ward);
+            }
+        } catch(e) {}
         nav('pg-login');
     }
 
@@ -15370,7 +15449,7 @@
         currentWardName = ward;
         selectedWardName = ward;
         sessionStorage.setItem('mcWard', ward);
-        if (wardDataReady) applyWardSelection(ward, { silent: true });
+        try { if (wardDataReady) applyWardSelection(ward, { silent: true }); } catch(e) {}
 
         // Update welcome name
         const welcomeH1 = document.getElementById('dashWelcomeName');
@@ -15469,14 +15548,15 @@
 
         // Nurse: show/hide จัดยา card based on approved manual orders
         if (isNurse && typeof MedCartStore !== 'undefined') {
-            var approvedManual = MedCartStore.orders.filter(function(o){
+            var approvedManualOrders = MedCartStore.orders.filter(function(o){
                 return o.source === 'Manual' && o.status !== 'pending_verify' && o.status !== 'rejected';
-            }).length;
-            var prepCard = dashEl.querySelector('.db-action[onclick*="goToPrepType"]');
+            });
+            var approvedManual = approvedManualOrders.length;
+            var prepCard = dashEl.querySelector('.db-action.secondary');
             if (prepCard) {
                 if (approvedManual > 0) {
                     prepCard.style.display = '';
-                    // Change label to indicate nurse prep
+                    prepCard.setAttribute('onclick', 'goToNursePrepApproved()');
                     var titleEl = prepCard.querySelector('.db-action-title');
                     if (titleEl) titleEl.textContent = 'จัดยาที่อนุมัติแล้ว';
                     var descEl = prepCard.querySelector('.db-action-desc');
@@ -15494,14 +15574,15 @@
         if (teamPanelSlot) teamPanelSlot.innerHTML = isSuper ? getRoleBottomHTML(role) : '';
 
         // Show user section in header
-        document.body.classList.add('logged-in');
-        document.getElementById('ghUserSection').style.display = 'flex';
-        // Update global header info
-        document.getElementById('ghUserName').textContent = name;
-        document.getElementById('ghUserRole').textContent = roleText;
-        document.getElementById('ghAvatar').textContent = name.substring(0,2).replace(/[ภญนส.]/g,'');
-        const avatarColors = {nurse:'var(--green)',pharma:'#3b82f6',super:'#7c3aed'};
-        document.getElementById('ghAvatar').style.background = 'linear-gradient(135deg,' + (avatarColors[role]||'var(--green)') + ',#5db840)';
+        try {
+            document.body.classList.add('logged-in');
+            document.getElementById('ghUserSection').style.display = 'flex';
+            document.getElementById('ghUserName').textContent = name;
+            document.getElementById('ghUserRole').textContent = roleText;
+            document.getElementById('ghAvatar').textContent = name.substring(0,2).replace(/[ภญนส.]/g,'');
+            const avatarColors = {nurse:'var(--green)',pharma:'#3b82f6',super:'#7c3aed'};
+            document.getElementById('ghAvatar').style.background = 'linear-gradient(135deg,' + (avatarColors[role]||'var(--green)') + ',#5db840)';
+        } catch(e) {}
 
         nav('pg-dashboard');
         showToast('เข้าสู่ระบบ: ' + name + ' (' + roleText + ')');
@@ -15931,7 +16012,15 @@
     /* ── Prep type selection (Page 6) ── */
     let selectedPrepType = null;
 
+    var nurseApprovedOnlyMode = false;
+
+    function goToNursePrepApproved() {
+        nurseApprovedOnlyMode = true;
+        goToPrepType();
+    }
+
     function goToPrepType() {
+        nurseApprovedOnlyMode = false; // full prep mode (pharma/super)
         const ward = currentWardName || document.getElementById('ghWard')?.textContent || DEFAULT_DEMO_WARD;
         document.getElementById('prepWardHeader').textContent = ward;
         document.getElementById('prepWardCtx').textContent = ward;
@@ -16041,14 +16130,31 @@
         });
     }
 
+    function getApprovedManualDrugIds() {
+        if (!nurseApprovedOnlyMode || typeof MedCartStore === 'undefined') return null;
+        var approved = MedCartStore.orders.filter(function(o){
+            return o.source === 'Manual' && o.status !== 'pending_verify' && o.status !== 'rejected';
+        });
+        return approved.map(function(o){ return o.id; });
+    }
+
+    function filterDrugsIfApprovedMode(drugs) {
+        var ids = getApprovedManualDrugIds();
+        if (!ids) return drugs; // not in approved mode — show all
+        return drugs.filter(function(d) {
+            return d.manualOrderId && ids.indexOf(d.manualOrderId) >= 0;
+        });
+    }
+
     function prepPatientRows() {
         return getDispensePatientKeys().map(function(key) {
             const pt = patientData[key];
-            const drugs = (pt && pt.drugs) || [];
+            var drugs = (pt && pt.drugs) || [];
+            drugs = filterDrugsIfApprovedMode(drugs);
             const pending = drugs.filter(function(d) { return !d.done; }).length;
             const highAlert = drugs.some(function(d) { return d.highAlert || isHighAlertDrug(d.name); });
             return { key: key, pt: pt, drugs: drugs, pending: pending, highAlert: highAlert };
-        }).filter(function(row) { return !!row.pt; }).sort(function(a, b) {
+        }).filter(function(row) { return !!row.pt && row.drugs.length > 0; }).sort(function(a, b) {
             const bedA = String((a.pt && a.pt.bed) || a.key || '');
             const bedB = String((b.pt && b.pt.bed) || b.key || '');
             return bedA.localeCompare(bedB, 'th', { numeric: true, sensitivity: 'base' });
@@ -16060,7 +16166,8 @@
         getDispensePatientKeys().forEach(function(key) {
             const pt = patientData[key];
             if (!pt) return;
-            (pt.drugs || []).forEach(function(drug, idx) {
+            var allDrugs = filterDrugsIfApprovedMode(pt.drugs || []);
+            allDrugs.forEach(function(drug, idx) {
                 const view = legacyDrugView(drug, pt, idx);
                 const name = view.name;
                 const norm = normalizeIbfDrugName(name);
@@ -16308,7 +16415,8 @@
         getDispensePatientKeys().forEach(function(key) {
             const pt = patientData[key];
             if (!pt) return;
-            (pt.drugs || []).forEach(function(drug, idx) {
+            var allDrugs = filterDrugsIfApprovedMode(pt.drugs || []);
+            allDrugs.forEach(function(drug, idx) {
                 const view = legacyDrugView(drug, pt, idx);
                 const round = prepRoundFromView(view, pt);
                 if (roundName && round !== roundName) return;
@@ -16522,6 +16630,34 @@
         const rounds = ['รอบเช้า','รอบเที่ยง','รอบเย็น','ก่อนนอน'].filter(function(round) {
             return prepScheduleRows(round, true).length > 0;
         });
+
+        // Nurse approved-only banner
+        var prepBanner = document.getElementById('prepApprovedBanner');
+        if (!prepBanner) {
+            var topbar = document.querySelector('#pg-prep-type .op-topbar');
+            if (topbar) {
+                prepBanner = document.createElement('div');
+                prepBanner.id = 'prepApprovedBanner';
+                topbar.parentNode.insertBefore(prepBanner, topbar.nextSibling);
+            }
+        }
+        if (prepBanner) {
+            if (nurseApprovedOnlyMode && currentRole === 'nurse') {
+                var approvedDrugs = (typeof MedCartStore !== 'undefined') ? MedCartStore.orders.filter(function(o){
+                    return o.source === 'Manual' && o.status !== 'pending_verify' && o.status !== 'rejected';
+                }) : [];
+                var drugList = approvedDrugs.map(function(o){
+                    return '<span style="background:#DCFCE7;color:#065F46;font-size:10px;font-weight:700;padding:3px 8px;border-radius:6px;border:1px solid #BBF7D0;">' + escHtml(o.drug) + ' · ' + escHtml(MedCartStore.getPatientName(o.patient)) + '</span>';
+                }).join(' ');
+                prepBanner.innerHTML = '<div style="background:linear-gradient(135deg,#F0FDF4,#DCFCE7);border:2px solid #86EFAC;border-radius:14px;padding:14px 20px;margin-bottom:16px;">'
+                    + '<div style="font-size:14px;font-weight:800;color:#065F46;margin-bottom:6px;">จัดเฉพาะยาที่เภสัชอนุมัติแล้ว · ' + approvedDrugs.length + ' รายการ</div>'
+                    + '<div style="display:flex;flex-wrap:wrap;gap:6px;">' + drugList + '</div>'
+                    + '</div>';
+            } else {
+                prepBanner.innerHTML = '';
+            }
+        }
+
         const nums = document.querySelectorAll('#pg-prep-type .ptc-stat-num');
         if (nums[0]) nums[0].textContent = summary.patients.length;
         if (nums[1]) nums[1].textContent = summary.totalDrugs;
@@ -21293,31 +21429,48 @@
             else { queueBadge.textContent = '0 รายการ'; queueBadge.style.background = ''; queueBadge.style.color = ''; }
         }
 
-        // Queue list — show MedCartStore manual orders with status
+        // Queue list — show MedCartStore manual orders split by status
+        function opRenderManualRow(o) {
+            var ptName = MedCartStore.getPatientName ? MedCartStore.getPatientName(o.patient) : o.patient;
+            var isPending = o.status === 'pending_verify';
+            var isRejected = o.status === 'rejected';
+            var borderColor = isPending ? '#F59E0B' : isRejected ? '#EF4444' : '#10B981';
+            var statusTag = isPending ? '<span class="op-tag" style="background:#FEF3C7;color:#92400E;border-color:#FDE68A;">รอเภสัชอนุมัติ</span>'
+                : isRejected ? '<span class="op-tag" style="background:#FEE2E2;color:#DC2626;border-color:#FECACA;">ปฏิเสธ</span>'
+                : '<span class="op-tag done">อนุมัติแล้ว</span>';
+            var priTag = o.priority === 'stat' ? '<span class="op-tag stat">STAT</span>'
+                : o.priority === 'high-alert' ? '<span class="op-tag ha">High Alert</span>'
+                : o.priority === 'prn' ? '<span class="op-tag prn">PRN</span>' : '';
+            return '<div class="op-order-row" style="border-left-color:' + borderColor + ';' + (isRejected ? 'opacity:0.5;' : '') + '">'
+                + '<div class="op-order-main">'
+                + '<div class="op-order-name">' + escHtml(o.drug) + ' ' + priTag + '</div>'
+                + '<div class="op-order-meta">' + escHtml(ptName) + ' · ' + escHtml(o.dose||'') + ' · ' + escHtml(o.route||'') + ' · ' + escHtml(o.schedule||'') + '<br>แพทย์: ' + escHtml(o.doctor||'-') + ' · ' + escHtml(o.orderSource||o.source||'') + ' · ' + escHtml(o.createdAt||'') + '</div>'
+                + '<div class="op-order-tags">' + statusTag + (isRejected && o.rejectReason ? '<span class="op-tag">เหตุผล: '+escHtml(o.rejectReason)+'</span>' : '') + '</div>'
+                + '</div></div>';
+        }
+        var manualPending = manualOrders.filter(function(o){ return o.status === 'pending_verify'; });
+        var manualApproved = manualOrders.filter(function(o){ return o.status !== 'pending_verify' && o.status !== 'rejected'; });
+        var manualRejected = manualOrders.filter(function(o){ return o.status === 'rejected'; });
+
         const queue = document.getElementById('opQueueList');
         if (queue) {
-            if (manualOrders.length === 0) {
-                queue.innerHTML = '<div class="op-empty">ยังไม่มีรายการที่บันทึก</div>';
-            } else {
-                queue.innerHTML = manualOrders.map(function(o) {
-                    var ptName = MedCartStore.getPatientName ? MedCartStore.getPatientName(o.patient) : o.patient;
-                    var isPending = o.status === 'pending_verify';
-                    var isRejected = o.status === 'rejected';
-                    var borderColor = isPending ? '#F59E0B' : isRejected ? '#EF4444' : '#10B981';
-                    var statusTag = isPending ? '<span class="op-tag" style="background:#FEF3C7;color:#92400E;border-color:#FDE68A;">รอเภสัชอนุมัติ</span>'
-                        : isRejected ? '<span class="op-tag" style="background:#FEE2E2;color:#DC2626;border-color:#FECACA;">ปฏิเสธ</span>'
-                        : '<span class="op-tag done">อนุมัติแล้ว</span>';
-                    var priTag = o.priority === 'stat' ? '<span class="op-tag stat">STAT</span>'
-                        : o.priority === 'high-alert' ? '<span class="op-tag ha">High Alert</span>'
-                        : o.priority === 'prn' ? '<span class="op-tag prn">PRN</span>' : '';
-                    return '<div class="op-order-row" style="border-left-color:' + borderColor + ';' + (isRejected ? 'opacity:0.5;' : '') + '">'
-                        + '<div class="op-order-main">'
-                        + '<div class="op-order-name">' + escHtml(o.drug) + ' ' + priTag + '</div>'
-                        + '<div class="op-order-meta">' + escHtml(ptName) + ' · ' + escHtml(o.dose||'') + ' · ' + escHtml(o.route||'') + ' · ' + escHtml(o.schedule||'') + '<br>แพทย์: ' + escHtml(o.doctor||'-') + ' · ' + escHtml(o.orderSource||o.source||'') + ' · ' + escHtml(o.createdAt||'') + '</div>'
-                        + '<div class="op-order-tags">' + statusTag + (isRejected && o.rejectReason ? '<span class="op-tag">เหตุผล: '+escHtml(o.rejectReason)+'</span>' : '') + '</div>'
-                        + '</div></div>';
-                }).join('');
+            var html = '';
+            // Pending section
+            if (manualPending.length) {
+                html += '<div style="padding:8px 12px;font-size:11px;font-weight:800;color:#92400E;background:#FEF3C7;border-radius:8px;margin:8px 0;">รอเภสัชอนุมัติ · ' + manualPending.length + ' รายการ</div>';
+                html += manualPending.map(opRenderManualRow).join('');
             }
+            // Approved section
+            if (manualApproved.length) {
+                html += '<div style="padding:8px 12px;font-size:11px;font-weight:800;color:#065F46;background:#DCFCE7;border-radius:8px;margin:8px 0;">อนุมัติแล้ว · ' + manualApproved.length + ' รายการ — พร้อมจัดยา</div>';
+                html += manualApproved.map(opRenderManualRow).join('');
+            }
+            // Rejected section
+            if (manualRejected.length) {
+                html += '<div style="padding:8px 12px;font-size:11px;font-weight:800;color:#DC2626;background:#FEE2E2;border-radius:8px;margin:8px 0;">ปฏิเสธ · ' + manualRejected.length + ' รายการ</div>';
+                html += manualRejected.map(opRenderManualRow).join('');
+            }
+            queue.innerHTML = html || '<div class="op-empty">ยังไม่มีรายการที่บันทึก</div>';
         }
         opUpdateSafetyPreview();
         renderOrderPlanDashboardHint();
@@ -21376,17 +21529,42 @@
             createdAt: now.toISOString(),
             createdBy: sessionStorage.getItem('mcName') || 'นส.สมใจ ดีมาก'
         };
-        const orders = getOrderPlanOrders();
-        orders.push(order);
-        saveOrderPlanOrders(orders);
-        applyOrderPlanOrdersToPatientData(order.ward);
-        syncWardFlowDatasets();
+        // Add to MedCartStore FIRST → pending_verify for pharmacist
+        try {
+            if (typeof MedCartStore !== 'undefined') {
+                MedCartStore.addManualOrder({
+                    patient: patientKey,
+                    drug: drugName,
+                    dose: dose,
+                    route: route,
+                    priority: priority,
+                    schedule: schedule,
+                    time: schedule === 'STAT now' ? 'STAT' : schedule === 'PRN' ? 'PRN' : '',
+                    doctor: doctor,
+                    note: note,
+                    orderSource: source,
+                    highAlert: priority === 'high-alert',
+                    ward: orderPlanWardName(),
+                    orderPlanId: order.id
+                });
+            }
+        } catch(e) {}
+
+        // Also save to Order Plan system
+        try {
+            var orders = getOrderPlanOrders();
+            orders.push(order);
+            saveOrderPlanOrders(orders);
+            applyOrderPlanOrdersToPatientData(order.ward);
+            syncWardFlowDatasets();
+        } catch(e) {}
+
         ['opDrugName','opDose','opNote'].forEach(function(id) {
             const el = document.getElementById(id);
             if (el) el.value = '';
         });
         renderOrderPlanPage();
-        showToast('เพิ่ม Order Plan แล้ว — ' + order.drugName + ' เข้า flow จัดยา');
+        showToast('ส่งรอเภสัชอนุมัติแล้ว — ' + drugName);
         setTimeout(function(){ showToast(''); }, 2200);
         return false;
     }
@@ -24292,6 +24470,8 @@
         syncWardFlowDatasets();
         // Re-init central store for the new ward
         if (typeof MedCartStore !== 'undefined') MedCartStore.init(resolvedWard);
+        // Re-sync after init — approved manual drugs now in patientData
+        try { syncWardFlowDatasets(); } catch(e) {}
         if (!options.silent) {
             const info = getCurrentWardInfo();
             showToast('เปลี่ยนเป็น ' + resolvedWard + ' — โหลดข้อมูล ' + info.desc + ' แล้ว');
