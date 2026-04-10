@@ -16401,10 +16401,13 @@
 
     function filterDrugsIfApprovedMode(drugs) {
         var ids = getApprovedManualDrugIds();
+        console.log('[filterDrugs] nurseApprovedOnlyMode=', nurseApprovedOnlyMode, 'ids=', ids, 'drugs with manualOrderId=', drugs.filter(function(d){return d.manualOrderId;}).length);
         if (!ids) return drugs; // not in approved mode — show all
-        return drugs.filter(function(d) {
+        var filtered = drugs.filter(function(d) {
             return d.manualOrderId && ids.indexOf(d.manualOrderId) >= 0;
         });
+        console.log('[filterDrugs] filtered:', filtered.length, 'of', drugs.length);
+        return filtered;
     }
 
     function prepPatientRows() {
