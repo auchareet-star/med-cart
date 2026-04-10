@@ -2335,6 +2335,7 @@
         #pg-dashboard #dashPermSection    { order:3; }
         #pg-dashboard #dashPipelineBar    { order:4; }
         #pg-dashboard #dashQuickLinks     { order:5; }
+        #pg-dashboard #dashNurseOrderActions { order:5; }
         #pg-dashboard .db-actions         { order:6; }
         #pg-dashboard #dashStatAssess     { order:7; }
         #pg-dashboard #dashCassettePanel  { order:8; }
@@ -2371,8 +2372,7 @@
         #pg-dashboard[data-role="pharma"] #dashNurseScheduleQuickLink,
         #pg-dashboard[data-role="pharma"] #dashQuickAlerts,
         #pg-dashboard[data-role="pharma"] #dashAssessQuickLink,
-        #pg-dashboard[data-role="pharma"] #dashManualOrderLink,
-        #pg-dashboard[data-role="pharma"] #dashNursePrepLink,
+        #pg-dashboard[data-role="pharma"] #dashNurseOrderActions,
         #pg-dashboard[data-role="pharma"] .db-action[onclick*="pg-routine"],
         #pg-dashboard[data-role="pharma"] #dashPipelineBar,
         #pg-dashboard[data-role="pharma"] #dashBottomGrid {
@@ -7377,22 +7377,6 @@
                 <span class="db-qnav-badge" style="color:#DC2626;border:1px solid #FECACA;background:#FEF2F2;">รอ 3</span>
             </div>
 
-            <div id="dashManualOrderLink" onclick="nav('pg-order-plan')" class="db-qnav"
-                style="--qn-bg:#F5F3FF;--qn-border:#DDD6FE;--qn-icon-bg:linear-gradient(135deg,#7C3AED,#A78BFA);--qn-color:#5B21B6;--qn-badge-bg:#EDE9FE;">
-                <div class="db-qnav-icon">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                </div>
-                <span class="db-qnav-label">บันทึกคำสั่งยา</span>
-            </div>
-
-            <div id="dashNursePrepLink" onclick="goToNursePrepApproved()" class="db-qnav"
-                style="--qn-bg:#F0FDF4;--qn-border:#86EFAC;--qn-icon-bg:linear-gradient(135deg,#059669,#10B981);--qn-color:#065F46;--qn-badge-bg:#DCFCE7;display:none;">
-                <div class="db-qnav-icon">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4z"/></svg>
-                </div>
-                <span class="db-qnav-label">จัดยาที่อนุมัติแล้ว</span>
-                <span class="db-qnav-badge" id="dashNursePrepCount" style="color:#059669;font-weight:800;">0</span>
-            </div>
 
             <div id="dashPharmaReportLink" onclick="nav('pg-pharma-report')" class="db-qnav"
                 style="--qn-bg:#FEF2F2;--qn-border:#FECACA;--qn-icon-bg:linear-gradient(135deg,#DC2626,#B91C1C);--qn-color:#991B1B;--qn-badge-bg:#FEE2E2;">
@@ -7419,6 +7403,42 @@
                 </div>
                 <span class="db-qnav-label">ประวัติการให้ยา</span>
                 <span class="db-qnav-badge" id="dashEmarCount">0</span>
+            </div>
+        </div>
+
+        <!-- ── Nurse: บันทึกคำสั่งยา + จัดยาที่อนุมัติ (2-col) ── -->
+        <div id="dashNurseOrderActions" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;">
+            <div id="dashManualOrderLink" onclick="nav('pg-order-plan')" style="
+                background:linear-gradient(135deg,#F5F3FF,#EDE9FE);
+                border:2px solid #DDD6FE;border-radius:14px;
+                padding:16px 18px;cursor:pointer;display:flex;align-items:center;gap:12px;
+                transition:all .18s;"
+                onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 20px rgba(124,58,237,0.12)'"
+                onmouseout="this.style.transform='';this.style.boxShadow=''">
+                <div style="width:40px;height:40px;background:linear-gradient(135deg,#7C3AED,#A78BFA);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                </div>
+                <div style="flex:1;min-width:0;">
+                    <div style="font-size:14px;font-weight:800;color:#5B21B6;">บันทึกคำสั่งยา</div>
+                    <div style="font-size:10px;color:#7C3AED;margin-top:1px;">Verbal / Telephone Order</div>
+                </div>
+            </div>
+
+            <div id="dashNursePrepLink" onclick="goToNursePrepApproved()" style="
+                background:linear-gradient(135deg,#F0FDF4,#DCFCE7);
+                border:2px solid #86EFAC;border-radius:14px;
+                padding:16px 18px;cursor:pointer;display:flex;align-items:center;gap:12px;
+                transition:all .18s;display:none;"
+                onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 20px rgba(5,150,105,0.12)'"
+                onmouseout="this.style.transform='';this.style.boxShadow=''">
+                <div style="width:40px;height:40px;background:linear-gradient(135deg,#059669,#10B981);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4z"/></svg>
+                </div>
+                <div style="flex:1;min-width:0;">
+                    <div style="font-size:14px;font-weight:800;color:#065F46;">จัดยาที่อนุมัติแล้ว</div>
+                    <div style="font-size:10px;color:#059669;margin-top:1px;" id="dashNursePrepSub">0 รายการพร้อมจัด</div>
+                </div>
+                <span id="dashNursePrepCount" style="background:#059669;color:white;font-size:12px;font-weight:800;padding:4px 10px;border-radius:8px;flex-shrink:0;">0</span>
             </div>
         </div>
 
@@ -15294,13 +15314,15 @@
             if (sec && typeof getRoleSectionHTML === 'function') sec.innerHTML = getRoleSectionHTML(currentRole);
             var pvBadge = document.getElementById('dashPendingVerifyCount');
             if (pvBadge) pvBadge.textContent = MedCartStore.countPendingVerify();
-            // Nurse prep chip visibility
-            var nursePrepChip = document.getElementById('dashNursePrepLink');
-            if (nursePrepChip && currentRole === 'nurse') {
+            // Nurse prep button visibility
+            var nursePrepBtn = document.getElementById('dashNursePrepLink');
+            if (nursePrepBtn && currentRole === 'nurse') {
                 var approved = MedCartStore.orders.filter(function(o){ return o.source === 'Manual' && o.status !== 'pending_verify' && o.status !== 'rejected'; }).length;
-                nursePrepChip.style.display = approved > 0 ? '' : 'none';
+                nursePrepBtn.style.display = approved > 0 ? 'flex' : 'none';
                 var npBadge = document.getElementById('dashNursePrepCount');
                 if (npBadge) npBadge.textContent = approved;
+                var npSub = document.getElementById('dashNursePrepSub');
+                if (npSub) npSub.textContent = approved + ' รายการพร้อมจัด';
             }
         }
     });
@@ -15618,20 +15640,25 @@
             var prepCard = dashEl.querySelector('.db-action.secondary');
             if (prepCard) prepCard.style.display = 'none';
         }
-        // Nurse prep chip — show/hide based on approved orders
-        var nursePrepChip = document.getElementById('dashNursePrepLink');
-        if (nursePrepChip) {
+        // Nurse prep button — show/hide based on approved orders
+        var nursePrepBtn = document.getElementById('dashNursePrepLink');
+        if (nursePrepBtn) {
             if (isNurse && typeof MedCartStore !== 'undefined') {
                 var approvedManual = MedCartStore.orders.filter(function(o){
                     return o.source === 'Manual' && o.status !== 'pending_verify' && o.status !== 'rejected';
                 }).length;
-                nursePrepChip.style.display = approvedManual > 0 ? '' : 'none';
+                nursePrepBtn.style.display = approvedManual > 0 ? 'flex' : 'none';
                 var npBadge = document.getElementById('dashNursePrepCount');
                 if (npBadge) npBadge.textContent = approvedManual;
+                var npSub = document.getElementById('dashNursePrepSub');
+                if (npSub) npSub.textContent = approvedManual + ' รายการพร้อมจัด';
             } else {
-                nursePrepChip.style.display = 'none';
+                nursePrepBtn.style.display = 'none';
             }
         }
+        // Show/hide the whole nurse order actions section
+        var nurseActions = document.getElementById('dashNurseOrderActions');
+        if (nurseActions) nurseActions.style.display = isNurse ? '' : 'none';
 
         // Super: render team panel
         var teamPanelSlot = document.getElementById('dashTeamPanelSlot');
