@@ -2349,7 +2349,6 @@
            จ่ายยา(hero) → RoleSection → Activity
            ──────────────────────────────────────── */
         #pg-dashboard[data-role="nurse"] #dashPipelineBar,
-        #pg-dashboard[data-role="nurse"] #dashSchedulePanel,
         #pg-dashboard[data-role="nurse"] #dashTeamPanelSlot,
         #pg-dashboard[data-role="nurse"] #dashPharmaReportLink,
         #pg-dashboard[data-role="nurse"] #dashPharmaVerifyLink {
@@ -7555,41 +7554,7 @@
                     <span style="font-size:10px;color:#64748b;font-weight:500;">วันนี้</span>
                 </div>
                 <div id="dashActivityLogWrap" style="display:flex;flex-direction:column;gap:0;">
-                    <div class="db-log-item" style="border-bottom:1px dashed #f1f5f9;padding:10px 8px;">
-                        <div style="width:32px;height:32px;background:#f0fdf4;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0D9488" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                        </div>
-                        <div style="flex:1;min-width:0;"><div class="db-log-text">จ่ายยา <strong>Amlodipine 5mg</strong></div><div style="font-size:11px;color:var(--text-3);">สมชาย มานะ · ห้อง 3A-01</div></div>
-                        <div class="db-log-time">08:12</div>
-                    </div>
-                    <div class="db-log-item" style="border-bottom:1px dashed #f1f5f9;padding:10px 8px;">
-                        <div style="width:32px;height:32px;background:#f0fdf4;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0D9488" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                        </div>
-                        <div style="flex:1;min-width:0;"><div class="db-log-text">จ่ายยา <strong>Metformin 500mg</strong></div><div style="font-size:11px;color:var(--text-3);">มาลี สุขใจ · ห้อง 3A-03</div></div>
-                        <div class="db-log-time">08:08</div>
-                    </div>
-                    <div class="db-log-item" style="border-bottom:1px dashed #f1f5f9;padding:10px 8px;">
-                        <div style="width:32px;height:32px;background:#eff6ff;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2.5"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>
-                        </div>
-                        <div style="flex:1;min-width:0;"><div class="db-log-text">จัดยา <strong>Omeprazole 20mg</strong></div><div style="font-size:11px;color:var(--text-3);">เข้า Slot A-01</div></div>
-                        <div class="db-log-time">07:55</div>
-                    </div>
-                    <div class="db-log-item" style="border-bottom:1px dashed #f1f5f9;padding:10px 8px;">
-                        <div style="width:32px;height:32px;background:#fffbeb;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-                        </div>
-                        <div style="flex:1;min-width:0;"><div class="db-log-text">งดยา <strong>Warfarin 3mg</strong></div><div style="font-size:11px;color:var(--text-3);">กัลยา ชัยวงศ์ · Vital ไม่ผ่านเกณฑ์</div></div>
-                        <div class="db-log-time">07:45</div>
-                    </div>
-                    <div class="db-log-item" style="padding:10px 8px;">
-                        <div style="width:32px;height:32px;background:#f5f3ff;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="2.5"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                        </div>
-                        <div style="flex:1;min-width:0;"><div class="db-log-text">เข้าสู่ระบบ</div><div style="font-size:11px;color:var(--text-3);">นส.สมใจ ดีมาก · Ward 3A</div></div>
-                        <div class="db-log-time">07:30</div>
-                    </div>
+                    <!-- Rendered dynamically from MedCartStore by renderDashActivityLog() -->
                 </div>
             </div>
 
@@ -14999,6 +14964,8 @@
             'pg-dashboard':       function() {
                 syncDashboardFromStore();
                 if (typeof renderDashboardDynamic === 'function') renderDashboardDynamic();
+                if (typeof renderDashActivityLog === 'function') renderDashActivityLog();
+                if (typeof renderDashScheduleTimeline === 'function') renderDashScheduleTimeline();
                 var sec = document.getElementById('dashRoleSection');
                 if (sec && typeof getRoleSectionHTML === 'function') sec.innerHTML = getRoleSectionHTML(currentRole);
                 var pvBadge = document.getElementById('dashPendingVerifyCount');
@@ -15362,6 +15329,92 @@
         }).join('');
     }
     MedCartStore.onChange(renderNsCalendar);
+
+    // ── Dashboard Activity Log — dynamic from MedCartStore ──
+    function renderDashActivityLog() {
+        var wrap = document.getElementById('dashActivityLogWrap');
+        if (!wrap || typeof MedCartStore === 'undefined') return;
+        var shortName = function(n) { return String(n||'').replace(/^(นาย|นาง|นางสาว|นส\.|ด\.ช\.|ด\.ญ\.)\s*/,''); };
+
+        // Icon templates
+        var icoDispense = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0D9488" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>';
+        var icoPrep = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2.5"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4z"/></svg>';
+        var icoOmit = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>';
+        var icoPendingVerify = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>';
+        var icoApproved = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0D9488" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>';
+
+        var items = [];
+        var orders = (MedCartStore.orders || []).slice();
+
+        // Dispensed / assessed — จ่ายยา
+        orders.filter(function(o){ return o.status === 'dispensed' || o.status === 'assessed'; })
+            .forEach(function(o) {
+                items.push({
+                    ico: icoDispense, bg:'#f0fdf4',
+                    text: 'จ่ายยา <strong>' + escHtml(o.drug) + '</strong>',
+                    sub: shortName(MedCartStore.getPatientName(o.patient)) + ' · ' + MedCartStore.getPatientBed(o.patient),
+                    time: o.time || o.createdAt || '',
+                    sortKey: (o.time && /^\d/.test(o.time)) ? o.time : (o.createdAt || '00:00')
+                });
+            });
+
+        // Prepped — จัดยา
+        orders.filter(function(o){ return o.status === 'prepped'; })
+            .forEach(function(o) {
+                items.push({
+                    ico: icoPrep, bg:'#eff6ff',
+                    text: 'จัดยา <strong>' + escHtml(o.drug) + '</strong>',
+                    sub: shortName(MedCartStore.getPatientName(o.patient)) + ' · ' + MedCartStore.getPatientBed(o.patient),
+                    time: o.createdAt || '',
+                    sortKey: o.createdAt || '00:00'
+                });
+            });
+
+        // Manual orders: pending verify — รอเภสัชอนุมัติ
+        orders.filter(function(o){ return o.source === 'Manual' && o.status === 'pending_verify'; })
+            .forEach(function(o) {
+                items.push({
+                    ico: icoPendingVerify, bg:'#f5f3ff',
+                    text: 'Verbal order <strong>' + escHtml(o.drug) + '</strong> · รอเภสัชอนุมัติ',
+                    sub: shortName(MedCartStore.getPatientName(o.patient)) + ' · ' + (o.doctor || '—'),
+                    time: o.createdAt || '',
+                    sortKey: o.createdAt || '00:00'
+                });
+            });
+
+        // Manual orders: approved — เภสัชอนุมัติ
+        orders.filter(function(o){ return o.source === 'Manual' && o.verified && o.verified.pharma && o.verified.pharma.done; })
+            .forEach(function(o) {
+                items.push({
+                    ico: icoApproved, bg:'#f0fdf4',
+                    text: 'เภสัชอนุมัติ <strong>' + escHtml(o.drug) + '</strong>',
+                    sub: shortName(MedCartStore.getPatientName(o.patient)) + ' · ' + (o.verified.pharma.by || 'เภสัช'),
+                    time: o.verified.pharma.at || o.createdAt || '',
+                    sortKey: o.verified.pharma.at || o.createdAt || '00:00'
+                });
+            });
+
+        // Sort by time desc (latest first) — pick top 6
+        items.sort(function(a,b) { return String(b.sortKey).localeCompare(String(a.sortKey)); });
+        items = items.slice(0, 6);
+
+        if (!items.length) {
+            wrap.innerHTML = '<div style="padding:20px;text-align:center;color:var(--text-3);font-size:12px;">ยังไม่มีกิจกรรม</div>';
+            return;
+        }
+
+        wrap.innerHTML = items.map(function(it, idx) {
+            var isLast = idx === items.length - 1;
+            var border = isLast ? '' : 'border-bottom:1px dashed #f1f5f9;';
+            return '<div class="db-log-item" style="' + border + 'padding:10px 8px;">'
+                + '<div style="width:32px;height:32px;background:' + it.bg + ';border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">' + it.ico + '</div>'
+                + '<div style="flex:1;min-width:0;"><div class="db-log-text">' + it.text + '</div>'
+                + '<div style="font-size:11px;color:var(--text-3);">' + escHtml(it.sub) + '</div></div>'
+                + '<div class="db-log-time">' + escHtml(it.time) + '</div>'
+                + '</div>';
+        }).join('');
+    }
+    MedCartStore.onChange(renderDashActivityLog);
 
     // ── Dynamic sync: re-render active page on ANY data change ──
     MedCartStore.onChange(function() {
@@ -16244,8 +16297,6 @@
                 var statusTag = isDone
                     ? '<span style="background:#DCFCE7;color:#059669;font-size:10px;font-weight:700;padding:4px 10px;border-radius:8px;">จัดแล้ว</span>'
                     : '<span style="background:#FEF3C7;color:#92400E;font-size:10px;font-weight:700;padding:4px 10px;border-radius:8px;">รอจัด</span>';
-                var actionBtn = isDone ? ''
-                    : '<button type="button" class="op-btn primary" style="font-size:11px;padding:8px 14px;" onclick="npStartPrep(\'' + escHtml(o.id) + '\',\'' + escHtml(key) + '\')">เลือก Cassette → จัดยา</button>';
                 var priTag = o.priority === 'stat' ? '<span class="op-tag stat">STAT</span>'
                     : o.priority === 'high-alert' ? '<span class="op-tag ha">High Alert</span>'
                     : o.priority === 'prn' ? '<span class="op-tag prn">PRN</span>' : '';
@@ -16256,7 +16307,7 @@
                     + '<div style="font-size:12px;color:var(--text-2);margin-top:3px;">' + escHtml(o.dose||'') + ' · ' + escHtml(o.route||'') + ' · ' + escHtml(o.schedule||'') + '</div>'
                     + '<div style="font-size:11px;color:var(--text-3);margin-top:2px;">แพทย์: ' + escHtml(o.doctor||'-') + ' · ' + escHtml(o.orderSource||'Verbal order') + '</div>'
                     + '</div>'
-                    + '<div style="display:flex;align-items:center;gap:8px;flex-shrink:0;">' + statusTag + actionBtn + '</div>'
+                    + '<div style="display:flex;align-items:center;gap:8px;flex-shrink:0;">' + statusTag + '</div>'
                     + '</div>';
             }).join('');
 
@@ -16418,7 +16469,6 @@
                 });
             }
         });
-        PatientDataNotifier.notify();
     }
 
     function getApprovedManualDrugIds() {
@@ -17171,6 +17221,10 @@
 
     // Now patientData exists — sync approved manual drugs into it
     try { syncApprovedDrugsToPatientData(); } catch(e) {}
+    // Seed Order Plan from MedCartStore so Nurse Schedule / ตารางรอบยา has data
+    try { if (typeof seedOrderPlanFromMedCartStore === 'function') seedOrderPlanFromMedCartStore(); } catch(e) { console.error('seedOrderPlan error:', e); }
+    // Notify after seed so dashboard widgets pick up new data
+    try { if (typeof MedCartStore !== 'undefined' && typeof MedCartStore._notify === 'function') MedCartStore._notify(); } catch(e) {}
 
     function cloneWardData(obj) {
         return JSON.parse(JSON.stringify(obj));
@@ -21463,6 +21517,51 @@
         return { color:'#0D9488', colorLight:['#F0FDFA','#CCFBF1'] };
     }
 
+    // Seed Order Plan from MedCartStore orders so Nurse Schedule page has data
+    function seedOrderPlanFromMedCartStore() {
+        if (typeof MedCartStore === 'undefined' || !MedCartStore.orders) return;
+        var existing = getOrderPlanOrders();
+        var existingByMed = {};
+        existing.forEach(function(o) { if (o && o.medCartId) existingByMed[o.medCartId] = true; });
+        var added = false;
+        MedCartStore.orders.forEach(function(mc) {
+            if (existingByMed[mc.id]) return;
+            if (!mc.ward) return;
+            var pt = (typeof patientData !== 'undefined') ? patientData[mc.patient] : null;
+            var dispensed = (mc.status === 'dispensed' || mc.status === 'assessed');
+            var prepared = (mc.status === 'prepped' || dispensed);
+            var isoBase = new Date(); isoBase.setHours(0,0,0,0);
+            var createdIso = (mc.createdAt && /^\d{1,2}:\d{2}$/.test(mc.createdAt))
+                ? new Date(isoBase.getTime() + (function(t){ var p=t.split(':'); return (parseInt(p[0])*3600+parseInt(p[1])*60)*1000; })(mc.createdAt)).toISOString()
+                : isoBase.toISOString();
+            var op = {
+                id: 'OP-SEED-' + mc.id,
+                medCartId: mc.id,
+                ward: mc.ward,
+                patientKey: mc.patient,
+                patientName: pt ? pt.name : (MedCartStore.getPatientName(mc.patient) || '-'),
+                hn: pt ? pt.hn : '',
+                bed: pt ? pt.bed : (MedCartStore.getPatientBed(mc.patient) || '-'),
+                drugName: mc.drug,
+                dose: mc.dose || '',
+                route: mc.route || 'PO',
+                priority: mc.priority || 'routine',
+                schedule: mc.schedule || 'รอบเช้า',
+                source: mc.source === 'HIS' ? 'HIS Order' : (mc.orderSource || 'Verbal order'),
+                doctor: mc.doctor || '',
+                note: mc.note || '',
+                status: 'active',
+                prepared: prepared,
+                done: dispensed,
+                createdAt: createdIso,
+                createdBy: mc.source === 'HIS' ? 'ระบบ HIS' : (mc.doctor || '-')
+            };
+            existing.push(op);
+            added = true;
+        });
+        if (added) saveOrderPlanOrders(existing);
+    }
+
     function orderPlanDrugFromOrder(order, existingDrug) {
         const palette = orderPlanDrugPalette(order);
         const done = existingDrug ? !!existingDrug.done : !!order.done;
@@ -21506,7 +21605,6 @@
                 pt.drugs.push(nextDrug);
             }
         });
-        PatientDataNotifier.notify();
     }
 
     function findOrderPlanDrug(orderId) {
@@ -24775,6 +24873,7 @@
         try { if (typeof MedCartStore !== 'undefined') MedCartStore.init(resolvedWard); } catch(e) { console.error('MedCartStore.init error:', e); }
         // Re-sync after init — add approved drugs to patientData then rebuild flow datasets
         try { syncApprovedDrugsToPatientData(); } catch(e) {}
+        try { seedOrderPlanFromMedCartStore(); } catch(e) {}
         try { syncWardFlowDatasets(); } catch(e) {}
         if (!options.silent) {
             const info = getCurrentWardInfo();
