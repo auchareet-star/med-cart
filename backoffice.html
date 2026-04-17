@@ -1607,6 +1607,101 @@
             setTimeout(function(){ showToast(''); }, 1800);
         }
 
+        /* ── Mock patient + MAR + eMAR data for print report ── */
+        function buildPrintPatientData(wardName) {
+            var staffWard = PM_USERS.filter(function(u){ return u.ward === wardName; });
+            var nurses  = staffWard.filter(function(u){ return u.role === 'nurse'; });
+            var pharmas = staffWard.filter(function(u){ return u.role === 'pharma'; });
+            var supers  = staffWard.filter(function(u){ return u.role === 'super'; });
+            var n1 = (nurses[0]  || PM_USERS.find(function(u){ return u.role==='nurse';  }) || PM_USERS[1]).name;
+            var n2 = (nurses[1]  || nurses[0] || PM_USERS[2]).name;
+            var ph = (pharmas[0] || PM_USERS.find(function(u){ return u.role==='pharma'; }) || PM_USERS[3]).name;
+            var sv = (supers[0]  || PM_USERS.find(function(u){ return u.role==='super';  }) || PM_USERS[0]).name;
+
+            /* Per-ward patient datasets */
+            var datasets = {
+                'Ward 3A': [
+                    { hn:'670-0001', name:'นางสาวสมหมาย ใจดี',   bed:'301', age:54, dx:'Hypertension + DM Type 2',         drugs:[{n:'Amlodipine 5 mg',  dose:'1 เม็ด', route:'PO',freq:'วันละ 1 ครั้ง',ha:false},{n:'Metformin 500 mg',dose:'1 เม็ด',route:'PO',freq:'เช้า-เย็น',ha:false},{n:'Omeprazole 20 mg',dose:'1 แคปซูล',route:'PO',freq:'ก่อนอาหารเช้า',ha:false}], pending:0, ha:false },
+                    { hn:'670-0002', name:'นายประสิทธิ์ รักดี',   bed:'302', age:68, dx:'Atrial Fibrillation + DVT',         drugs:[{n:'Warfarin 3 mg',    dose:'1 เม็ด', route:'PO',freq:'ก่อนนอน',ha:true},{n:'Heparin 5000u',dose:'5000 unit',route:'SC',freq:'ทุก 12 ชม.',ha:true}], pending:1, ha:true },
+                    { hn:'670-0003', name:'นางวิไล สุขใจ',        bed:'303', age:45, dx:'GERD + Chronic Anxiety',            drugs:[{n:'Omeprazole 20 mg',  dose:'1 แคปซูล',route:'PO',freq:'เช้า-เย็น',ha:false},{n:'Lorazepam 0.5 mg',dose:'1 เม็ด',route:'PO',freq:'ก่อนนอน',ha:false}], pending:0, ha:false },
+                    { hn:'670-0004', name:'นายสมชาย มีสุข',       bed:'304', age:72, dx:'DM Type 2 + CKD Stage 3',           drugs:[{n:'Metformin 500 mg',  dose:'1 เม็ด', route:'PO',freq:'เช้า-เย็น',ha:false},{n:'Insulin Glargine 20u',dose:'20 unit',route:'SC',freq:'ก่อนนอน',ha:true},{n:'Amlodipine 10 mg',dose:'1 เม็ด',route:'PO',freq:'เช้า',ha:false}], pending:1, ha:true },
+                    { hn:'670-0005', name:'นางสาวจิตรา บุญมา',    bed:'305', age:38, dx:'Community-Acquired Pneumonia',       drugs:[{n:'Azithromycin 500 mg',dose:'1 เม็ด',route:'PO',freq:'วันละ 1 ครั้ง',ha:false},{n:'Paracetamol 500 mg',dose:'2 เม็ด',route:'PO',freq:'ทุก 6 ชม. PRN',ha:false}], pending:0, ha:false },
+                    { hn:'670-0006', name:'นายวิชัย แสงทอง',      bed:'306', age:61, dx:'Post-op Appendectomy D3',            drugs:[{n:'Morphine 5 mg',     dose:'5 mg',   route:'IV',freq:'ทุก 4 ชม. PRN',ha:true},{n:'Enoxaparin 40 mg',dose:'40 mg',route:'SC',freq:'วันละ 1 ครั้ง',ha:true},{n:'Metronidazole 500 mg',dose:'500 mg',route:'IV',freq:'ทุก 8 ชม.',ha:false}], pending:1, ha:true },
+                    { hn:'670-0007', name:'นางเพ็ญศรี ทองดี',     bed:'307', age:55, dx:'CHF + Hypertension',                drugs:[{n:'Furosemide 40 mg',  dose:'1 เม็ด', route:'PO',freq:'เช้า',ha:false},{n:'Losartan 50 mg',dose:'1 เม็ด',route:'PO',freq:'เช้า',ha:false},{n:'Spironolactone 25 mg',dose:'1 เม็ด',route:'PO',freq:'เช้า',ha:false}], pending:2, ha:false },
+                    { hn:'670-0008', name:'นายธนกร ศรีวัน',       bed:'308', age:49, dx:'COPD Exacerbation',                 drugs:[{n:'Prednisolone 30 mg',dose:'2 เม็ด', route:'PO',freq:'เช้า',ha:false},{n:'Salbutamol 4 mg',dose:'1 เม็ด',route:'PO',freq:'ทุก 6 ชม.',ha:false}], pending:0, ha:false }
+                ],
+                'Ward 5A': [
+                    { hn:'650-0201', name:'นายวรวุฒิ พงษ์ไทย',   bed:'501', age:58, dx:'R Hip Fracture Post ORIF D2',        drugs:[{n:'Enoxaparin 40 mg',  dose:'40 mg',  route:'SC',freq:'วันละ 1 ครั้ง',ha:true},{n:'Paracetamol 500 mg',dose:'2 เม็ด',route:'PO',freq:'ทุก 6 ชม.',ha:false},{n:'Omeprazole 20 mg',dose:'1 แคปซูล',route:'PO',freq:'เช้า',ha:false}], pending:1, ha:true },
+                    { hn:'650-0202', name:'นางสมศรี คงดี',        bed:'502', age:64, dx:'L Knee OA Post TKR D5',              drugs:[{n:'Tramadol 50 mg',    dose:'1 เม็ด', route:'PO',freq:'ทุก 8 ชม.',ha:false},{n:'Enoxaparin 40 mg',dose:'40 mg',route:'SC',freq:'วันละ 1 ครั้ง',ha:true}], pending:0, ha:true },
+                    { hn:'650-0203', name:'นายกฤษดา ศรีสมบูรณ์', bed:'503', age:42, dx:'Tibial Fracture Post ORIF D1',        drugs:[{n:'Morphine 5 mg',     dose:'5 mg',   route:'IV',freq:'ทุก 4 ชม. PRN',ha:true},{n:'Enoxaparin 40 mg',dose:'40 mg',route:'SC',freq:'วันละ 1 ครั้ง',ha:true}], pending:2, ha:true }
+                ]
+            };
+
+            /* fallback generic data for other wards */
+            var info = wardInfo[wardName] || {};
+            var patCount = parseInt((info.patients||'5').replace(/[^0-9]/g,''),10) || 5;
+            var fallback = [];
+            for (var i = 0; i < Math.min(patCount, 6); i++) {
+                var drugIdx = i % (DRUG_MASTER ? DRUG_MASTER.length : 5);
+                var d = DRUG_MASTER ? DRUG_MASTER[drugIdx] : { name:'Paracetamol 500 mg', route:'PO', ha:false };
+                fallback.push({ hn:'HN-'+String(1000+i).slice(1), name:'ผู้ป่วย '+(i+1), bed:String(100+i+1), age:40+i*3, dx:'Diagnosis '+(i+1), drugs:[{n:d.name,dose:'1 หน่วย',route:d.route,freq:'วันละ 1 ครั้ง',ha:d.ha}], pending: i%3===0?1:0, ha:d.ha });
+            }
+            var patients = datasets[wardName] || fallback;
+
+            /* eMAR — dose schedule */
+            var rounds = [
+                { time:'06:00', label:'รอบเช้า 06.00' },
+                { time:'12:00', label:'รอบเที่ยง 12.00' },
+                { time:'18:00', label:'รอบเย็น 18.00' },
+                { time:'22:00', label:'รอบก่อนนอน 22.00' }
+            ];
+            var emar = [];
+            patients.forEach(function(pt) {
+                pt.drugs.forEach(function(drug, di) {
+                    var roundsForDrug = drug.freq.indexOf('วันละ 1') >= 0 ? [rounds[0]]
+                        : drug.freq.indexOf('เช้า-เย็น') >= 0 ? [rounds[0], rounds[2]]
+                        : drug.freq.indexOf('เช้า') >= 0 ? [rounds[0]]
+                        : drug.freq.indexOf('ก่อนนอน') >= 0 ? [rounds[3]]
+                        : drug.freq.indexOf('PRN') >= 0 ? [rounds[1]]
+                        : drug.freq.indexOf('ทุก 12') >= 0 ? [rounds[0], rounds[2]]
+                        : drug.freq.indexOf('ทุก 8') >= 0 ? [rounds[0], rounds[1], rounds[2]]
+                        : drug.freq.indexOf('ทุก 6') >= 0 ? [rounds[0], rounds[1], rounds[2], rounds[3]]
+                        : drug.freq.indexOf('ทุก 4') >= 0 ? [rounds[0], rounds[1]]
+                        : [rounds[0]];
+                    roundsForDrug.forEach(function(r, ri) {
+                        var isLast = pt.pending > 0 && di === pt.drugs.length - 1 && ri === roundsForDrug.length - 1;
+                        var status = isLast ? 'pending'
+                            : drug.ha ? (Math.random() > 0.2 ? 'given' : 'held')
+                            : 'given';
+                        var nurse = (di + ri) % 2 === 0 ? n1 : n2;
+                        var givenTime = status === 'given'
+                            ? r.time.split(':')[0] + ':' + (parseInt(r.time.split(':')[1],10) + Math.floor((di+ri)*3) % 15).toString().padStart(2,'0')
+                            : '—';
+                        emar.push({ time: r.time, label: r.label, hn: pt.hn, ptName: pt.name, bed: pt.bed, drug: drug.n, dose: drug.dose, route: drug.route, nurse: nurse, givenTime: givenTime, status: status, ha: drug.ha });
+                    });
+                });
+            });
+
+            /* Staff activity log */
+            var now = new Date();
+            function t(offsetMin){ var d = new Date(now - offsetMin*60000); return d.toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit'}); }
+            var activity = [
+                { time:t(0),  actor:sv,  role:'หัวหน้าเวร', action:'ออกรายงาน Medication Control',            detail:'สั่งพิมพ์ / Export รายงานประจำ '+wardName,  type:'info' },
+                { time:t(5),  actor:ph,  role:'เภสัชกร',    action:'ตรวจสอบ Drug Interaction',                detail:'ตรวจ '+intCount+' คู่ยา — พบ major '+majorInt+' คู่',        type: majorInt ? 'warn' : 'good' },
+                { time:t(12), actor:sv,  role:'หัวหน้าเวร', action:'อนุมัติ Cassette Template',               detail:'ตรวจสอบ Drawer/Cassette ก่อนเริ่มจัดยา',     type:'good' },
+                { time:t(20), actor:n1,  role:'พยาบาล',     action:'บันทึก MAR รอบเช้า (06:00)',              detail:'จ่ายยาผู้ป่วย 6/8 ราย เสร็จสิ้น',            type:'good' },
+                { time:t(35), actor:ph,  role:'เภสัชกร',    action:'อนุมัติ Manual Order — Morphine 5 mg',    detail:'Verbal Order จาก นพ.สมศักดิ์ EMP-3001',      type:'warn' },
+                { time:t(48), actor:n2,  role:'พยาบาล',     action:'จ่ายยา High Alert พร้อม Witness',         detail:'Warfarin 3 mg — Double-check ผ่าน',           type:'good' },
+                { time:t(55), actor:n1,  role:'พยาบาล',     action:'Hold ยา Insulin Glargine',                detail:'ผู้ป่วย Bed 304 — RBS < 70 mg/dL รอพิจารณา', type:'warn' },
+                { time:t(62), actor:ph,  role:'เภสัชกร',    action:'ตรวจสอบ Stock — Morphine 5 mg ต่ำ',      detail:'เหลือ 8 amp. แจ้งเติมยา',                    type:'warn' },
+                { time:t(78), actor:sv,  role:'หัวหน้าเวร', action:'Verify High Alert Queue ครบทุกราย',       detail:'ตรวจสอบ 3 รายการ High Alert ใน Ward',        type:'good' }
+            ];
+            return { patients: patients, emar: emar, activity: activity, n1:n1, n2:n2, ph:ph, sv:sv };
+        }
+
+        var intCount = typeof DRUG_INTERACTIONS !== 'undefined' ? DRUG_INTERACTIONS.length : 0;
+        var majorInt = typeof DRUG_INTERACTIONS !== 'undefined' ? DRUG_INTERACTIONS.filter(function(i){ return i.severity==='major'; }).length : 0;
+
         function reportPrintMock() {
             const scope = reportScope();
             const metrics = scope.metrics;
@@ -1616,8 +1711,6 @@
             const auditRows = reportAuditRows(scope);
             const haList = typeof DRUG_MASTER !== 'undefined' ? DRUG_MASTER.filter(function(d){ return d.ha; }) : [];
             const lowStockList = typeof DRUG_MASTER !== 'undefined' ? DRUG_MASTER.filter(function(d){ return d.stock <= 15; }) : [];
-            const intCount = typeof DRUG_INTERACTIONS !== 'undefined' ? DRUG_INTERACTIONS.length : 0;
-            const majorInt = typeof DRUG_INTERACTIONS !== 'undefined' ? DRUG_INTERACTIONS.filter(function(i){ return i.severity==='major'; }).length : 0;
             const readyLabel = cassette.disabledWithMedication ? 'ต้องตรวจสอบ' : 'พร้อมใช้งาน';
 
             /* ── Date / time ── */
@@ -1875,8 +1968,113 @@
                 + '<thead><tr><th style="white-space:nowrap;">เวลา</th><th>กิจกรรม</th><th>รายละเอียด</th><th style="text-align:center;">สถานะ</th></tr></thead>'
                 + '<tbody>'+auditHtml+'</tbody></table></div></div>'
 
+                /* ── Patient List & MAR รายบุคคล ── */
+                + (function() {
+                    var pd = buildPrintPatientData(scope.wardName);
+                    var statusLabel = { given:'จ่ายแล้ว', pending:'รอจ่าย', partial:'บางส่วน', done:'ครบแล้ว' };
+                    var statusBg    = { given:'#F0FDFA', pending:'#FFFBEB', partial:'#EFF6FF', done:'#F0FDFA' };
+                    var statusColor = { given:'#0F766E', pending:'#B45309', partial:'#1D4ED8', done:'#0F766E' };
+                    var statusBorder= { given:'#5EEAD4', pending:'#FDE68A', partial:'#BFDBFE', done:'#5EEAD4' };
+
+                    var ptRows = pd.patients.map(function(pt, i) {
+                        var st = pt.pending > 0 ? 'pending' : 'done';
+                        var haTag = pt.ha ? '<span class="p-badge ha" style="margin-left:4px;">HA</span>' : '';
+                        var drugList = pt.drugs.map(function(d){ return (d.ha?'<b style="color:#DC2626;">⚠ </b>':'')+esc(d.n); }).join('<br>');
+                        var freqList = pt.drugs.map(function(d){ return '<span style="color:#94A3B8;font-size:9px;">'+esc(d.freq)+'</span>'; }).join('<br>');
+                        return '<tr class="'+(i%2===0?'even':'odd')+'">'
+                            + '<td style="white-space:nowrap;font-family:monospace;font-size:10px;color:#64748B;">'+esc(pt.hn)+'</td>'
+                            + '<td><b>'+esc(pt.name)+'</b>'+haTag+'<br><span style="font-size:9px;color:#94A3B8;">อายุ '+pt.age+' ปี · Dx: '+esc(pt.dx)+'</span></td>'
+                            + '<td style="text-align:center;font-weight:700;">'+esc(pt.bed)+'</td>'
+                            + '<td>'+drugList+'</td>'
+                            + '<td>'+freqList+'</td>'
+                            + '<td style="text-align:center;"><span class="p-badge" style="background:'+statusBg[st]+';color:'+statusColor[st]+';border:1px solid '+statusBorder[st]+';">'+statusLabel[st]+'</span>'
+                            + (pt.pending>0?'<br><span style="font-size:9px;color:#D97706;">รอ '+pt.pending+' รายการ</span>':'')
+                            + '</td>'
+                            + '</tr>';
+                    }).join('');
+
+                    return '<div class="rpt-section" style="page-break-before:always;">'
+                        + '<div class="rpt-section-head">'
+                        + '<div class="rpt-section-dot" style="background:#0D9488;"></div>'
+                        + '<div class="rpt-section-title">รายชื่อผู้ป่วยและ MAR รายบุคคล</div>'
+                        + '<span class="rpt-section-badge" style="background:#F0FDFA;color:#0F766E;border-color:#5EEAD4;">'+pd.patients.length+' ราย</span>'
+                        + '</div>'
+                        + '<div class="rpt-table-wrap"><table>'
+                        + '<thead><tr><th>HN</th><th>ชื่อ-สกุล / การวินิจฉัย</th><th style="text-align:center;">เตียง</th><th>รายการยา</th><th>ความถี่</th><th style="text-align:center;">สถานะ MAR</th></tr></thead>'
+                        + '<tbody>'+ptRows+'</tbody></table></div></div>';
+                })()
+
+                /* ── eMAR บันทึกการให้ยารายมื้อ ── */
+                + (function() {
+                    var pd = buildPrintPatientData(scope.wardName);
+                    var stLabel  = { given:'ให้แล้ว', pending:'รอให้', held:'Hold' };
+                    var stBg     = { given:'#F0FDFA', pending:'#FFFBEB', held:'#F1F5F9' };
+                    var stColor  = { given:'#0F766E', pending:'#B45309', held:'#64748B' };
+                    var stBorder = { given:'#5EEAD4', pending:'#FDE68A', held:'#CBD5E1' };
+
+                    var emarRows = pd.emar.map(function(e, i) {
+                        var haTag = e.ha ? '<b style="color:#DC2626;margin-right:3px;">⚠</b>' : '';
+                        return '<tr class="'+(i%2===0?'even':'odd')+'">'
+                            + '<td style="white-space:nowrap;font-weight:700;color:#475569;font-size:10px;">'+esc(e.time)+'</td>'
+                            + '<td style="white-space:nowrap;font-size:10px;">'+esc(e.bed)+'<br><span style="color:#94A3B8;font-size:9px;">'+esc(e.hn)+'</span></td>'
+                            + '<td><b style="font-size:10.5px;">'+esc(e.ptName)+'</b></td>'
+                            + '<td>'+haTag+esc(e.drug)+'<br><span style="font-size:9px;color:#94A3B8;">'+esc(e.dose)+' · '+esc(e.route)+'</span></td>'
+                            + '<td style="font-size:10px;color:#475569;">'+esc(e.nurse)+'</td>'
+                            + '<td style="text-align:center;font-size:10px;font-weight:700;color:#64748B;">'+esc(e.givenTime)+'</td>'
+                            + '<td style="text-align:center;"><span class="p-badge" style="background:'+stBg[e.status]+';color:'+stColor[e.status]+';border:1px solid '+stBorder[e.status]+';">'+stLabel[e.status]+'</span></td>'
+                            + '</tr>';
+                    }).join('');
+
+                    var givenCount   = pd.emar.filter(function(e){ return e.status==='given'; }).length;
+                    var pendingCount = pd.emar.filter(function(e){ return e.status==='pending'; }).length;
+                    var heldCount    = pd.emar.filter(function(e){ return e.status==='held'; }).length;
+
+                    return '<div class="rpt-section" style="page-break-before:auto;">'
+                        + '<div class="rpt-section-head">'
+                        + '<div class="rpt-section-dot" style="background:#2563EB;"></div>'
+                        + '<div class="rpt-section-title">eMAR บันทึกการให้ยา (รายมื้อ)</div>'
+                        + '<span class="rpt-section-badge" style="background:#EFF6FF;color:#1D4ED8;border-color:#BFDBFE;">ให้แล้ว '+givenCount+' · รอ '+pendingCount+' · Hold '+heldCount+'</span>'
+                        + '</div>'
+                        + '<div class="rpt-table-wrap"><table>'
+                        + '<thead><tr><th>รอบ</th><th>เตียง / HN</th><th>ชื่อผู้ป่วย</th><th>ยา / ขนาด / Route</th><th>ผู้ให้ยา</th><th style="text-align:center;">เวลาจริง</th><th style="text-align:center;">สถานะ</th></tr></thead>'
+                        + '<tbody>'+emarRows+'</tbody></table></div></div>';
+                })()
+
+                /* ── กิจกรรมบุคลากร ── */
+                + (function() {
+                    var pd = buildPrintPatientData(scope.wardName);
+                    var actSev = { good:'#0D9488', warn:'#D97706', info:'#2563EB', danger:'#DC2626', neutral:'#64748B' };
+                    var actBg  = { good:'#F0FDFA', warn:'#FFFBEB', info:'#EFF6FF', danger:'#FFF1F2', neutral:'#F8FAFC' };
+                    var roleColor = { 'หัวหน้าเวร':'#7C3AED', 'เภสัชกร':'#2563EB', 'พยาบาล':'#0D9488' };
+                    var roleBg    = { 'หัวหน้าเวร':'#EDE9FE', 'เภสัชกร':'#DBEAFE', 'พยาบาล':'#CCFBF1' };
+
+                    var actRows = pd.activity.map(function(a, i) {
+                        var dot = actSev[a.type] || '#64748B';
+                        var rc = roleColor[a.role] || '#64748B';
+                        var rb = roleBg[a.role] || '#F1F5F9';
+                        return '<tr class="'+(i%2===0?'even':'odd')+'">'
+                            + '<td style="white-space:nowrap;font-size:10px;color:#64748B;font-weight:700;">'+esc(a.time)+'</td>'
+                            + '<td style="font-size:10px;white-space:nowrap;"><b>'+esc(a.actor)+'</b></td>'
+                            + '<td style="text-align:center;"><span class="p-badge" style="background:'+rb+';color:'+rc+';border:1px solid '+rb+';">'+esc(a.role)+'</span></td>'
+                            + '<td style="font-weight:700;font-size:10.5px;">'+esc(a.action)+'</td>'
+                            + '<td style="font-size:10px;color:#64748B;">'+esc(a.detail)+'</td>'
+                            + '<td style="text-align:center;"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:'+dot+';"></span></td>'
+                            + '</tr>';
+                    }).join('');
+
+                    return '<div class="rpt-section" style="page-break-before:auto;">'
+                        + '<div class="rpt-section-head">'
+                        + '<div class="rpt-section-dot" style="background:#7C3AED;"></div>'
+                        + '<div class="rpt-section-title">กิจกรรมบุคลากร — ผู้ดำเนินการและประวัติการปฏิบัติงาน</div>'
+                        + '<span class="rpt-section-badge" style="background:#EDE9FE;color:#6D28D9;border-color:#C4B5FD;">'+pd.activity.length+' รายการ</span>'
+                        + '</div>'
+                        + '<div class="rpt-table-wrap"><table>'
+                        + '<thead><tr><th>เวลา</th><th>ชื่อผู้ดำเนินการ</th><th style="text-align:center;">บทบาท</th><th>กิจกรรม</th><th>รายละเอียด</th><th style="text-align:center;">สถานะ</th></tr></thead>'
+                        + '<tbody>'+actRows+'</tbody></table></div></div>';
+                })()
+
                 /* ── Signature ── */
-                + '<div class="rpt-sign">'
+                + '<div class="rpt-sign" style="page-break-before:auto;">'
                 + '<div class="rpt-sign-box"><div class="rpt-sign-line"></div><div class="rpt-sign-label">ผู้ออกรายงาน</div><div class="rpt-sign-sub">พยาบาล / เภสัชกร / หัวหน้าเวร</div></div>'
                 + '<div class="rpt-sign-box"><div class="rpt-sign-line"></div><div class="rpt-sign-label">ผู้ตรวจสอบ</div><div class="rpt-sign-sub">Charge Nurse / Supervisor</div></div>'
                 + '<div class="rpt-sign-box"><div class="rpt-sign-line"></div><div class="rpt-sign-label">ผู้อนุมัติ</div><div class="rpt-sign-sub">หัวหน้าพยาบาล / หัวหน้า Ward</div></div>'
