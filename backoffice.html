@@ -650,11 +650,12 @@
         .wm-zone-select { width:100%; border:1.5px solid #E2E8F0; border-radius:8px; padding:5px 8px; font-family:'Prompt',sans-serif; font-size:11px; font-weight:700; color:#475569; background:white; cursor:pointer; outline:none; }
         .wm-zone-select:focus { border-color:#0D9488; }
         .wm-add-zone-btn {
-            border:1.5px dashed #CBD5E1; background:white; color:#64748B; border-radius:8px;
-            padding:5px 12px; font-family:'Prompt',sans-serif; font-size:11px; font-weight:800;
-            cursor:pointer; transition:all .15s;
+            border:none; background:linear-gradient(135deg,#0D9488,#14B8A6); color:white; border-radius:8px;
+            padding:6px 14px; font-family:'Prompt',sans-serif; font-size:11px; font-weight:800;
+            cursor:pointer; transition:all .15s; box-shadow:0 2px 6px rgba(13,148,136,0.25);
+            display:inline-flex; align-items:center; gap:4px;
         }
-        .wm-add-zone-btn:hover { border-color:#0D9488; color:#0D9488; background:#F0FDFA; }
+        .wm-add-zone-btn:hover { background:linear-gradient(135deg,#0f766e,#0D9488); box-shadow:0 3px 10px rgba(13,148,136,0.35); transform:translateY(-1px); }
         .wm-section-head-row { display:flex; align-items:center; justify-content:space-between; }
         /* Zone coverage in cart tab */
         .wm-coverage-list { display:flex; flex-direction:column; gap:6px; margin-top:4px; }
@@ -3085,7 +3086,8 @@
             if (!zone) return;
             if (field === 'bedStart' || field === 'bedEnd') value = parseInt(value, 10) || zone[field];
             zone[field] = value;
-            wmRender();
+            /* Don't re-render for name changes — would destroy input focus on every keystroke */
+            if (field !== 'name') wmRender();
         }
         function wmSetZoneCart(wardId, zoneId, cartId) {
             var ward = wmFindWard(wardId);
@@ -3137,7 +3139,7 @@
                 return '<div class="wm-zone-card">'
                     + '<div class="wm-zone-header">'
                     + '<div class="wm-zone-dot" style="background:'+dotColor+';"></div>'
-                    + '<input class="wm-zone-name-input" value="'+escHtml(zone.name)+'" oninput="wmUpdateZone(\''+ward.id+'\',\''+zone.id+'\',\'name\',this.value)">'
+                    + '<input class="wm-zone-name-input" value="'+escHtml(zone.name)+'" oninput="wmUpdateZone(\''+ward.id+'\',\''+zone.id+'\',\'name\',this.value)" onblur="wmRender()">'
                     + '<span class="wm-zone-bed-count">'+bedCount+' เตียง</span>'
                     + (zones.length > 1 ? '<button class="wm-zone-remove" onclick="wmRemoveZone(\''+ward.id+'\',\''+zone.id+'\')" title="ลบ Zone">✕</button>' : '')
                     + '</div>'
@@ -3159,14 +3161,18 @@
             var assignedCount = zones.filter(function(z){ return !!z.cartId; }).length;
             var totalBeds = zones.reduce(function(s, z){ return s + Math.max(0, z.bedEnd - z.bedStart + 1); }, 0);
             var allAssigned = assignedCount === zones.length;
-            return '<div style="display:flex;align-items:center;justify-content:space-between;margin-top:18px;margin-bottom:8px;">'
+            var statusColor = allAssigned ? '#0D9488' : '#D97706';
+            var statusBg    = allAssigned ? '#F0FDFA'  : '#FFFBEB';
+            var statusBorder= allAssigned ? '#99F6E4'  : '#FDE68A';
+            return '<div class="wm-divider"></div>'
+                + '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">'
                 + '<div>'
-                + '<div style="font-size:10px;font-weight:900;color:#94A3B8;text-transform:uppercase;letter-spacing:.1em;">Bed Zones</div>'
-                + '<div style="font-size:11px;font-weight:700;color:'+(allAssigned?'#0D9488':'#D97706')+';margin-top:2px;">'
+                + '<div style="font-size:12px;font-weight:900;color:#0F172A;">Bed Zones</div>'
+                + '<div style="font-size:11px;font-weight:700;color:'+statusColor+';margin-top:2px;">'
                 + (allAssigned?'✓ ':'⚠ ')+assignedCount+'/'+zones.length+' Zone มี Med Cart &nbsp;·&nbsp; '+totalBeds+' เตียงรวม'
                 + '</div></div>'
                 + '<button class="wm-add-zone-btn" onclick="wmAddZone(\''+ward.id+'\')">'
-                + '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-right:4px;vertical-align:-1px;"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>'
+                + '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>'
                 + 'เพิ่ม Zone</button>'
                 + '</div>'
                 + '<div class="wm-zone-list">'+zoneCards+'</div>';
