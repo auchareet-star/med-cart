@@ -3934,6 +3934,20 @@
         .rtho-sheet { background:white; border-radius:20px; padding:24px 20px 28px; width:100%; max-width:420px; box-shadow:0 8px 40px rgba(0,0,0,0.22); }
         .rtho-chip { padding:8px 14px; border-radius:10px; border:1.5px solid var(--border); font-size:12px; font-weight:600; color:var(--text-2); cursor:pointer; background:white; text-align:left; }
         .rtho-chip.active { border-color:var(--green); color:#0F766E; background:#F0FDFA; }
+        .log-tab { padding:7px 14px;border-radius:20px;border:1.5px solid var(--border);font-size:12px;font-weight:600;color:var(--text-2);cursor:pointer;background:white;white-space:nowrap; }
+        .log-tab.active { border-color:#059669;color:#065F46;background:#ECFDF5; }
+        .log-entry { background:white;border:1px solid rgba(226,232,240,0.8);border-radius:14px;padding:14px 16px;margin-bottom:8px;display:flex;align-items:flex-start;gap:12px; }
+        .log-dot { width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0; }
+        .log-dot.given { background:linear-gradient(135deg,#D1FAE5,#A7F3D0); }
+        .log-dot.hold  { background:linear-gradient(135deg,#FFF7ED,#FFEDD5); }
+        .log-dot.omit  { background:linear-gradient(135deg,#FFFBEB,#FEF3C7); }
+        .log-dot.offcart { background:linear-gradient(135deg,#EFF6FF,#DBEAFE); }
+        .log-badge { display:inline-flex;align-items:center;padding:2px 8px;border-radius:6px;font-size:10px;font-weight:700; }
+        .log-badge.given { background:#D1FAE5;color:#065F46; }
+        .log-badge.hold  { background:#FFEDD5;color:#C2410C; }
+        .log-badge.omit  { background:#FEF3C7;color:#92400E; }
+        .log-badge.offcart { background:#DBEAFE;color:#1E40AF; }
+        .log-kpi-card { background:white;border:1px solid rgba(226,232,240,0.8);border-radius:12px;padding:12px 14px;text-align:center; }
         .mdc.hold-card { background:#FFF7ED !important; border-color:#FED7AA !important; }
         .mdc.omit-card { background:#FFFBEB !important; border-color:#FDE68A !important; }
         .mdc.hold-card .mdc-bar, .mdc.omit-card .mdc-bar { background:linear-gradient(180deg,#D97706,#F59E0B) !important; }
@@ -7619,6 +7633,15 @@
                 </div>
                 <span class="db-qnav-label">ประวัติการให้ยา</span>
                 <span class="db-qnav-badge" id="dashEmarCount">0</span>
+            </div>
+
+            <div onclick="nav('pg-log')" class="db-qnav"
+                style="--qn-bg:#F0FDF4;--qn-border:#86EFAC;--qn-icon-bg:linear-gradient(135deg,#059669,#10B981);--qn-color:#065F46;--qn-badge-bg:#D1FAE5;">
+                <div class="db-qnav-icon">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+                </div>
+                <span class="db-qnav-label">Log การจ่ายยา</span>
+                <span class="db-qnav-badge" id="dashLogCount">0</span>
             </div>
         </div>
 
@@ -14592,6 +14615,49 @@
 </div>
 
 
+<!-- ═══════════════════════════════════════════════════════
+     LOG PAGE
+═══════════════════════════════════════════════════════════ -->
+<div id="pg-log" class="page">
+    <div style="min-height:100vh;background:linear-gradient(160deg,#F0FDF4 0%,#ECFDF5 40%,#F0FDF4 100%);padding:0 0 32px;">
+
+        <!-- Top Bar -->
+        <div style="background:white;border-bottom:1px solid var(--border);padding:16px 20px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:10;">
+            <button onclick="history.back()" style="width:36px;height:36px;border-radius:10px;border:1px solid var(--border);background:white;display:flex;align-items:center;justify-content:center;cursor:pointer;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-2)" stroke-width="2.5"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+            </button>
+            <div style="width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#059669,#10B981);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+            </div>
+            <div style="flex:1;">
+                <div style="font-size:16px;font-weight:800;color:var(--text-1);">Log การจ่ายยา</div>
+                <div style="font-size:11px;color:var(--text-3);" id="logSubtitle">Ward 3A · วันนี้</div>
+            </div>
+            <div style="display:flex;gap:8px;">
+                <button onclick="renderLogPage()" style="padding:7px 12px;border-radius:9px;border:1px solid var(--border);background:white;font-size:12px;font-weight:600;color:var(--text-2);cursor:pointer;display:flex;align-items:center;gap:5px;">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg>
+                    รีเฟรช
+                </button>
+            </div>
+        </div>
+
+        <!-- Filter Tabs -->
+        <div style="padding:14px 20px 0;display:flex;gap:8px;flex-wrap:wrap;" id="logFilterTabs">
+            <button class="log-tab active" onclick="logSetFilter(this,'all')">ทั้งหมด</button>
+            <button class="log-tab" onclick="logSetFilter(this,'given')">ให้ยาแล้ว</button>
+            <button class="log-tab" onclick="logSetFilter(this,'hold')">Hold</button>
+            <button class="log-tab" onclick="logSetFilter(this,'omit')">Omit</button>
+            <button class="log-tab" onclick="logSetFilter(this,'offcart')">Off-cart</button>
+        </div>
+
+        <!-- Summary KPI -->
+        <div style="padding:14px 20px 0;display:grid;grid-template-columns:repeat(4,1fr);gap:8px;" id="logKpi"></div>
+
+        <!-- Log List -->
+        <div style="padding:12px 20px 0;" id="logList"></div>
+    </div>
+</div>
+
 <!-- Global Header -->
 <div id="globalHeader">
     <div class="gh-left">
@@ -14781,7 +14847,8 @@
         'pg-prep-med-detail':'รายละเอียดยา','pg-ibf':'จัดยาตามข้อมูลคนไข้',
         'pg-prep-sched':'จัดยาตามเวลา','pg-sched-detail':'รายการรอบเวลา','pg-trf':'จัดยาตามรอบ',
         'pg-post-assess':'ประเมินหลังให้ยา',
-        'pg-assess-list':'รายการประเมินหลังให้ยา'
+        'pg-assess-list':'รายการประเมินหลังให้ยา',
+        'pg-log':'Log การจ่ายยา'
     };
 
     // Pages that require nurse/head-nurse permission.
@@ -14874,6 +14941,7 @@
         if (wardDataReady && targetId === 'pg-order-plan' && typeof renderOrderPlanPage === 'function') renderOrderPlanPage();
         if (wardDataReady && targetId === 'pg-nurse-schedule' && typeof renderNurseSchedulePage === 'function') renderNurseSchedulePage();
         if (wardDataReady && targetId === 'pg-emar' && typeof renderEmarPage === 'function') renderEmarPage();
+        if (wardDataReady && targetId === 'pg-log' && typeof renderLogPage === 'function') renderLogPage();
         if (targetId === 'pg-nurse-prep' && typeof renderNursePrepPage === 'function') renderNursePrepPage();
         if (targetId === 'pg-pharma-report' && typeof renderPharmaReportPage === 'function') renderPharmaReportPage();
         if (targetId === 'pg-pharma-verify' && typeof renderPharmaVerifyPage === 'function') renderPharmaVerifyPage();
@@ -23210,6 +23278,91 @@
         }
 
         el.innerHTML = html;
+    }
+
+    var logCurrentFilter = 'all';
+
+    function logSetFilter(btn, filter) {
+        logCurrentFilter = filter;
+        document.querySelectorAll('.log-tab').forEach(function(b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+        renderLogPage();
+    }
+
+    function renderLogPage() {
+        var ward = emarWardName();
+        var all = (typeof getWardEmarRecords === 'function') ? getWardEmarRecords(ward) : [];
+        var today = all.filter(function(r) { return typeof emarIsToday === 'function' ? emarIsToday(r) : true; });
+
+        // KPI
+        var given   = today.filter(function(r) { return !r.holdOmit && !r.offCart; }).length;
+        var hold    = today.filter(function(r) { return r.holdOmit === 'hold'; }).length;
+        var omit    = today.filter(function(r) { return r.holdOmit === 'omit'; }).length;
+        var offcart = today.filter(function(r) { return r.offCart; }).length;
+        var kpiEl = document.getElementById('logKpi');
+        if (kpiEl) kpiEl.innerHTML = [
+            { label:'ให้ยาแล้ว', val:given,   color:'#059669', bg:'#D1FAE5' },
+            { label:'Hold',      val:hold,    color:'#C2410C', bg:'#FFEDD5' },
+            { label:'Omit',      val:omit,    color:'#92400E', bg:'#FEF3C7' },
+            { label:'Off-cart',  val:offcart, color:'#1E40AF', bg:'#DBEAFE' }
+        ].map(function(k) {
+            return '<div class="log-kpi-card">'
+                + '<div style="font-size:22px;font-weight:800;color:' + k.color + ';">' + k.val + '</div>'
+                + '<div style="font-size:10px;font-weight:600;color:var(--text-3);margin-top:2px;">' + k.label + '</div>'
+                + '</div>';
+        }).join('');
+
+        // Update subtitle
+        var sub = document.getElementById('logSubtitle');
+        if (sub) sub.textContent = ward + ' · วันนี้ · ' + today.length + ' รายการ';
+
+        // Update dashboard badge
+        var badge = document.getElementById('dashLogCount');
+        if (badge) badge.textContent = today.length;
+
+        // Filter
+        var filtered = today;
+        if (logCurrentFilter === 'given')   filtered = today.filter(function(r) { return !r.holdOmit && !r.offCart; });
+        if (logCurrentFilter === 'hold')    filtered = today.filter(function(r) { return r.holdOmit === 'hold'; });
+        if (logCurrentFilter === 'omit')    filtered = today.filter(function(r) { return r.holdOmit === 'omit'; });
+        if (logCurrentFilter === 'offcart') filtered = today.filter(function(r) { return r.offCart; });
+
+        var listEl = document.getElementById('logList');
+        if (!listEl) return;
+        if (filtered.length === 0) {
+            listEl.innerHTML = '<div style="text-align:center;padding:48px 20px;color:var(--text-3);">'
+                + '<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="margin:0 auto 12px;display:block;opacity:0.35;"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>'
+                + '<div style="font-size:13px;font-weight:600;">ยังไม่มีรายการ</div>'
+                + '</div>';
+            return;
+        }
+
+        listEl.innerHTML = filtered.map(function(r) {
+            var type = r.holdOmit || (r.offCart ? 'offcart' : 'given');
+            var badgeLabel = type === 'given' ? 'ให้ยาแล้ว' : type === 'hold' ? 'Hold' : type === 'omit' ? 'Omit' : 'Off-cart';
+            var icon = type === 'given'
+                ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>'
+                : type === 'hold'
+                ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C2410C" stroke-width="2.5"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>'
+                : type === 'omit'
+                ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D97706" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>'
+                : '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1D4ED8" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg>';
+            var reason = r.holdOmitReason ? '<div style="font-size:10px;color:var(--text-3);margin-top:2px;">เหตุผล: ' + r.holdOmitReason + '</div>' : '';
+            var offCartNote = r.offCart && r.offCartNote ? '<div style="font-size:10px;color:var(--text-3);margin-top:2px;">หมายเหตุ: ' + r.offCartNote + '</div>' : '';
+            return '<div class="log-entry">'
+                + '<div class="log-dot ' + type + '">' + icon + '</div>'
+                + '<div style="flex:1;min-width:0;">'
+                + '<div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:4px;">'
+                + '<span class="log-badge ' + type + '">' + badgeLabel + '</span>'
+                + '<span style="font-size:11px;color:var(--text-3);">' + (r.recordedTime || '') + '</span>'
+                + '</div>'
+                + '<div style="font-size:13px;font-weight:700;color:var(--text-1);">' + (r.drugName || '—') + '</div>'
+                + '<div style="font-size:11px;color:var(--text-2);margin-top:2px;">' + (r.patientName || '') + (r.bed ? ' · เตียง ' + r.bed : '') + '</div>'
+                + reason + offCartNote
+                + '<div style="font-size:10px;color:var(--text-3);margin-top:3px;">โดย: ' + (r.recordedBy || '—') + '</div>'
+                + '</div>'
+                + '</div>';
+        }).join('');
     }
 
     function renderEmarPage() {
