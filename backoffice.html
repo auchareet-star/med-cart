@@ -3159,11 +3159,22 @@
         function wmRenderZones(ward) {
             var zones = ward.zones || [];
             var zoneColors = [ward.color, '#3B82F6', '#A855F7', '#F59E0B', '#06B6D4', '#EC4899'];
+            /* Collect all cartIds already assigned to ANY zone across ALL wards */
+            var usedCartIds = {};
+            WM_WARDS.forEach(function(w) {
+                if (!w.zones) return;
+                w.zones.forEach(function(z) { if (z.cartId) usedCartIds[z.cartId] = true; });
+            });
+
             var zoneCards = zones.map(function(zone, i) {
                 var cart = zone.cartId ? wmFindCart(zone.cartId) : null;
                 var bedCount = Math.max(0, zone.bedEnd - zone.bedStart + 1);
                 var allCartOpts = '<option value="">— ไม่มี Med Cart —</option>'
-                    + WM_CARTS.filter(function(c){ return wmCartStatus(c) !== 'inactive'; }).map(function(c) {
+                    + WM_CARTS.filter(function(c) {
+                        if (wmCartStatus(c) === 'inactive') return false;
+                        /* Allow the cart that is currently selected for THIS zone; block others already used */
+                        return c.id === zone.cartId || !usedCartIds[c.id];
+                    }).map(function(c) {
                         var sel = (zone.cartId === c.id) ? ' selected' : '';
                         return '<option value="'+c.id+'"'+sel+'>'+escHtml(wmCartName(c))+(wmCartStatus(c)==='maintenance'?' (ซ่อมบำรุง)':'')+'</option>';
                     }).join('');
