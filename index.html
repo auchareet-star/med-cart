@@ -21371,58 +21371,54 @@
     }
 
     // Dispense patient data
-    const dispensePatients = {
-        '01': {
-            avatar:'สช', name:'นายสมชาย มานะ', hn:'6401234', bed:'3A-01', age:'ชาย, 58 ปี',
-            allergy:'แพ้ยา: Penicillin, Sulfonamides', tags:['Fall Risk','Drug Allergy'],
-            round:'รอบเช้า', drugs:[
-                { name:'Amlodipine 5 mg', dose:'5 mg x 1 เม็ด', route:'PO (รับประทาน)', time:'06:00–08:00 น.', freq:'OD เช้า' },
-                { name:'Metformin 500 mg', dose:'500 mg x 1 เม็ด', route:'PO (รับประทาน)', time:'06:00–08:00 น.', freq:'BID' },
-                { name:'Omeprazole 20 mg', dose:'20 mg x 1 แคปซูล', route:'PO (รับประทาน)', time:'06:00–08:00 น.', freq:'OD ก่อนอาหาร' }
-            ]
-        },
-        '03': {
-            avatar:'มส', name:'นางมาลี สุขใจ', hn:'6404215', bed:'3A-03', age:'หญิง, 67 ปี',
-            allergy:'', tags:['Fall Risk'],
-            round:'รอบเช้า', drugs:[
-                { name:'Amlodipine 10 mg', dose:'10 mg x 1 เม็ด', route:'PO (รับประทาน)', time:'06:00–08:00 น.', freq:'OD เช้า' },
-                { name:'Metformin 500 mg', dose:'500 mg x 1 เม็ด', route:'PO (รับประทาน)', time:'06:00–08:00 น.', freq:'BID' },
-                { name:'Enalapril 5 mg', dose:'5 mg x 1 เม็ด', route:'PO (รับประทาน)', time:'06:00–08:00 น.', freq:'OD เช้า' }
-            ]
-        },
-        '05': {
-            avatar:'วด', name:'นายวิชัย ดีงาม', hn:'6402890', bed:'3A-05', age:'ชาย, 72 ปี',
-            allergy:'แพ้ยา: NSAIDs', tags:['Fall Risk','Drug Allergy'],
-            round:'รอบเช้า', drugs:[
-                { name:'Warfarin 3 mg', dose:'3 mg x 1 เม็ด', route:'PO (รับประทาน)', time:'06:00–08:00 น.', freq:'OD ก่อนนอน' },
-                { name:'Omeprazole 20 mg', dose:'20 mg x 1 แคปซูล', route:'PO (รับประทาน)', time:'06:00–08:00 น.', freq:'OD' }
-            ]
-        },
-        '08': {
-            avatar:'กช', name:'นางกัลยา ชัยวงศ์', hn:'6403012', bed:'3A-08', age:'หญิง, 54 ปี',
-            allergy:'', tags:[],
-            round:'รอบเช้า', drugs:[
-                { name:'Metformin 500 mg', dose:'500 mg x 1 เม็ด', route:'PO (รับประทาน)', time:'06:00–08:00 น.', freq:'BID' },
-                { name:'Glipizide 5 mg', dose:'5 mg x 1 เม็ด', route:'PO (รับประทาน)', time:'06:00–08:00 น.', freq:'OD เช้า' },
-                { name:'Atorvastatin 20 mg', dose:'20 mg x 1 เม็ด', route:'PO (รับประทาน)', time:'06:00–08:00 น.', freq:'OD ก่อนนอน' }
-            ]
-        },
-        '12': {
-            avatar:'ปก', name:'นายประสิทธิ์ แก้วงาม', hn:'6406234', bed:'3A-12', age:'ชาย, 63 ปี',
-            allergy:'แพ้ยา: Codeine', tags:['Drug Allergy'],
-            round:'รอบเที่ยง', drugs:[
-                { name:'Insulin Glargine 20u', dose:'20 units', route:'SC (ฉีดใต้ผิวหนัง)', time:'11:00–12:00 น.', freq:'OD เช้า' }
-            ]
-        },
-        '15': {
-            avatar:'สบ', name:'นางสมศรี บุญมาก', hn:'6407890', bed:'3A-15', age:'หญิง, 70 ปี',
-            allergy:'', tags:['Fall Risk'],
-            round:'รอบเที่ยง', drugs:[
-                { name:'Amlodipine 5 mg', dose:'5 mg x 1 เม็ด', route:'PO (รับประทาน)', time:'11:00–12:00 น.', freq:'OD เช้า' },
-                { name:'Hydrochlorothiazide 25 mg', dose:'25 mg x 1 เม็ด', route:'PO (รับประทาน)', time:'11:00–12:00 น.', freq:'OD เช้า' }
-            ]
-        }
-    };
+    // Build dispensePatients dynamically from patientData so data stays in sync
+    const routeFullMap = { PO:'PO (รับประทาน)', IV:'IV (หลอดเลือดดำ)', SC:'SC (ฉีดใต้ผิวหนัง)', IM:'IM (เข้ากล้ามเนื้อ)' };
+    const roundTimeMap = { 'รอบเช้า':'06:00–08:00 น.', 'รอบสาย':'09:00–11:00 น.', 'รอบเที่ยง':'11:00–13:00 น.', 'รอบบ่าย':'13:00–15:00 น.', 'รอบเย็น':'16:00–18:00 น.', 'รอบดึก':'20:00–22:00 น.' };
+
+    function buildDispensePatients() {
+        var result = {};
+        Object.keys(patientData).forEach(function(key) {
+            var pt = patientData[key];
+            var round = pt.round || 'รอบเช้า';
+            var roundTime = roundTimeMap[round] || '06:00–08:00 น.';
+            var drugs = (pt.drugs || []).filter(function(d) {
+                // exclude PRN-only drugs from routine dispense list
+                var desc = String(d.desc || d.freq || '');
+                return !/\bPRN\b/i.test(desc);
+            }).map(function(d) {
+                // parse dose and route from desc field e.g. "1 เม็ด · PO · OD เช้า"
+                var parts = String(d.desc || '').split('·').map(function(s){ return s.trim(); });
+                var doseStr = parts[0] || d.name || '';
+                var routeRaw = parts[1] || 'PO';
+                var freqStr = parts.slice(2).join(' · ') || '';
+                var routeKey = routeRaw.replace(/\s.*/, '');
+                var routeFull = routeFullMap[routeKey] || routeRaw;
+                var time = /OD ก่อนนอน|ก่อนนอน/.test(freqStr) ? '20:00–22:00 น.' : roundTime;
+                return {
+                    name: d.name,
+                    dose: doseStr,
+                    route: routeFull,
+                    time: time,
+                    freq: freqStr || routeRaw,
+                    highAlert: !!d.highAlert
+                };
+            });
+            result[key] = {
+                avatar: pt.avatar || patientInitials(pt.name),
+                name: pt.name,
+                hn: pt.hn,
+                bed: pt.bed,
+                age: pt.age,
+                allergy: pt.allergy || '',
+                tags: (pt.tags || []).slice(),
+                round: round,
+                drugs: drugs
+            };
+        });
+        return result;
+    }
+
+    const dispensePatients = buildDispensePatients();
 
     let currentDispenseBed = '01';
     let rtPatientFilter = 'all';
