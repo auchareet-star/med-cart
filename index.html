@@ -3919,6 +3919,24 @@
         .am-drug-st.ready  { background: linear-gradient(135deg,#EFF6FF,#DBEAFE); color: #2563eb; }
         .am-drug-st.done   { background: linear-gradient(135deg,#F0FDF4,#DCFCE7); color: var(--green); }
         .am-drug-st.omit   { background: linear-gradient(135deg,#FFFBEB,#FEF3C7); color: #d97706; }
+        .am-drug-st.hold   { background: linear-gradient(135deg,#FFF7ED,#FFEDD5); color: #c2410c; border:1.5px solid #FED7AA; }
+        .rt-drug.hold-drug { background:#FFF7ED !important; border-color:#FED7AA !important; }
+        .rt-drug.hold-drug .rt-drug-bar { background:linear-gradient(180deg,#EA580C,#F97316) !important; }
+        .rt-drug.omit-drug { background:#FFFBEB !important; border-color:#FDE68A !important; }
+        .rt-drug.omit-drug .rt-drug-bar { background:linear-gradient(180deg,#D97706,#F59E0B) !important; }
+        .rt-hold-omit-btn { font-size:9px; font-weight:700; padding:3px 8px; border-radius:6px; cursor:pointer; border:1.5px solid; white-space:nowrap; line-height:1.4; background:white; }
+        .rt-hold-omit-btn.hold { color:#c2410c; border-color:#FED7AA; }
+        .rt-hold-omit-btn.hold:hover { background:#FFF7ED; }
+        .rt-hold-omit-btn.omit { color:#92400E; border-color:#FCD34D; }
+        .rt-hold-omit-btn.omit:hover { background:#FFFBEB; }
+        /* Hold/Omit modal */
+        .rtho-overlay { position:fixed; inset:0; background:rgba(15,23,42,0.45); z-index:9000; display:flex; align-items:flex-end; justify-content:center; }
+        .rtho-sheet { background:white; border-radius:24px 24px 0 0; padding:24px 20px 32px; width:100%; max-width:480px; box-shadow:0 -8px 40px rgba(0,0,0,0.18); }
+        .rtho-chip { padding:8px 14px; border-radius:10px; border:1.5px solid var(--border); font-size:12px; font-weight:600; color:var(--text-2); cursor:pointer; background:white; text-align:left; }
+        .rtho-chip.active { border-color:var(--green); color:#0F766E; background:#F0FDFA; }
+        .mdc.hold-card { background:#FFF7ED !important; border-color:#FED7AA !important; }
+        .mdc.omit-card { background:#FFFBEB !important; border-color:#FDE68A !important; }
+        .mdc.hold-card .mdc-bar, .mdc.omit-card .mdc-bar { background:linear-gradient(180deg,#D97706,#F59E0B) !important; }
 
         /* Center: detail + 5 rights + scan */
         .am-center { display: flex; flex-direction: column; overflow-y: auto; padding: 16px; gap: 14px; }
@@ -10973,6 +10991,27 @@
             </div>
         </div>
 
+    </div>
+</div>
+
+<!-- ══ Hold / Omit Modal (routine flow) ══ -->
+<div id="rtHoldOmitOverlay" class="rtho-overlay" style="display:none;" onclick="if(event.target===this)rtCloseHoldOmitModal()">
+    <div class="rtho-sheet">
+        <div style="width:40px;height:4px;background:#E2E8F0;border-radius:4px;margin:0 auto 20px;"></div>
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:18px;">
+            <div id="rthoIcon" style="width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"></div>
+            <div>
+                <div id="rthoTitle" style="font-size:16px;font-weight:800;color:var(--text-1);"></div>
+                <div id="rthoDrugName" style="font-size:12px;color:var(--text-3);margin-top:2px;"></div>
+            </div>
+        </div>
+        <div style="font-size:12px;font-weight:700;color:var(--text-2);margin-bottom:8px;">เหตุผล</div>
+        <div id="rthoReasonChips" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;"></div>
+        <input id="rthoReasonInput" class="op-input" placeholder="หรือพิมพ์เหตุผลอื่น..." style="font-size:13px;margin-bottom:16px;">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+            <button onclick="rtCloseHoldOmitModal()" style="padding:12px;border-radius:12px;border:1.5px solid var(--border);background:white;font-size:13px;font-weight:700;color:var(--text-2);cursor:pointer;">ยกเลิก</button>
+            <button id="rthoConfirmBtn" onclick="rtConfirmHoldOmit()" style="padding:12px;border-radius:12px;border:none;font-size:13px;font-weight:700;color:white;cursor:pointer;"></button>
+        </div>
     </div>
 </div>
 
@@ -21506,6 +21545,7 @@
         currentLegacyDispenseBed = patientData[bedNum] ? bedNum : currentLegacyDispenseBed;
         var pt = dispensePatients[bedNum];
         if (!pt) return;
+        rtDrugStates = {};
         rtDrugs.length = 0;
         pt.drugs.forEach(function(d) { rtDrugs.push(d); });
         rtActiveDrugIdx = 0;
@@ -21536,10 +21576,30 @@
         oldDrugs.forEach(function(d) { d.remove(); });
         var insertBefore = drugContainer.querySelector('.rt-bottom') || drugContainer.lastElementChild;
         var innerDiv = drugContainer.querySelector('.rt-inner');
-        pt.drugs.forEach(function(d) {
+        pt.drugs.forEach(function(d, idx) {
+            var state = rtDrugStates[idx];
             var div = document.createElement('div');
-            div.className = 'rt-drug';
-            div.innerHTML = '<div class="rt-drug-bar wait"></div><div class="rt-drug-info"><div class="rt-drug-name">' + d.name + haBadge(d.name) + '</div><div class="rt-drug-sub">' + d.route + ' · ' + d.freq + '</div></div><div class="rt-drug-right"><span class="am-drug-st wait" style="font-size:11px;">รอให้ยา</span></div>';
+            if (state) {
+                div.className = 'rt-drug ' + state.type + '-drug';
+                var stLabel = state.type === 'hold' ? 'Hold ยา' : 'Omit ยา';
+                var stClass = state.type === 'hold' ? 'hold' : 'omit';
+                div.innerHTML = '<div class="rt-drug-bar ' + stClass + '"></div>'
+                    + '<div class="rt-drug-info"><div class="rt-drug-name">' + d.name + haBadge(d.name) + '</div>'
+                    + '<div class="rt-drug-sub">' + d.route + ' · ' + d.freq + '</div>'
+                    + '<div style="font-size:10px;color:#92400e;margin-top:2px;">' + state.reason + '</div></div>'
+                    + '<div class="rt-drug-right"><span class="am-drug-st ' + stClass + '" style="font-size:11px;">' + stLabel + '</span></div>';
+            } else {
+                div.className = 'rt-drug';
+                div.innerHTML = '<div class="rt-drug-bar wait"></div>'
+                    + '<div class="rt-drug-info"><div class="rt-drug-name">' + d.name + haBadge(d.name) + '</div>'
+                    + '<div class="rt-drug-sub">' + d.route + ' · ' + d.freq + '</div></div>'
+                    + '<div class="rt-drug-right" style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;">'
+                    + '<span class="am-drug-st wait" style="font-size:11px;">รอให้ยา</span>'
+                    + '<div class="rt-drug-actions" style="display:flex;gap:5px;">'
+                    + '<button class="rt-hold-omit-btn hold" onclick="rtOpenHoldOmit(' + idx + ',\'hold\')">Hold</button>'
+                    + '<button class="rt-hold-omit-btn omit" onclick="rtOpenHoldOmit(' + idx + ',\'omit\')">Omit</button>'
+                    + '</div></div>';
+            }
             innerDiv.appendChild(div);
         });
 
@@ -21593,6 +21653,11 @@
 
     var rtDrugs = [];
 
+    var rtDrugStates = {}; // { [idx]: { type:'hold'|'omit', reason:'' } }
+    var rtHoldOmitTarget = null; // { type, idx }
+    var rtHoldReasons = ['NPO / งดน้ำ-อาหาร','BP ต่ำ / ค่าผิดปกติ','ผู้ป่วยปฏิเสธ','รอแพทย์ยืนยัน','อาการแพ้สงสัย'];
+    var rtOmitReasons = ['ผู้ป่วยปฏิเสธ','ให้ยาแล้วก่อนหน้า','ข้ามรอบนี้ตามแผน','ยาหมด / ไม่มีในสต็อก','อาการดีขึ้น'];
+
     function rtBuildDrugCards() {
         var drugs = getLegacyDrugs();
         rtDrugs = drugs.map(function(d) {
@@ -21602,10 +21667,26 @@
         var container = document.getElementById('rtDrugCardsContainer');
         if (!container) return;
         container.innerHTML = rtDrugs.map(function(d, i) {
+            var state = rtDrugStates[i];
+            // Hold/Omit card — pre-done, no scan needed
+            if (state) {
+                var isHold = state.type === 'hold';
+                var stateLabel = isHold ? 'Hold' : 'Omit';
+                var stateColor = isHold ? '#EA580C' : '#D97706';
+                var stateBg = isHold ? '#FFF7ED' : '#FFFBEB';
+                var stateBorder = isHold ? '#FED7AA' : '#FDE68A';
+                return '<div class="mdc '+(isHold?'hold-card':'omit-card')+'" id="rdrug_'+i+'" data-flow="r" data-done="true" style="margin-bottom:12px;border:1.5px solid '+stateBorder+';background:'+stateBg+';">'
+                    +'<div class="mdc-bar" style="background:'+stateColor+';"></div>'
+                    +'<div class="mdc-body"><div class="mdc-header"><div class="mdc-info">'
+                    +'<div class="mdc-name" style="font-size:15px;">'+d.name+'</div>'
+                    +'<div class="mdc-sub" style="color:'+stateColor+';">'+stateLabel+' · '+escHtml(state.reason)+'</div>'
+                    +'</div>'
+                    +'<span style="font-size:11px;font-weight:700;padding:5px 12px;border-radius:8px;background:'+stateBg+';color:'+stateColor+';border:1.5px solid '+stateBorder+';">'+stateLabel+'</span>'
+                    +'</div></div></div>';
+            }
             var isLast = i === rtDrugs.length - 1;
             var scanBtns = '<button class="mdc-btn" id="rdrug_'+i+'_btn" style="background:linear-gradient(135deg,#0d9488,#14b8a6);border-radius:12px;padding:10px 18px;font-weight:700;" onclick="scanMultiDrug(\'r\','+i+')">'
                 +'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" style="vertical-align:middle;margin-right:4px;"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg>สแกน</button>';
-            // Add demo fail button on last drug
             if (isLast) {
                 scanBtns = '<div style="display:flex;gap:6px;">' + scanBtns
                     + '<button class="mdc-btn" style="background:linear-gradient(135deg,#DC2626,#EF4444);border-radius:12px;padding:10px 12px;font-weight:700;font-size:10px;" onclick="scanMultiDrug(\'r\','+i+',true)">'
@@ -21629,9 +21710,95 @@
                 +'<span style="font-size:11px;color:var(--text-2);" id="rdrug_'+i+'_lot">—</span>'
                 +'</div></div></div>';
         }).join('');
-        // Update confirm button text
         var btn = document.getElementById('rtBtnConfirmDrug');
-        if (btn) { btn.disabled = true; btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> ยืนยันให้ยา (0/'+rtDrugs.length+')'; }
+        var pendingCount = rtDrugs.filter(function(_, i) { return !rtDrugStates[i]; }).length;
+        var heldOmit = rtDrugs.length - pendingCount;
+        var labelSuffix = heldOmit ? ' · Hold/Omit ' + heldOmit : '';
+        if (btn) {
+            if (pendingCount === 0 && heldOmit > 0) {
+                btn.disabled = false;
+                btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> ยืนยัน ('+heldOmit+' Hold/Omit)';
+            } else {
+                btn.disabled = true;
+                btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> ยืนยันให้ยา (0/'+pendingCount+')'+labelSuffix;
+            }
+        }
+    }
+
+    function rtOpenHoldOmit(idx, type) {
+        var pt = dispensePatients[currentDispenseBed];
+        var drug = pt ? pt.drugs[idx] : null;
+        var drugName = drug ? drug.name : (rtDrugs[idx] ? rtDrugs[idx].name : 'ยา');
+        rtHoldOmitTarget = { type: type, idx: idx };
+        var isHold = type === 'hold';
+        var reasons = isHold ? rtHoldReasons : rtOmitReasons;
+        var color = isHold ? '#EA580C' : '#D97706';
+        var iconBg = isHold ? 'linear-gradient(135deg,#EA580C,#F97316)' : 'linear-gradient(135deg,#D97706,#F59E0B)';
+        var icon = isHold
+            ? '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>'
+            : '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="8" y1="12" x2="16" y2="12"/></svg>';
+        document.getElementById('rthoIcon').style.background = iconBg;
+        document.getElementById('rthoIcon').innerHTML = icon;
+        document.getElementById('rthoTitle').textContent = isHold ? 'Hold ยา — พักชั่วคราว' : 'Omit ยา — ข้ามรอบนี้';
+        document.getElementById('rthoDrugName').textContent = drugName;
+        document.getElementById('rthoReasonInput').value = '';
+        var chipsEl = document.getElementById('rthoReasonChips');
+        chipsEl.innerHTML = reasons.map(function(r) {
+            return '<button class="rtho-chip" onclick="rthoSelectChip(this)">' + r + '</button>';
+        }).join('');
+        var confirmBtn = document.getElementById('rthoConfirmBtn');
+        confirmBtn.textContent = isHold ? 'Hold ยานี้' : 'Omit ยานี้';
+        confirmBtn.style.background = iconBg;
+        document.getElementById('rtHoldOmitOverlay').style.display = 'flex';
+    }
+
+    function rthoSelectChip(el) {
+        document.querySelectorAll('#rthoReasonChips .rtho-chip').forEach(function(c) { c.classList.remove('active'); });
+        el.classList.add('active');
+        document.getElementById('rthoReasonInput').value = '';
+    }
+
+    function rtCloseHoldOmitModal() {
+        document.getElementById('rtHoldOmitOverlay').style.display = 'none';
+        rtHoldOmitTarget = null;
+    }
+
+    function rtConfirmHoldOmit() {
+        var target = rtHoldOmitTarget;
+        if (!target) return;
+        var activeChip = document.querySelector('#rthoReasonChips .rtho-chip.active');
+        var reason = activeChip ? activeChip.textContent : document.getElementById('rthoReasonInput').value.trim();
+        if (!reason) { showToast('กรุณาระบุเหตุผล'); setTimeout(function(){ showToast(''); }, 1600); return; }
+        rtDrugStates[target.idx] = { type: target.type, reason: reason };
+        // Update step 2 drug row
+        var drugRows = document.querySelectorAll('#rtStep2 .rt-drug');
+        var row = drugRows[target.idx];
+        if (row) {
+            var isHold = target.type === 'hold';
+            row.classList.add(isHold ? 'hold-drug' : 'omit-drug');
+            var statusEl = row.querySelector('.am-drug-st');
+            if (statusEl) {
+                statusEl.className = 'am-drug-st ' + target.type;
+                statusEl.textContent = isHold ? 'Hold' : 'Omit';
+            }
+            var actionsEl = row.querySelector('.rt-drug-actions');
+            if (actionsEl) actionsEl.style.display = 'none';
+        }
+        // Record in eMAR
+        var pt = dispensePatients[currentDispenseBed] || {};
+        var drug = (pt.drugs || [])[target.idx] || {};
+        recordEmarAdministration({
+            ward: emarWardName(), patientKey: currentDispenseBed,
+            patientName: pt.name || '', hn: pt.hn || '', bed: pt.bed || '',
+            drugName: drug.name || '', dose: drug.dose || '', route: drug.route || 'PO',
+            schedule: pt.round || 'รอบเช้า', dueTime: drug.time || '',
+            givenTime: emarCurrentTimeLabel(),
+            holdOmit: target.type, holdOmitReason: reason,
+            done: false, prn: false, source: target.type === 'hold' ? 'Hold' : 'Omit'
+        });
+        rtCloseHoldOmitModal();
+        showToast((target.type === 'hold' ? 'Hold' : 'Omit') + ' ' + (drug.name || 'ยา') + ' — ' + reason);
+        setTimeout(function(){ showToast(''); }, 2200);
     }
     let rtActiveDrugIdx = 0;
 
