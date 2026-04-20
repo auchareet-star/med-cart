@@ -681,6 +681,23 @@
         .wm-zone-no-cart { font-size:10px; font-weight:700; color:#F59E0B; }
         .wm-zone-select { width:100%; border:1.5px solid #E2E8F0; border-radius:8px; padding:5px 8px; font-family:'Prompt',sans-serif; font-size:11px; font-weight:700; color:#475569; background:white; cursor:pointer; outline:none; }
         .wm-zone-select:focus { border-color:#0D9488; }
+        /* ── VIEW MODE (fields disabled until Edit is clicked) ── */
+        .wm-view-mode .wm-input,
+        .wm-view-mode .wm-zone-name-input,
+        .wm-view-mode .wm-zone-range-input,
+        .wm-view-mode .wm-zone-select,
+        .wm-view-mode select {
+            pointer-events:none; background:var(--bg) !important;
+            border-color:transparent !important; cursor:default; color:var(--text-2);
+        }
+        .wm-view-mode .wm-color-swatch,
+        .wm-view-mode .wm-status-opt { pointer-events:none; opacity:.5; cursor:default; }
+        .wm-view-mode .wm-add-zone-btn,
+        .wm-view-mode .wm-zone-remove,
+        .wm-view-mode .wm-danger-zone,
+        .wm-view-mode .wm-add-btn { display:none !important; }
+        .wm-view-mode .wm-zone-card { border-color:#F1F5F9; }
+        .wm-view-mode .wm-zone-cart-badge { opacity:.7; }
         .wm-add-zone-btn {
             border:none; background:linear-gradient(135deg,#0D9488,#14B8A6); color:white; border-radius:8px;
             padding:6px 14px; font-family:'Prompt',sans-serif; font-size:11px; font-weight:800;
@@ -932,8 +949,13 @@
                             <div class="bo-ph-chips" id="wmCartChips"></div>
                         </div>
                     </div>
-                    <div class="bo-ph-right">
-                        <button class="btn primary" onclick="saveWardModal()">
+                    <div class="bo-ph-right" id="wm-actions-cart">
+                        <button class="btn" id="wm-edit-btn-cart" onclick="wmEnableEdit()">
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                            แก้ไข
+                        </button>
+                        <button class="btn" id="wm-cancel-btn-cart" onclick="wmCancelEdit()" style="display:none;">ยกเลิก</button>
+                        <button class="btn primary" id="wm-save-btn-cart" onclick="saveWardModal()" style="display:none;">
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
                             บันทึกข้อมูล
                         </button>
@@ -955,8 +977,13 @@
                             <div class="bo-ph-chips" id="wmChips"></div>
                         </div>
                     </div>
-                    <div class="bo-ph-right">
-                        <button class="btn primary" onclick="saveWardModal()">
+                    <div class="bo-ph-right" id="wm-actions-ward">
+                        <button class="btn" id="wm-edit-btn-ward" onclick="wmEnableEdit()">
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                            แก้ไข
+                        </button>
+                        <button class="btn" id="wm-cancel-btn-ward" onclick="wmCancelEdit()" style="display:none;">ยกเลิก</button>
+                        <button class="btn primary" id="wm-save-btn-ward" onclick="saveWardModal()" style="display:none;">
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
                             บันทึกข้อมูล
                         </button>
@@ -3629,26 +3656,59 @@
             if (wmChips)     wmChips.innerHTML     = chipsHtml;
             if (wmCartChips) wmCartChips.innerHTML = chipsHtml;
 
-            if (cartBody) cartBody.innerHTML = wmRenderCartTab();
-            if (wardBody) wardBody.innerHTML = wmRenderWardTab();
+            var viewClass = wmEditMode ? 'bo-page-body' : 'bo-page-body wm-view-mode';
+            if (cartBody) { cartBody.className = viewClass; cartBody.innerHTML = wmRenderCartTab(); }
+            if (wardBody) { wardBody.className = viewClass; wardBody.innerHTML = wmRenderWardTab(); }
+        }
+
+        var wmEditMode = false;
+
+        function wmEnableEdit() {
+            wmEditMode = true;
+            wmRender();
+            wmUpdateEditButtons();
+        }
+
+        function wmCancelEdit() {
+            wmEditMode = false;
+            wmDirty = {};
+            wmRender();
+            wmUpdateEditButtons();
+        }
+
+        function wmUpdateEditButtons() {
+            ['cart','ward'].forEach(function(p) {
+                var e = document.getElementById('wm-edit-btn-' + p);
+                var s = document.getElementById('wm-save-btn-' + p);
+                var c = document.getElementById('wm-cancel-btn-' + p);
+                if (!e) return;
+                e.style.display = wmEditMode ? 'none'        : 'inline-flex';
+                s.style.display = wmEditMode ? 'inline-flex' : 'none';
+                c.style.display = wmEditMode ? 'inline-flex' : 'none';
+            });
         }
 
         function openCartPage() {
             wmSearch = '';
             wmStatusFilter = 'all';
             wmSelectedCart = WM_CARTS[0] ? WM_CARTS[0].id : null;
+            wmEditMode = false;
             wmRender();
+            wmUpdateEditButtons();
         }
         function openWardModal() {
             wmSearch = '';
             wmStatusFilter = 'all';
             wmSelectedWard = WM_WARDS[0] ? WM_WARDS[0].id : null;
+            wmEditMode = false;
             wmRender();
+            wmUpdateEditButtons();
         }
         function closeWardModal() {
             boNavTo('home', document.querySelector('.bo-nav-item'));
         }
         function saveWardModal() {
+            if (!window.confirm('ยืนยันการบันทึกข้อมูล?\n\nการเปลี่ยนแปลงจะมีผลกับ Ward และ Med Cart ที่เกี่ยวข้องทั้งหมด')) return;
             /* Apply dirty values back to WM_WARDS / WM_CARTS */
             WM_WARDS.forEach(function(w) {
                 if (wmDirty[w.id]) Object.assign(w, wmDirty[w.id]);
@@ -3661,10 +3721,12 @@
             var savedWard = sessionStorage.getItem('mcWard') || DEFAULT_DEMO_WARD;
             if (!wardInfo[savedWard] && WM_WARDS.length) sessionStorage.setItem('mcWard', WM_WARDS[0].name);
             wmDirty = {};
-            boNavTo('home', document.querySelector('.bo-nav-item'));
+            wmEditMode = false;
+            wmRender();
+            wmUpdateEditButtons();
             renderBackoffice();
-            showToast('บันทึก Med Cart & Ward เรียบร้อยแล้ว');
-            setTimeout(function(){ showToast(''); }, 2000);
+            showToast('✓ บันทึก Med Cart & Ward เรียบร้อยแล้ว');
+            setTimeout(function(){ showToast(''); }, 2500);
         }
 
         function goFrontOffice() {
