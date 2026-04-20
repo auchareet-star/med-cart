@@ -21551,31 +21551,35 @@
         rtActiveDrugIdx = 0;
 
         // Step 2: Patient hero
-        var hero = document.querySelector('#rtStep2 .pd-hero');
-        if (hero) {
-            var avatar = hero.querySelector('.pd-avatar');
-            if (avatar) { avatar.textContent = pt.avatar; }
-            var nameEl = hero.querySelector('.pd-pt-name');
-            if (nameEl) nameEl.textContent = pt.name;
-            var metaEl = hero.querySelector('.pd-pt-meta');
-            if (metaEl) metaEl.innerHTML = '<span>HN: ' + pt.hn + '</span><span>เตียง ' + pt.bed + '</span><span>' + pt.age + '</span>';
-            var allergyEl = hero.querySelector('.pd-allergy');
-            if (allergyEl) { allergyEl.style.display = pt.allergy ? 'flex' : 'none'; if (pt.allergy) allergyEl.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>' + pt.allergy; }
-            var warnEl = hero.querySelector('.pd-warnings');
-            if (warnEl) { warnEl.innerHTML = pt.tags.map(function(t) { var cls = t === 'Fall Risk' ? 'fall' : 'allergy'; return '<span class="pd-warn-tag ' + cls + '">' + t + '</span>'; }).join(''); warnEl.style.display = pt.tags.length ? 'flex' : 'none'; }
+        var s2Avatar = document.getElementById('rtStep2Avatar');
+        if (s2Avatar) s2Avatar.textContent = pt.avatar;
+        var s2Name = document.getElementById('rtStep2Name');
+        if (s2Name) s2Name.textContent = pt.name;
+        var s2HN = document.getElementById('rtStep2HN');
+        if (s2HN) s2HN.textContent = 'HN: ' + pt.hn;
+        var s2Bed = document.getElementById('rtStep2Bed');
+        if (s2Bed) s2Bed.textContent = 'เตียง ' + pt.bed;
+        var s2Age = document.getElementById('rtStep2Age');
+        if (s2Age) s2Age.textContent = pt.age;
+        var s2Allergy = document.getElementById('rtStep2Allergy');
+        if (s2Allergy) {
+            s2Allergy.style.display = pt.allergy ? 'flex' : 'none';
+            var s2AllergyText = document.getElementById('rtStep2AllergyText');
+            if (s2AllergyText) s2AllergyText.textContent = pt.allergy || '';
+        }
+        var s2Warnings = document.getElementById('rtStep2Warnings');
+        if (s2Warnings) {
+            s2Warnings.innerHTML = pt.tags.map(function(t) { var cls = t === 'Fall Risk' ? 'fall' : 'allergy'; return '<span class="pd-warn-tag ' + cls + '">' + t + '</span>'; }).join('');
+            s2Warnings.style.display = pt.tags.length ? 'flex' : 'none';
         }
 
         // Step 2: Drug list
-        var drugTitle = document.querySelector('#rtStep2 [style*="font-weight:800"][style*="margin-bottom:14px"]');
-        if (drugTitle) {
-            var iconHtml = drugTitle.querySelector('div') ? drugTitle.querySelector('div').outerHTML : '';
-            drugTitle.innerHTML = iconHtml + ' รายการยาปกติ — ' + pt.round + ' (' + pt.drugs.length + ' รายการ)';
-        }
+        var drugTitleEl = document.getElementById('rtStep2DrugTitle');
+        if (drugTitleEl) drugTitleEl.textContent = 'รายการยาปกติ — ' + pt.round + ' (' + pt.drugs.length + ' รายการ)';
         var drugContainer = document.querySelector('#rtStep2');
         var oldDrugs = drugContainer.querySelectorAll('.rt-drug');
         oldDrugs.forEach(function(d) { d.remove(); });
-        var insertBefore = drugContainer.querySelector('.rt-bottom') || drugContainer.lastElementChild;
-        var innerDiv = drugContainer.querySelector('.rt-inner');
+        var innerDiv = document.getElementById('rtStep2DrugList') || drugContainer.querySelector('.rt-inner') || drugContainer;
         pt.drugs.forEach(function(d, idx) {
             var state = rtDrugStates[idx];
             var div = document.createElement('div');
