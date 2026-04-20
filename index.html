@@ -544,6 +544,118 @@
         .op-flow { margin-top: 14px; display: grid; gap: 8px; }
         .op-flow-step { display: flex; gap: 10px; align-items: center; font-size: 11px; color: var(--text-2); font-weight: 700; }
         .op-flow-step i { width: 22px; height: 22px; border-radius: 8px; background: #CCFBF1; color: #0F766E; display: flex; align-items: center; justify-content: center; font-style: normal; font-size: 10px; font-weight: 900; }
+        /* ── Quick Dispense Sheet ─────────────────────── */
+        .ns-qd-overlay {
+            display: none; position: fixed; inset: 0;
+            background: rgba(15,23,42,0.45); backdrop-filter: blur(2px);
+            z-index: 900; align-items: flex-end; justify-content: center;
+        }
+        .ns-qd-overlay.open { display: flex; }
+        .ns-qd-sheet {
+            width: 100%; max-width: 520px;
+            background: white; border-radius: 24px 24px 0 0;
+            box-shadow: 0 -8px 40px rgba(15,23,42,0.18);
+            padding: 0 0 env(safe-area-inset-bottom,0);
+            animation: ns-qd-up .22s cubic-bezier(.2,.8,.4,1);
+            display: flex; flex-direction: column; max-height: 90vh; overflow-y: auto;
+        }
+        @keyframes ns-qd-up { from { transform: translateY(100%); } to { transform: translateY(0); } }
+        .ns-qd-handle {
+            width: 36px; height: 4px; background: #E2E8F0; border-radius: 2px;
+            margin: 10px auto 0;
+        }
+        .ns-qd-header {
+            padding: 16px 20px 14px;
+            border-bottom: 1px solid #F1F5F9;
+            display: flex; align-items: center; gap: 12px;
+        }
+        .ns-qd-drug-icon {
+            width: 44px; height: 44px; border-radius: 14px;
+            display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+        }
+        .ns-qd-title { font-size: 16px; font-weight: 800; color: var(--text-1); line-height: 1.2; }
+        .ns-qd-sub   { font-size: 11px; color: var(--text-3); margin-top: 2px; }
+        .ns-qd-close {
+            margin-left: auto; width: 32px; height: 32px;
+            border: 1px solid var(--border); border-radius: 10px;
+            background: #F8FAFC; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            color: var(--text-3); flex-shrink: 0;
+        }
+        .ns-qd-close:hover { background: #FEF2F2; border-color: #FECACA; color: #DC2626; }
+        .ns-qd-body { padding: 16px 20px; display: flex; flex-direction: column; gap: 14px; }
+        .ns-qd-pt-card {
+            background: linear-gradient(135deg,#F0FDFA,#CCFBF1);
+            border: 1px solid #99F6E4; border-radius: 14px;
+            padding: 12px 14px; display: flex; align-items: center; gap: 12px;
+        }
+        .ns-qd-pt-avatar {
+            width: 38px; height: 38px;
+            background: linear-gradient(135deg,#0D9488,#14B8A6);
+            border-radius: 12px; display: flex; align-items: center; justify-content: center;
+            font-size: 11px; font-weight: 800; color: white; flex-shrink: 0;
+        }
+        .ns-qd-pt-name { font-size: 14px; font-weight: 700; color: #0F766E; }
+        .ns-qd-pt-meta { font-size: 11px; color: #0D9488; margin-top: 1px; }
+        .ns-qd-ha-banner {
+            background: #FEF2F2; border: 1px solid #FECACA; border-radius: 12px;
+            padding: 10px 14px; display: flex; align-items: center; gap: 10px;
+            font-size: 12px; font-weight: 700; color: #DC2626;
+        }
+        .ns-qd-rights { display: flex; flex-direction: column; gap: 6px; }
+        .ns-qd-rights-title { font-size: 11px; font-weight: 800; color: var(--text-2); text-transform: uppercase; letter-spacing: .05em; }
+        .ns-qd-right-row {
+            display: flex; align-items: center; gap: 8px;
+            padding: 7px 10px; border: 1px solid var(--border);
+            border-radius: 10px; background: #FAFAFA; cursor: pointer;
+            transition: all .1s;
+        }
+        .ns-qd-right-row.checked { background: #F0FDF4; border-color: #6EE7B7; }
+        .ns-qd-right-cb {
+            width: 18px; height: 18px; border-radius: 6px;
+            border: 2px solid #CBD5E1; background: white; flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
+            transition: all .1s;
+        }
+        .ns-qd-right-row.checked .ns-qd-right-cb { background: #0D9488; border-color: #0D9488; }
+        .ns-qd-right-label { font-size: 12px; font-weight: 600; color: var(--text-2); flex: 1; }
+        .ns-qd-right-row.checked .ns-qd-right-label { color: #0F766E; }
+        .ns-qd-time-row {
+            display: flex; align-items: center; gap: 10px;
+        }
+        .ns-qd-time-label { font-size: 12px; font-weight: 700; color: var(--text-2); white-space: nowrap; }
+        .ns-qd-time-input {
+            flex: 1; padding: 9px 12px; border: 1.5px solid var(--border);
+            border-radius: 10px; font-family: 'Prompt', sans-serif;
+            font-size: 14px; font-weight: 700; color: var(--text-1);
+            background: white;
+        }
+        .ns-qd-time-input:focus { outline: none; border-color: #0D9488; }
+        .ns-qd-footer {
+            padding: 12px 20px 20px;
+            border-top: 1px solid #F1F5F9;
+            display: flex; gap: 10px;
+        }
+        .ns-qd-btn-confirm {
+            flex: 2; display: flex; align-items: center; justify-content: center; gap: 8px;
+            padding: 14px 20px; border-radius: 14px; border: none; cursor: pointer;
+            background: linear-gradient(135deg,#0D9488,#14B8A6);
+            color: white; font-family: 'Prompt', sans-serif;
+            font-size: 14px; font-weight: 800;
+            box-shadow: 0 4px 16px rgba(13,148,136,0.28);
+            transition: all .18s;
+        }
+        .ns-qd-btn-confirm:disabled { opacity:.4; cursor:not-allowed; transform:none!important; box-shadow:none!important; }
+        .ns-qd-btn-confirm:not(:disabled):hover { transform:translateY(-2px); box-shadow:0 8px 24px rgba(13,148,136,0.35); }
+        .ns-qd-btn-full {
+            flex: 1; display: flex; align-items: center; justify-content: center; gap: 6px;
+            padding: 14px 12px; border-radius: 14px; cursor: pointer;
+            background: white; border: 1.5px solid var(--border);
+            color: var(--text-2); font-family: 'Prompt', sans-serif;
+            font-size: 12px; font-weight: 700; transition: all .15s;
+        }
+        .ns-qd-btn-full:hover { border-color: var(--green); color: var(--green); background: #F0FDFA; }
+        /* ─────────────────────────────────────────────── */
         .ns-filter-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
         .ns-filter-btn {
             border: 1px solid var(--border);
@@ -14357,6 +14469,83 @@
 ═══════════════════════════════════════════════════════════ -->
 <div class="toast" id="toast"></div>
 
+<!-- ── Quick Dispense Sheet ─────────────────── -->
+<div class="ns-qd-overlay" id="nsQdOverlay" onclick="if(event.target===this)nsCloseQd()">
+    <div class="ns-qd-sheet" id="nsQdSheet">
+        <div class="ns-qd-handle"></div>
+
+        <!-- Header: drug name + close -->
+        <div class="ns-qd-header">
+            <div class="ns-qd-drug-icon" id="nsQdDrugIcon"></div>
+            <div>
+                <div class="ns-qd-title" id="nsQdDrugName">—</div>
+                <div class="ns-qd-sub"  id="nsQdDrugSub">—</div>
+            </div>
+            <button type="button" class="ns-qd-close" onclick="nsCloseQd()" aria-label="ปิด">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+        </div>
+
+        <div class="ns-qd-body">
+            <!-- Patient -->
+            <div class="ns-qd-pt-card">
+                <div class="ns-qd-pt-avatar" id="nsQdPtAvatar">—</div>
+                <div>
+                    <div class="ns-qd-pt-name" id="nsQdPtName">—</div>
+                    <div class="ns-qd-pt-meta" id="nsQdPtMeta">—</div>
+                </div>
+            </div>
+
+            <!-- High Alert banner (shown conditionally) -->
+            <div class="ns-qd-ha-banner" id="nsQdHaBanner" style="display:none;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                ยา High Alert — กรุณาตรวจสอบ 7 Rights อย่างละเอียด
+            </div>
+
+            <!-- 7 Rights checklist (nurse side) -->
+            <div class="ns-qd-rights">
+                <div class="ns-qd-rights-title">ยืนยัน 7 Rights</div>
+                <div class="ns-qd-right-row checked" onclick="nsToggleRight(this)">
+                    <div class="ns-qd-right-cb"><svg width="10" height="10" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+                    <span class="ns-qd-right-label">Right Patient — ตรวจชื่อ + HN ตรงกับป้ายข้อมือ</span>
+                </div>
+                <div class="ns-qd-right-row checked" onclick="nsToggleRight(this)">
+                    <div class="ns-qd-right-cb"><svg width="10" height="10" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+                    <span class="ns-qd-right-label">Right Drug — ตรวจชื่อยาตรงกับ eMAR</span>
+                </div>
+                <div class="ns-qd-right-row checked" onclick="nsToggleRight(this)">
+                    <div class="ns-qd-right-cb"><svg width="10" height="10" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+                    <span class="ns-qd-right-label">Right Dose — ตรวจขนาดยาตรงตามคำสั่ง</span>
+                </div>
+                <div class="ns-qd-right-row checked" onclick="nsToggleRight(this)">
+                    <div class="ns-qd-right-cb"><svg width="10" height="10" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+                    <span class="ns-qd-right-label">Right Route — <span id="nsQdRoute">—</span></span>
+                </div>
+                <div class="ns-qd-right-row checked" onclick="nsToggleRight(this)">
+                    <div class="ns-qd-right-cb"><svg width="10" height="10" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+                    <span class="ns-qd-right-label">Right Time — <span id="nsQdScheduledTime">—</span></span>
+                </div>
+            </div>
+
+            <!-- Time given -->
+            <div class="ns-qd-time-row">
+                <span class="ns-qd-time-label">เวลาให้ยาจริง</span>
+                <input type="time" class="ns-qd-time-input" id="nsQdTimeInput">
+            </div>
+        </div>
+
+        <div class="ns-qd-footer">
+            <button type="button" class="ns-qd-btn-full" onclick="nav('pg-routine')">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg>
+                จ่ายยาเต็ม
+            </button>
+            <button type="button" class="ns-qd-btn-confirm" id="nsQdConfirmBtn" onclick="nsConfirmDispense()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                <span class="btn-label">ยืนยันให้ยาแล้ว</span>
+            </button>
+        </div>
+    </div>
+</div>
 
 
 <!-- Global Header -->
@@ -15380,8 +15569,18 @@
             var border = isDone ? '#BBF7D0' : isPrepped ? '#93C5FD' : isHA ? '#FECACA' : '#E2E8F0';
             var icon = isDone ? '✓ ' : isHA ? '⚠ ' : '';
             var isPh = (typeof currentRole !== 'undefined' && currentRole === 'pharma');
-            var clickAttr = isPh ? '' : ' onclick="nav(\'pg-emar\')"';
-            var cursorStyle = isPh ? 'cursor:default;' : 'cursor:pointer;';
+            /* Pending/prepped pills open Quick Dispense Sheet; done pills show eMAR */
+            var clickAttr = '';
+            var cursorStyle = 'cursor:default;';
+            if (!isPh) {
+                if (isDone) {
+                    clickAttr = ' onclick="nav(\'pg-emar\')"';
+                    cursorStyle = 'cursor:pointer;';
+                } else {
+                    clickAttr = ' onclick="nsOpenQd(\'' + o.id + '\')"';
+                    cursorStyle = 'cursor:pointer;';
+                }
+            }
             return '<div style="background:'+bg+';color:'+color+';border:1px solid '+border+';border-radius:6px;padding:3px 7px;font-size:9px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;'+cursorStyle+'" title="'+escHtml(o.drug)+' · '+escHtml(o.dose)+' · '+o.route+'"'+clickAttr+'>'
                 + icon + escHtml(o.drug.split(' ')[0]) + '</div>';
         }
@@ -15414,6 +15613,102 @@
         }).join('');
     }
     MedCartStore.onChange(renderNsCalendar);
+
+    // ── Quick Dispense Sheet ──────────────────────────────
+    var _nsQdOrderId = null;
+
+    function nsOpenQd(orderId) {
+        var o = MedCartStore.orders.find(function(x){ return x.id === orderId; });
+        if (!o) return;
+        _nsQdOrderId = orderId;
+
+        var isDone = o.status === 'dispensed' || o.status === 'assessed';
+        if (isDone) { nav('pg-emar'); return; }
+
+        var ptName = MedCartStore.getPatientName(o.patient);
+        var ptBed  = MedCartStore.getPatientBed(o.patient);
+        var shortName = ptName.replace(/^(นาย|นางสาว|นาง|นส\.)\s*/, '');
+        var initials = shortName.slice(0, 2);
+
+        var isHA = o.highAlert;
+        var isPrepped = o.status === 'prepped';
+        var iconBg = isHA ? '#FEF2F2' : isPrepped ? '#EFF6FF' : '#F0FDFA';
+        var iconColor = isHA ? '#DC2626' : isPrepped ? '#2563EB' : '#0D9488';
+
+        // Drug icon
+        var iconEl = document.getElementById('nsQdDrugIcon');
+        if (iconEl) {
+            iconEl.style.background = iconBg;
+            iconEl.innerHTML = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="'+iconColor+'" stroke-width="2"><path d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="12" y1="6" x2="12" y2="12"/></svg>';
+        }
+
+        // Texts
+        setText('nsQdDrugName', o.drug);
+        setText('nsQdDrugSub', o.dose + ' · ' + o.route + (o.time ? ' · ' + o.time + ' น.' : ''));
+        setText('nsQdPtAvatar', initials);
+        setText('nsQdPtName', ptName);
+        setText('nsQdPtMeta', ptBed + (o.patient ? ' · HN: ' + o.patient.padStart(7,'0') : ''));
+        setText('nsQdRoute', o.route);
+        setText('nsQdScheduledTime', o.time ? o.time + ' น.' : o.schedule);
+
+        // High Alert banner
+        var haBanner = document.getElementById('nsQdHaBanner');
+        if (haBanner) haBanner.style.display = isHA ? 'flex' : 'none';
+
+        // Pre-check all rights
+        document.querySelectorAll('#nsQdSheet .ns-qd-right-row').forEach(function(r){ r.classList.add('checked'); });
+        nsUpdateConfirmBtn();
+
+        // Set current time
+        var now = new Date();
+        var hh = String(now.getHours()).padStart(2,'0');
+        var mm = String(now.getMinutes()).padStart(2,'0');
+        var ti = document.getElementById('nsQdTimeInput');
+        if (ti) ti.value = hh + ':' + mm;
+
+        // Open overlay
+        document.getElementById('nsQdOverlay').classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function nsCloseQd() {
+        document.getElementById('nsQdOverlay').classList.remove('open');
+        document.body.style.overflow = '';
+        _nsQdOrderId = null;
+    }
+
+    function nsToggleRight(row) {
+        row.classList.toggle('checked');
+        nsUpdateConfirmBtn();
+    }
+
+    function nsUpdateConfirmBtn() {
+        var allChecked = document.querySelectorAll('#nsQdSheet .ns-qd-right-row:not(.checked)').length === 0;
+        var btn = document.getElementById('nsQdConfirmBtn');
+        if (btn) btn.disabled = !allChecked;
+    }
+
+    function nsConfirmDispense() {
+        if (!_nsQdOrderId) return;
+        var btn = document.getElementById('nsQdConfirmBtn');
+        if (btn) { btn.classList.add('loading'); btn.disabled = true; }
+
+        // Simulate brief network delay
+        setTimeout(function() {
+            MedCartStore.updateStatus(_nsQdOrderId, 'dispensed');
+            MedCartStore._autoVerifyDoctor && MedCartStore._autoVerifyDoctor.call(MedCartStore);
+            MedCartStore._notify && MedCartStore._notify.call(MedCartStore);
+            nsCloseQd();
+            if (btn) { btn.classList.remove('loading'); }
+            showToast('บันทึกการให้ยาเรียบร้อยแล้ว');
+            setTimeout(function(){ showToast(''); }, 2500);
+        }, 600);
+    }
+
+    function setText(id, val) {
+        var el = document.getElementById(id);
+        if (el) el.textContent = val || '—';
+    }
 
     // ── Dashboard Activity Log — dynamic from MedCartStore ──
     function renderDashActivityLog() {
