@@ -57,16 +57,23 @@
             <button class="filter-btn" onclick="toggleFilter(this)">รอจ่าย</button>
             <button class="filter-btn" onclick="toggleFilter(this)">เกินเวลา</button>
             <button class="filter-btn" onclick="toggleFilter(this)">STAT / PRN</button>
+            <button class="filter-clear-btn" id="ptClearFilter" onclick="clearDispFilter()">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                ล้างตัวกรอง
+            </button>
         </div>
 
         <!-- Patient list -->
         <div class="disp-list" id="ptList">
 
             <!-- 1 – STAT overdue -->
-            <div class="pt-card" onclick="showToast('กำลังไปยังหน้าจ่ายยาของ นายธนกร...'); setTimeout(()=>showToast(''),2500);" data-name="ธนกร วิเศษสิทธิ์" data-hn="6405001" data-bed="3A-10">
+            <div class="pt-card" onclick="showToast('กำลังไปยังหน้าจ่ายยาของ นายธนกร...'); setTimeout(()=>showToast(''),2500);" data-name="ธนกร วิเศษสิทธิ์" data-hn="6405001" data-bed="3A-10" data-status="overdue" data-tags="stat high-alert">
                 <div class="pt-urgency stat"></div>
                 <div class="pt-info">
-                    <div class="pt-name">นายธนกร วิเศษสิทธิ์</div>
+                    <div class="pt-name">
+                        นายธนกร วิเศษสิทธิ์
+                        <span class="pt-allergy-badge"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/></svg> แพ้ยา</span>
+                    </div>
                     <div class="pt-hn">HN: 6405001 &nbsp;·&nbsp; เตียง 3A-10</div>
                     <div class="pt-badges">
                         <span class="pt-badge stat">STAT</span>
@@ -74,16 +81,19 @@
                     </div>
                 </div>
                 <div class="pt-meta">
-                    <div class="pt-time" style="color:#dc2626;">07:30</div>
-                    <div class="pt-time-label">เลยเวลา 45 นาที</div>
-                    <span class="pt-status-pill overdue"><span class="dot"></span> เกินเวลา</span>
+                    <div class="pt-time" style="color:#dc2626;font-weight:800;">07:30</div>
+                    <div class="pt-time-label" style="color:#dc2626;">เลยเวลา 45 นาที</div>
+                    <span class="pt-status-pill overdue">
+                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                        เกินเวลา
+                    </span>
                     <div class="pt-drugs"><strong>2</strong> รายการยา</div>
                 </div>
                 <svg class="pt-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
             </div>
 
             <!-- 2 – Soon -->
-            <div class="pt-card" onclick="showToast('กำลังไปยังหน้าจ่ายยาของ นางมาลี...'); setTimeout(()=>showToast(''),2500);" data-name="มาลี สุขใจ" data-hn="6404215" data-bed="3A-03">
+            <div class="pt-card" onclick="showToast('กำลังไปยังหน้าจ่ายยาของ นางมาลี...'); setTimeout(()=>showToast(''),2500);" data-name="มาลี สุขใจ" data-hn="6404215" data-bed="3A-03" data-status="soon" data-tags="">
                 <div class="pt-urgency soon"></div>
                 <div class="pt-info">
                     <div class="pt-name">นางมาลี สุขใจ</div>
@@ -95,17 +105,23 @@
                 <div class="pt-meta">
                     <div class="pt-time" style="color:#d97706;">08:00</div>
                     <div class="pt-time-label">อีก 15 นาที</div>
-                    <span class="pt-status-pill soon"><span class="dot"></span> ใกล้ถึงเวลา</span>
+                    <span class="pt-status-pill soon">
+                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                        ใกล้ถึงเวลา
+                    </span>
                     <div class="pt-drugs"><strong>4</strong> รายการยา</div>
                 </div>
                 <svg class="pt-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
             </div>
 
             <!-- 3 – Normal waiting -->
-            <div class="pt-card" onclick="nav('pg-pt-detail')" data-name="สมชาย มานะ" data-hn="6401234" data-bed="3A-01">
+            <div class="pt-card" onclick="nav('pg-pt-detail')" data-name="สมชาย มานะ" data-hn="6401234" data-bed="3A-01" data-status="waiting" data-tags="">
                 <div class="pt-urgency normal"></div>
                 <div class="pt-info">
-                    <div class="pt-name">นายสมชาย มานะ</div>
+                    <div class="pt-name">
+                        นายสมชาย มานะ
+                        <span class="pt-allergy-badge"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/></svg> Penicillin</span>
+                    </div>
                     <div class="pt-hn">HN: 6401234 &nbsp;·&nbsp; เตียง 3A-01</div>
                     <div class="pt-badges">
                         <span class="pt-badge normal">ปกติ</span>
@@ -114,14 +130,17 @@
                 <div class="pt-meta">
                     <div class="pt-time">08:00</div>
                     <div class="pt-time-label">รอบเช้า</div>
-                    <span class="pt-status-pill waiting"><span class="dot"></span> รอจ่าย</span>
+                    <span class="pt-status-pill waiting">
+                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                        รอจ่าย
+                    </span>
                     <div class="pt-drugs"><strong>3</strong> รายการยา</div>
                 </div>
                 <svg class="pt-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
             </div>
 
             <!-- 4 – Partial -->
-            <div class="pt-card" onclick="showToast('กำลังไปยังหน้าจ่ายยาของ นส.พิมพ์ใจ...'); setTimeout(()=>showToast(''),2500);" data-name="พิมพ์ใจ สุขสม" data-hn="6401567" data-bed="3A-02">
+            <div class="pt-card partial-card" onclick="showToast('กำลังไปยังหน้าจ่ายยาของ นส.พิมพ์ใจ...'); setTimeout(()=>showToast(''),2500);" data-name="พิมพ์ใจ สุขสม" data-hn="6401567" data-bed="3A-02" data-status="partial" data-tags="prn">
                 <div class="pt-urgency soon"></div>
                 <div class="pt-info">
                     <div class="pt-name">นางสาวพิมพ์ใจ สุขสม</div>
@@ -133,14 +152,17 @@
                 <div class="pt-meta">
                     <div class="pt-time">08:00</div>
                     <div class="pt-time-label">รอบเช้า</div>
-                    <span class="pt-status-pill partial"><span class="dot"></span> จ่ายแล้วบางส่วน</span>
+                    <span class="pt-status-pill partial">
+                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2a10 10 0 0 1 0 20"/><path d="M12 2a10 10 0 0 0 0 20" stroke-dasharray="3 3"/></svg>
+                        จ่ายแล้วบางส่วน
+                    </span>
                     <div class="pt-drugs"><strong>1/2</strong> รายการยา</div>
                 </div>
                 <svg class="pt-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
             </div>
 
             <!-- 5 – Normal -->
-            <div class="pt-card" onclick="showToast('กำลังไปยังหน้าจ่ายยาของ นายวิชัย...'); setTimeout(()=>showToast(''),2500);" data-name="วิชัย ดีงาม" data-hn="6402890" data-bed="3A-05">
+            <div class="pt-card" onclick="showToast('กำลังไปยังหน้าจ่ายยาของ นายวิชัย...'); setTimeout(()=>showToast(''),2500);" data-name="วิชัย ดีงาม" data-hn="6402890" data-bed="3A-05" data-status="waiting" data-tags="">
                 <div class="pt-urgency normal"></div>
                 <div class="pt-info">
                     <div class="pt-name">นายวิชัย ดีงาม</div>
@@ -152,14 +174,17 @@
                 <div class="pt-meta">
                     <div class="pt-time">08:00</div>
                     <div class="pt-time-label">รอบเช้า</div>
-                    <span class="pt-status-pill waiting"><span class="dot"></span> รอจ่าย</span>
+                    <span class="pt-status-pill waiting">
+                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                        รอจ่าย
+                    </span>
                     <div class="pt-drugs"><strong>2</strong> รายการยา</div>
                 </div>
                 <svg class="pt-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
             </div>
 
             <!-- 6 – Overdue -->
-            <div class="pt-card" onclick="showToast('กำลังไปยังหน้าจ่ายยาของ นางกัลยา...'); setTimeout(()=>showToast(''),2500);" data-name="กัลยา ชัยวงศ์" data-hn="6403012" data-bed="3A-08">
+            <div class="pt-card" onclick="showToast('กำลังไปยังหน้าจ่ายยาของ นางกัลยา...'); setTimeout(()=>showToast(''),2500);" data-name="กัลยา ชัยวงศ์" data-hn="6403012" data-bed="3A-08" data-status="overdue" data-tags="high-alert">
                 <div class="pt-urgency overdue"></div>
                 <div class="pt-info">
                     <div class="pt-name">นางกัลยา ชัยวงศ์</div>
@@ -169,16 +194,19 @@
                     </div>
                 </div>
                 <div class="pt-meta">
-                    <div class="pt-time" style="color:#dc2626;">07:00</div>
-                    <div class="pt-time-label">เลยเวลา 1 ชม.</div>
-                    <span class="pt-status-pill overdue"><span class="dot"></span> เกินเวลา</span>
+                    <div class="pt-time pt-time-danger">07:00</div>
+                    <div class="pt-time-label pt-time-label-danger">เลยเวลา 1 ชม.</div>
+                    <span class="pt-status-pill overdue">
+                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                        เกินเวลา
+                    </span>
                     <div class="pt-drugs"><strong>3</strong> รายการยา</div>
                 </div>
                 <svg class="pt-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
             </div>
 
             <!-- 7 – Normal -->
-            <div class="pt-card" onclick="showToast('กำลังไปยังหน้าจ่ายยาของ นายประสิทธิ์...'); setTimeout(()=>showToast(''),2500);" data-name="ประสิทธิ์ แก้วงาม" data-hn="6406234" data-bed="3A-12">
+            <div class="pt-card" onclick="showToast('กำลังไปยังหน้าจ่ายยาของ นายประสิทธิ์...'); setTimeout(()=>showToast(''),2500);" data-name="ประสิทธิ์ แก้วงาม" data-hn="6406234" data-bed="3A-12" data-status="waiting" data-tags="">
                 <div class="pt-urgency normal"></div>
                 <div class="pt-info">
                     <div class="pt-name">นายประสิทธิ์ แก้วงาม</div>
@@ -190,14 +218,17 @@
                 <div class="pt-meta">
                     <div class="pt-time">12:00</div>
                     <div class="pt-time-label">รอบเที่ยง</div>
-                    <span class="pt-status-pill waiting"><span class="dot"></span> รอจ่าย</span>
+                    <span class="pt-status-pill waiting">
+                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                        รอจ่าย
+                    </span>
                     <div class="pt-drugs"><strong>1</strong> รายการยา</div>
                 </div>
                 <svg class="pt-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
             </div>
 
             <!-- 8 – Normal -->
-            <div class="pt-card" onclick="showToast('กำลังไปยังหน้าจ่ายยาของ นางสมศรี...'); setTimeout(()=>showToast(''),2500);" data-name="สมศรี บุญมาก" data-hn="6407890" data-bed="3A-15">
+            <div class="pt-card" onclick="showToast('กำลังไปยังหน้าจ่ายยาของ นางสมศรี...'); setTimeout(()=>showToast(''),2500);" data-name="สมศรี บุญมาก" data-hn="6407890" data-bed="3A-15" data-status="waiting" data-tags="">
                 <div class="pt-urgency normal"></div>
                 <div class="pt-info">
                     <div class="pt-name">นางสมศรี บุญมาก</div>
@@ -209,12 +240,26 @@
                 <div class="pt-meta">
                     <div class="pt-time">12:00</div>
                     <div class="pt-time-label">รอบเที่ยง</div>
-                    <span class="pt-status-pill waiting"><span class="dot"></span> รอจ่าย</span>
+                    <span class="pt-status-pill waiting">
+                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                        รอจ่าย
+                    </span>
                     <div class="pt-drugs"><strong>2</strong> รายการยา</div>
                 </div>
                 <svg class="pt-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
             </div>
 
         </div>
+
+        <!-- Empty state (shown when no results) -->
+        <div class="pt-empty-state" id="ptEmptyState">
+            <div class="pt-empty-state-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </div>
+            <h3>ไม่พบรายการ</h3>
+            <p>ลองปรับตัวกรองหรือคำค้นหาใหม่</p>
+            <button type="button" onclick="clearDispFilter()">ล้างตัวกรอง</button>
+        </div>
+
     </div>
 </div>

@@ -1187,6 +1187,32 @@
         }
         .btn-primary:hover  { background: linear-gradient(135deg, var(--green-dark) 0%, var(--green) 100%); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(13,148,136,0.25), 0 12px 32px rgba(13,148,136,0.2); }
         .btn-primary:active { transform: translateY(0); box-shadow: 0 1px 4px rgba(13,148,136,0.2); }
+        .btn-primary:disabled { opacity:.45; cursor:not-allowed; transform:none!important; box-shadow:none!important; }
+        .btn-primary.loading {
+            pointer-events:none; opacity:.85; position:relative;
+            background:linear-gradient(135deg,var(--green-dark),var(--green));
+        }
+        .btn-primary.loading .btn-label { opacity:0; }
+        .btn-primary.loading::after {
+            content:''; position:absolute;
+            width:18px; height:18px;
+            border:2.5px solid rgba(255,255,255,0.35);
+            border-top-color:white;
+            border-radius:50%;
+            animation:btn-spin .7s linear infinite;
+        }
+        .btn-primary.btn-success {
+            background:linear-gradient(135deg,#059669,#10B981)!important;
+            box-shadow:0 4px 16px rgba(5,150,105,0.3)!important;
+            animation:btn-flash .4s ease;
+        }
+        .btn-primary.btn-error {
+            background:linear-gradient(135deg,#DC2626,#EF4444)!important;
+            box-shadow:0 4px 16px rgba(220,38,38,0.3)!important;
+            animation:btn-flash .4s ease;
+        }
+        @keyframes btn-spin  { to { transform:rotate(360deg); } }
+        @keyframes btn-flash { 0%{transform:scale(1)} 50%{transform:scale(.97)} 100%{transform:scale(1)} }
 
         .btn-secondary {
             background: var(--white);
@@ -3204,7 +3230,11 @@
             white-space: nowrap;
         }
         .filter-btn:hover { border-color: var(--green); color: var(--green); }
-        .filter-btn.active { border-color: var(--green); background: var(--green-light); color: var(--green-dark); }
+        .filter-btn.active {
+            border-color: var(--green); background: var(--green-light); color: var(--green-dark);
+            padding-left: 10px;
+        }
+        .filter-btn.active::before { content: '✓ '; font-size: 11px; }
 
         .filter-badge {
             font-size: 10px; font-weight: 700;
@@ -3212,6 +3242,42 @@
             padding: 1px 6px; border-radius: var(--r-full);
             min-width: 16px; text-align: center;
         }
+
+        .filter-clear-btn {
+            display: none; align-items: center; gap: 4px;
+            padding: 9px 12px;
+            border: 2px dashed #FECACA;
+            border-radius: 12px;
+            background: #FEF2F2;
+            font-family: 'Prompt', sans-serif;
+            font-size: 12px; font-weight: 600;
+            color: #DC2626; cursor: pointer;
+            transition: all .12s; white-space: nowrap;
+        }
+        .filter-clear-btn.show { display: flex; }
+        .filter-clear-btn:hover { background: #FEE2E2; border-color: #FCA5A5; }
+
+        .pt-empty-state {
+            display: none; flex-direction: column; align-items: center; justify-content: center;
+            padding: 48px 24px; gap: 12px; text-align: center;
+        }
+        .pt-empty-state.show { display: flex; }
+        .pt-empty-state-icon {
+            width: 56px; height: 56px;
+            background: var(--bg); border: 1.5px solid var(--border);
+            border-radius: 16px; display: flex; align-items: center; justify-content: center;
+            color: var(--text-3);
+        }
+        .pt-empty-state h3 { font-size: 15px; font-weight: 700; color: var(--text-2); }
+        .pt-empty-state p  { font-size: 12px; color: var(--text-3); }
+        .pt-empty-state button {
+            margin-top: 4px; padding: 8px 18px;
+            border: 1.5px solid var(--border); border-radius: 10px;
+            background: white; font-family: 'Prompt', sans-serif;
+            font-size: 12px; font-weight: 600; color: var(--text-2);
+            cursor: pointer; transition: all .12s;
+        }
+        .pt-empty-state button:hover { border-color: var(--green); color: var(--green); }
 
         /* Patient list */
         .disp-list {
@@ -3270,17 +3336,36 @@
         .pt-meta { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; flex-shrink: 0; }
 
         .pt-time { font-size: 13px; font-weight: 700; color: var(--text-1); }
+        .pt-time.pt-time-danger { color: #dc2626; font-weight: 800; }
         .pt-time-label { font-size: 10px; color: var(--text-3); }
+        .pt-time-label.pt-time-label-danger { color: #dc2626; font-weight: 600; }
 
         .pt-status-pill {
             padding: 3px 10px; border-radius: var(--r-full);
             font-size: 11px; font-weight: 700;
-            display: flex; align-items: center; gap: 4px;
+            display: inline-flex; align-items: center; gap: 5px;
+            border: 1px solid transparent;
         }
-        .pt-status-pill.waiting { background: var(--bg); color: var(--text-2); }
-        .pt-status-pill.soon    { background: #fff7ed; color: #d97706; }
-        .pt-status-pill.overdue { background: #fef2f2; color: #dc2626; }
-        .pt-status-pill.partial { background: #eff6ff; color: #2563eb; }
+        .pt-status-pill svg { flex-shrink: 0; }
+        .pt-status-pill.waiting { background: var(--bg); color: var(--text-2); border-color: var(--border); }
+        .pt-status-pill.soon    { background: #fff7ed; color: #d97706; border-color: #fde68a; }
+        .pt-status-pill.overdue { background: #fef2f2; color: #dc2626; border-color: #fecaca; }
+        .pt-status-pill.partial { background: #eff6ff; color: #2563eb; border-color: #bfdbfe; font-weight: 800; }
+        .pt-status-pill.done    { background: #f0fdf4; color: #0d9488; border-color: #6ee7b7; }
+
+        /* Partial card gets a blue accent */
+        .pt-card.partial-card { border-color: #BFDBFE; }
+        .pt-card.partial-card:hover { border-color: #3B82F6; box-shadow: 0 4px 16px rgba(59,130,246,0.1); }
+        .pt-card.partial-card .pt-drugs { color: #2563eb; font-weight: 700; }
+
+        /* Allergy inline badge */
+        .pt-allergy-badge {
+            display: inline-flex; align-items: center; gap: 3px;
+            padding: 1px 6px; border-radius: var(--r-full);
+            font-size: 9px; font-weight: 700; letter-spacing: .2px;
+            background: #fef2f2; color: #dc2626;
+            border: 1px solid #fca5a5; white-space: nowrap;
+        }
 
         .pt-drugs { font-size: 12px; color: var(--text-2); }
         .pt-drugs strong { color: var(--text-1); }
@@ -19576,7 +19661,9 @@
     function filterPt() {
         const q = document.getElementById('ptSearch').value.trim().toLowerCase();
         const activeFilter = document.querySelector('.disp-toolbar .filter-btn.active');
-        const filterText = activeFilter ? activeFilter.textContent : 'ทั้งหมด';
+        const filterText = activeFilter ? activeFilter.textContent.trim() : 'ทั้งหมด';
+        const isAllFilter = filterText.startsWith('ทั้งหมด');
+        let visibleCount = 0;
         document.querySelectorAll('#ptList .pt-card').forEach(c => {
             const name = (c.dataset.name || '').toLowerCase();
             const hn   = (c.dataset.hn   || '').toLowerCase();
@@ -19588,8 +19675,21 @@
             if (filterText.includes('รอจ่าย')) matchFilter = status !== 'done';
             else if (filterText.includes('เกินเวลา')) matchFilter = status === 'overdue';
             else if (filterText.includes('STAT') || filterText.includes('High Alert')) matchFilter = tags.includes('stat') || tags.includes('high-alert');
-            c.style.display = (matchSearch && matchFilter) ? '' : 'none';
+            const show = matchSearch && matchFilter;
+            c.style.display = show ? '' : 'none';
+            if (show) visibleCount++;
         });
+        const clearBtn = document.getElementById('ptClearFilter');
+        const emptyState = document.getElementById('ptEmptyState');
+        if (clearBtn) clearBtn.classList.toggle('show', !isAllFilter || q.length > 0);
+        if (emptyState) emptyState.classList.toggle('show', visibleCount === 0);
+    }
+
+    function clearDispFilter() {
+        document.querySelectorAll('.disp-toolbar .filter-btn').forEach((b, i) => b.classList.toggle('active', i === 0));
+        const searchEl = document.getElementById('ptSearch');
+        if (searchEl) searchEl.value = '';
+        filterPt();
     }
 
     function toggleFilter(el) {

@@ -165,34 +165,40 @@
                 <div style="width:38px;height:38px;background:linear-gradient(135deg,#F5F3FF,#EDE9FE);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-6 18.75h9"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="12" y1="6" x2="12" y2="12"/></svg>
                 </div>
-                <div style="flex:1;">
-                    <div style="font-size:14px;font-weight:600;color:var(--text-1);">Amlodipine 5 mg</div>
-                    <div style="font-size:11px;color:var(--text-3);">DRG-00421 · เม็ด · PO</div>
+                <div style="flex:1;min-width:0;">
+                    <div style="font-size:14px;font-weight:600;color:var(--text-1);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Amlodipine 5 mg</div>
+                    <div style="font-size:11px;color:var(--text-3);">DRG-00421 · เม็ด · PO · 08:00 น.</div>
                 </div>
                 <div style="display:flex;align-items:center;gap:10px;">
                     <div style="text-align:right;">
                         <div style="font-size:13px;font-weight:700;color:var(--text-1);">6 เม็ด</div>
                         <div style="font-size:10px;color:var(--text-3);">4 ผู้ป่วย</div>
                     </div>
-                    <span style="padding:4px 10px;border-radius:8px;font-size:10px;font-weight:600;background:#F1F5F9;color:#64748B;">ยังไม่จัด</span>
+                    <span style="padding:4px 10px;border-radius:8px;font-size:10px;font-weight:600;background:#F1F5F9;color:#64748B;display:inline-flex;align-items:center;gap:4px;">
+                        <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                        ยังไม่จัด
+                    </span>
                 </div>
             </div>
 
             <!-- Drug 2: Metformin 500 mg — จัดบางส่วน -->
-            <div style="background:rgba(255,255,255,0.9);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:14px;padding:14px 16px;display:flex;align-items:center;gap:12px;margin-bottom:8px;transition:all .2s;cursor:default;" onmouseover="this.style.boxShadow='0 4px 16px rgba(0,0,0,0.06)';this.style.borderColor='#A78BFA'" onmouseout="this.style.boxShadow='';this.style.borderColor='var(--border)'">
+            <div style="background:rgba(255,255,255,0.9);backdrop-filter:blur(12px);border:1px solid #BFDBFE;border-radius:14px;padding:14px 16px;display:flex;align-items:center;gap:12px;margin-bottom:8px;transition:all .2s;cursor:default;" onmouseover="this.style.boxShadow='0 4px 16px rgba(59,130,246,0.08)';this.style.borderColor='#93C5FD'" onmouseout="this.style.boxShadow='';this.style.borderColor='#BFDBFE'">
                 <div style="width:38px;height:38px;background:linear-gradient(135deg,#EFF6FF,#DBEAFE);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-6 18.75h9"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="12" y1="6" x2="12" y2="12"/></svg>
                 </div>
-                <div style="flex:1;">
-                    <div style="font-size:14px;font-weight:600;color:var(--text-1);">Metformin 500 mg</div>
-                    <div style="font-size:11px;color:var(--text-3);">DRG-00532 · เม็ด · PO</div>
+                <div style="flex:1;min-width:0;">
+                    <div style="font-size:14px;font-weight:600;color:var(--text-1);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Metformin 500 mg</div>
+                    <div style="font-size:11px;color:var(--text-3);">DRG-00532 · เม็ด · PO · 08:00 น.</div>
                 </div>
                 <div style="display:flex;align-items:center;gap:10px;">
                     <div style="text-align:right;">
                         <div style="font-size:13px;font-weight:700;color:var(--text-1);">5 เม็ด</div>
                         <div style="font-size:10px;color:var(--text-3);">3 ผู้ป่วย</div>
                     </div>
-                    <span style="padding:4px 10px;border-radius:8px;font-size:10px;font-weight:600;background:#EFF6FF;color:#2563EB;">จัดบางส่วน</span>
+                    <span style="padding:4px 10px;border-radius:8px;font-size:10px;font-weight:700;background:#EFF6FF;color:#2563EB;border:1px solid #BFDBFE;display:inline-flex;align-items:center;gap:4px;">
+                        <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 2a10 10 0 0 1 0 20"/></svg>
+                        จัดบางส่วน
+                    </span>
                 </div>
             </div>
 
@@ -201,55 +207,85 @@
                 <div style="width:38px;height:38px;background:linear-gradient(135deg,#F5F3FF,#EDE9FE);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-6 18.75h9"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="12" y1="6" x2="12" y2="12"/></svg>
                 </div>
-                <div style="flex:1;">
-                    <div style="font-size:14px;font-weight:600;color:var(--text-1);">Omeprazole 20 mg</div>
-                    <div style="font-size:11px;color:var(--text-3);">DRG-00187 · แคปซูล · PO</div>
+                <div style="flex:1;min-width:0;">
+                    <div style="font-size:14px;font-weight:600;color:var(--text-1);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Omeprazole 20 mg</div>
+                    <div style="font-size:11px;color:var(--text-3);">DRG-00187 · แคปซูล · PO · 07:00 น.</div>
                 </div>
                 <div style="display:flex;align-items:center;gap:10px;">
                     <div style="text-align:right;">
                         <div style="font-size:13px;font-weight:700;color:var(--text-1);">4 แคปซูล</div>
                         <div style="font-size:10px;color:var(--text-3);">4 ผู้ป่วย</div>
                     </div>
-                    <span style="padding:4px 10px;border-radius:8px;font-size:10px;font-weight:600;background:#F1F5F9;color:#64748B;">ยังไม่จัด</span>
+                    <span style="padding:4px 10px;border-radius:8px;font-size:10px;font-weight:600;background:#F1F5F9;color:#64748B;display:inline-flex;align-items:center;gap:4px;">
+                        <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                        ยังไม่จัด
+                    </span>
                 </div>
             </div>
 
-            <!-- Drug 4: Heparin 5000 units — High Alert -->
-            <div style="background:rgba(255,255,255,0.9);backdrop-filter:blur(12px);border:1px solid #FECACA;border-radius:14px;padding:14px 16px;display:flex;align-items:center;gap:12px;margin-bottom:8px;transition:all .2s;cursor:default;" onmouseover="this.style.boxShadow='0 4px 16px rgba(220,38,38,0.08)';this.style.borderColor='#FCA5A5'" onmouseout="this.style.boxShadow='';this.style.borderColor='#FECACA'">
+            <!-- Drug 4: Heparin 5000 units — High Alert + เกินเวลา -->
+            <div style="background:rgba(255,255,255,0.9);backdrop-filter:blur(12px);border:1px solid #FECACA;border-left:4px solid #DC2626;border-radius:14px;padding:14px 16px;display:flex;align-items:center;gap:12px;margin-bottom:8px;transition:all .2s;cursor:default;" onmouseover="this.style.boxShadow='0 4px 16px rgba(220,38,38,0.08)';this.style.borderColor='#FCA5A5'" onmouseout="this.style.boxShadow='';this.style.borderColor='#FECACA'">
                 <div style="width:38px;height:38px;background:linear-gradient(135deg,#FEF2F2,#FEE2E2);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-6 18.75h9"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="12" y1="6" x2="12" y2="12"/></svg>
                 </div>
-                <div style="flex:1;">
-                    <div style="font-size:14px;font-weight:600;color:var(--text-1);display:flex;align-items:center;gap:6px;">
+                <div style="flex:1;min-width:0;">
+                    <div style="font-size:14px;font-weight:700;color:#DC2626;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:flex;align-items:center;gap:6px;">
                         Heparin 5000 units
-                        <span style="background:linear-gradient(135deg,#DC2626,#EF4444);color:white;font-size:8px;font-weight:700;padding:2px 6px;border-radius:4px;letter-spacing:.5px;">High Alert</span>
+                        <span style="background:linear-gradient(135deg,#DC2626,#EF4444);color:white;font-size:8px;font-weight:700;padding:2px 6px;border-radius:4px;letter-spacing:.5px;flex-shrink:0;">HIGH ALERT</span>
                     </div>
-                    <div style="font-size:11px;color:var(--text-3);">DRG-00891 · ยาฉีด · SC</div>
+                    <div style="font-size:11px;color:#DC2626;margin-top:1px;">DRG-00891 · SC · 07:30 น. <strong>· เกินเวลา 45 นาที</strong></div>
                 </div>
                 <div style="display:flex;align-items:center;gap:10px;">
                     <div style="text-align:right;">
                         <div style="font-size:13px;font-weight:700;color:#DC2626;">3 vials</div>
                         <div style="font-size:10px;color:var(--text-3);">2 ผู้ป่วย</div>
                     </div>
-                    <span style="padding:4px 10px;border-radius:8px;font-size:10px;font-weight:600;background:#F1F5F9;color:#64748B;">ยังไม่จัด</span>
+                    <span style="padding:4px 10px;border-radius:8px;font-size:10px;font-weight:700;background:#FEF2F2;color:#DC2626;border:1px solid #FECACA;display:inline-flex;align-items:center;gap:4px;">
+                        <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                        เกินเวลา
+                    </span>
                 </div>
             </div>
 
-            <!-- Drug 5: Aspirin 81 mg — จัดครบ (opacity .6) -->
+            <!-- Drug 4b: Warfarin 3 mg — HOLD -->
+            <div style="background:rgba(248,250,252,0.9);backdrop-filter:blur(12px);border:1px solid #E2E8F0;border-radius:14px;padding:14px 16px;display:flex;align-items:center;gap:12px;margin-bottom:8px;transition:all .2s;cursor:default;" onmouseover="this.style.boxShadow='0 4px 16px rgba(0,0,0,0.04)'" onmouseout="this.style.boxShadow=''">
+                <div style="width:38px;height:38px;background:#F1F5F9;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-6 18.75h9"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="12" y1="6" x2="12" y2="12"/></svg>
+                </div>
+                <div style="flex:1;min-width:0;">
+                    <div style="font-size:14px;font-weight:600;color:#94A3B8;text-decoration:line-through;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Warfarin 3 mg</div>
+                    <div style="font-size:11px;color:#CBD5E1;">DRG-00112 · เม็ด · PO · 08:00 น. · งดยา: Vital ไม่ผ่านเกณฑ์</div>
+                </div>
+                <div style="display:flex;align-items:center;gap:10px;">
+                    <div style="text-align:right;">
+                        <div style="font-size:13px;font-weight:700;color:#CBD5E1;">3 เม็ด</div>
+                        <div style="font-size:10px;color:var(--text-3);">3 ผู้ป่วย</div>
+                    </div>
+                    <span style="padding:4px 10px;border-radius:8px;font-size:10px;font-weight:700;background:#F8FAFC;color:#64748B;border:1px solid #E2E8F0;display:inline-flex;align-items:center;gap:4px;">
+                        <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><circle cx="12" cy="12" r="10"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+                        HOLD
+                    </span>
+                </div>
+            </div>
+
+            <!-- Drug 5: Aspirin 81 mg — จัดครบ -->
             <div style="background:rgba(255,255,255,0.9);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:14px;padding:14px 16px;display:flex;align-items:center;gap:12px;margin-bottom:8px;transition:all .2s;cursor:default;opacity:.6;" onmouseover="this.style.boxShadow='0 4px 16px rgba(0,0,0,0.06)';this.style.borderColor='#A78BFA'" onmouseout="this.style.boxShadow='';this.style.borderColor='var(--border)'">
                 <div style="width:38px;height:38px;background:linear-gradient(135deg,#F0FDF4,#DCFCE7);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#16A34A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-6 18.75h9"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="12" y1="6" x2="12" y2="12"/></svg>
                 </div>
-                <div style="flex:1;">
-                    <div style="font-size:14px;font-weight:600;color:var(--text-1);">Aspirin 81 mg</div>
-                    <div style="font-size:11px;color:var(--text-3);">DRG-00045 · เม็ด · PO</div>
+                <div style="flex:1;min-width:0;">
+                    <div style="font-size:14px;font-weight:600;color:var(--text-1);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Aspirin 81 mg</div>
+                    <div style="font-size:11px;color:var(--text-3);">DRG-00045 · เม็ด · PO · 08:00 น.</div>
                 </div>
                 <div style="display:flex;align-items:center;gap:10px;">
                     <div style="text-align:right;">
                         <div style="font-size:13px;font-weight:700;color:var(--text-3);">3 เม็ด</div>
                         <div style="font-size:10px;color:var(--text-3);">3 ผู้ป่วย</div>
                     </div>
-                    <span style="padding:4px 10px;border-radius:8px;font-size:10px;font-weight:600;background:#F0FDF4;color:#16A34A;">จัดครบ</span>
+                    <span style="padding:4px 10px;border-radius:8px;font-size:10px;font-weight:600;background:#F0FDF4;color:#16A34A;border:1px solid #BBF7D0;display:inline-flex;align-items:center;gap:4px;">
+                        <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                        จัดครบ
+                    </span>
                 </div>
             </div>
 
