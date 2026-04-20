@@ -2511,8 +2511,6 @@
         #pg-dashboard[data-role="pharma"] #dashNurseOrderActions,
         #pg-dashboard[data-role="pharma"] .db-action[onclick*="pg-routine"],
         #pg-dashboard[data-role="pharma"] #dashPrnQuickLink,
-        #pg-dashboard[data-role="pharma"] #dashStatQuickLink2,
-        #pg-dashboard[data-role="pharma"] #dashHaQuickLink,
         #pg-dashboard[data-role="pharma"] #dashPipelineBar,
         #pg-dashboard[data-role="pharma"] #dashBottomGrid {
             display:none !important;
@@ -7628,24 +7626,6 @@
                 </div>
                 <span class="db-qnav-label">ยา PRN</span>
                 <span class="db-qnav-badge" id="dashPrnCount">0</span>
-            </div>
-
-            <div id="dashStatQuickLink2" onclick="startStatTimer();nav('pg-stat')" class="db-qnav"
-                style="--qn-bg:#FFF1F2;--qn-border:#FECDD3;--qn-icon-bg:linear-gradient(135deg,#BE123C,#E11D48);--qn-color:#BE123C;--qn-badge-bg:#FFE4E6;">
-                <div class="db-qnav-icon">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-                </div>
-                <span class="db-qnav-label">ยา STAT</span>
-                <span class="db-qnav-badge db-alert-num" id="dashStatCount2" style="color:#BE123C;font-weight:800;">0</span>
-            </div>
-
-            <div id="dashHaQuickLink" onclick="nav('pg-highalert')" class="db-qnav"
-                style="--qn-bg:#FEF2F2;--qn-border:#FECACA;--qn-icon-bg:linear-gradient(135deg,#DC2626,#EF4444);--qn-color:#DC2626;--qn-badge-bg:#FEE2E2;">
-                <div class="db-qnav-icon">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/><path d="M9 12l2 2 4-4"/></svg>
-                </div>
-                <span class="db-qnav-label">High Alert</span>
-                <span class="db-qnav-badge" id="dashHaCount">0</span>
             </div>
 
         </div>
@@ -15395,9 +15375,7 @@
         // STAT alert badge
         var statBadge = document.querySelector('#dashQuickAlerts .db-alert-num');
         if (statBadge) statBadge.textContent = s.stat;
-        el = document.getElementById('dashStatCount2'); if (el) el.textContent = s.stat || 0;
         el = document.getElementById('dashPrnCount'); if (el) el.textContent = (typeof prnPatients !== 'undefined' ? prnPatients.length : 0);
-        el = document.getElementById('dashHaCount'); if (el) el.textContent = (typeof haPatients !== 'undefined' ? haPatients.length : 0);
         // eMAR 7 Rights counters
         el = document.getElementById('emar7rPending'); if (el) el.textContent = s.pending;
         el = document.getElementById('emar7rPassed'); if (el) el.textContent = s.done;
