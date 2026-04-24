@@ -25449,6 +25449,19 @@
         };
     }
 
+    function dashCassetteCountForDrawer(drawerNo, drawerTotal, cassetteTotal) {
+        drawerTotal = Math.max(1, Math.floor(drawerTotal) || 1);
+        cassetteTotal = Math.max(0, Math.floor(cassetteTotal) || 0);
+        const base = Math.floor(cassetteTotal / drawerTotal);
+        const extra = cassetteTotal % drawerTotal;
+        return base + (drawerNo <= extra ? 1 : 0);
+    }
+    function dashCassetteGlobalIndex(drawerNo, cassetteNo, drawerTotal, cassetteTotal) {
+        let idx = 0;
+        for (let d = 1; d < drawerNo; d++) idx += dashCassetteCountForDrawer(d, drawerTotal, cassetteTotal);
+        return idx + cassetteNo;
+    }
+
     function getDashboardCassetteState() {
         const cart = getCurrentDashboardCart();
         /* Override capacity from backoffice sessionStorage if present */
@@ -25620,9 +25633,9 @@
             const disabledSlots = state.disabledSlots || new Set();
             for (let d = 1; d <= state.drawers; d++) {
                 let cells = '';
-                for (let c = 1; c <= state.perDrawer; c++) {
-                    const globalIndex = ((d - 1) * state.perDrawer) + c;
-                    if (globalIndex > state.total) continue;
+                const cassPD = dashCassetteCountForDrawer(d, state.drawers, state.total);
+                for (let c = 1; c <= cassPD; c++) {
+                    const globalIndex = dashCassetteGlobalIndex(d, c, state.drawers, state.total);
                     const slotKey = d + ':' + c;
                     const isManuallyClosed = disabledSlots.has(slotKey);
                     const lock = !isManuallyClosed ? lockByKey[ptdCassetteKey(d, c)] : null;
@@ -25636,7 +25649,8 @@
                     const cellInner = isManuallyClosed ? '<span style="color:#DC2626;font-size:9px;font-weight:900;line-height:1;">✕</span>' : '';
                     cells += '<button type="button" class="db-cassette-cell ' + cls + (lock && lock.__completed ? ' completed' : '') + '" title="' + escHtml(title) + '" aria-label="' + escHtml(title) + '"' + cellStyle + cellOnclick + '>' + cellInner + '</button>';
                 }
-                const readyInDrawer = Math.max(Math.min(state.readyBase - ((d - 1) * state.perDrawer), state.perDrawer), 0);
+                const drawerOffset = dashCassetteGlobalIndex(d, 1, state.drawers, state.total) - 1;
+                const readyInDrawer = Math.max(Math.min(state.readyBase - drawerOffset, cassPD), 0);
                 const locksInDrawer = state.locks.filter(function(l){ return parseInt(l.drawer) === d; });
                 const completedInDrawer = state.completedLocks.filter(function(l){ return parseInt(l.drawer) === d; });
                 const allInDrawer = locksInDrawer.length + completedInDrawer.length;
@@ -25720,7 +25734,7 @@
             return ptdCassetteKey(lock.drawer, lock.cassette) === key;
         }) || null;
         const lock = active || completed || null;
-        const globalIndex = ((drawerNum - 1) * state.perDrawer) + cassNum;
+        const globalIndex = dashCassetteGlobalIndex(drawerNum, cassNum, state.drawers, state.total);
         const isManuallyClosed = (state.disabledSlots || new Set()).has(drawerNum + ':' + cassNum);
         const isMaintenance = !lock && !isManuallyClosed && globalIndex > state.readyBase;
         const cfg = lock ? cassetteModeConfig[lock.mode] : null;
