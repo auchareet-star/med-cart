@@ -25506,7 +25506,8 @@
             var codeKey = (cart.code || '').replace(/^MC-/i, '') || cart.id || cart.name.replace(/^Med Cart\s+/, '');
             var slotArr = boDisabled[codeKey] || boDisabled[cart.id] || [];
             slotArr.forEach(function(k) { disabledSlots.add(k); });
-        } catch (e) {}
+            console.log('[Dashboard] boCartDisabledSlots:', JSON.stringify(boDisabled), '| cart.id:', cart.id, '| codeKey:', codeKey, '| slotArr:', slotArr);
+        } catch (e) { console.log('[Dashboard] Error reading boCartDisabledSlots:', e); }
 
         return {
             cart: cart,
@@ -25623,7 +25624,10 @@
                     const cls = isManuallyClosed ? 'closed' : lock ? lock.mode : isMaintenance ? 'maintenance' : '';
                     const statusText = isManuallyClosed ? 'ปิดใช้งาน (กำหนดจาก Backoffice)' : lock && lock.__completed ? 'เติมยาเรียบร้อยแล้ว' : lock ? 'กำลังจัดยา (' + (cfg ? cfg.label : lock.mode) + ')' : isMaintenance ? 'ไม่พร้อมใช้' : 'ว่าง · รอจัดยา';
                     const title = 'Drawer ' + d + ' · Cassette ' + c + ' · ' + statusText;
-                    cells += '<button type="button" class="db-cassette-cell ' + cls + (lock && lock.__completed ? ' completed' : '') + '" title="' + escHtml(title) + '" aria-label="' + escHtml(title) + '" onclick="event.stopPropagation();showCassetteDetailModal(' + d + ',' + c + ')"></button>';
+                    const cellOnclick = isManuallyClosed ? '' : ' onclick="event.stopPropagation();showCassetteDetailModal(' + d + ',' + c + ')"';
+                    const cellStyle = isManuallyClosed ? ' style="cursor:not-allowed;pointer-events:none;background:#FEE2E2;border:1.5px solid #FCA5A5;"' : '';
+                    const cellInner = isManuallyClosed ? '<span style="color:#DC2626;font-size:9px;font-weight:900;line-height:1;">✕</span>' : '';
+                    cells += '<button type="button" class="db-cassette-cell ' + cls + (lock && lock.__completed ? ' completed' : '') + '" title="' + escHtml(title) + '" aria-label="' + escHtml(title) + '"' + cellStyle + cellOnclick + '>' + cellInner + '</button>';
                 }
                 const readyInDrawer = Math.max(Math.min(state.readyBase - ((d - 1) * state.perDrawer), state.perDrawer), 0);
                 const locksInDrawer = state.locks.filter(function(l){ return parseInt(l.drawer) === d; });

@@ -2873,7 +2873,10 @@
         }
         function wmGetDisabledSlots(cartId) {
             // Returns a Set of "D:C" keys for manually closed cassette slots
-            var raw = wmGetField(cartId, 'disabledSlots', []);
+            // Falls back to cart.disabledSlots (persisted after save, when wmDirty is cleared)
+            var cart = wmFindCart(cartId);
+            var savedBase = cart && Array.isArray(cart.disabledSlots) ? cart.disabledSlots : [];
+            var raw = wmGetField(cartId, 'disabledSlots', savedBase);
             return new Set(Array.isArray(raw) ? raw : []);
         }
         function wmToggleSlot(cartId, d, c) {
@@ -3807,7 +3810,8 @@
             return '<div class="wm-drawer-map">' + hint + rows + '</div>';
         }
         function wmNormalizeRelationships() {
-            var desiredWardCart = {};
+            var desiredWardCart = {};   // ward → primary cart (WM_WARDS authoritative)
+            var savedCartWards = {};    // cart → ward for ALL carts (to restore secondary carts)
             WM_WARDS.forEach(function(w) {
                 w.bedsTotal = Math.max(1, wmAsInt(w.bedsTotal, 1));
                 w.bedsOcc = Math.min(Math.max(0, wmAsInt(w.bedsOcc, 0)), w.bedsTotal);
@@ -3825,7 +3829,9 @@
                     wmCassetteCapacityForEnabledDrawers(c.drawers, c.cassettes, c.drawersEnabled)
                 );
                 c.wardId = c.wardId || null;
-                if (c.wardId) desiredWardCart[c.wardId] = c.id;
+                // WM_WARDS takes priority — only fill gap if ward has no primary cart yet
+                if (c.wardId && !desiredWardCart[c.wardId]) desiredWardCart[c.wardId] = c.id;
+                if (c.wardId) savedCartWards[c.id] = c.wardId; // remember for secondary restore
             });
 
             WM_WARDS.forEach(function(w){ w.cartId = null; });
@@ -3839,6 +3845,14 @@
                 ward.cartId = cart.id;
                 cart.wardId = ward.id;
                 usedCarts[cart.id] = true;
+            });
+
+            // Restore wardId for secondary carts (zone carts etc.) that lost assignment
+            WM_CARTS.forEach(function(c) {
+                if (!c.wardId && savedCartWards[c.id]) {
+                    var ward = wmFindWard(savedCartWards[c.id]);
+                    if (ward) c.wardId = ward.id;
+                }
             });
         }
         function wmSyncWardInfo() {
@@ -3947,6 +3961,7 @@
                 }
             });
             sessionStorage.setItem('boCartDisabledSlots', JSON.stringify(boDisabled));
+            console.log('[Backoffice] Saved boCartDisabledSlots:', JSON.stringify(boDisabled));
             wmNormalizeRelationships();
             wmSyncWardInfo();
             var savedWard = sessionStorage.getItem('mcWard') || DEFAULT_DEMO_WARD;
